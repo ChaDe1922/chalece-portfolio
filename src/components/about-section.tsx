@@ -36,9 +36,10 @@ export function AboutSection() {
               I am a learning experience designer and technologist who turns
               complex, technical material into learning that sticks. I started
               in audio engineering and studio operations, earned a B.A. and an
-              M.S. in Music Technology from Georgia Tech, and built a
-              decade-long career around one idea: that hard things become
-              learnable when you design for the learner, not the spec.
+              M.S. in Music Technology from Georgia Tech, where my graduate
+              research used music to help toddlers build early literacy, and
+              built a decade-long career around one idea: that hard things
+              become learnable when you design for the learner, not the spec.
             </p>
             <p>
               At Codio I authored seven published Coursera courses, on DevOps,
