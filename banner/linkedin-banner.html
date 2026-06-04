@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chalece DeLaCoudray - LinkedIn Banner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  /* Brand tokens (light), mirrored from the portfolio hero. */
+  :root {
+    --paper:#f7f5f2; --ink:#14131a; --link:#5b45cc; --violet:#6d5ae6; --coral:#ff6b5e;
+    --display:"Space Grotesk","Helvetica Neue",Arial,sans-serif;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html, body { width:1584px; height:396px; }
+  .banner {
+    position:relative; width:1584px; height:396px; overflow:hidden;
+    background:var(--paper); color:var(--ink);
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  /* Soft violet/coral accent, kept to the right (like the hero). */
+  .accent {
+    position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(46% 80% at 90% 0%, color-mix(in oklch, var(--violet) 24%, transparent), transparent 70%),
+      radial-gradient(40% 70% at 103% 70%, color-mix(in oklch, var(--coral) 16%, transparent), transparent 72%);
+  }
+  .grain {
+    position:absolute; inset:0; pointer-events:none; opacity:0.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* Headline, vertically centered, left-aligned, clear of the lower-left
+     where the profile photo overlaps the banner. */
+  .content {
+    position:absolute; left:96px; top:0; bottom:0; right:120px;
+    display:flex; flex-direction:column; justify-content:center;
+    /* Bias the headline upward so "click." clears the lower-left where the
+       LinkedIn profile photo overlaps the banner. */
+    padding-bottom:112px;
+  }
+  h1 {
+    font-family:var(--display); font-weight:700; color:var(--ink);
+    font-size:78px; line-height:1.04; letter-spacing:-0.02em;
+    max-width:1180px;
+  }
+  .accent-word { color:var(--link); }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="accent"></div>
+    <div class="grain"></div>
+    <div class="content">
+      <h1>I make hard technical ideas <span class="accent-word">click.</span></h1>
+    </div>
+  </div>
+</body>
+</html>
