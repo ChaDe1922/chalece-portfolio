@@ -44,7 +44,15 @@
     font-size:72px; line-height:1.05; letter-spacing:-0.02em;
     max-width:1120px;
   }
-  .accent-word { color:var(--link); }
+  .accent-word { color:var(--link); position:relative; display:inline-block; }
+  /* Stylish cursor tucked just below-right of "click." */
+  .cursor-cue {
+    position:absolute;
+    top:62%; left:68%;
+    width:120px; height:120px;
+    pointer-events:none;
+    filter:drop-shadow(0 7px 12px rgba(20,19,26,0.22));
+  }
 </style>
 </head>
 <body>
@@ -52,7 +60,7 @@
     <div class="accent"></div>
     <div class="grain"></div>
     <div class="content">
-      <h1>I make hard technical ideas <span class="accent-word">click.</span></h1>
+      <h1>I make hard technical ideas <span class="accent-word">click.<svg class="cursor-cue" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="40" cy="40" r="29" stroke="#6d5ae6" stroke-width="2.5" opacity="0.4"/><path d="M40 40 L40 95 L55 81 L65 102 L72 99 L62 78 L83 78 Z" fill="#6d5ae6" stroke="#fffdfa" stroke-width="2.5" stroke-linejoin="round"/></svg></span></h1>
     </div>
   </div>
 </body>
