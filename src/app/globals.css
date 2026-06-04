@@ -228,45 +228,32 @@
   }
 }
 
-/* ---- Click ripple: water-drop rings radiating from a background click ----
-   Two concentric rings (outer element + inner child) expand and fade. Only
-   transform/opacity animate. The component does not mount under
-   prefers-reduced-motion, so no motion-gating is needed here. */
-.ripple-ring,
-.ripple-ring-inner {
+/* ---- Click burst: a soft, blurred color glow that blooms from a background
+   click and fades. Gentle (not hard rings). Only transform/opacity animate.
+   The component does not mount under prefers-reduced-motion. */
+.click-burst {
   position: absolute;
+  width: 240px;
+  height: 240px;
+  margin: -120px 0 0 -120px; /* center on the click point */
   border-radius: 9999px;
-  border: 2px solid var(--ripple-color);
+  background: radial-gradient(
+    circle,
+    color-mix(in oklch, var(--burst-color) 55%, transparent) 0%,
+    color-mix(in oklch, var(--burst-color) 22%, transparent) 38%,
+    transparent 70%
+  );
+  filter: blur(8px);
+  will-change: transform, opacity;
+  animation: click-burst 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-.ripple-ring {
-  width: 14px;
-  height: 14px;
-  margin: -7px 0 0 -7px; /* center on the click point */
-  animation: ripple-ring 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.ripple-ring-inner {
-  inset: -2px;
-  border-width: 1px;
-  opacity: 0.6;
-  animation: ripple-ring-inner 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-@keyframes ripple-ring {
+@keyframes click-burst {
   from {
-    transform: scale(1);
-    opacity: 0.55;
+    transform: scale(0.3);
+    opacity: 0.5;
   }
   to {
-    transform: scale(26);
-    opacity: 0;
-  }
-}
-@keyframes ripple-ring-inner {
-  from {
-    transform: scale(1);
-    opacity: 0.4;
-  }
-  to {
-    transform: scale(16);
+    transform: scale(1.7);
     opacity: 0;
   }
 }
@@ -341,6 +328,13 @@
      bottom, without locking the whole heading block (which wastes space). */
   .section-heading > p:first-child {
     break-after: avoid;
+  }
+  /* Chrome ignores break-after:avoid here, so force About and Resume to begin
+     on their own page: the eyebrow lands with its heading (About -> p3,
+     Resume -> p4) instead of dangling at the previous page's bottom. */
+  #about,
+  #resume {
+    break-before: page;
   }
   @page {
     margin: 0.5in;

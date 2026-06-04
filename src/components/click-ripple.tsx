@@ -8,11 +8,11 @@ const COLORS = ["var(--ring)", "var(--coral)"];
 const INTERACTIVE = "a, button, input, select, textarea, label, [role='button']";
 
 /**
- * Decorative click feedback: a water-drop ring (with a faint second ring)
- * radiates from each background click, reinforcing "I make hard technical
- * ideas click." Purely visual: the layer never intercepts pointer events, it
- * skips clicks on interactive elements, and it is disabled under
- * prefers-reduced-motion and in print.
+ * Decorative click feedback: a soft, blurred color glow blooms from each
+ * background click and fades, reinforcing "I make hard technical ideas click."
+ * Purely visual: the layer never intercepts pointer events, it skips clicks on
+ * interactive elements, and it is disabled under prefers-reduced-motion and in
+ * print.
  */
 export function ClickRipple() {
   const [ripples, setRipples] = React.useState<Ripple[]>([]);
@@ -46,17 +46,15 @@ export function ClickRipple() {
         <span
           key={r.id}
           onAnimationEnd={() => remove(r.id)}
-          className="ripple-ring"
+          className="click-burst"
           style={
             {
               left: r.x,
               top: r.y,
-              "--ripple-color": r.color,
+              "--burst-color": r.color,
             } as React.CSSProperties
           }
-        >
-          <span className="ripple-ring-inner" />
-        </span>
+        />
       ))}
     </div>
   );
