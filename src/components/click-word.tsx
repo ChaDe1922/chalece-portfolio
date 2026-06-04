@@ -2,17 +2,15 @@
 
 import * as React from "react";
 
-type Spark = { id: number; tx: number; ty: number; color: string };
-
 /**
  * The violet, clickable word in the hero headline ("click."). Clicking (or
- * pressing Enter/Space) gives a small on-brand surprise: the word pops and a
- * soft burst of violet/coral sparks radiates outward, literally making it
- * click. Decorative only; reduced-motion users get the click without motion.
- * It is a real <button>, so the global background burst skips it.
+ * pressing Enter/Space) lights it up: a large soft violet/coral glow blooms
+ * behind the word as it gives a gentle pop, literally making it click.
+ * Decorative only; reduced-motion users get the click without motion. It is a
+ * real <button>, so the global background burst skips it.
  */
 export function ClickWord({ children = "click." }: { children?: React.ReactNode }) {
-  const [sparks, setSparks] = React.useState<Spark[]>([]);
+  const [blooms, setBlooms] = React.useState<number[]>([]);
   const [pop, setPop] = React.useState(0);
   const seq = React.useRef(0);
 
@@ -24,25 +22,12 @@ export function ClickWord({ children = "click." }: { children?: React.ReactNode 
       return;
     }
     setPop((p) => p + 1);
-
-    const COUNT = 9;
-    const base = seq.current;
-    const next: Spark[] = Array.from({ length: COUNT }, (_, i) => {
-      const angle = (i / COUNT) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
-      const dist = 26 + Math.random() * 22;
-      return {
-        id: base + i,
-        tx: Math.cos(angle) * dist,
-        ty: Math.sin(angle) * dist,
-        color: i % 2 === 0 ? "var(--ring)" : "var(--coral)",
-      };
-    });
-    seq.current += COUNT;
-    setSparks((prev) => [...prev, ...next]);
+    const id = seq.current++;
+    setBlooms((prev) => [...prev, id]);
   }
 
-  function removeSpark(id: number) {
-    setSparks((prev) => prev.filter((s) => s.id !== id));
+  function removeBloom(id: number) {
+    setBlooms((prev) => prev.filter((b) => b !== id));
   }
 
   return (
@@ -52,24 +37,16 @@ export function ClickWord({ children = "click." }: { children?: React.ReactNode 
       className="click-word"
       aria-label="click (tap for a little surprise)"
     >
+      {blooms.map((id) => (
+        <span
+          key={id}
+          aria-hidden="true"
+          className="click-word-bloom"
+          onAnimationEnd={() => removeBloom(id)}
+        />
+      ))}
       <span key={pop} className="click-word-text" data-pop={pop > 0 ? "" : undefined}>
         {children}
-      </span>
-      <span aria-hidden="true" className="spark-layer">
-        {sparks.map((s) => (
-          <span
-            key={s.id}
-            className="spark"
-            onAnimationEnd={() => removeSpark(s.id)}
-            style={
-              {
-                "--tx": `${s.tx}px`,
-                "--ty": `${s.ty}px`,
-                "--spark": s.color,
-              } as React.CSSProperties
-            }
-          />
-        ))}
       </span>
     </button>
   );
