@@ -34,15 +34,15 @@
      where the profile photo overlaps the banner. */
   .content {
     position:absolute; left:96px; top:0; bottom:0; right:120px;
-    display:flex; flex-direction:column; justify-content:center;
-    /* Bias the headline upward so "click." clears the lower-left where the
-       LinkedIn profile photo overlaps the banner. */
-    padding-bottom:112px;
+    display:flex; flex-direction:column; justify-content:flex-start;
+    /* Top-anchor the headline so both lines (incl. "click.") sit in the upper
+       band, clear of the LinkedIn profile photo that overlaps the bottom-left. */
+    padding-top:44px;
   }
   h1 {
     font-family:var(--display); font-weight:700; color:var(--ink);
-    font-size:78px; line-height:1.04; letter-spacing:-0.02em;
-    max-width:1180px;
+    font-size:72px; line-height:1.05; letter-spacing:-0.02em;
+    max-width:1120px;
   }
   .accent-word { color:var(--link); }
 </style>
