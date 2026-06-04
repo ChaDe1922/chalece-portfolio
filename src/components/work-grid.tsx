@@ -18,7 +18,7 @@ export function WorkGrid() {
           />
         </Reveal>
 
-        <Reveal className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 print:mt-5 print:grid-cols-2 print:gap-3">
+        <Reveal className="work-grid mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 print:mt-4 print:gap-3">
           {work.map((item) => (
             <WorkCard key={item.title} item={item} />
           ))}

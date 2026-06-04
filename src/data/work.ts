@@ -33,8 +33,8 @@ export const work: WorkItem[] = [
   {
     title: "Your Voice Is Power",
     description:
-      "Curriculum and coding competition with CEISMC, Amazon, Georgia Tech, and Pharrell Williams' YELLOW, connecting computer science, music, and equity on the EarSketch platform.",
-    tags: ["Curriculum", "Equity", "Music + Code"],
+      "Curriculum and coding competition with CEISMC, Amazon, Georgia Tech, and Pharrell Williams' YELLOW, connecting computer science, music, and equity on the EarSketch platform. Published in the IEEE RESPECT and ASEE conference proceedings.",
+    tags: ["Curriculum", "Equity", "Published"],
     href: "https://teamyellow.org/stories/your-voice-is-power-listening-creating-and-whole-child-education/",
   },
   {

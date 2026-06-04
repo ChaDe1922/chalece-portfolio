@@ -240,27 +240,28 @@
 }
 .cursor-trail-dot {
   position: fixed;
-  width: 14px;
-  height: 14px;
-  margin: -7px 0 0 -7px; /* center on the path point */
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px; /* center on the path point */
   border-radius: 9999px;
   pointer-events: none;
   background: radial-gradient(
     circle,
-    color-mix(in oklch, var(--ring) 42%, transparent) 0%,
-    transparent 68%
+    color-mix(in oklch, var(--ring) 58%, transparent) 0%,
+    transparent 72%
   );
+  filter: blur(2px);
   will-change: transform, opacity;
-  animation: cursor-trail 0.5s ease-out forwards;
+  animation: cursor-trail 0.9s ease-out forwards;
 }
 @keyframes cursor-trail {
   from {
-    opacity: 0.45;
+    opacity: 0.62;
     transform: scale(1);
   }
   to {
     opacity: 0;
-    transform: scale(0.35);
+    transform: scale(0.4);
   }
 }
 @media print {
@@ -286,7 +287,7 @@
   );
   filter: blur(10px);
   will-change: transform, opacity;
-  animation: click-burst 1.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: click-burst 1.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 @keyframes click-burst {
   from {
@@ -369,6 +370,13 @@
   h2,
   h3 {
     break-after: avoid;
+  }
+  /* Force the Featured Work grid to 3 columns in print (beats sm:grid-cols-2,
+     which also matches at the print page width) so 9 cards fit 3 rows and the
+     PDF stays compact. */
+  .work-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.6rem !important;
   }
   @page {
     margin: 0.5in;
