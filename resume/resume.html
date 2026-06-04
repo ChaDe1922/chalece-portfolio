@@ -16,8 +16,14 @@
     --body:"Inter", "Helvetica Neue", Arial, sans-serif;
   }
   * { box-sizing:border-box; }
+  /* Background on the root element so it propagates to every printed page
+     (a body background only covers the body box, leaving later pages white). */
+  html {
+    background:var(--paper);
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
   body {
-    margin:0; background:var(--paper); color:var(--ink);
+    margin:0; background:transparent; color:var(--ink);
     font-family:var(--body); line-height:1.46;
     -webkit-print-color-adjust:exact; print-color-adjust:exact;
   }
@@ -44,27 +50,28 @@
     display:flex; align-items:center; gap:9px;
     font-family:var(--body); font-weight:600; font-size:11.5px;
     text-transform:uppercase; letter-spacing:0.16em; color:var(--link);
-    margin:20px 0 0;
+    margin:18px 0 0;
+    break-after:avoid;
   }
   h2.section .bar { width:26px; height:2px; background:var(--violet); border-radius:2px; }
-  h2.section + .rule { border:0; border-top:1px solid var(--rule); margin:8px 0 12px; }
+  h2.section + .rule { border:0; border-top:1px solid var(--rule); margin:8px 0 12px; break-after:avoid; }
 
   .profile { font-size:13px; color:var(--ink); margin:4px 0 0; }
 
-  .entry { margin:0 0 14px; }
-  .entry-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; }
+  .entry { margin:0 0 12px; break-inside:avoid; }
+  .entry-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; break-after:avoid; }
   .entry-title { font-family:var(--display); font-weight:600; font-size:13.5px; color:var(--ink); }
   .entry-sub { color:var(--muted); font-size:12.5px; }
   .dates { color:var(--muted); font-size:12px; white-space:nowrap; }
 
   ul { margin:6px 0 0; padding-left:20px; list-style:square; }
-  li { margin:3px 0; font-size:12.5px; color:var(--ink); }
+  li { margin:3px 0; font-size:12.5px; color:var(--ink); break-inside:avoid; }
   li::marker { color:var(--violet); }
 
   .skills p { margin:5px 0; font-size:12.5px; color:var(--ink); }
   .skills strong { font-family:var(--display); font-weight:600; color:var(--ink); }
 
-  .edu { margin:0 0 10px; }
+  .edu { margin:0 0 10px; break-inside:avoid; }
   .edu .entry-title { font-family:var(--display); font-weight:600; font-size:13px; }
   a { color:var(--link); }
 
@@ -76,7 +83,7 @@
   }
   @media print {
     .page { max-width:none; margin:0; padding:0; }
-    @page { margin:0.5in; }
+    @page { margin:0.45in; }
   }
 </style>
 </head>
