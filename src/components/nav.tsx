@@ -45,7 +45,7 @@ export function Nav() {
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/65 print:static print:border-0 print:bg-transparent print:backdrop-blur-none">
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 md:px-8 print:h-auto print:flex-col print:items-start print:gap-0.5 print:py-2"
+        className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 md:px-8 print:h-auto print:py-2"
       >
         <a
           href="#hero"
@@ -53,10 +53,6 @@ export function Nav() {
         >
           {site.name}
         </a>
-        {/* Print-only: surface the live URL at the top of the PDF. */}
-        <span className="hidden text-sm font-medium text-link print:block">
-          {site.url.replace("https://", "")}
-        </span>
 
         {/* Desktop links */}
         <ul className="hidden items-center gap-1 md:flex print:hidden">

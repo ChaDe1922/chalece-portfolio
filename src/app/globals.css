@@ -228,6 +228,41 @@
   }
 }
 
+/* ---- Cursor glow: a faint blurred violet aura that trails the mouse. Ambient
+   and pointer-only; the component does not mount under reduced-motion / touch.
+   Position is driven by the component via transform. */
+.cursor-glow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 55;
+  width: 320px;
+  height: 320px;
+  border-radius: 9999px;
+  pointer-events: none;
+  opacity: 0;
+  filter: blur(44px);
+  background: radial-gradient(
+    circle,
+    color-mix(in oklch, var(--ring) 30%, transparent) 0%,
+    transparent 65%
+  );
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+.dark .cursor-glow {
+  background: radial-gradient(
+    circle,
+    color-mix(in oklch, var(--ring) 26%, transparent) 0%,
+    transparent 65%
+  );
+}
+@media print {
+  .cursor-glow {
+    display: none !important;
+  }
+}
+
 /* ---- Click burst: a soft, blurred color glow that blooms from a background
    click and fades. Gentle (not hard rings). Only transform/opacity animate.
    The component does not mount under prefers-reduced-motion. */
@@ -243,17 +278,17 @@
     color-mix(in oklch, var(--burst-color) 22%, transparent) 38%,
     transparent 70%
   );
-  filter: blur(8px);
+  filter: blur(10px);
   will-change: transform, opacity;
-  animation: click-burst 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: click-burst 1.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 @keyframes click-burst {
   from {
-    transform: scale(0.3);
-    opacity: 0.5;
+    transform: scale(0.25);
+    opacity: 0.42;
   }
   to {
-    transform: scale(1.7);
+    transform: scale(2);
     opacity: 0;
   }
 }
