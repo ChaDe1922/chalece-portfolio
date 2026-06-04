@@ -378,6 +378,16 @@
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 0.6rem !important;
   }
+  /* Keep About bio paragraphs whole: the 2nd paragraph is too tall for the
+     remaining page-2 space, so it moves entirely to page 3 instead of splitting. */
+  #about p {
+    break-inside: avoid;
+  }
+  /* Start the Contact section on its own page so the eyebrow, heading, and
+     cards stay together (page 4) instead of splitting across pages 3 and 4. */
+  #contact {
+    break-before: page;
+  }
   @page {
     margin: 0.5in;
   }
