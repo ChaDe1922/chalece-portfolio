@@ -3,68 +3,59 @@
 import * as React from "react";
 
 /**
- * A very subtle blurred violet glow that trails the cursor, hinting the page
- * is alive. The glow eases toward the pointer (the lag is the "trail"). Purely
- * ambient: never intercepts clicks, only on fine pointers (mouse), and not
- * mounted under prefers-reduced-motion or in print.
+ * A light, delicate trail that traces the mouse path while it moves and fades
+ * out when it stops (no lingering spotlight). Soft violet dots are emitted
+ * along the movement path and quickly fade. Pointer-fine only; not mounted
+ * under prefers-reduced-motion; never intercepts clicks; hidden in print.
  */
-export function CursorGlow() {
-  const ref = React.useRef<HTMLDivElement>(null);
+export function CursorTrail() {
+  const layerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (!window.matchMedia("(pointer: fine)").matches) return;
+    const layer = layerRef.current;
+    if (!layer) return;
 
-    const el = ref.current;
-    if (!el) return;
+    const STEP = 9; // px between dots along the path
+    const MAX_PER_MOVE = 14; // cap dots emitted per event (fast flicks)
+    let lastX: number | null = null;
+    let lastY: number | null = null;
 
-    // target = latest pointer; pos = eased position (trails behind).
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
-    let posX = targetX;
-    let posY = targetY;
-    let raf = 0;
-    let running = false;
-
-    const tick = () => {
-      posX += (targetX - posX) * 0.12;
-      posY += (targetY - posY) * 0.12;
-      el.style.transform = `translate3d(${posX}px, ${posY}px, 0) translate(-50%, -50%)`;
-      if (Math.abs(targetX - posX) > 0.4 || Math.abs(targetY - posY) > 0.4) {
-        raf = requestAnimationFrame(tick);
-      } else {
-        running = false; // caught up; idle until next move
-      }
-    };
-
-    const start = () => {
-      if (!running) {
-        running = true;
-        raf = requestAnimationFrame(tick);
-      }
+    const spawn = (x: number, y: number) => {
+      const dot = document.createElement("span");
+      dot.className = "cursor-trail-dot";
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+      dot.addEventListener("animationend", () => dot.remove(), { once: true });
+      layer.appendChild(dot);
     };
 
     const onMove = (e: PointerEvent) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      el.style.opacity = "1";
-      start();
-    };
-    const onLeave = () => {
-      el.style.opacity = "0";
+      const x = e.clientX;
+      const y = e.clientY;
+      if (lastX === null || lastY === null) {
+        lastX = x;
+        lastY = y;
+        spawn(x, y);
+        return;
+      }
+      const dx = x - lastX;
+      const dy = y - lastY;
+      const dist = Math.hypot(dx, dy);
+      if (dist < STEP) return; // not enough movement yet
+      const count = Math.min(Math.floor(dist / STEP), MAX_PER_MOVE);
+      for (let i = 1; i <= count; i++) {
+        const t = i / count;
+        spawn(lastX + dx * t, lastY + dy * t);
+      }
+      lastX = x;
+      lastY = y;
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
-    document.addEventListener("pointerleave", onLeave);
-    window.addEventListener("blur", onLeave);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("pointermove", onMove);
-      document.removeEventListener("pointerleave", onLeave);
-      window.removeEventListener("blur", onLeave);
-    };
+    return () => window.removeEventListener("pointermove", onMove);
   }, []);
 
-  return <div ref={ref} aria-hidden="true" className="cursor-glow" />;
+  return <div ref={layerRef} aria-hidden="true" className="cursor-trail" />;
 }

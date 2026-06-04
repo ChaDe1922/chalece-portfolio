@@ -62,4 +62,11 @@ export const work: WorkItem[] = [
       "Co-founded an athletic development company and built the data and analytics backbone, including performance and wellness dashboards, for a women's tackle football team.",
     tags: ["Data", "Dashboards", "Sports"],
   },
+  {
+    title: "Athlete Storytelling & Video (E22)",
+    description:
+      "Concept, script, shoot, and edit short-form video, photography, and graphics for E22's women's tackle football athletes, and run their social storytelling. Built to be clear, compelling, and optimized for on-demand viewing.",
+    tags: ["Short-form video", "Storytelling", "Graphic design"],
+    href: "https://www.instagram.com/_she22much/",
+  },
 ];

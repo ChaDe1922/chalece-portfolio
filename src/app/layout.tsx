@@ -8,7 +8,7 @@ import { MotionProvider } from "@/components/motion-provider";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ClickRipple } from "@/components/click-ripple";
-import { CursorGlow } from "@/components/cursor-glow";
+import { CursorTrail } from "@/components/cursor-glow";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -119,7 +119,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
-            <CursorGlow />
+            <CursorTrail />
             <ClickRipple />
           </MotionProvider>
         </ThemeProvider>

@@ -228,37 +228,43 @@
   }
 }
 
-/* ---- Cursor glow: a faint blurred violet aura that trails the mouse. Ambient
-   and pointer-only; the component does not mount under reduced-motion / touch.
-   Position is driven by the component via transform. */
-.cursor-glow {
+/* ---- Cursor trail: a light, delicate trail of soft violet dots that traces
+   the mouse path while moving and fades out when it stops. Pointer-only; the
+   component does not mount under reduced-motion / touch. Soft radial dots (no
+   filter blur) keep many short-lived elements cheap. */
+.cursor-trail {
   position: fixed;
-  left: 0;
-  top: 0;
+  inset: 0;
   z-index: 55;
-  width: 320px;
-  height: 320px;
+  pointer-events: none;
+}
+.cursor-trail-dot {
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px; /* center on the path point */
   border-radius: 9999px;
   pointer-events: none;
-  opacity: 0;
-  filter: blur(44px);
   background: radial-gradient(
     circle,
-    color-mix(in oklch, var(--ring) 30%, transparent) 0%,
-    transparent 65%
+    color-mix(in oklch, var(--ring) 42%, transparent) 0%,
+    transparent 68%
   );
-  transition: opacity 0.4s ease;
-  will-change: transform;
+  will-change: transform, opacity;
+  animation: cursor-trail 0.5s ease-out forwards;
 }
-.dark .cursor-glow {
-  background: radial-gradient(
-    circle,
-    color-mix(in oklch, var(--ring) 26%, transparent) 0%,
-    transparent 65%
-  );
+@keyframes cursor-trail {
+  from {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.35);
+  }
 }
 @media print {
-  .cursor-glow {
+  .cursor-trail {
     display: none !important;
   }
 }
@@ -346,6 +352,11 @@
     transform: none !important;
   }
   /* Keep blocks whole across page breaks. */
+  /* Keep each section heading (eyebrow + title + intro) intact so the eyebrow
+     is never orphaned from its heading at a page bottom. Chrome honors
+     break-inside on the block reliably (break-after:avoid was ignored).
+     Content then flows naturally so sections fill pages without forced gaps. */
+  .section-heading,
   .work-card,
   .stat-block,
   .contact-card,
@@ -358,18 +369,6 @@
   h2,
   h3 {
     break-after: avoid;
-  }
-  /* Glue the eyebrow label to its heading so it is never orphaned at a page
-     bottom, without locking the whole heading block (which wastes space). */
-  .section-heading > p:first-child {
-    break-after: avoid;
-  }
-  /* Chrome ignores break-after:avoid here, so force About and Resume to begin
-     on their own page: the eyebrow lands with its heading (About -> p3,
-     Resume -> p4) instead of dangling at the previous page's bottom. */
-  #about,
-  #resume {
-    break-before: page;
   }
   @page {
     margin: 0.5in;

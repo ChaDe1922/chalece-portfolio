@@ -10,6 +10,8 @@ const skills = [
   "Adult learning (ADDIE, Bloom's)",
   "Technical content (DevOps, OS, CI/CD)",
   "AI tooling and prototyping",
+  "Storytelling and short-form video",
+  "Photography and graphic design",
   "UX and WCAG accessibility",
   "Python, JavaScript, HTML/CSS",
   "Program management",
