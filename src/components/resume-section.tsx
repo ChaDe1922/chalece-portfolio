@@ -35,7 +35,7 @@ export function ResumeSection() {
                 >
                   <Check className="size-4" />
                 </span>
-                <span className="text-base leading-relaxed text-foreground/90">
+                <span className="text-base leading-relaxed text-foreground/90 print:text-[15px]">
                   {line}
                 </span>
               </li>

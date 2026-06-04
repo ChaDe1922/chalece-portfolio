@@ -31,7 +31,7 @@ export function AboutSection() {
         </Reveal>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-start lg:gap-12 print:mt-5 print:grid-cols-[1fr_11rem] print:items-start print:gap-6">
-          <Reveal className="max-w-prose space-y-5 text-base leading-relaxed text-foreground/90 sm:text-lg print:order-1">
+          <Reveal className="max-w-prose space-y-5 text-base leading-relaxed text-foreground/90 sm:text-lg print:order-1 print:text-base">
             <p>
               I am a learning experience designer and technologist who turns
               complex, technical material into learning that sticks. I started

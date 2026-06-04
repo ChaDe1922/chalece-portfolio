@@ -32,7 +32,7 @@ export function Hero() {
         >
           I make hard technical ideas click.
         </h1>
-        <p className="enter enter-3 mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+        <p className="enter enter-3 mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl print:text-base">
           Ten years turning complex technical content into learning people
           actually finish and use. Seven published Coursera courses, 30,630+
           learners. M.S. Music Technology, Georgia Tech.
