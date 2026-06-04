@@ -11,7 +11,7 @@ export function Footer() {
           &copy; {year} {site.name}
         </p>
 
-        <nav aria-label="Footer">
+        <nav aria-label="Footer" className="print:hidden">
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {navItems.map((item) => (
               <li key={item.href}>

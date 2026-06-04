@@ -8,7 +8,7 @@ import { Reveal } from "@/components/reveal";
 export function WorkGrid() {
   return (
     <section id="work" aria-labelledby="work-heading" className="scroll-mt-24">
-      <div className="mx-auto max-w-5xl px-4 py-20 md:px-8 md:py-28">
+      <div className="mx-auto max-w-5xl px-4 py-20 md:px-8 md:py-28 print:py-6">
         <Reveal>
           <SectionHeading
             id="work-heading"
@@ -18,7 +18,7 @@ export function WorkGrid() {
           />
         </Reveal>
 
-        <Reveal className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Reveal className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 print:mt-5 print:grid-cols-2 print:gap-3">
           {work.map((item) => (
             <WorkCard key={item.title} item={item} />
           ))}

@@ -18,7 +18,7 @@ export function SectionHeading({
   className,
 }: SectionHeadingProps) {
   return (
-    <div className={cn("max-w-2xl", className)}>
+    <div className={cn("section-heading max-w-2xl", className)}>
       {eyebrow ? (
         <p className="mb-3 inline-flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-link">
           <span aria-hidden="true" className="h-px w-6 bg-link" />

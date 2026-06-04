@@ -243,3 +243,64 @@
     animation: none !important;
   }
 }
+
+/* ---- Print: turn the screen-first site into a clean, paginated PDF ----
+   Print-only. Does not affect on-screen rendering. Forces the light/paper
+   brand, neutralizes motion, and keeps cards/sections from splitting. */
+@media print {
+  /* Always print light, even if the viewer is in dark mode. */
+  :root,
+  .dark {
+    --background: #f7f5f2;
+    --foreground: #14131a;
+    --card: #fffdfa;
+    --card-foreground: #14131a;
+    --secondary: #edeae5;
+    --secondary-foreground: #14131a;
+    --muted: #edeae5;
+    --muted-foreground: #5a5862;
+    --accent: #e9e5fb;
+    --accent-foreground: #2f2a52;
+    --border: #e3dfd8;
+    --ring: #6d5ae6;
+    --link: #5b45cc;
+    --coral: #ff6b5e;
+    --primary: #6d5ae6;
+    --primary-foreground: #ffffff;
+  }
+  html {
+    background: #f7f5f2;
+  }
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    /* Stop scroll/entrance transforms from offsetting content in print. */
+    animation: none !important;
+    transform: none !important;
+  }
+  /* Keep blocks whole across page breaks. */
+  .section-heading,
+  .work-card,
+  .stat-block,
+  .contact-card,
+  .about-photo,
+  .about-figure,
+  .resume-highlights li {
+    break-inside: avoid;
+  }
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+  /* Keep an eyebrow label glued to its heading (avoids an orphaned eyebrow at
+     a page bottom; more reliable than break-inside on the container). */
+  .section-heading > * {
+    break-after: avoid;
+  }
+  @page {
+    margin: 0.5in;
+  }
+}

@@ -23,13 +23,13 @@ export function AboutSection() {
       aria-labelledby="about-heading"
       className="scroll-mt-24 bg-secondary/40"
     >
-      <div className="mx-auto max-w-5xl px-4 py-20 md:px-8 md:py-28">
+      <div className="mx-auto max-w-5xl px-4 py-20 md:px-8 md:py-28 print:px-0 print:py-6">
         <Reveal>
           <SectionHeading id="about-heading" eyebrow="About" title="Hi, I'm Chalece." />
         </Reveal>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-start lg:gap-12">
-          <Reveal className="max-w-prose space-y-5 text-base leading-relaxed text-foreground/90 sm:text-lg">
+        <div className="mt-10 grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-start lg:gap-12 print:mt-5 print:grid-cols-[1fr_11rem] print:items-start print:gap-6">
+          <Reveal className="max-w-prose space-y-5 text-base leading-relaxed text-foreground/90 sm:text-lg print:order-1">
             <p>
               I am a learning experience designer and technologist who turns
               complex, technical material into learning that sticks. I started
@@ -69,8 +69,8 @@ export function AboutSection() {
             </div>
           </Reveal>
 
-          <Reveal className="order-first lg:order-none lg:pt-2">
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-[16rem] overflow-hidden rounded-2xl border border-border bg-muted sm:max-w-xs lg:mx-0">
+          <Reveal className="about-photo order-first lg:order-none lg:pt-2 print:order-2">
+            <div className="about-figure relative mx-auto aspect-[4/5] w-full max-w-[16rem] overflow-hidden rounded-2xl border border-border bg-muted sm:max-w-xs lg:mx-0 print:mx-0 print:max-w-[11rem]">
               {site.hasHeadshot ? (
                 <Image
                   src={site.headshotPath}

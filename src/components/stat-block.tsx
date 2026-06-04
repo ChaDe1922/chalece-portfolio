@@ -28,9 +28,11 @@ export function StatBlock({ stat }: { stat: Stat }) {
 
     let raf = 0;
     let started = false;
-    setText(`0${suffix}`);
 
     const run = () => {
+      // Zero out only at the moment we start animating, so a stat that is
+      // never scrolled into view (or is being printed) keeps its final value.
+      setText(`0${suffix}`);
       const duration = 1400;
       const start = performance.now();
       const tick = (now: number) => {
@@ -61,7 +63,7 @@ export function StatBlock({ stat }: { stat: Stat }) {
   }, [stat.value, suffix, reduced]);
 
   return (
-    <div>
+    <div className="stat-block">
       <p
         ref={ref}
         className="font-heading text-4xl font-bold tabular-nums sm:text-5xl"

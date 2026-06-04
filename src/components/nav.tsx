@@ -42,20 +42,20 @@ export function Nav() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/65">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/65 print:static print:border-0 print:bg-transparent print:backdrop-blur-none">
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 md:px-8"
+        className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 md:px-8 print:h-auto print:py-2"
       >
         <a
           href="#hero"
-          className="font-heading text-base font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+          className="font-heading text-base font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm print:text-2xl print:font-bold"
         >
           {site.name}
         </a>
 
         {/* Desktop links */}
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-1 md:flex print:hidden">
           {navItems.map((item) => {
             const id = item.href.replace("#", "");
             const isActive = active === id;
@@ -83,7 +83,7 @@ export function Nav() {
           })}
         </ul>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 print:hidden">
           <ThemeToggle />
 
           {/* Mobile menu */}

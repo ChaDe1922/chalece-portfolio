@@ -54,7 +54,7 @@ export function ContactSection() {
       aria-labelledby="contact-heading"
       className="scroll-mt-24 bg-secondary/40"
     >
-      <div className="mx-auto max-w-5xl px-4 py-20 md:px-8 md:py-28">
+      <div className="mx-auto max-w-5xl px-4 py-20 md:px-8 md:py-28 print:py-6">
         <Reveal>
           <SectionHeading
             id="contact-heading"
@@ -64,7 +64,7 @@ export function ContactSection() {
           />
         </Reveal>
 
-        <Reveal className="mt-10 grid gap-4 sm:grid-cols-3">
+        <Reveal className="mt-10 grid gap-4 sm:grid-cols-3 print:mt-5 print:grid-cols-3">
           {channels.map(({ label, value, href, icon: Icon, external }) => (
             <a
               key={label}
@@ -72,7 +72,7 @@ export function ContactSection() {
               {...(external
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              className="group flex flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-link/40 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="contact-card group flex flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-link/40 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background print:p-4"
             >
               <div className="flex items-center justify-between">
                 <Icon
