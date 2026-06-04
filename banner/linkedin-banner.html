@@ -30,19 +30,18 @@
     position:absolute; inset:0; pointer-events:none; opacity:0.05;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  /* Headline, vertically centered, left-aligned, clear of the lower-left
-     where the profile photo overlaps the banner. */
+  /* Headline centered both ways. LinkedIn's profile photo overlaps the
+     bottom-left, so a centered block keeps every word clear of it: the text
+     sits mid-canvas (well right of the avatar) and off the bottom edge. */
   .content {
-    position:absolute; left:96px; top:0; bottom:0; right:120px;
-    display:flex; flex-direction:column; justify-content:flex-start;
-    /* Top-anchor the headline so both lines (incl. "click.") sit in the upper
-       band, clear of the LinkedIn profile photo that overlaps the bottom-left. */
-    padding-top:44px;
+    position:absolute; inset:0; padding:0 96px;
+    display:flex; flex-direction:column;
+    justify-content:center; align-items:center; text-align:center;
   }
   h1 {
     font-family:var(--display); font-weight:700; color:var(--ink);
     font-size:72px; line-height:1.05; letter-spacing:-0.02em;
-    max-width:1120px;
+    max-width:1180px;
   }
   .accent-word { color:var(--link); position:relative; display:inline-block; }
   /* Stylish cursor tucked just below-right of "click." */
@@ -60,7 +59,7 @@
     <div class="accent"></div>
     <div class="grain"></div>
     <div class="content">
-      <h1>I make hard technical ideas <span class="accent-word">click.<svg class="cursor-cue" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="40" cy="40" r="29" stroke="#6d5ae6" stroke-width="2.5" opacity="0.4"/><path d="M40 40 L40 95 L55 81 L65 102 L72 99 L62 78 L83 78 Z" fill="#6d5ae6" stroke="#fffdfa" stroke-width="2.5" stroke-linejoin="round"/></svg></span></h1>
+      <h1>I make complex technical concepts <span class="accent-word">click.<svg class="cursor-cue" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="40" cy="40" r="29" stroke="#6d5ae6" stroke-width="2.5" opacity="0.4"/><path d="M40 40 L40 95 L55 81 L65 102 L72 99 L62 78 L83 78 Z" fill="#6d5ae6" stroke="#fffdfa" stroke-width="2.5" stroke-linejoin="round"/></svg></span></h1>
     </div>
   </div>
 </body>

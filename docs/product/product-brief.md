@@ -21,10 +21,10 @@ This is a **secondary priority** to applications and outreach. The goal is a tas
 ## 2. Positioning
 **For** hiring managers and recruiters in learning, curriculum, and EdTech
 **who** need to quickly verify a candidate's depth and craft,
-**Chalece's portfolio** is a fast, accessible site that shows a decade of turning hard technical ideas into learning that reaches tens of thousands of people,
+**Chalece's portfolio** is a fast, accessible site that shows a decade of turning complex technical concepts into learning that reaches tens of thousands of people,
 **unlike** a static PDF or a LinkedIn page, because it pairs verifiable proof (public Coursera courses, a CHI publication, shipped AI systems) with the design and accessibility sensibility the work itself demands.
 
-**Value proposition (one line):** A learning experience designer and technologist who makes hard technical ideas click, with the receipts to prove it.
+**Value proposition (one line):** A learning experience designer and technologist who makes complex technical concepts click, with the receipts to prove it.
 
 **Voice and tone:** Confident, warm, precise. Creative-technologist personality (a nod to music tech and building), never gimmicky. Plain language. Short sentences.
 
@@ -78,7 +78,7 @@ Recommendation: keep it a **single page** for v1 (fast, simple, great for skimmi
 
 ### 6.1 Hero (#hero)
 - Eyebrow: `Learning Experience Designer · Technologist · Atlanta, Remote`
-- Headline: **"I make hard technical ideas click."**
+- Headline: **"I make complex technical concepts click."**
 - Subhead: "Ten years turning complex technical content into learning people actually finish and use. Seven published Coursera courses, 30,630+ learners. M.S. Music Technology, Georgia Tech."
 - Primary CTA: `See my work` (scrolls to #work)
 - Secondary CTA: `Download resume` (PDF) and/or `Email me`

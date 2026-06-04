@@ -9,7 +9,7 @@ const INTERACTIVE = "a, button, input, select, textarea, label, [role='button']"
 
 /**
  * Decorative click feedback: a soft, blurred color glow blooms from each
- * background click and fades, reinforcing "I make hard technical ideas click."
+ * background click and fades, reinforcing "I make complex technical concepts click."
  * Purely visual: the layer never intercepts pointer events, it skips clicks on
  * interactive elements, and it is disabled under prefers-reduced-motion and in
  * print.

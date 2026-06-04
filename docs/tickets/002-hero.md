@@ -4,7 +4,7 @@
 
 ## Content (brief §6.1, verbatim, no em dashes)
 - Eyebrow: `Learning Experience Designer · Technologist · Atlanta, Remote`
-- Headline (oversized display): **"I make hard technical ideas click."**
+- Headline (oversized display): **"I make complex technical concepts click."**
 - Subhead: "Ten years turning complex technical content into learning people actually finish and use. Seven published Coursera courses, 30,630+ learners. M.S. Music Technology, Georgia Tech."
 - Primary CTA: `See my work` -> `#work`
 - Secondary CTA: `Download resume` (PDF) and/or `Email me`

@@ -29,9 +29,9 @@ export function Hero() {
         </p>
         <h1
           id="hero-heading"
-          className="enter enter-2 max-w-4xl text-balance text-[2.5rem] font-bold leading-[1.06] tracking-tight sm:text-6xl sm:leading-[1.04] md:text-7xl print:text-4xl"
+          className="enter enter-2 max-w-4xl text-[2rem] font-bold leading-[1.06] tracking-tight sm:text-balance sm:text-6xl sm:leading-[1.04] md:text-7xl print:text-4xl"
         >
-          I make hard technical ideas <ClickWord />
+          I make complex technical concepts <ClickWord />
         </h1>
         <p className="enter enter-3 mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl print:text-base">
           Ten years turning complex technical content into learning people
