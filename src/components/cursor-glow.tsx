@@ -17,8 +17,8 @@ export function CursorTrail() {
     const layer = layerRef.current;
     if (!layer) return;
 
-    const STEP = 7; // px between dots along the path
-    const MAX_PER_MOVE = 18; // cap dots emitted per event (fast flicks)
+    const STEP = 6; // px between dots along the path
+    const MAX_PER_MOVE = 32; // cap dots emitted per event (fast flicks)
     let lastX: number | null = null;
     let lastY: number | null = null;
 
