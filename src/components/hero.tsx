@@ -22,7 +22,7 @@ export function Hero() {
         aria-hidden="true"
         className="grain-overlay pointer-events-none absolute inset-0 -z-10 print:hidden"
       />
-      <div className="relative mx-auto max-w-5xl px-4 pb-20 pt-20 md:px-8 md:pb-28 md:pt-28 print:pb-6 print:pt-4">
+      <div className="relative mx-auto max-w-5xl px-4 pb-20 pt-20 md:px-8 md:pb-28 md:pt-28 print:pb-4 print:pt-2">
         <p className="enter enter-1 mb-5 text-sm font-medium uppercase tracking-[0.18em] text-link">
           Learning Experience Designer · Technologist · {site.location}
         </p>

@@ -228,6 +228,49 @@
   }
 }
 
+/* ---- Click ripple: water-drop rings radiating from a background click ----
+   Two concentric rings (outer element + inner child) expand and fade. Only
+   transform/opacity animate. The component does not mount under
+   prefers-reduced-motion, so no motion-gating is needed here. */
+.ripple-ring,
+.ripple-ring-inner {
+  position: absolute;
+  border-radius: 9999px;
+  border: 2px solid var(--ripple-color);
+}
+.ripple-ring {
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px; /* center on the click point */
+  animation: ripple-ring 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.ripple-ring-inner {
+  inset: -2px;
+  border-width: 1px;
+  opacity: 0.6;
+  animation: ripple-ring-inner 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes ripple-ring {
+  from {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  to {
+    transform: scale(26);
+    opacity: 0;
+  }
+}
+@keyframes ripple-ring-inner {
+  from {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(16);
+    opacity: 0;
+  }
+}
+
 /* ---- Global reduced-motion kill switch (animations + view transitions) ---- */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -281,7 +324,6 @@
     transform: none !important;
   }
   /* Keep blocks whole across page breaks. */
-  .section-heading,
   .work-card,
   .stat-block,
   .contact-card,
@@ -295,9 +337,9 @@
   h3 {
     break-after: avoid;
   }
-  /* Keep an eyebrow label glued to its heading (avoids an orphaned eyebrow at
-     a page bottom; more reliable than break-inside on the container). */
-  .section-heading > * {
+  /* Glue the eyebrow label to its heading so it is never orphaned at a page
+     bottom, without locking the whole heading block (which wastes space). */
+  .section-heading > p:first-child {
     break-after: avoid;
   }
   @page {

@@ -25,18 +25,6 @@ export function Footer() {
             ))}
           </ul>
         </nav>
-
-        <p className="text-sm text-muted-foreground">
-          Built with{" "}
-          <a
-            href="https://nextjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-sm underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            Next.js
-          </a>
-        </p>
       </div>
     </footer>
   );

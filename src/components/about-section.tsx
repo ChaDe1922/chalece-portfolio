@@ -44,8 +44,8 @@ export function AboutSection() {
               thirty thousand learners. At Amazon Music I led technical programs
               and stood up the systems behind them. Along the way I co-founded
               an athletics-development venture, mentored young coders, published
-              research at ACM CHI, and built a portfolio of AI agent systems
-              that I use to prototype and ship faster.
+              research at ACM CHI, and work fluently with AI tooling to
+              prototype and ship faster.
             </p>
             <p>
               I care about clarity, accessibility, and craft. If you have
