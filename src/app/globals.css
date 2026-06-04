@@ -1,26 +1,245 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-link: var(--link);
+  --color-coral: var(--coral);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-space-grotesk);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Light theme: warm paper + ink, electric-violet accent, coral highlight.
+   Values chosen to pass WCAG 2.2 AA (verified): ink/paper 16.96:1,
+   link 6.09:1, white-on-primary 4.93:1, muted 6.42:1. */
+:root {
+  --background: #f7f5f2; /* paper */
+  --foreground: #14131a; /* ink */
+  --card: #fffdfa;
+  --card-foreground: #14131a;
+  --popover: #fffdfa;
+  --popover-foreground: #14131a;
+  --primary: #6d5ae6; /* violet (button bg, white text = 4.93:1) */
+  --primary-foreground: #ffffff;
+  --secondary: #edeae5;
+  --secondary-foreground: #14131a;
+  --muted: #edeae5;
+  --muted-foreground: #5a5862; /* 6.42:1 on paper */
+  --accent: #e9e5fb; /* subtle violet-tinted hover surface */
+  --accent-foreground: #2f2a52;
+  --destructive: #d8412f;
+  --border: #e3dfd8;
+  --input: #e3dfd8;
+  --ring: #6d5ae6;
+  --link: #5b45cc; /* accessible violet for text/links, 6.09:1 */
+  --coral: #ff6b5e; /* decorative only, never body text on paper */
+  --chart-1: #6d5ae6;
+  --chart-2: #ff6b5e;
+  --chart-3: #5b45cc;
+  --chart-4: #5a5862;
+  --chart-5: #14131a;
+  --radius: 0.75rem;
+  --sidebar: #f7f5f2;
+  --sidebar-foreground: #14131a;
+  --sidebar-primary: #6d5ae6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e9e5fb;
+  --sidebar-accent-foreground: #2f2a52;
+  --sidebar-border: #e3dfd8;
+  --sidebar-ring: #6d5ae6;
+}
+
+/* Dark theme: near-black (not pure #000), raised surfaces, lighter violet
+   for AA text contrast. Verified: fg/bg 15.78:1, link 6.33:1, muted 7.33:1. */
+.dark {
+  --background: #17161d; /* near-black */
+  --foreground: #f2f0ec;
+  --card: #201f28; /* raised surface */
+  --card-foreground: #f2f0ec;
+  --popover: #201f28;
+  --popover-foreground: #f2f0ec;
+  --primary: #6d5ae6;
+  --primary-foreground: #ffffff;
+  --secondary: #262530;
+  --secondary-foreground: #f2f0ec;
+  --muted: #262530;
+  --muted-foreground: #a7a4ae; /* 7.33:1 on near-black */
+  --accent: #2a2640;
+  --accent-foreground: #e7e2fb;
+  --destructive: #ff7a6b;
+  --border: #322f3c;
+  --input: #322f3c;
+  --ring: #9b8cf0;
+  --link: #9b8cf0; /* lighter violet, 6.33:1 on near-black */
+  --coral: #ff8478;
+  --chart-1: #9b8cf0;
+  --chart-2: #ff8478;
+  --chart-3: #6d5ae6;
+  --chart-4: #a7a4ae;
+  --chart-5: #f2f0ec;
+  --sidebar: #17161d;
+  --sidebar-foreground: #f2f0ec;
+  --sidebar-primary: #9b8cf0;
+  --sidebar-primary-foreground: #17161d;
+  --sidebar-accent: #2a2640;
+  --sidebar-accent-foreground: #e7e2fb;
+  --sidebar-border: #322f3c;
+  --sidebar-ring: #9b8cf0;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-space-grotesk), var(--font-inter), sans-serif;
+    letter-spacing: -0.02em;
+  }
+  /* Respect reduced-motion for native smooth scroll too. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Account for the sticky nav when jumping to anchors. */
+@layer base {
+  :target {
+    scroll-margin-top: 5.5rem;
+  }
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
+/* ---- Grain overlay: inline SVG feTurbulence, tiny payload, decorative ----
+   Rendered as a sibling layer (not an ancestor ::before) so it never sits in
+   the contrast-resolution path of the text above it. */
+.grain-overlay {
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark .grain-overlay {
+  opacity: 0.07;
+}
+
+/* ---- Scroll-driven reveal: progressive enhancement only ----
+   Content is fully visible by default. The fade/slide-in runs only when
+   the browser supports scroll timelines AND the user allows motion. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+  }
+}
+/* Transform-only: content stays fully opaque at every scroll position, so it
+   never reduces text contrast or perceivability for audits or for users whose
+   browser pauses the timeline. The motion is a pure slide-up enhancement. */
+@keyframes reveal-in {
+  from {
+    transform: translateY(26px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* ---- Hero entrance: one-time fade-up on load (above the fold) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .enter {
+    animation: enter-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .enter-1 {
+    animation-delay: 0.05s;
+  }
+  .enter-2 {
+    animation-delay: 0.14s;
+  }
+  .enter-3 {
+    animation-delay: 0.23s;
+  }
+  .enter-4 {
+    animation-delay: 0.32s;
+  }
+}
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Global reduced-motion kill switch (animations + view transitions) ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
