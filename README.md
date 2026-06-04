@@ -37,11 +37,23 @@ All copy and data live in typed files (no hunting through JSX):
 
 Copy rule: no em dashes anywhere (use commas, periods, colons, or "to" for ranges).
 
-## Before deploying: swap in real assets
+## Resume PDF
 
-1. **Resume PDF** — replace `public/Chalece-DeLaCoudray-Resume.pdf` (currently a placeholder) with the real ATS resume, same filename.
-2. **Headshot** — drop a photo at `public/headshot.jpg`, then set `hasHeadshot: true` in `src/data/site.ts`. Until then the About section shows a polished monogram.
-3. **Deployed URL** — set `site.url` in `src/data/site.ts` to the real Vercel URL (drives `metadataBase`, canonical, sitemap, robots, JSON-LD).
+The downloadable resume is brand-matched to the site. Source: [`resume/resume.html`](resume/resume.html) (Space Grotesk + Inter, paper/ink/violet tokens). To regenerate `public/Chalece-DeLaCoudray-Resume.pdf` after editing the source:
+
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+  --headless --disable-gpu --no-pdf-header-footer --virtual-time-budget=12000 \
+  --print-to-pdf="public/Chalece-DeLaCoudray-Resume.pdf" \
+  "file://$PWD/resume/resume.html"
+```
+
+(Fonts load from Google Fonts at render time and embed into the PDF.) Then redeploy.
+
+## Assets / config notes
+
+- **Headshot** — `public/headshot.jpg` is in place with `hasHeadshot: true` in `src/data/site.ts`.
+- **Deployed URL** — `site.url` in `src/data/site.ts` is the production Vercel URL (drives `metadataBase`, canonical, sitemap, robots, JSON-LD).
 
 ## Deploy (Vercel)
 

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chalece DeLaCoudray - Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Brand tokens mirrored from the website (globals.css) */
+  :root {
+    --paper:#f7f5f2; --ink:#14131a; --muted:#5a5862;
+    --link:#5b45cc; --violet:#6d5ae6; --rule:#e3dfd8;
+    --display:"Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --body:"Inter", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--body); line-height:1.46;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .page { max-width:780px; margin:0 auto; padding:40px 48px 48px; }
+
+  /* Header (editorial, matches the site hero) */
+  header.head { margin:0 0 6px; }
+  .name {
+    font-family:var(--display); font-weight:700; font-size:31px;
+    letter-spacing:-0.02em; margin:0; color:var(--ink);
+  }
+  .eyebrow {
+    display:flex; align-items:center; gap:9px;
+    margin:9px 0 0; font-weight:600; font-size:11px;
+    text-transform:uppercase; letter-spacing:0.16em; color:var(--link);
+  }
+  .eyebrow .bar { width:26px; height:2px; background:var(--violet); border-radius:2px; }
+  .contact { margin:13px 0 0; font-size:12.5px; color:var(--muted); }
+  .contact a { color:var(--link); text-decoration:none; }
+  .head-rule { border:0; border-top:1px solid var(--rule); margin:16px 0 0; }
+
+  /* Section labels (violet eyebrow + thin rule) */
+  h2.section {
+    display:flex; align-items:center; gap:9px;
+    font-family:var(--body); font-weight:600; font-size:11.5px;
+    text-transform:uppercase; letter-spacing:0.16em; color:var(--link);
+    margin:20px 0 0;
+  }
+  h2.section .bar { width:26px; height:2px; background:var(--violet); border-radius:2px; }
+  h2.section + .rule { border:0; border-top:1px solid var(--rule); margin:8px 0 12px; }
+
+  .profile { font-size:13px; color:var(--ink); margin:4px 0 0; }
+
+  .entry { margin:0 0 14px; }
+  .entry-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; }
+  .entry-title { font-family:var(--display); font-weight:600; font-size:13.5px; color:var(--ink); }
+  .entry-sub { color:var(--muted); font-size:12.5px; }
+  .dates { color:var(--muted); font-size:12px; white-space:nowrap; }
+
+  ul { margin:6px 0 0; padding-left:20px; list-style:square; }
+  li { margin:3px 0; font-size:12.5px; color:var(--ink); }
+  li::marker { color:var(--violet); }
+
+  .skills p { margin:5px 0; font-size:12.5px; color:var(--ink); }
+  .skills strong { font-family:var(--display); font-weight:600; color:var(--ink); }
+
+  .edu { margin:0 0 10px; }
+  .edu .entry-title { font-family:var(--display); font-weight:600; font-size:13px; }
+  a { color:var(--link); }
+
+  @media (max-width:640px) {
+    .page { padding:28px 22px; }
+    .name { font-size:26px; }
+    .entry-head { flex-direction:column; gap:1px; }
+    .dates { white-space:normal; }
+  }
+  @media print {
+    .page { max-width:none; margin:0; padding:0; }
+    @page { margin:0.5in; }
+  }
+</style>
+</head>
+<body>
+  <main class="page">
+    <header class="head">
+      <h1 class="name">Chalece DeLaCoudray</h1>
+      <div class="eyebrow"><span class="bar"></span>Learning Experience Designer &nbsp;&middot;&nbsp; Instructional Designer</div>
+      <div class="contact">
+        cdelacoudray@gmail.com &nbsp;&middot;&nbsp; Atlanta, GA &nbsp;&middot;&nbsp; (912) 271-6997 &nbsp;&middot;&nbsp; linkedin.com/in/chalecedelacoudray
+      </div>
+      <hr class="head-rule">
+    </header>
+
+    <h2 class="section"><span class="bar"></span>Profile</h2><hr class="rule">
+    <p class="profile">Learning experience designer with 10+ years turning complex technical material into learning people finish and use. Authored 7 published Coursera courses reaching 30,630+ learners, owning each end to end from objectives through content, assessment, and iteration. Grounded in adult-learning principles and Bloom's-aligned design, with practical AI-tooling proficiency. M.S. Music Technology, Georgia Tech.</p>
+
+    <h2 class="section"><span class="bar"></span>Experience</h2><hr class="rule">
+
+    <div class="entry">
+      <div class="entry-head">
+        <span><span class="entry-title">Computer Science Curriculum Developer</span>, <span class="entry-sub">Codio, Remote</span></span>
+        <span class="dates">June 2021 - June 2026</span>
+      </div>
+      <ul>
+        <li>Authored 7 published Coursera courses reaching 30,630+ learners, including Container Creation and Orchestration Basics (2,300+ enrolled), CI/CD for Software Developers, DevOps, Intro to Operating Systems, Unix System Basics, Bash Scripting and System Configuration, and Data Security for Web Developers, with publicly verifiable instructor credit.</li>
+        <li>Designed and managed the Summer Creative Coding Intensive for two years (2022 and 2023), a cohort program pairing Python programming with game development in Pygame for high school juniors through college freshmen, culminating in group projects and capstone presentations.</li>
+        <li>Authored CS curriculum well beyond the published catalog, spanning systems and DevOps, Python and Pygame game development, AI/LLM and Azure ML, web security, and creative coding (EarSketch), for K-12 through college and self-paced learners.</li>
+        <li>Defined action-based learning objectives and authored end-to-end online CS courses and specializations across K-12, university, and self-paced levels.</li>
+        <li>Built formative and summative assessments to evaluate learner progress across full course sequences.</li>
+        <li>Created interactive graphic concept representations for difficult topics such as operating systems and container orchestration, making abstract systems accessible to learners at varied levels.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span><span class="entry-title">Workshop Facilitator &amp; Panelist (Contract)</span>, <span class="entry-sub">Georgia Institute of Technology, Atlanta, GA</span></span>
+        <span class="dates">2023 - Present</span>
+      </div>
+      <ul>
+        <li>Lead annual hands-on EarSketch and music-technology coding workshops for high school students at Georgia Tech, introducing computer science through music creation.</li>
+        <li>Serve on student panels, sharing pathways into computing and music technology and answering questions about careers in the field.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span><span class="entry-title">Program Manager</span>, <span class="entry-sub">Amazon Music, Atlanta, GA</span></span>
+        <span class="dates">December 2021 - May 2023</span>
+      </div>
+      <ul>
+        <li>Led the Audio Quality and Hardware Compatibility programs for Amazon's Amp, a live audio streaming app, across 50+ device combinations and 1,200+ test scenarios.</li>
+        <li>Stood up an Audio Hardware Testing Lab from scratch with security and facilities partners and documented its operating procedures.</li>
+        <li>Managed the team defining objective measures of perceived audio quality used across releases.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span><span class="entry-title">STEAM Curriculum Integration Specialist</span>, <span class="entry-sub">CEISMC, Georgia Institute of Technology, Atlanta, GA</span></span>
+        <span class="dates">June 2019 - November 2021</span>
+      </div>
+      <ul>
+        <li>Built project-based curriculum integrating computer science, visual arts, audio-video technology, and music standards.</li>
+        <li>Co-taught and implemented integrated, standards-aligned lessons alongside classroom teachers.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span><span class="entry-title">Lead Teaching Assistant</span>, <span class="entry-sub">Georgia Institute of Technology, Atlanta, GA</span></span>
+        <span class="dates">May 2019 - August 2019</span>
+      </div>
+      <ul>
+        <li>Led a cohort of teaching assistants for two music and technology courses; tutored students and maintained grade records.</li>
+      </ul>
+    </div>
+
+    <h2 class="section"><span class="bar"></span>Skills</h2><hr class="rule">
+    <div class="skills">
+      <p><strong>Methods &amp; Frameworks:</strong> Full course-lifecycle design, ADDIE, Bloom's taxonomy, adult-learning theory, formative and summative assessment, eLearning and instructor-led training, WCAG accessibility</p>
+      <p><strong>Technical:</strong> Python, JavaScript, HTML5, CSS, interactive concept visualization, DevOps and OS curriculum, data analysis</p>
+      <p><strong>Tools &amp; Platforms:</strong> Codio, Coursera, EarSketch, Git/GitHub, Google Workspace, Canva, AI-assisted content development (Claude); Articulate Rise (fast ramp)</p>
+    </div>
+
+    <h2 class="section"><span class="bar"></span>Education &amp; Certifications</h2><hr class="rule">
+    <div class="edu">
+      <div class="entry-head">
+        <span class="entry-title">M.S., Music Technology (Cognitive and Computational Musicology), Georgia Institute of Technology</span>
+        <span class="dates">2018 - 2020</span>
+      </div>
+      <div class="entry-sub">GPA 3.75/4.0 &middot; Herbert P. Haley Graduate Fellowship &middot; OMED Tower Award &middot; Published author, ACM CHI 2020</div>
+    </div>
+    <div class="edu">
+      <div class="entry-head">
+        <span class="entry-title">B.A., Music Technology, Bethune-Cookman University</span>
+        <span class="dates">2008 - 2012</span>
+      </div>
+      <div class="entry-sub">GPA 3.04/4.0</div>
+    </div>
+    <div class="skills">
+      <p><strong>Certifications (LinkedIn Learning):</strong> Succeeding in Web Development: Full Stack and Front End; UX Foundations: Accessibility; Learning Data Science: Tell Stories With Data</p>
+    </div>
+  </main>
+</body>
+</html>
