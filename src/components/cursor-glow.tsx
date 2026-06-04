@@ -18,7 +18,7 @@ export function CursorTrail() {
     if (!layer) return;
 
     const STEP = 6; // px between dots along the path
-    const MAX_PER_MOVE = 32; // cap dots emitted per event (fast flicks)
+    const MAX_PER_MOVE = 20; // cap dots emitted per event (shorter streak on fast flicks)
     let lastX: number | null = null;
     let lastY: number | null = null;
 
