@@ -35,7 +35,7 @@ export const work: WorkItem[] = [
     description:
       "Curriculum and coding competition with CEISMC, Amazon, Georgia Tech, and Pharrell Williams' YELLOW, connecting computer science, music, and equity on the EarSketch platform. Published in the IEEE RESPECT and ASEE conference proceedings.",
     tags: ["Curriculum", "Equity", "Published"],
-    href: "https://teamyellow.org/stories/your-voice-is-power-listening-creating-and-whole-child-education/",
+    href: "https://www.amazonfutureengineer.co.uk/your-voice-is-power",
   },
   {
     title: "Music Tech Workshops at Georgia Tech",
