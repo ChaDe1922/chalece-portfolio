@@ -31,9 +31,9 @@ export function CursorTrail() {
       layer.appendChild(dot);
     };
 
-    const onMove = (e: PointerEvent) => {
-      const x = e.clientX;
-      const y = e.clientY;
+    // Interpolate dots from the last point to (x, y) so fast moves still leave
+    // a connected streak rather than spaced dots.
+    const emit = (x: number, y: number) => {
       if (lastX === null || lastY === null) {
         lastX = x;
         lastY = y;
@@ -53,8 +53,35 @@ export function CursorTrail() {
       lastY = y;
     };
 
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
+    // Mouse: pointermove (ignore touch here; the browser cancels touch
+    // pointermove on scroll, so touch is handled via the touch events below).
+    const onPointerMove = (e: PointerEvent) => {
+      if (e.pointerType === "touch") return;
+      emit(e.clientX, e.clientY);
+    };
+    // Touch: touchmove keeps firing throughout a finger drag / scroll, so the
+    // trail traces the finger reliably. Passive: never blocks scrolling.
+    const onTouch = (e: TouchEvent) => {
+      const t = e.touches[0] ?? e.changedTouches[0];
+      if (t) emit(t.clientX, t.clientY);
+    };
+    const onTouchEnd = () => {
+      lastX = null;
+      lastY = null;
+    };
+
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("touchstart", onTouch, { passive: true });
+    window.addEventListener("touchmove", onTouch, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("touchstart", onTouch);
+      window.removeEventListener("touchmove", onTouch);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
+    };
   }, []);
 
   return <div ref={layerRef} aria-hidden="true" className="cursor-trail" />;

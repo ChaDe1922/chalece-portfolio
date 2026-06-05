@@ -21,17 +21,36 @@ export function ClickRipple() {
   React.useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const onDown = (e: PointerEvent) => {
-      if (e.button !== 0) return; // primary click only
-      const target = e.target as Element | null;
+    let lastTouch = 0;
+
+    const bloom = (x: number, y: number, target: Element | null) => {
       if (target?.closest(INTERACTIVE)) return; // let real controls be
       const id = next.current++;
       const color = COLORS[id % COLORS.length];
-      setRipples((prev) => [...prev, { id, x: e.clientX, y: e.clientY, color }]);
+      setRipples((prev) => [...prev, { id, x, y, color }]);
     };
 
-    window.addEventListener("pointerdown", onDown);
-    return () => window.removeEventListener("pointerdown", onDown);
+    // Mouse only: touch is handled by touchstart below (real/synthesized touch
+    // pointerdowns don't reliably report button 0).
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      if (Date.now() - lastTouch < 700) return; // ignore ghost mouse after touch
+      bloom(e.clientX, e.clientY, e.target as Element | null);
+    };
+    const onTouchStart = (e: TouchEvent) => {
+      lastTouch = Date.now();
+      const t = e.changedTouches[0];
+      // Use the event target (topmost element under the touch) for the
+      // interactive-skip; Touch.target can be stale.
+      if (t) bloom(t.clientX, t.clientY, e.target as Element | null);
+    };
+
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("touchstart", onTouchStart);
+    };
   }, []);
 
   const remove = (id: number) =>

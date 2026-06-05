@@ -13,8 +13,9 @@ export function ClickWord({ children = "click." }: { children?: React.ReactNode 
   const [blooms, setBlooms] = React.useState<number[]>([]);
   const [pop, setPop] = React.useState(0);
   const seq = React.useRef(0);
+  const lastTouch = React.useRef(0);
 
-  function handleClick() {
+  function fire() {
     if (
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -26,6 +27,19 @@ export function ClickWord({ children = "click." }: { children?: React.ReactNode 
     setBlooms((prev) => [...prev, id]);
   }
 
+  function handleClick(e: React.MouseEvent) {
+    e.stopPropagation(); // the word owns this gesture; no background burst too
+    // A tap fires touchstart then a synthesized click; skip the ghost click.
+    if (Date.now() - lastTouch.current < 700) return;
+    fire();
+  }
+
+  function handleTouchStart(e: React.TouchEvent) {
+    e.stopPropagation(); // keep the window ripple/trail off the word itself
+    lastTouch.current = Date.now();
+    fire();
+  }
+
   function removeBloom(id: number) {
     setBlooms((prev) => prev.filter((b) => b !== id));
   }
@@ -34,6 +48,7 @@ export function ClickWord({ children = "click." }: { children?: React.ReactNode 
     <button
       type="button"
       onClick={handleClick}
+      onTouchStart={handleTouchStart}
       className="click-word"
       aria-label="click (tap for a little surprise)"
     >
