@@ -5,10 +5,6 @@ import "./globals.css";
 import { site } from "@/data/site";
 import { ThemeProvider } from "@/components/theme-provider";
 import { MotionProvider } from "@/components/motion-provider";
-import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
-import { ClickRipple } from "@/components/click-ripple";
-import { CursorTrail } from "@/components/cursor-glow";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -107,21 +103,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <MotionProvider>
-            <a
-              href="#main"
-              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:shadow-lg print:hidden"
-            >
-              Skip to content
-            </a>
-            <Nav />
-            <main id="main" className="flex-1">
-              {children}
-            </main>
-            <Footer />
-            <CursorTrail />
-            <ClickRipple />
-          </MotionProvider>
+          <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
         <script
           type="application/ld+json"
