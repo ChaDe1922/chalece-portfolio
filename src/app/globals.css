@@ -228,6 +228,25 @@
   }
 }
 
+/* ---- Lesson content: each block rises in gently, one after another, so a
+   slide reads like an upscale reveal instead of appearing all at once. Reuses
+   enter-up. Under reduced-motion the children are simply visible. ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .lesson-stagger > * {
+    animation: enter-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .lesson-stagger > *:nth-child(1) { animation-delay: 0.04s; }
+  .lesson-stagger > *:nth-child(2) { animation-delay: 0.1s; }
+  .lesson-stagger > *:nth-child(3) { animation-delay: 0.16s; }
+  .lesson-stagger > *:nth-child(4) { animation-delay: 0.22s; }
+  .lesson-stagger > *:nth-child(5) { animation-delay: 0.28s; }
+  .lesson-stagger > *:nth-child(6) { animation-delay: 0.34s; }
+  .lesson-stagger > *:nth-child(7) { animation-delay: 0.4s; }
+  .lesson-stagger > *:nth-child(8) { animation-delay: 0.46s; }
+  .lesson-stagger > *:nth-child(9) { animation-delay: 0.52s; }
+  .lesson-stagger > *:nth-child(n + 10) { animation-delay: 0.58s; }
+}
+
 /* ---- Cursor trail: a light, delicate trail of soft violet dots that traces
    the pointer path (mouse move or finger drag) while moving and fades out when
    it stops. The component does not mount under reduced-motion. Soft radial dots

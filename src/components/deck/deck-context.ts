@@ -12,5 +12,5 @@ export const DeckProvider = DeckContext.Provider;
 export function useDeck(): DeckContextValue {
   const ctx = React.useContext(DeckContext);
   if (ctx) return ctx;
-  return { markComplete: () => {}, isComplete: () => false };
+  return { markComplete: () => {}, isComplete: () => false, next: () => {} };
 }

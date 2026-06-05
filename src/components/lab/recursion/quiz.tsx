@@ -159,7 +159,7 @@ export function Quiz() {
   }, [answeredMc, mcQuestions.length, deck]);
 
   return (
-    <div className="space-y-8">
+    <div className="lesson-stagger space-y-8">
       <p className="text-lg leading-relaxed text-muted-foreground">{data.intro}</p>
 
       {data.questions.map((q) => (

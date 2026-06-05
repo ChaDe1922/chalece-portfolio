@@ -19,7 +19,7 @@ export function CountdownCode() {
   const allRight = data.predict.blanks.every((_, i) => isRight(i));
 
   return (
-    <div className="space-y-5">
+    <div className="lesson-stagger space-y-5">
       <p className="text-lg leading-relaxed text-foreground">{data.intro}</p>
 
       {/* The recipe: how to write any recursive function. */}

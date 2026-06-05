@@ -12,6 +12,25 @@ export const recursionLab = {
   },
 
   slides: {
+    // 0. Cover: what you will learn and the objectives.
+    intro: {
+      id: "start",
+      title: "Recursion, watch it run.",
+      meta: "Interactive lesson · about 6 minutes · no setup",
+      promise:
+        "A short, hands-on lesson. You will play with recursion, name its parts, build it in Python, watch it run, then check what you learned.",
+      objectivesLead: "By the end, you will be able to:",
+      objectives: [
+        "Explain what recursion is, in plain language.",
+        "Spot the two parts every recursion needs: a base case and a recursive case.",
+        "Write and trace a simple recursive function in Python.",
+        "Describe the call stack, and why a base case is required.",
+        "Predict what happens when the base case is missing.",
+      ],
+      begin: "Begin the lesson",
+      byline: "An interactive lesson by Chalece DeLaCoudray",
+    },
+
     // 1. Hook: self-reference, before the word "recursion".
     mirror: {
       id: "mirror",

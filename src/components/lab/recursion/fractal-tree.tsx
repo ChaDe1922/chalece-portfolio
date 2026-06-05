@@ -235,7 +235,7 @@ export function FractalTree() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="lesson-stagger space-y-4">
       {/* Teaching first: what a fractal is, and the rule in code. */}
       <p className="text-lg leading-relaxed text-foreground">{data.teach}</p>
       <div className="rounded-xl border border-border bg-card p-4 font-mono text-sm [font-feature-settings:'liga'_0,'calt'_0]">

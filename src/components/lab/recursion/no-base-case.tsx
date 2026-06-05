@@ -44,7 +44,7 @@ export function NoBaseCase() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="lesson-stagger space-y-5">
       <p className="text-lg leading-relaxed text-foreground">{data.intro}</p>
 
       {/* The broken function */}

@@ -46,7 +46,7 @@ export function MirrorRoom() {
   const zoom = 1 / Math.pow(SCALE, depth);
 
   return (
-    <div className="space-y-5">
+    <div className="lesson-stagger space-y-5">
       {/* Teaching first */}
       <p className="text-lg leading-relaxed text-foreground">{data.intro}</p>
 

@@ -15,4 +15,6 @@ export type Slide = {
 export type DeckContextValue = {
   markComplete: (id: string) => void;
   isComplete: (id: string) => boolean;
+  /** Advance to the next slide (used by an in-slide CTA like a Begin button). */
+  next: () => void;
 };

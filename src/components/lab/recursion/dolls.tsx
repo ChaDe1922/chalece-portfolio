@@ -47,7 +47,7 @@ export function Dolls() {
       : data.openInstr;
 
   return (
-    <div className="space-y-5">
+    <div className="lesson-stagger space-y-5">
       {/* Teaching first: the two rules and the definition. */}
       <p className="text-lg leading-relaxed text-foreground">{data.teachLead}</p>
       <div className="grid gap-3 sm:grid-cols-2">

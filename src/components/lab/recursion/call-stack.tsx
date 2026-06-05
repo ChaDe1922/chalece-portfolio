@@ -76,7 +76,7 @@ export function CallStack() {
   }
 
   return (
-    <div>
+    <div className="lesson-stagger">
       <p className="mb-3 text-base leading-relaxed text-foreground">{data.framing}</p>
       <p className="mb-5 text-base leading-relaxed text-muted-foreground">{data.dek}</p>
 

@@ -131,15 +131,17 @@ export function SlideDeck({ slides, deckId, className }: SlideDeckProps) {
       markComplete: (id: string) =>
         setCompleted((prev) => (prev.has(id) ? prev : new Set(prev).add(id))),
       isComplete: (id: string) => completed.has(id),
+      next,
     }),
-    [completed],
+    [completed, next],
   );
 
-  const offset = reduced ? 0 : 40;
+  // Calm opacity crossfade for the slide container; the per-element stagger
+  // inside each slide carries the motion so content assembles gracefully.
   const variants = {
-    enter: (dir: number) => ({ x: dir >= 0 ? offset : -offset, opacity: 0 }),
-    center: { x: 0, opacity: 1 },
-    exit: (dir: number) => ({ x: dir >= 0 ? -offset : offset, opacity: 0 }),
+    enter: { opacity: 0 },
+    center: { opacity: 1 },
+    exit: { opacity: 0 },
   };
 
   return (

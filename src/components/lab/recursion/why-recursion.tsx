@@ -33,7 +33,7 @@ export function WhyRecursion() {
   const [active, setActive] = React.useState<string | null>(null);
 
   return (
-    <div className="space-y-6">
+    <div className="lesson-stagger space-y-6">
       {/* Definition front and center */}
       <p className="rounded-xl border border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] p-5 text-lg font-medium leading-relaxed text-foreground">
         {data.definition}
@@ -43,7 +43,7 @@ export function WhyRecursion() {
 
       <p className="text-base font-medium text-foreground">{data.instruction}</p>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="lesson-stagger grid gap-3 sm:grid-cols-2">
         {data.apps.map((app) => {
           const on = active === app.id;
           return (
