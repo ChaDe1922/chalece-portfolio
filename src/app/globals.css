@@ -472,3 +472,39 @@
     margin: 0.5in;
   }
 }
+
+/* ---- Lab range sliders: larger, brand-violet grab targets ---- */
+.lab-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--border);
+  cursor: pointer;
+}
+.lab-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background: var(--primary);
+  border: 2px solid var(--background);
+  box-shadow: 0 1px 4px rgba(20, 19, 26, 0.25);
+  cursor: grab;
+}
+.lab-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+.lab-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background: var(--primary);
+  border: 2px solid var(--background);
+  cursor: grab;
+}
+.lab-slider:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}

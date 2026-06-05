@@ -15,6 +15,9 @@ type SlideDeckProps = {
 
 const SWIPE_THRESHOLD = 60; // px of horizontal travel to count as a swipe
 const INTERACTIVE = "a, button, input, select, textarea, [contenteditable], [role='button']";
+// A swipe must not start on a control (slider, button, canvas, etc.), or
+// dragging it would also navigate the deck.
+const SWIPE_IGNORE = `${INTERACTIVE}, canvas, [role='slider'], [data-no-swipe]`;
 
 /** Reusable, data-driven full-viewport slide deck. Keyboard, swipe, dots, hash
  *  deep-linking, reduced-motion aware, and a completion gate for slide bodies. */
@@ -96,9 +99,20 @@ export function SlideDeck({ slides, deckId, className }: SlideDeckProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, [next, prev]);
 
-  // Touch / pointer swipe.
+  // Touch swipe only. Mouse users navigate with the buttons, dots, or arrow
+  // keys, so a mouse drag (e.g. dragging a slider) never navigates. A touch
+  // gesture that starts on a control is ignored so dragging it does not flip
+  // the slide.
   const swipe = React.useRef<{ x: number; y: number } | null>(null);
   const onPointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType !== "touch") {
+      swipe.current = null;
+      return;
+    }
+    if (e.target instanceof Element && e.target.closest(SWIPE_IGNORE)) {
+      swipe.current = null;
+      return;
+    }
     swipe.current = { x: e.clientX, y: e.clientY };
   };
   const onPointerUp = (e: React.PointerEvent) => {

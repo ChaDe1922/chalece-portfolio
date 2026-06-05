@@ -190,6 +190,12 @@ export const recursionLab = {
       codeRec: "    draw_branch(length * 0.7, depth - 1)\n    draw_branch(length * 0.7, depth - 1)",
       codeNote:
         "There it is again. When depth hits zero, return and stop. Otherwise, two smaller branches at 70 percent length, one level deeper. Left and right. That is the whole tree.",
+      presets: [
+        { id: "sapling", label: "Sapling", depth: 4, angle: 20, ratio: 68, lean: 0, leaves: true },
+        { id: "oak", label: "Oak", depth: 8, angle: 28, ratio: 73, lean: 0, leaves: true },
+        { id: "windswept", label: "Windswept", depth: 7, angle: 32, ratio: 78, lean: 18, leaves: true },
+      ],
+      randomize: "Surprise me",
     },
 
     // 6. Assessment finale.
