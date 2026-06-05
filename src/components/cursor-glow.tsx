@@ -3,17 +3,17 @@
 import * as React from "react";
 
 /**
- * A light, delicate trail that traces the mouse path while it moves and fades
+ * A light, delicate trail that traces the pointer path while it moves and fades
  * out when it stops (no lingering spotlight). Soft violet dots are emitted
- * along the movement path and quickly fade. Pointer-fine only; not mounted
- * under prefers-reduced-motion; never intercepts clicks; hidden in print.
+ * along the movement path and quickly fade. Works for both mouse movement and
+ * finger drags on touch (pointermove fires for both); not mounted under
+ * prefers-reduced-motion; never intercepts clicks or scrolling; hidden in print.
  */
 export function CursorTrail() {
   const layerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (!window.matchMedia("(pointer: fine)").matches) return;
     const layer = layerRef.current;
     if (!layer) return;
 

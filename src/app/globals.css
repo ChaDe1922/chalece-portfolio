@@ -229,9 +229,9 @@
 }
 
 /* ---- Cursor trail: a light, delicate trail of soft violet dots that traces
-   the mouse path while moving and fades out when it stops. Pointer-only; the
-   component does not mount under reduced-motion / touch. Soft radial dots (no
-   filter blur) keep many short-lived elements cheap. */
+   the pointer path (mouse move or finger drag) while moving and fades out when
+   it stops. The component does not mount under reduced-motion. Soft radial dots
+   (no filter blur) keep many short-lived elements cheap. */
 .cursor-trail {
   position: fixed;
   inset: 0;
