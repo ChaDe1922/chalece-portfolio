@@ -1,68 +1,61 @@
 "use client";
 
 import * as React from "react";
+import dynamic from "next/dynamic";
 import { useReducedMotion } from "motion/react";
 import { LogIn, LogOut } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
+import { MirrorRoomCssFallback } from "@/components/lab/recursion/mirror-room-css-fallback";
+import { useWebGLSupport } from "@/components/lab/recursion/mirror-tunnel/use-webgl-support";
 
 const data = recursionLab.slides.mirror;
 const MAX = data.maxDepth; // 7
-const SCALE = 0.62;
 
-/** One frame nests the next at 62% size, centered. The chain is static; we
- *  zoom by scaling the whole chain so the current depth fills the viewport. */
-function Frame({ level }: { level: number }) {
-  const deepest = level >= MAX;
-  // Silver-white at the entrance, cooling to blue as we go inward.
-  const hue = 210;
-  const light = 92 - level * 7;
-  return (
-    <div
-      className="absolute inset-0 flex items-center justify-center rounded-lg border"
-      style={{
-        borderColor: `hsl(${hue},30%,${Math.max(40, light - 25)}%)`,
-        background: `hsl(${hue},${20 + level * 4}%,${Math.max(30, light)}%)`,
-      }}
-    >
-      {deepest ? (
-        <span className="px-2 text-center text-[0.6rem] font-medium text-slate-700">
-          too deep to see, but it continues
-        </span>
-      ) : (
-        <div className="absolute" style={{ inset: "19%" }}>
-          <Frame level={level + 1} />
-        </div>
-      )}
-    </div>
-  );
-}
+// Code-split: three / R3F load only when this 3D scene mounts (lab route only),
+// never on the marketing pages or the server render.
+const MirrorTunnelScene = dynamic(
+  () =>
+    import("@/components/lab/recursion/mirror-tunnel/mirror-tunnel-scene").then(
+      (m) => m.MirrorTunnelScene,
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        aria-hidden="true"
+        className="mx-auto aspect-square w-full max-w-xs rounded-xl border border-border bg-[#05040d]"
+      />
+    ),
+  },
+);
 
-/** Slide 1 hook: step into nested reflections. Self-reference, before the word
- *  recursion. Reduced motion removes the zoom transition. */
+/** Slide 1 hook: step into an infinity mirror. Self-reference, before the word
+ *  recursion. The visual is a 3D tunnel when WebGL is available and motion is
+ *  allowed; otherwise the CSS illusion. The teaching, buttons, and depth
+ *  readout live here and drive whichever visual is shown. */
 export function MirrorRoom() {
   const reduced = useReducedMotion();
+  const webgl = useWebGLSupport(); // null until probed (server + first paint)
   const [depth, setDepth] = React.useState(0);
-  const zoom = 1 / Math.pow(SCALE, depth);
+
+  const use3D = webgl === true && !reduced;
 
   return (
     <div className="lesson-stagger space-y-5">
       {/* Teaching first */}
       <p className="text-lg leading-relaxed text-foreground">{data.intro}</p>
 
-      {/* Then the interaction */}
-      <div className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-slate-900">
-        <div
-          className="relative size-full"
-          style={{
-            transform: `scale(${zoom})`,
-            transformOrigin: "center",
-            transition: reduced ? "none" : "transform 0.55s cubic-bezier(0.4,0,0.2,1)",
-          }}
-        >
-          <Frame level={0} />
-        </div>
-      </div>
+      <p className="sr-only">
+        An interactive tunnel of nested reflections. Use the Step inside and Step back out buttons
+        to travel deeper, and read your depth below.
+      </p>
+
+      {/* Then the interaction. 3D tunnel or the CSS fallback, same depth state. */}
+      {use3D ? (
+        <MirrorTunnelScene depth={depth} />
+      ) : (
+        <MirrorRoomCssFallback depth={depth} reduced={!!reduced} />
+      )}
 
       <p aria-live="polite" className="text-center text-sm font-medium text-foreground">
         {data.depthNote(depth, MAX)}
@@ -87,7 +80,7 @@ export function MirrorRoom() {
         </button>
       </div>
 
-      <p className={cn("text-sm leading-relaxed text-muted-foreground")}>{data.prompt}</p>
+      <p className="text-sm leading-relaxed text-muted-foreground">{data.prompt}</p>
     </div>
   );
 }
