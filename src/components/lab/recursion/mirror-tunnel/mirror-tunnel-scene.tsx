@@ -17,7 +17,7 @@ export function MirrorTunnelScene({ depth }: { depth: number }) {
       className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-[#05040d]"
     >
       <Canvas
-        frameloop="always"
+        frameloop="demand"
         dpr={[1, 1.5]}
         gl={{ powerPreference: "low-power", antialias: false }}
       >
