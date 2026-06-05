@@ -2,24 +2,24 @@
 
 import { SlideDeck } from "@/components/deck/slide-deck";
 import type { Slide } from "@/components/deck/types";
-import { ShrinkIt } from "@/components/lab/recursion/shrink-it";
-import { MatchTwoParts } from "@/components/lab/recursion/match-two-parts";
-import { BuildFunction } from "@/components/lab/recursion/build-function";
+import { MirrorRoom } from "@/components/lab/recursion/mirror-room";
+import { Dolls } from "@/components/lab/recursion/dolls";
+import { CountdownCode } from "@/components/lab/recursion/countdown-code";
 import { CallStack } from "@/components/lab/recursion/call-stack";
-import { Challenge } from "@/components/lab/recursion/challenge";
-import { Everywhere } from "@/components/lab/recursion/everywhere";
+import { FractalTree } from "@/components/lab/recursion/fractal-tree";
+import { Quiz } from "@/components/lab/recursion/quiz";
 import { recursionLab } from "@/data/recursion-lab";
 
 const s = recursionLab.slides;
 
-// Deck order: play, two parts, build, watch it run, predict, close.
+// One taught lesson: experience, name it, code it, model it, payoff, assess.
 const slides: Slide[] = [
-  { id: s.shrink.id, title: s.shrink.title, render: () => <ShrinkIt /> },
-  { id: s.match.id, title: "The two parts", render: () => <MatchTwoParts /> },
-  { id: s.build.id, title: "Build the function", render: () => <BuildFunction /> },
+  { id: s.mirror.id, title: s.mirror.title, render: () => <MirrorRoom /> },
+  { id: s.dolls.id, title: s.dolls.title, render: () => <Dolls /> },
+  { id: s.code.id, title: s.code.title, render: () => <CountdownCode /> },
   { id: s.callStack.id, title: s.callStack.title, render: () => <CallStack /> },
-  { id: s.predict.id, title: s.predict.title, render: () => <Challenge /> },
-  { id: s.close.id, title: s.close.title, render: () => <Everywhere /> },
+  { id: s.fractal.id, title: s.fractal.title, render: () => <FractalTree /> },
+  { id: s.quiz.id, title: s.quiz.title, render: () => <Quiz /> },
 ];
 
 export function RecursionDeck() {

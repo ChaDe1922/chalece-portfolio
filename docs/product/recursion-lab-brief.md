@@ -7,6 +7,8 @@
 **Style rule (non-negotiable):** No em dashes anywhere in copy or code comments. Use commas, periods, colons, or "to" for ranges.
 **Author note:** This is one of two related briefs. It also defines the shared `SlideDeck` engine that `about-experience-brief.md` reuses. Build this engine first.
 
+**Shipped (2026-06-05):** `/lab/recursion` now delivers one complete, taught lesson adapted from `curriculum-dev-agent/courses/recursion-intro` (M1 L1): mirror room (experience) to nested dolls (base case, recursive case) to countdown code (chunked, predict the output) to call stack (countdown visualizer) to fractal tree (payoff) to a graded assessment finale (multiple choice with per-option feedback, a fill-in trace, and a synthesis reflection with a self-assessment rubric). The §4.2 manipulatives arc below is archived. The SlideDeck engine is unchanged and still powers it.
+
 ---
 
 ## 0. TL;DR for the build team

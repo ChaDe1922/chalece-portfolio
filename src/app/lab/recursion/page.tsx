@@ -4,7 +4,7 @@ import { site } from "@/data/site";
 import { recursionLab } from "@/data/recursion-lab";
 import { RecursionDeck } from "./recursion-deck";
 
-const ogTitle = "Recursion, watch it run. An interactive lesson by Chalece DeLaCoudray.";
+const ogTitle = recursionLab.meta.ogTitle;
 
 export const metadata: Metadata = {
   title: { absolute: recursionLab.meta.title },
