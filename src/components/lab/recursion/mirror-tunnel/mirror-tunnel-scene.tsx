@@ -2,6 +2,7 @@
 "use no memo";
 
 import { Canvas } from "@react-three/fiber";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { MirrorTunnelCamera } from "./mirror-tunnel-camera";
 import { MirrorTunnelRings } from "./mirror-tunnel-rings";
 
@@ -16,14 +17,17 @@ export function MirrorTunnelScene({ depth }: { depth: number }) {
       className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-[#05040d]"
     >
       <Canvas
-        frameloop="demand"
-        dpr={[1, 2]}
-        gl={{ powerPreference: "low-power", antialias: true }}
+        frameloop="always"
+        dpr={[1, 1.5]}
+        gl={{ powerPreference: "low-power", antialias: false }}
       >
         <color attach="background" args={["#05040d"]} />
         <fogExp2 attach="fog" args={["#05040d", 0.09]} />
         <MirrorTunnelCamera depth={depth} />
         <MirrorTunnelRings />
+        <EffectComposer>
+          <Bloom intensity={0.8} luminanceThreshold={0.3} luminanceSmoothing={0.25} mipmapBlur />
+        </EffectComposer>
       </Canvas>
     </div>
   );

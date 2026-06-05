@@ -38,6 +38,23 @@ export function MirrorRoom() {
   const webgl = useWebGLSupport(); // null until probed (server + first paint)
   const [depth, setDepth] = React.useState(0);
 
+  // Pause (unmount) the WebGL canvas when the tab is hidden or the stage is
+  // scrolled offscreen, so the render loop genuinely stops on mobile.
+  const stageRef = React.useRef<HTMLDivElement>(null);
+  const [active, setActive] = React.useState(true);
+  React.useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    const onVis = () => setActive(document.visibilityState === "visible");
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, []);
+
   const use3D = webgl === true && !reduced;
 
   return (
@@ -50,12 +67,20 @@ export function MirrorRoom() {
         to travel deeper, and read your depth below.
       </p>
 
-      {/* Then the interaction. 3D tunnel or the CSS fallback, same depth state. */}
-      {use3D ? (
-        <MirrorTunnelScene depth={depth} />
-      ) : (
-        <MirrorRoomCssFallback depth={depth} reduced={!!reduced} />
-      )}
+      {/* Then the interaction. 3D tunnel or the CSS fallback, same depth state.
+          The 3D canvas unmounts when the stage is hidden/offscreen (active). */}
+      <div ref={stageRef}>
+        {use3D && active ? (
+          <MirrorTunnelScene depth={depth} />
+        ) : use3D ? (
+          <div
+            aria-hidden="true"
+            className="mx-auto aspect-square w-full max-w-xs rounded-xl border border-border bg-[#05040d]"
+          />
+        ) : (
+          <MirrorRoomCssFallback depth={depth} reduced={!!reduced} />
+        )}
+      </div>
 
       <p aria-live="polite" className="text-center text-sm font-medium text-foreground">
         {data.depthNote(depth, MAX)}

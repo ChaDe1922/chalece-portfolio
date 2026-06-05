@@ -6,12 +6,11 @@ import * as THREE from "three";
 // mutated. Safe from React Compiler (no hooks) and from re-renders. This file
 // only ever loads client-side (the scene is imported via next/dynamic ssr:false).
 const RING_GEO = new THREE.TorusGeometry(1.8, 0.04, 8, 64);
-const RING_MAT = new THREE.MeshStandardMaterial({
-  color: "#1a0f3a",
-  emissive: "#6d5ae6", // brand --primary violet
-  emissiveIntensity: 1.8,
-  roughness: 0.4,
-  metalness: 0.1,
+// Flat emissive look with no lighting (cheaper than PBR). toneMapped:false lets
+// the violet feed the bloom bright-pass at full strength.
+const RING_MAT = new THREE.MeshBasicMaterial({
+  color: "#6d5ae6", // brand --primary violet
+  toneMapped: false,
 });
 
 // 12 rings receding into the fog.
