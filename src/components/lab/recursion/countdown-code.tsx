@@ -20,7 +20,19 @@ export function CountdownCode() {
 
   return (
     <div className="space-y-5">
-      <p className="text-lg leading-relaxed text-muted-foreground">{data.intro}</p>
+      <p className="text-lg leading-relaxed text-foreground">{data.intro}</p>
+
+      {/* The recipe: how to write any recursive function. */}
+      <ol className="grid gap-3 sm:grid-cols-3">
+        {data.recipe.map((r) => (
+          <li key={r.step} className="rounded-xl border border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] p-4">
+            <p className="font-heading text-sm font-semibold text-link">{r.step}</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{r.text}</p>
+          </li>
+        ))}
+      </ol>
+
+      <p className="text-base leading-relaxed text-muted-foreground">{data.buildIntro}</p>
 
       {/* Chunked reveal */}
       <div className="space-y-3">

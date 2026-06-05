@@ -59,14 +59,48 @@ export const recursionLab = {
           text: "Every bigger doll. Each one holds a smaller version of itself, and each step moves closer to the base case.",
         },
       ],
+      definition:
+        "That structure has a name: recursion. Recursion is something defined in terms of a smaller version of itself, with a rule for when to stop. You just felt both parts: the recursive case that keeps going, and the base case that ends it.",
+    },
+
+    // 2.5 Define + motivate: what recursion is, why it matters, where you see it.
+    why: {
+      id: "why",
+      title: "What it is, and where you will meet it",
+      definition:
+        "Recursion: a function that solves a problem by calling itself on a smaller version of the same problem, until it reaches a case simple enough to answer directly.",
+      why: "It is how we handle anything that nests, or breaks into smaller copies of itself. Once you can write one, a whole class of problems gets simple. You describe one step and the stopping point, and the repetition takes care of itself.",
+      instruction: "Tap each one. Notice the same shape: a thing that contains a smaller version of itself.",
+      apps: [
+        { id: "folders", label: "Folders inside folders", hint: "a folder can hold folders, which hold more folders" },
+        { id: "threads", label: "Reply threads", hint: "a comment has replies, and each reply can have replies" },
+        { id: "nature", label: "Patterns in nature", hint: "trees, ferns, lungs, the same branch shape at every scale" },
+        { id: "divide", label: "Divide and conquer", hint: "to search a sorted list, check the middle, then search the smaller half the same way" },
+      ],
     },
 
     // 3. Code: countdown, chunked, then predict the output.
     code: {
       id: "code",
-      title: "Your first recursive function",
+      title: "How to write one in Python",
       intro:
-        "Here is that same idea in Python. We build the countdown function one piece at a time. Reveal each piece, then predict what it prints.",
+        "Every recursive function follows the same recipe. Learn the recipe once, and you can write any of them.",
+      recipe: [
+        {
+          step: "1. Base case",
+          text: "Find the smallest input you can answer directly, with no more calls. That is where you stop.",
+        },
+        {
+          step: "2. Recursive case",
+          text: "Do one small piece of the work, then call the function again on a smaller input.",
+        },
+        {
+          step: "3. Move toward the base",
+          text: "Make sure each call gets closer to the base case. If the input never shrinks, it never stops.",
+        },
+      ],
+      buildIntro:
+        "Let us use the recipe to write countdown(n): it counts down from n to zero, printing each step. Reveal each piece, then predict what it prints.",
       chunks: [
         {
           label: "The signature",
@@ -100,7 +134,9 @@ export const recursionLab = {
     callStack: {
       id: "call-stack",
       title: "Wait, what is a call stack?",
-      dek: "Every call waits while the one below it runs. Press Step and watch the calls stack up, hit the base case, then finish in reverse. Last in, first out.",
+      framing:
+        "The call stack is Python's memory of what is running. Each call is a plate stacked on top, holding its own value of n. The top plate is the function running right now. It is last in, first out: the plate added last is the first one removed.",
+      dek: "Every call waits while the one below it runs. Press Step and watch the calls stack up, hit the base case, then finish in reverse.",
       nRange: [2, 3, 4, 5] as const,
       defaultN: 3,
       captions: {
@@ -113,6 +149,25 @@ export const recursionLab = {
           `countdown(${k}) is done and returns. The call that was waiting can now finish.`,
         result: "Done. Output printed on the way in: the numbers, then Go!.",
       },
+    },
+
+    // 4.5 Teach the error before the assessment.
+    noBaseCase: {
+      id: "no-base-case",
+      title: "What if there is no base case?",
+      intro:
+        "The dolls always had a smallest one. But what if a function never stops? Here is countdown with the base case removed.",
+      broken: "def countdown_broken(n):\n    print(n)\n    countdown_broken(n - 1)   # no base case",
+      brokenNote: "No if. No stopping condition. Every call just calls the next one. Nothing ever returns.",
+      run: "Run countdown_broken(3)",
+      running: (n: number) => `countdown_broken(${n})`,
+      traceback:
+        'Traceback (most recent call last):\n  File "countdown.py", line 3, in countdown_broken\n    countdown_broken(n - 1)\n  [Previous line repeated 996 more times]\nRecursionError: maximum recursion depth exceeded',
+      reframe:
+        "This is not a sign you broke something. Python limits recursion to about 1,000 calls by design, to protect your computer's memory. It is a safety net. Python is telling you something useful: your function did not know when to stop.",
+      fixIntro: "The fix is the base case you already know. One if statement is all it takes.",
+      fixed:
+        'def countdown_fixed(n):\n    if n <= 0:        # base case: stop here\n        print("Go!")\n    else:\n        print(n)\n        countdown_fixed(n - 1)',
     },
 
     // 5. Payoff: the fractal tree.
