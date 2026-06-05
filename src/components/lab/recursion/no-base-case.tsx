@@ -53,6 +53,12 @@ export function NoBaseCase() {
       </div>
       <p className="text-sm leading-relaxed text-muted-foreground">{data.brokenNote}</p>
 
+      {/* Teach the outcome first, then let them run it to witness it. */}
+      <div className="flex items-start gap-3 rounded-xl border border-emerald-300 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-950/40">
+        <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+        <p className="text-sm leading-relaxed text-foreground">{data.reframe}</p>
+      </div>
+
       {phase === "idle" ? (
         <button
           type="button"
@@ -89,10 +95,6 @@ export function NoBaseCase() {
           <pre className="overflow-x-auto whitespace-pre rounded-xl border border-destructive/40 bg-[#0d1016] p-4 font-mono text-xs leading-relaxed text-red-300">
             {data.traceback}
           </pre>
-          <div className="flex items-start gap-3 rounded-xl border border-emerald-300 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-950/40">
-            <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
-            <p className="text-sm leading-relaxed text-foreground">{data.reframe}</p>
-          </div>
           <p className="text-base leading-relaxed text-foreground">{data.fixIntro}</p>
           <div className="rounded-xl border border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] p-4 font-mono text-sm [font-feature-settings:'liga'_0,'calt'_0]">
             <pre className="whitespace-pre-wrap text-foreground">{data.fixed}</pre>

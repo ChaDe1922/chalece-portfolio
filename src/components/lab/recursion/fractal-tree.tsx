@@ -134,7 +134,16 @@ export function FractalTree() {
 
   return (
     <div className="space-y-4">
-      <p className="text-lg leading-relaxed text-muted-foreground">{data.intro}</p>
+      {/* Teaching first: what a fractal is, and the rule in code. */}
+      <p className="text-lg leading-relaxed text-foreground">{data.teach}</p>
+      <div className="rounded-xl border border-border bg-card p-4 font-mono text-sm [font-feature-settings:'liga'_0,'calt'_0]">
+        <pre className="whitespace-pre-wrap text-foreground">{data.codeBase}</pre>
+        <pre className="mt-1 whitespace-pre-wrap text-foreground">{data.codeRec}</pre>
+      </div>
+      <p className="text-sm leading-relaxed text-muted-foreground">{data.codeNote}</p>
+
+      {/* Then the interaction: grow your own. */}
+      <p className="pt-1 text-base leading-relaxed text-foreground">{data.intro}</p>
 
       <canvas
         ref={canvasRef}
@@ -167,17 +176,9 @@ export function FractalTree() {
         </div>
       </div>
 
-      <p className="text-base leading-relaxed text-foreground">
-        <span className="font-medium text-link">{data.prompt}</span> {data.explain}
+      <p className="text-base leading-relaxed text-muted-foreground">
+        <span className="font-medium text-link">{data.prompt}</span> {data.nature}
       </p>
-
-      {/* Code reveal */}
-      <div className="rounded-xl border border-border bg-card p-4 font-mono text-sm [font-feature-settings:'liga'_0,'calt'_0]">
-        <pre className="whitespace-pre-wrap text-foreground">{data.codeBase}</pre>
-        <pre className="mt-1 whitespace-pre-wrap text-foreground">{data.codeRec}</pre>
-      </div>
-      <p className="text-sm leading-relaxed text-muted-foreground">{data.codeNote}</p>
-      <p className="text-sm leading-relaxed text-muted-foreground">{data.nature}</p>
     </div>
   );
 }

@@ -17,11 +17,11 @@ export const recursionLab = {
       id: "mirror",
       title: "Have you ever seen yourself forever?",
       intro:
-        "Two mirrors facing each other make a hallway of you, each smaller than the last, going inward until they vanish. Step inside and look.",
+        "Some things contain a smaller version of themselves. Two mirrors facing each other show it: each reflection is the whole scene again, smaller, placed inside the one before it. It goes inward, not sideways. Hold that idea, then step inside and watch it happen.",
       maxDepth: 7,
       stepIn: "Step inside",
       stepOut: "Step back out",
-      prompt: "What do you notice? Each reflection sits inside the one before it. It goes inward, not sideways.",
+      prompt: "Each reflection sits inside the one before it. That nesting, a thing inside a smaller copy of itself, is what the rest of this lesson is about.",
       depthNote: (d: number, max: number) =>
         d === 0
           ? "Standing at the entrance."
@@ -34,6 +34,10 @@ export const recursionLab = {
     dolls: {
       id: "dolls",
       title: "Two rules that keep it from going forever",
+      teachLead:
+        "Something that never stops is useless in a program. So every recursion has exactly two parts: one that keeps it going, and one that ends it.",
+      interactLead:
+        "Now open these nested dolls and watch both parts happen: each doll holds a smaller one (the recursive case), until you reach a doll with nothing inside (the base case).",
       intro:
         "Something that never stops is useless in a program. Open these nested dolls. Each one holds a smaller one, until you reach a doll with nothing inside.",
       openInstr: "Open each doll to find a smaller one inside.",
@@ -174,7 +178,9 @@ export const recursionLab = {
     fractal: {
       id: "fractal",
       title: "Recursion draws the world",
-      intro: "Drag the sliders. The same rule, a branch that splits into two smaller branches, draws this.",
+      teach:
+        "One last idea, then you play. A fractal is a shape built from a single rule repeated at smaller and smaller scales. The rule for a tree: draw a branch, then draw two smaller branches from its tip, and do the same thing to each of those. Depth is the base case. When depth reaches zero, the branching stops. That repeating-at-smaller-scale property is called self similarity.",
+      intro: "Now drag the sliders and grow your own. The same rule, a branch that splits into two smaller branches, draws all of this.",
       prompt: "Why does this look like a real tree?",
       explain:
         "Because that is how trees actually grow. Mandelbrot called shapes built from the same rule at smaller and smaller scales fractals. The key property is self similarity: zoom into any part and you find the same structure. The depth slider is the base case. When depth reaches zero, the branching stops.",

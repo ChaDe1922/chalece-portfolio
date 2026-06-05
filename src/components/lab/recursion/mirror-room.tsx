@@ -47,8 +47,10 @@ export function MirrorRoom() {
 
   return (
     <div className="space-y-5">
-      <p className="text-lg leading-relaxed text-muted-foreground">{data.intro}</p>
+      {/* Teaching first */}
+      <p className="text-lg leading-relaxed text-foreground">{data.intro}</p>
 
+      {/* Then the interaction */}
       <div className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-slate-900">
         <div
           className="relative size-full"

@@ -48,7 +48,22 @@ export function Dolls() {
 
   return (
     <div className="space-y-5">
-      <p className="text-lg leading-relaxed text-muted-foreground">{data.intro}</p>
+      {/* Teaching first: the two rules and the definition. */}
+      <p className="text-lg leading-relaxed text-foreground">{data.teachLead}</p>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {data.rules.map((rule) => (
+          <div key={rule.id} className="rounded-xl border border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] p-4">
+            <p className="font-heading text-base font-semibold text-link">{rule.term}</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{rule.text}</p>
+          </div>
+        ))}
+      </div>
+      <p className="rounded-xl border border-border bg-card p-4 text-base leading-relaxed text-foreground">
+        {data.definition}
+      </p>
+
+      {/* Then the interaction reinforces both parts. */}
+      <p className="pt-1 text-base leading-relaxed text-muted-foreground">{data.interactLead}</p>
 
       <div className="flex min-h-[160px] flex-wrap items-end justify-center gap-3 rounded-xl border border-border bg-card p-5">
         {Array.from({ length: revealed }, (_, i) => {
@@ -89,23 +104,6 @@ export function Dolls() {
           </button>
         ) : null}
       </div>
-
-      {/* Reveal the two rules and the definition once the base case is reached. */}
-      {atBase ? (
-        <div className="space-y-4">
-          <div className="grid gap-3 sm:grid-cols-2">
-            {data.rules.map((rule) => (
-              <div key={rule.id} className="rounded-xl border border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] p-4">
-                <p className="font-heading text-base font-semibold text-link">{rule.term}</p>
-                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{rule.text}</p>
-              </div>
-            ))}
-          </div>
-          <p className="rounded-xl border border-border bg-card p-4 text-base leading-relaxed text-foreground">
-            {data.definition}
-          </p>
-        </div>
-      ) : null}
     </div>
   );
 }
