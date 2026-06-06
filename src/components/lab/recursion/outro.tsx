@@ -3,6 +3,8 @@
 import { ArrowLeft, ArrowUpRight, Check, FileDown, GraduationCap, Mail } from "lucide-react";
 import { recursionLab } from "@/data/recursion-lab";
 import { RichText } from "@/components/lab/recursion/rich-text";
+import { CursorTrail } from "@/components/cursor-glow";
+import { ClickRipple } from "@/components/click-ripple";
 import { site } from "@/data/site";
 
 const data = recursionLab.slides.outro;
@@ -28,8 +30,16 @@ const channels = [
 export function Outro() {
   return (
     <div className="lesson-stagger space-y-6">
+      {/* The conclusion gets the portfolio's cursor trail + click ripple. Both
+          self-disable under reduced motion and clean up when this slide leaves. */}
+      <CursorTrail />
+      <ClickRipple />
+
       <p className="text-lg leading-relaxed text-foreground">
         <RichText text={data.lead} />
+      </p>
+      <p className="text-lg leading-relaxed text-foreground">
+        <RichText text={data.leadIdea} />
       </p>
 
       {/* What you can do now */}

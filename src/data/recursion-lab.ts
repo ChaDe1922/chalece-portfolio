@@ -431,7 +431,9 @@ export const recursionLab = {
     outro: {
       id: "outro",
       title: "That is recursion.",
-      lead: "You stepped into a mirror, opened the dolls, wrote `countdown` in Python, watched the call stack, broke it on purpose, then grew a fractal tree. That is the whole idea: something defined in terms of a smaller version of itself, with a base case that stops it.",
+      lead: "You stepped into a mirror, opened the dolls, wrote `countdown` in Python, watched the call stack, broke it on purpose, then grew a fractal tree.",
+      leadIdea:
+        "That is the whole idea: something defined in terms of a smaller version of itself, with a base case that stops it.",
       recapLead: "What you can do now:",
       recap: [
         "Explain what recursion is, in plain language.",

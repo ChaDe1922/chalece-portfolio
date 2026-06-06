@@ -111,7 +111,16 @@ const slides: Slide[] = [
     ),
     render: () => <Quiz />,
   },
-  { id: s.outro.id, title: s.outro.title, render: () => <Outro /> },
+  {
+    id: s.outro.id,
+    title: s.outro.title,
+    titleNode: (
+      <>
+        That is <ClickWord label="recursion">recursion</ClickWord>.
+      </>
+    ),
+    render: () => <Outro />,
+  },
 ];
 
 export function RecursionDeck() {
