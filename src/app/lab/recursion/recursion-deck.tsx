@@ -38,7 +38,7 @@ const slides: Slide[] = [
     title: s.code.title,
     titleNode: (
       <>
-        How to write a recursive function in <PythonWord>Python</PythonWord>.
+        Writing a recursive function in <PythonWord>Python</PythonWord>.
       </>
     ),
     render: () => <CountdownCode />,

@@ -105,7 +105,7 @@ export const recursionLab = {
     // 3. Code: countdown, chunked, then predict the output.
     code: {
       id: "code",
-      title: "How to write a recursive function in Python.",
+      title: "Writing a recursive function in Python.",
       intro:
         "Every recursive function follows the same recipe. Learn the recipe once, and you can write any of them. Tap a step to see that part light up in the code below.",
       recipe: [
