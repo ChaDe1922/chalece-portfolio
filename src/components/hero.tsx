@@ -1,4 +1,4 @@
-import { ArrowDown, FileDown } from "lucide-react";
+import { ArrowDown, FileDown, Sparkles } from "lucide-react";
 import { MagneticButton } from "@/components/magnetic-button";
 import { ClickWord } from "@/components/click-word";
 import { site } from "@/data/site";
@@ -51,6 +51,10 @@ export function Hero() {
           >
             <FileDown aria-hidden="true" />
             Download resume
+          </MagneticButton>
+          <MagneticButton href="/lab/recursion" variant="outline">
+            <Sparkles aria-hidden="true" />
+            Try an interactive lesson
           </MagneticButton>
         </div>
       </div>

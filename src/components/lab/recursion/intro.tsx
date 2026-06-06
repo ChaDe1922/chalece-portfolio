@@ -123,7 +123,7 @@ export function Intro() {
         </ul>
       </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div className="space-y-3">
         <button
           type="button"
           onClick={() => deck.next()}
@@ -132,7 +132,7 @@ export function Intro() {
           {data.begin}
           <ArrowRight aria-hidden="true" className="size-5" />
         </button>
-        <span className="text-sm text-muted-foreground">{data.byline}</span>
+        <p className="text-sm text-muted-foreground">{data.byline}</p>
       </div>
     </div>
   );

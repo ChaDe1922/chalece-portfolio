@@ -15,10 +15,10 @@ export const recursionLab = {
     // 0. Cover: what you will learn and the objectives.
     intro: {
       id: "start",
-      title: "Recursion, watch it run.",
+      title: "Inside Recursion",
       meta: "Interactive lesson · about 6 minutes · no setup",
       promise:
-        "A short, hands-on lesson. You will play with recursion, name its parts, build it in Python, watch it run, then check what you learned.",
+        "In this short hands-on lesson, you will explore recursion by moving through nested patterns, naming the parts that make recursion work, building a recursive function in Python, watching it run, and checking what you learned.",
       objectivesLead: "By the end, you will be able to:",
       objectives: [
         "Explain what recursion is, in plain language.",

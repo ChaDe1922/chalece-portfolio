@@ -21,9 +21,36 @@ const s = recursionLab.slides;
 // One taught lesson: cover, experience, name + define, why/where, how to write,
 // run it, break it (RecursionError), payoff, assess.
 const slides: Slide[] = [
-  { id: s.intro.id, title: s.intro.title, render: () => <Intro /> },
-  { id: s.mirror.id, title: s.mirror.title, render: () => <MirrorRoom /> },
-  { id: s.dolls.id, title: s.dolls.title, render: () => <Dolls /> },
+  {
+    id: s.intro.id,
+    title: s.intro.title,
+    titleNode: (
+      <>
+        Inside <ClickWord label="Recursion">Recursion</ClickWord>
+      </>
+    ),
+    render: () => <Intro />,
+  },
+  {
+    id: s.mirror.id,
+    title: s.mirror.title,
+    titleNode: (
+      <>
+        Step into <ClickWord label="recursion">recursion</ClickWord>
+      </>
+    ),
+    render: () => <MirrorRoom />,
+  },
+  {
+    id: s.dolls.id,
+    title: s.dolls.title,
+    titleNode: (
+      <>
+        The two <ClickWord label="rules">rules</ClickWord> of recursion
+      </>
+    ),
+    render: () => <Dolls />,
+  },
   {
     id: s.why.id,
     title: s.why.title,
