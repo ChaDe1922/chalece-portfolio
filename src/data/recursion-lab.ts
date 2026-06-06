@@ -211,7 +211,7 @@ export const recursionLab = {
       id: "no-base-case",
       title: "What if there is no base case?",
       recap:
-        "Remember the two rules: a recursive case that keeps going, and a base case that stops it. The base case is the stop sign that keeps a recursion from running forever. Take it away and nothing tells the calls to stop.",
+        "Remember the two rules: a **recursive case** that keeps going, and a **base case** that stops it. The **base case** is the stop sign that keeps a recursion from running forever. Take it away and nothing tells the calls to stop.",
       intro:
         "The dolls always had a smallest one. But what if a function never stops? Here is `countdown` with the base case removed.",
       broken: "def countdown_broken(n):\n    print(n)\n    countdown_broken(n - 1)   # no base case",
