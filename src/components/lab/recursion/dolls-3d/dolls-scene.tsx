@@ -19,12 +19,12 @@ const X_POSITIONS: [number, number, number][] = [
   [1.55, -0.5, 0],
 ];
 // Lift is in each doll's local space (inside the already-scaled group), so the
-// lid rises just clear of the body rather than flying off. The lid opens toward
-// the right (positive x, leaning clockwise), the same direction the next doll
-// emerges.
+// lid rises just clear of the body rather than flying off. The lid is set down
+// to the LEFT, rotated counter-clockwise so its wide opening faces RIGHT, back
+// toward the cup and the next doll emerging into the row.
 const LIFT = 0.62;
 const ASIDE = 0.42;
-const ROT = -0.5;
+const ROT = 1.0;
 const BASE_Y = -0.5;
 const BASE_COLOR = new THREE.Color("#16a766");
 const REC_COLOR = new THREE.Color("#e8924a");
@@ -97,8 +97,8 @@ function DollsAnimator({
       }
       if (top) {
         top.position.y = s.openT * LIFT;
-        top.position.x = s.openT * ASIDE; // lid opens to the right
-        top.rotation.z = s.openT * ROT;
+        top.position.x = s.openT * -ASIDE; // lid is set down to the left
+        top.rotation.z = s.openT * ROT; // rotated so its opening faces right
       }
 
       // Emissive: highlight pulses, plus a steady base glow once fully opened.
