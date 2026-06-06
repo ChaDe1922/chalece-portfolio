@@ -369,6 +369,64 @@
   }
 }
 
+/* ---- "Python" word: a little green snake slithers out from behind the word
+   and retreats. Reuses .click-word for the violet color/focus. The snake sits
+   behind the word (z-0) and is removed on animation end. The component does
+   not mount the snake under prefers-reduced-motion. */
+.python-snake {
+  position: absolute;
+  left: 100%; /* anchored just past the word's right edge */
+  top: 50%;
+  z-index: 0;
+  margin-left: -10px; /* start tucked behind the last letters */
+  pointer-events: none;
+  transform-origin: left center;
+  animation: python-slither 1.7s cubic-bezier(0.34, 1.2, 0.5, 1) forwards;
+}
+.python-snake svg {
+  display: block;
+}
+.python-snake-tongue {
+  transform-origin: 36px 8px;
+  animation: snake-tongue 0.28s ease-in-out 3;
+}
+/* Emerges from behind the word, slithers out to the right with a gentle bob,
+   then retreats back behind the word and fades. */
+@keyframes python-slither {
+  0% {
+    transform: translate(-100%, -50%) rotate(-4deg);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  40% {
+    transform: translate(10%, -56%) rotate(5deg);
+  }
+  60% {
+    transform: translate(14%, -46%) rotate(-3deg);
+  }
+  78% {
+    transform: translate(2%, -52%) rotate(3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-100%, -50%) rotate(-4deg);
+    opacity: 0;
+  }
+}
+@keyframes snake-tongue {
+  0%,
+  100% {
+    transform: scaleX(0.2);
+    opacity: 0;
+  }
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
 /* ---- Click burst: a soft, blurred color glow that blooms from a background
    click and fades. Gentle (not hard rings). Only transform/opacity animate.
    The component does not mount under prefers-reduced-motion. */

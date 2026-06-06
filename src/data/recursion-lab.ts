@@ -105,40 +105,57 @@ export const recursionLab = {
     // 3. Code: countdown, chunked, then predict the output.
     code: {
       id: "code",
-      title: "How to write one in Python",
+      title: "How to write a recursive function in Python.",
       intro:
-        "Every recursive function follows the same recipe. Learn the recipe once, and you can write any of them.",
+        "Every recursive function follows the same recipe. Learn the recipe once, and you can write any of them. Tap a step to see that part light up in the code below.",
       recipe: [
         {
+          id: "base",
+          highlight: "base",
           step: "1. Base case",
-          text: "Find the smallest input you can answer directly, with no more calls. That is where you stop.",
+          text: "New term. The base case is the one input simple enough to answer on the spot, with no more calls to itself. It is the stop sign: when the function reaches it, the recursion ends. Without a base case, the function would call itself forever.",
         },
         {
+          id: "recursive",
+          highlight: "recursive",
           step: "2. Recursive case",
-          text: "Do one small piece of the work, then call the function again on a smaller input.",
+          text: "The part that calls itself. Do one small piece of the work, then call the same function again on a smaller input.",
         },
         {
+          id: "move",
+          highlight: "move",
           step: "3. Move toward the base",
-          text: "Make sure each call gets closer to the base case. If the input never shrinks, it never stops.",
+          text: "Each call must hand the function an input closer to the base case. In countdown that is n - 1: every call shrinks n by one, so it always marches toward 0. If the input never shrinks, the base case is never reached and it never stops.",
         },
       ],
       buildIntro:
         "Let us use the recipe to write countdown(n): it counts down from n to zero, printing each step. Reveal each piece, then predict what it prints.",
+      // The function as structured lines: the single source for the live code
+      // panel. `part` groups lines for the reveal and the card highlighting;
+      // `move` marks the token that is the step toward the base case.
+      codeLines: [
+        { text: "def countdown(n):", part: "signature" },
+        { text: "    if n <= 0:", part: "base" },
+        { text: '        print("Go!")', part: "base" },
+        { text: "    else:", part: "recursive" },
+        { text: "        print(n)", part: "recursive" },
+        { text: "        countdown(n - 1)", part: "recursive", move: "n - 1" },
+      ],
       chunks: [
         {
+          part: "signature",
           label: "The signature",
-          code: "def countdown(n):",
           note: "def means here comes a new function. It takes one input, n, the number we start from.",
         },
         {
+          part: "base",
           label: "The base case",
-          code: "    if n <= 0:\n        print(\"Go!\")",
-          note: "When n reaches 0, stop calling and just answer. This check runs first, every time.",
+          note: "This is the base case: the stopping point. When n reaches 0 (or less), the function prints Go! and does not call itself again, so the recursion ends right here.",
         },
         {
+          part: "recursive",
           label: "The recursive case",
-          code: "    else:\n        print(n)\n        countdown(n - 1)",
-          note: "Print n, then call countdown again with n - 1. Each call gets one step closer to the base case.",
+          note: "This is the recursive case: print n, then call countdown again. The n - 1 is the move toward the base case. Each call shrinks n by one, so it steps closer to 0 every time.",
         },
       ],
       full: "def countdown(n):\n    if n <= 0:\n        print(\"Go!\")\n    else:\n        print(n)\n        countdown(n - 1)",

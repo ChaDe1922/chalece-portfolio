@@ -3,6 +3,7 @@
 import { SlideDeck } from "@/components/deck/slide-deck";
 import type { Slide } from "@/components/deck/types";
 import { ClickWord } from "@/components/click-word";
+import { PythonWord } from "@/components/lab/recursion/python-word";
 import { Intro } from "@/components/lab/recursion/intro";
 import { MirrorRoom } from "@/components/lab/recursion/mirror-room";
 import { Dolls } from "@/components/lab/recursion/dolls";
@@ -32,7 +33,16 @@ const slides: Slide[] = [
     ),
     render: () => <WhyRecursion />,
   },
-  { id: s.code.id, title: s.code.title, render: () => <CountdownCode /> },
+  {
+    id: s.code.id,
+    title: s.code.title,
+    titleNode: (
+      <>
+        How to write a recursive function in <PythonWord>Python</PythonWord>.
+      </>
+    ),
+    render: () => <CountdownCode />,
+  },
   { id: s.callStack.id, title: s.callStack.title, render: () => <CallStack /> },
   { id: s.noBaseCase.id, title: s.noBaseCase.title, render: () => <NoBaseCase /> },
   { id: s.fractal.id, title: s.fractal.title, render: () => <FractalTree /> },
