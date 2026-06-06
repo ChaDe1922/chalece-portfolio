@@ -82,30 +82,32 @@ export function NoBaseCase() {
         <RichText text={data.brokenNote} />
       </p>
 
-      {/* Click first, expectation set beneath. */}
-      {phase === "idle" ? (
+      {/* The run command and the pile-up, side by side. */}
+      <div className="grid gap-4 md:grid-cols-2 md:items-start">
+        {/* Left: instruction, button, expectation beneath. */}
         <div className="space-y-2">
           <p className="text-base font-medium text-foreground">{data.runLead}</p>
           <button
             type="button"
             onClick={run}
-            className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            disabled={phase === "running"}
+            className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60"
           >
-            <Play aria-hidden="true" className="size-4" /> {data.run}
+            <Play aria-hidden="true" className="size-4" /> {phase === "crashed" ? "Run again" : data.run}
           </button>
           <p className="text-sm leading-relaxed text-muted-foreground">
             <RichText text={data.expectNote} />
           </p>
         </div>
-      ) : null}
 
-      {/* The pile-up: physics plates when able, else the DOM growing stack. */}
-      {phase !== "idle" ? (
+        {/* Right: physics plates when able, else the DOM growing stack. */}
         <div ref={stageRef}>
-          {use3D && active ? (
+          {phase === "idle" ? (
+            <div className="h-[340px] w-full rounded-xl border border-dashed border-border bg-card/50" />
+          ) : use3D && active ? (
             <NoBaseCasePlates count={count} phase={phase} />
           ) : (
-            <div className="max-h-64 overflow-hidden rounded-xl border border-border bg-[#0d1016] p-3">
+            <div className="max-h-[340px] overflow-hidden rounded-xl border border-border bg-[#0d1016] p-3">
               <ol className="flex flex-col gap-1">
                 {Array.from({ length: count }, (_, i) => (
                   <li
@@ -123,7 +125,7 @@ export function NoBaseCase() {
             </div>
           )}
         </div>
-      ) : null}
+      </div>
 
       {/* The crash + reframe + fix */}
       {phase === "crashed" ? (
@@ -140,8 +142,19 @@ export function NoBaseCase() {
           <p className="text-base leading-relaxed text-foreground">
             <RichText text={data.fixIntro} />
           </p>
-          <div className="rounded-xl border border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] p-4 font-mono text-sm [font-feature-settings:'liga'_0,'calt'_0]">
-            <pre className="whitespace-pre-wrap text-foreground">{data.fixed}</pre>
+          <div className="rounded-xl border border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] p-4 font-mono text-sm leading-6 [font-feature-settings:'liga'_0,'calt'_0]">
+            {data.fixedLines.map((line, i) => (
+              <div
+                key={i}
+                className={cn(
+                  "whitespace-pre rounded px-2 text-foreground",
+                  "base" in line &&
+                    "border-l-2 border-emerald-500 bg-emerald-500/15 dark:bg-emerald-500/20",
+                )}
+              >
+                {line.text}
+              </div>
+            ))}
           </div>
         </div>
       ) : null}

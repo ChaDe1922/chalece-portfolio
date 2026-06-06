@@ -8,7 +8,7 @@ const PlatesPhysicsScene = dynamic(
     import("@/components/lab/recursion/no-base-case-plates/plates-physics-scene").then(
       (m) => m.PlatesPhysicsScene,
     ),
-  { ssr: false, loading: () => <div className="h-[300px] w-full" aria-hidden="true" /> },
+  { ssr: false, loading: () => <div className="h-[340px] w-full" aria-hidden="true" /> },
 );
 
 /** Thin wrapper so the physics scene (three + rapier) is dynamically imported.

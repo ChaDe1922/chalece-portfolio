@@ -7,8 +7,8 @@ import { Canvas } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
 import { Physics, RigidBody, CuboidCollider, CylinderCollider } from "@react-three/rapier";
 
-const PLATE_R = 0.5;
-const PLATE_H = 0.22;
+const PLATE_R = 0.62;
+const PLATE_H = 0.26;
 // Module-level singletons (Compiler-safe, never re-created).
 const PLATE_GEO = new THREE.CylinderGeometry(PLATE_R, PLATE_R, PLATE_H, 32);
 const PLATE_MAT = new THREE.MeshStandardMaterial({ color: "#6d5ae6", roughness: 0.5, metalness: 0.05 });
@@ -21,16 +21,16 @@ const wob = (i: number, salt: number) => (((i * 1103515245 + salt * 12345) % 100
  *  the tower builds, then leans past its base and topples, like calls piling up
  *  with no base case to stop them. */
 function Plate({ i }: { i: number }) {
-  const x = i * 0.03 + i * i * 0.0055 + wob(i, 7) * 0.05;
+  const x = i * 0.04 + i * i * 0.006 + wob(i, 7) * 0.05;
   const z = wob(i, 31) * 0.05;
-  const y = i * (PLATE_H + 0.004) + 0.32; // spawn just above its slot, drop in
+  const y = i * (PLATE_H + 0.005) + 0.34; // spawn just above its slot, drop in
   const rot = wob(i, 13) * 0.06;
   return (
     <RigidBody
       colliders={false}
       position={[x, y, z]}
       rotation={[rot, 0, rot * 0.5]}
-      friction={0.6}
+      friction={0.55}
       restitution={0.05}
       linearDamping={0.04}
       angularDamping={0.05}
@@ -65,13 +65,13 @@ export function PlatesPhysicsScene({
   const plates = Array.from({ length: count }, (_, i) => i);
 
   return (
-    <div aria-hidden="true" className="h-[300px] w-full">
+    <div aria-hidden="true" className="h-[340px] w-full">
       <Canvas
         frameloop={paused ? "demand" : "always"}
         dpr={[1, 1.5]}
         gl={{ powerPreference: "low-power", antialias: true, alpha: true }}
       >
-        <PerspectiveCamera makeDefault position={[0, 1.9, 7.8]} rotation={[-0.17, 0, 0]} fov={36} near={0.1} far={40} />
+        <PerspectiveCamera makeDefault position={[1.3, 2.0, 8.7]} rotation={[-0.19, 0, 0]} fov={42} near={0.1} far={40} />
         <ambientLight intensity={0.7} color="#fff6ee" />
         <directionalLight position={[3, 6, 4]} intensity={1.1} color="#fff4e6" />
         <Physics gravity={[0, -12, 0]} paused={paused}>

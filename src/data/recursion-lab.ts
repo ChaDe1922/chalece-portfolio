@@ -226,9 +226,18 @@ export const recursionLab = {
         'Traceback (most recent call last):\n  File "countdown.py", line 3, in countdown_broken\n    countdown_broken(n - 1)\n  [Previous line repeated 996 more times]\nRecursionError: maximum recursion depth exceeded',
       reframe:
         "This is not a sign you broke something. Python limits recursion to about 1,000 calls by design, to protect your computer's memory. It is a safety net. Python is telling you something useful: your function did not know when to stop.",
-      fixIntro: "The fix is the base case you already know. One `if` statement is all it takes.",
+      fixIntro:
+        "We already know the solution to this problem. An `if` statement gives us our base case: our smallest acceptable input, `n <= 0`, the point where the answer is known and the function stops instead of calling itself again.",
       fixed:
         'def countdown_fixed(n):\n    if n <= 0:        # base case: stop here\n        print("Go!")\n    else:\n        print(n)\n        countdown_fixed(n - 1)',
+      fixedLines: [
+        { text: "def countdown_fixed(n):" },
+        { text: "    if n <= 0:        # base case: stop here", base: true },
+        { text: '        print("Go!")', base: true },
+        { text: "    else:" },
+        { text: "        print(n)" },
+        { text: "        countdown_fixed(n - 1)" },
+      ],
     },
 
     // 5. Payoff: the fractal tree.
