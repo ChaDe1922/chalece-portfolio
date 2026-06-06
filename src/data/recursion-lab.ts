@@ -34,13 +34,17 @@ export const recursionLab = {
     // 1. Hook: self-reference, before the word "recursion".
     mirror: {
       id: "mirror",
-      title: "Have you ever seen yourself forever?",
+      title: "Step into recursion",
+      lead: "Have you ever looked into two mirrors facing each other?",
       intro:
-        "Some things contain a smaller version of themselves. Two mirrors facing each other show it: each reflection is the whole scene again, smaller, placed inside the one before it. It goes inward, not sideways. Hold that idea, then step inside and watch it happen.",
+        "Each mirror shows the whole scene again, but smaller. Then that smaller scene appears again inside itself, and again after that. The pattern does not spread out across the room. It moves inward.",
+      instruction:
+        "Use the **Step inside** and **Step back out** buttons to travel through a tunnel of nested reflections. Watch the depth change as each new reflection appears inside the one before it.",
       maxDepth: 7,
       stepIn: "Step inside",
       stepOut: "Step back out",
-      prompt: "Each reflection sits inside the one before it. That nesting, a thing inside a smaller copy of itself, is what the rest of this lesson is about.",
+      prompt:
+        "A reflection inside a smaller version of itself is a visual example of recursion. In this lesson, you will learn how that same idea shows up in code.",
       depthNote: (d: number, max: number) =>
         d === 0
           ? "Standing at the entrance."
@@ -52,14 +56,14 @@ export const recursionLab = {
     // 2. Name it: base case + recursive case, via nested dolls.
     dolls: {
       id: "dolls",
-      title: "Two rules that keep it from going forever",
+      title: "The two rules of recursion",
       teachLead:
-        "Something that never stops is useless in a program. So every recursion has exactly two parts: one that keeps it going, and one that ends it.",
+        "A program cannot repeat forever. To make recursion useful, it needs two parts: one part that keeps the pattern going, and one part that tells it when to stop.",
       interactLead:
-        "Now open these nested dolls and watch both parts happen: each doll holds a smaller one (the recursive case), until you reach a doll with nothing inside (the base case).",
+        "Now open the nested dolls and watch both parts happen. Each doll holds a smaller one, which is the recursive case, until you reach the smallest doll with nothing inside, which is the base case.",
       intro:
         "Something that never stops is useless in a program. Open these nested dolls. Each one holds a smaller one, until you reach a doll with nothing inside.",
-      openInstr: "Open each doll to find a smaller one inside.",
+      openInstr: "Open each doll to find the smaller one inside.",
       open: "Open doll",
       reassemble: "Put them back",
       reset: "Reset",
@@ -74,16 +78,16 @@ export const recursionLab = {
         {
           id: "base",
           term: "Base case",
-          text: "The smallest doll. Nothing inside, the answer is already known, stop here. Without it, you would open dolls forever.",
+          text: "The smallest doll. There is nothing left to open, so the answer is already known. Stop here. Without a base case, the dolls would keep opening forever.",
         },
         {
           id: "recursive",
           term: "Recursive case",
-          text: "Every bigger doll. Each one holds a smaller version of itself, and each step moves closer to the base case.",
+          text: "Every bigger doll. Each one contains a smaller version of itself, and each step moves closer to the base case.",
         },
       ],
       definition:
-        "That structure has a name: recursion. Recursion is something defined in terms of a smaller version of itself, with a rule for when to stop. You just felt both parts: the recursive case that keeps going, and the base case that ends it.",
+        "This structure is called recursion. Recursion means something is defined using a smaller version of itself, with a clear rule for when to stop.",
     },
 
     // 2.5 Define + motivate: what recursion is, why it matters, where you see it.
@@ -276,11 +280,12 @@ export const recursionLab = {
     quiz: {
       id: "quiz",
       title: "Check what you learned",
-      intro: "Three quick checks, then say it in your own words. This is how we know it clicked.",
+      intro: "A few quick checks, then say it in your own words. This is how we know it clicked.",
       questions: [
         {
           id: "base-case-check",
           kind: "mc-code" as const,
+          objective: "Spot the two parts every recursion needs: a base case and a recursive case.",
           prompt: "Which of these functions is missing a base case?",
           options: [
             {
@@ -316,6 +321,7 @@ export const recursionLab = {
         {
           id: "recursive-case-check",
           kind: "mc-text" as const,
+          objective: "Predict what happens when the base case is missing.",
           prompt: "What happens if you call `countdown_broken(5)`, where it has no base case?",
           options: [
             {
@@ -351,6 +357,7 @@ export const recursionLab = {
         {
           id: "trace-countdown",
           kind: "fill" as const,
+          objective: "Write and trace a simple recursive function in Python.",
           prompt: "Call `countdown(3)`. What gets printed, in order?",
           labels: ["First print", "Second print", "Third print", "Fourth print"],
           answers: ["3", "2", "1", "Go!"],
@@ -358,6 +365,42 @@ export const recursionLab = {
             "Exactly right. The output is produced on the way in to the deepest call, not on the way back out.",
           feedbackIncorrect:
             "Not quite. countdown(3) prints 3, then countdown(2) prints 2, then countdown(1) prints 1, then countdown(0) is the base case and prints Go!.",
+        },
+        {
+          id: "define-recursion",
+          kind: "mc-text" as const,
+          objective: "Explain what recursion is, in plain language.",
+          prompt: "Last one. Which of these best describes recursion?",
+          options: [
+            {
+              key: "A",
+              text: "A function that solves a problem by calling itself on a smaller version of the same problem, until it reaches a base case it can answer directly.",
+              correct: true,
+              feedback:
+                "That is it. Recursion is self reference with a stopping point: it calls itself on something smaller until it hits a base case. You have got it.",
+            },
+            {
+              key: "B",
+              text: "A loop that repeats a block of code a fixed number of times.",
+              correct: false,
+              feedback:
+                "That describes a loop. Recursion does not count out a fixed number of repeats: it calls itself on a smaller input until it reaches a base case.",
+            },
+            {
+              key: "C",
+              text: "A function that calls a different helper function to finish its work.",
+              correct: false,
+              feedback:
+                "Close, but the key is that a recursive function calls itself, not a different function, and it shrinks the problem each time until a base case stops it.",
+            },
+            {
+              key: "D",
+              text: "Code that keeps running until you force it to stop.",
+              correct: false,
+              feedback:
+                "That is recursion without a base case, which crashes. Real recursion has a base case so it stops on its own.",
+            },
+          ],
         },
       ],
       reflection: {
@@ -382,6 +425,26 @@ export const recursionLab = {
           },
         ],
       },
+    },
+
+    // 7. Conclusion: wrap the lesson and offer contact.
+    outro: {
+      id: "outro",
+      title: "That is recursion.",
+      lead: "You stepped into a mirror, opened the dolls, wrote `countdown` in Python, watched the call stack, broke it on purpose, then grew a fractal tree. That is the whole idea: something defined in terms of a smaller version of itself, with a base case that stops it.",
+      recapLead: "What you can do now:",
+      recap: [
+        "Explain what recursion is, in plain language.",
+        "Spot the base case and the recursive case.",
+        "Write and trace a simple recursive function in Python.",
+        "Describe the call stack, and why a base case is required.",
+        "Predict the RecursionError when the base case is missing.",
+      ],
+      contactLead:
+        "I am Chalece DeLaCoudray, a learning experience designer and technologist. If this is the kind of learning you want to build, let's talk.",
+      backToPortfolio: "Back to portfolio",
+      resume: "Download resume",
+      byline: "Thanks for playing.",
     },
   },
 } as const;

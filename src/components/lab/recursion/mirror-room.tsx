@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useReducedMotion } from "motion/react";
 import { LogIn, LogOut } from "lucide-react";
 import { recursionLab } from "@/data/recursion-lab";
+import { RichText } from "@/components/lab/recursion/rich-text";
 import { MirrorRoomCssFallback } from "@/components/lab/recursion/mirror-room-css-fallback";
 import { useWebGLSupport } from "@/components/lab/recursion/mirror-tunnel/use-webgl-support";
 
@@ -60,11 +61,10 @@ export function MirrorRoom() {
   return (
     <div className="lesson-stagger space-y-5">
       {/* Teaching first */}
-      <p className="text-lg leading-relaxed text-foreground">{data.intro}</p>
-
-      <p className="sr-only">
-        An interactive tunnel of nested reflections. Use the Step inside and Step back out buttons
-        to travel deeper, and read your depth below.
+      <p className="text-lg leading-relaxed text-foreground">{data.lead}</p>
+      <p className="text-base leading-relaxed text-muted-foreground">{data.intro}</p>
+      <p className="text-base leading-relaxed text-foreground">
+        <RichText text={data.instruction} />
       </p>
 
       {/* Then the interaction. 3D tunnel or the CSS fallback, same depth state.

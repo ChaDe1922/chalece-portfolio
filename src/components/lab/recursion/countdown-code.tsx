@@ -186,7 +186,7 @@ export function CountdownCode() {
         <div className="border-t border-border pt-6">
           <div className="mb-3 flex items-center gap-2">
             <ClipboardCheck aria-hidden="true" className="size-4 text-link" />
-            <span className="text-xs font-semibold uppercase tracking-wide text-link">Checkpoint</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-link">Quick check</span>
           </div>
           <div className="rounded-xl border border-border bg-card p-4">
             <p className="text-sm font-medium text-foreground">

@@ -427,6 +427,39 @@
   }
 }
 
+/* ---- Cover "nested rings": inner rings drift toward the pointer; a click
+   ripples a highlight color from the inner ring outward, then resets. Each ring
+   carries its base color (--rb), a flash color (--rf), and a stagger (--rd). */
+.nested-ring {
+  transition: transform 0.2s ease-out;
+}
+.nested-ring--rippling {
+  animation: ring-ripple 0.62s ease both;
+  animation-delay: var(--rd, 0s);
+}
+@keyframes ring-ripple {
+  0% {
+    stroke: var(--rb);
+    stroke-width: 2;
+  }
+  40% {
+    stroke: var(--rf);
+    stroke-width: 3.6;
+  }
+  100% {
+    stroke: var(--rb);
+    stroke-width: 2;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nested-ring {
+    transition: none;
+  }
+  .nested-ring--rippling {
+    animation: none;
+  }
+}
+
 /* ---- Click burst: a soft, blurred color glow that blooms from a background
    click and fades. Gentle (not hard rings). Only transform/opacity animate.
    The component does not mount under prefers-reduced-motion. */

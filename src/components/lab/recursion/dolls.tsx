@@ -119,7 +119,9 @@ export function Dolls() {
       </p>
 
       {/* Then the interaction reinforces both parts. */}
-      <p className="pt-1 text-base leading-relaxed text-muted-foreground">{data.interactLead}</p>
+      <p className="pt-1 text-base leading-relaxed text-muted-foreground">
+        <Emphasize text={data.interactLead} terms={["recursive case", "base case"]} />
+      </p>
 
       <div ref={stageRef}>
         {use3D && active ? (

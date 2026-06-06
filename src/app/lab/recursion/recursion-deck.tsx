@@ -13,6 +13,7 @@ import { CallStack } from "@/components/lab/recursion/call-stack";
 import { NoBaseCase } from "@/components/lab/recursion/no-base-case";
 import { FractalTree } from "@/components/lab/recursion/fractal-tree";
 import { Quiz } from "@/components/lab/recursion/quiz";
+import { Outro } from "@/components/lab/recursion/outro";
 import { recursionLab } from "@/data/recursion-lab";
 
 const s = recursionLab.slides;
@@ -73,7 +74,17 @@ const slides: Slide[] = [
     ),
     render: () => <FractalTree />,
   },
-  { id: s.quiz.id, title: s.quiz.title, render: () => <Quiz /> },
+  {
+    id: s.quiz.id,
+    title: s.quiz.title,
+    titleNode: (
+      <>
+        <ClickWord label="Check">Check</ClickWord> what you learned
+      </>
+    ),
+    render: () => <Quiz />,
+  },
+  { id: s.outro.id, title: s.outro.title, render: () => <Outro /> },
 ];
 
 export function RecursionDeck() {
