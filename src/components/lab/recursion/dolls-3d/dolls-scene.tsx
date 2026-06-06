@@ -19,10 +19,13 @@ const X_POSITIONS: [number, number, number][] = [
   [1.55, -0.5, 0],
 ];
 // Lift is in each doll's local space (inside the already-scaled group), so the
-// lid rises just clear of the body rather than flying off.
+// lid rises just clear of the body rather than flying off. The lid opens toward
+// the right (positive x, leaning clockwise), the same direction the next doll
+// emerges.
 const LIFT = 0.62;
-const ASIDE = 0.28;
-const ROT = -0.3;
+const ASIDE = 0.42;
+const ROT = -0.5;
+const BASE_Y = -0.5;
 const BASE_COLOR = new THREE.Color("#16a766");
 const REC_COLOR = new THREE.Color("#e8924a");
 const OFF = new THREE.Color("#000000");
@@ -46,7 +49,7 @@ function DollsAnimator({
   topRefs: RefArr;
 }) {
   const invalidate = useThree((s) => s.invalidate);
-  const st = React.useRef(Array.from({ length: TOTAL }, () => ({ openT: 0, scaleT: 0 })));
+  const st = React.useRef(Array.from({ length: TOTAL }, () => ({ openT: 0, scaleT: 0, posT: 0 })));
   const lastDemo = React.useRef(demoTrigger);
   const demo = React.useRef({ active: false, idx: 0, dwell: 0 });
 
@@ -68,21 +71,33 @@ function DollsAnimator({
     for (let i = 0; i < TOTAL; i++) {
       const s = st.current[i];
       const scaleTarget = i < revealed ? 1 : 0;
+      const posTarget = scaleTarget; // emerge from the parent into the slot
       let openTarget = revealed > i + 1 && i < TOTAL - 1 ? 1 : 0;
       if (demo.current.active && i === demo.current.idx && i < TOTAL - 1) openTarget = 1;
 
       s.scaleT = THREE.MathUtils.lerp(s.scaleT, scaleTarget, 0.14);
+      s.posT = THREE.MathUtils.lerp(s.posT, posTarget, 0.13);
       s.openT = THREE.MathUtils.lerp(s.openT, openTarget, 0.1);
-      if (Math.abs(s.scaleT - scaleTarget) > 0.001 || Math.abs(s.openT - openTarget) > 0.001) {
+      if (
+        Math.abs(s.scaleT - scaleTarget) > 0.001 ||
+        Math.abs(s.posT - posTarget) > 0.001 ||
+        Math.abs(s.openT - openTarget) > 0.001
+      ) {
         busy = true;
       }
 
       const outer = outerRefs[i].current;
       const top = topRefs[i].current;
-      if (outer) outer.scale.setScalar(TARGET_SCALES[i] * s.scaleT);
+      if (outer) {
+        outer.scale.setScalar(TARGET_SCALES[i] * s.scaleT);
+        // Slide from the previous doll's slot into this doll's slot.
+        const parentX = X_POSITIONS[Math.max(0, i - 1)][0];
+        outer.position.x = THREE.MathUtils.lerp(parentX, X_POSITIONS[i][0], s.posT);
+        outer.position.y = BASE_Y - (1 - s.posT) * 0.2; // rise out as it settles
+      }
       if (top) {
         top.position.y = s.openT * LIFT;
-        top.position.x = s.openT * -ASIDE;
+        top.position.x = s.openT * ASIDE; // lid opens to the right
         top.rotation.z = s.openT * ROT;
       }
 
