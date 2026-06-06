@@ -89,7 +89,7 @@ export const recursionLab = {
     // 2.5 Define + motivate: what recursion is, why it matters, where you see it.
     why: {
       id: "why",
-      title: "What it is, and where you will meet it",
+      title: "What is recursion and where will I find it?",
       definition:
         "Recursion: a function that solves a problem by calling itself on a smaller version of the same problem, until it reaches a case simple enough to answer directly.",
       why: "It is how we handle anything that nests, or breaks into smaller copies of itself. Once you can write one, a whole class of problems gets simple. You describe one step and the stopping point, and the repetition takes care of itself.",

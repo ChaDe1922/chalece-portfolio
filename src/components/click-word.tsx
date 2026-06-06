@@ -9,7 +9,13 @@ import * as React from "react";
  * Decorative only; reduced-motion users get the click without motion. It is a
  * real <button>, so the global background burst skips it.
  */
-export function ClickWord({ children = "click." }: { children?: React.ReactNode }) {
+export function ClickWord({
+  children = "click.",
+  label = "click (tap for a little surprise)",
+}: {
+  children?: React.ReactNode;
+  label?: string;
+}) {
   const [blooms, setBlooms] = React.useState<number[]>([]);
   const [pop, setPop] = React.useState(0);
   const seq = React.useRef(0);
@@ -50,7 +56,7 @@ export function ClickWord({ children = "click." }: { children?: React.ReactNode 
       onClick={handleClick}
       onTouchStart={handleTouchStart}
       className="click-word"
-      aria-label="click (tap for a little surprise)"
+      aria-label={label}
     >
       {blooms.map((id) => (
         <span

@@ -6,6 +6,9 @@ import type * as React from "react";
 export type Slide = {
   id: string; // stable, used in the URL hash
   title?: string;
+  /** Optional rich heading rendered in place of `title` (which stays the plain
+   *  string used for dot/slide aria labels). */
+  titleNode?: React.ReactNode;
   render: () => React.ReactNode;
   advanceGate?: boolean;
 };

@@ -2,6 +2,7 @@
 
 import { SlideDeck } from "@/components/deck/slide-deck";
 import type { Slide } from "@/components/deck/types";
+import { ClickWord } from "@/components/click-word";
 import { Intro } from "@/components/lab/recursion/intro";
 import { MirrorRoom } from "@/components/lab/recursion/mirror-room";
 import { Dolls } from "@/components/lab/recursion/dolls";
@@ -21,7 +22,16 @@ const slides: Slide[] = [
   { id: s.intro.id, title: s.intro.title, render: () => <Intro /> },
   { id: s.mirror.id, title: s.mirror.title, render: () => <MirrorRoom /> },
   { id: s.dolls.id, title: s.dolls.title, render: () => <Dolls /> },
-  { id: s.why.id, title: s.why.title, render: () => <WhyRecursion /> },
+  {
+    id: s.why.id,
+    title: s.why.title,
+    titleNode: (
+      <>
+        What is <ClickWord label="recursion">recursion</ClickWord> and where will I find it?
+      </>
+    ),
+    render: () => <WhyRecursion />,
+  },
   { id: s.code.id, title: s.code.title, render: () => <CountdownCode /> },
   { id: s.callStack.id, title: s.callStack.title, render: () => <CallStack /> },
   { id: s.noBaseCase.id, title: s.noBaseCase.title, render: () => <NoBaseCase /> },

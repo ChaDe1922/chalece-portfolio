@@ -187,7 +187,7 @@ export function SlideDeck({ slides, deckId, className }: SlideDeckProps) {
                     tabIndex={-1}
                     className="mb-6 font-heading text-2xl font-bold tracking-tight text-foreground outline-none sm:text-3xl md:text-4xl"
                   >
-                    {current.title}
+                    {current.titleNode ?? current.title}
                   </h2>
                 ) : null}
                 {current.render()}
