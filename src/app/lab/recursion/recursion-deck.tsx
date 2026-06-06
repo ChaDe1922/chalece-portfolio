@@ -53,7 +53,16 @@ const slides: Slide[] = [
     ),
     render: () => <CallStack />,
   },
-  { id: s.noBaseCase.id, title: s.noBaseCase.title, render: () => <NoBaseCase /> },
+  {
+    id: s.noBaseCase.id,
+    title: s.noBaseCase.title,
+    titleNode: (
+      <>
+        What if there is no <ClickWord label="base case">base case</ClickWord>?
+      </>
+    ),
+    render: () => <NoBaseCase />,
+  },
   { id: s.fractal.id, title: s.fractal.title, render: () => <FractalTree /> },
   { id: s.quiz.id, title: s.quiz.title, render: () => <Quiz /> },
 ];
