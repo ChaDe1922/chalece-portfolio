@@ -73,7 +73,7 @@ function buildTree(depth: number, angle: number, ratio: number, lean: number, le
           .clone()
           .multiply(qAxis(Y, hash(i) * Math.PI * 2))
           .multiply(qAxis(X, 0.5 + hash(i + 7) * 0.5));
-        const size = 0.18 + hash(i + 3) * 0.09;
+        const size = 0.26 + hash(i + 3) * 0.12;
         leafM.push(new THREE.Matrix4().compose(end, lq, new THREE.Vector3(size, size, size)));
         leafC.push(
           new THREE.Color().setHSL(
@@ -202,7 +202,7 @@ export function TreeScene(props: {
       className="aspect-[4/3] w-full overflow-hidden rounded-xl border border-border bg-gradient-to-b from-[#faf9f6] to-[#eee9f2] shadow-sm dark:from-[#0d1016] dark:to-[#161b22]"
     >
       <Canvas dpr={[1, 1.5]} gl={{ powerPreference: "low-power", antialias: true, alpha: true }}>
-        <PerspectiveCamera makeDefault position={[0, 1.8, 6.9]} fov={45} near={0.1} far={50} />
+        <PerspectiveCamera makeDefault position={[0, 1.8, 6.0]} fov={45} near={0.1} far={50} />
         <OrbitControls
           makeDefault
           target={[0, 1.5, 0]}
