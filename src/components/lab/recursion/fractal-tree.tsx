@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { useReducedMotion } from "motion/react";
-import { Shuffle } from "lucide-react";
+import { Leaf, Shuffle } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
 import { RichText } from "@/components/lab/recursion/rich-text";
 import { FractalTree2D } from "@/components/lab/recursion/fractal-tree-2d";
@@ -25,7 +26,7 @@ export function FractalTree() {
   const [angle, setAngle] = React.useState(30);
   const [ratio, setRatio] = React.useState(70);
   const [lean, setLean] = React.useState(0);
-  const [leaves, setLeaves] = React.useState(true);
+  const [leaves, setLeaves] = React.useState(false);
   const [count, setCount] = React.useState(0);
 
   // Pause/unmount the 3D canvas when the stage is hidden or scrolled offscreen.
@@ -171,17 +172,21 @@ export function FractalTree() {
         {slider("depth-slider", "Depth", depth, 1, 9, setDepth)}
         {slider("angle-slider", "Angle", angle, 10, 60, setAngle, "°")}
         {slider("ratio-slider", "Ratio", ratio, 50, 90, setRatio, "%")}
-        <div className="flex items-center gap-2 pt-1">
-          <input
-            id="leaves-toggle"
-            type="checkbox"
-            checked={leaves}
-            onChange={(e) => setLeaves(e.target.checked)}
-            className="size-4 cursor-pointer [accent-color:var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          />
-          <label htmlFor="leaves-toggle" className="cursor-pointer text-sm text-foreground">
-            Show leaves at the branch tips
-          </label>
+        <div className="flex items-center justify-between gap-3 pt-1">
+          <span className="text-sm font-medium text-foreground">Leaves</span>
+          <button
+            type="button"
+            onClick={() => setLeaves((v) => !v)}
+            aria-pressed={leaves}
+            className={cn(
+              "inline-flex h-9 items-center gap-2 rounded-lg border px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              leaves
+                ? "border-primary bg-primary/10 text-link"
+                : "border-border bg-background text-foreground hover:bg-muted",
+            )}
+          >
+            <Leaf aria-hidden="true" className="size-4" /> {leaves ? "On" : "Off"}
+          </button>
         </div>
       </div>
 

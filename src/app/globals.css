@@ -427,6 +427,27 @@
   }
 }
 
+/* ---- Dolls rule card: a quick pop when clicked, signalling the selection. */
+.dolls-rule-pop {
+  animation: card-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes card-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.055);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dolls-rule-pop {
+    animation: none;
+  }
+}
+
 /* ---- Cover "nested rings": inner rings drift toward the pointer; a click
    ripples a highlight color from the inner ring outward, then resets. Each ring
    carries its base color (--rb), a flash color (--rf), and a stagger (--rd). */

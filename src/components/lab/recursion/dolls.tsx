@@ -38,6 +38,7 @@ export function Dolls() {
   const [revealed, setRevealed] = React.useState(1);
   const [highlight, setHighlight] = React.useState<Highlight>(null);
   const [demoTrigger, setDemoTrigger] = React.useState(0);
+  const [popped, setPopped] = React.useState<string | null>(null);
   const atBase = revealed >= TOTAL;
 
   React.useEffect(() => {
@@ -49,6 +50,7 @@ export function Dolls() {
   function showCase(which: "base" | "recursive") {
     if (which === "base") setRevealed(TOTAL); // open to the base so it can glow
     setHighlight(which);
+    setPopped(which);
     setDemoTrigger((d) => d + 1);
     if (clearTimer.current) clearTimeout(clearTimer.current);
     clearTimer.current = setTimeout(() => setHighlight(null), 3000);
@@ -94,17 +96,19 @@ export function Dolls() {
               key={rule.id}
               type="button"
               onClick={() => showCase(rule.id as "base" | "recursive")}
+              onAnimationEnd={() => setPopped((p) => (p === rule.id ? null : p))}
               aria-pressed={on}
               className={cn(
-                "rounded-xl border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "flex h-full flex-col rounded-xl border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 on
                   ? "border-primary bg-primary/10 ring-2 ring-primary"
                   : "border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] hover:border-primary/50",
+                popped === rule.id && "dolls-rule-pop",
               )}
             >
               <span className="font-heading text-base font-semibold text-link">{rule.term}</span>
               <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{rule.text}</p>
-              <span className="mt-2 inline-block text-xs font-medium text-link">
+              <span className="mt-auto pt-3 text-xs font-medium text-link">
                 {on ? "Showing this in the dolls" : "Click to see it in the dolls"}
               </span>
             </button>

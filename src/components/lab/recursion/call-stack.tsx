@@ -154,9 +154,13 @@ export function CallStack() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-[120px_1fr_180px]">
-        {/* 3D plates: physical stack metaphor (decorative). */}
-        <div className="hidden md:block" aria-hidden="true">
-          <CallStackPlates stack={activeStack} />
+        {/* 3D plates: physical stack metaphor. The label is meaningful; the
+            plates themselves are decorative (the frame list carries the data). */}
+        <div className="hidden md:flex md:flex-col md:items-center md:gap-2">
+          <span className="text-xs font-semibold uppercase tracking-wide text-link">Call stack</span>
+          <div aria-hidden="true" className="w-full">
+            <CallStackPlates stack={activeStack} />
+          </div>
         </div>
 
         {/* Stack */}
