@@ -7,12 +7,12 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
 
 const MAX = 6; // covers countdown(5) down to countdown(0)
-const GAP = 0.34;
+const GAP = 0.32;
 const MID = ((MAX - 1) * GAP) / 2;
 const BOTTOM_Y = -MID;
 
 // Module-level singletons (Compiler-safe, never re-created).
-const PLATE_GEO = new THREE.CylinderGeometry(0.46, 0.5, 0.18, 44);
+const PLATE_GEO = new THREE.CylinderGeometry(0.4, 0.44, 0.18, 44);
 const FRAME_MAT = new THREE.MeshStandardMaterial({ color: "#6d5ae6", roughness: 0.5, metalness: 0.05 });
 const BASE_MAT = new THREE.MeshStandardMaterial({ color: "#16a766", roughness: 0.5, metalness: 0.05 });
 
@@ -69,19 +69,19 @@ export function PlatesScene({ stack }: { stack: number[] }) {
   ).current;
 
   return (
-    <div aria-hidden="true" className="h-full min-h-[230px] w-full">
+    <div aria-hidden="true" className="h-[300px] w-full">
       <Canvas
         frameloop="demand"
         dpr={[1, 1.5]}
         gl={{ powerPreference: "low-power", antialias: true, alpha: true }}
       >
-        {/* Raised and tilted down so the disc tops read, while still aimed at
-            the stack center (origin) so no plates fall below the view. */}
+        {/* Pulled back and tilted down so disc tops read and the full plate
+            width fits the narrow column, still aimed at the stack center. */}
         <PerspectiveCamera
           makeDefault
-          position={[0, 0.9, 4.3]}
-          rotation={[-0.206, 0, 0]}
-          fov={32}
+          position={[0, 0.8, 5.2]}
+          rotation={[-0.153, 0, 0]}
+          fov={30}
           near={0.1}
           far={20}
         />

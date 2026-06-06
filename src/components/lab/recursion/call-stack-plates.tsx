@@ -9,14 +9,14 @@ import { useWebGLSupport } from "@/components/lab/recursion/mirror-tunnel/use-we
 // Code-split: three / R3F load only when these plates mount (lab route only).
 const PlatesScene = dynamic(
   () => import("@/components/lab/recursion/call-stack-plates/plates-scene").then((m) => m.PlatesScene),
-  { ssr: false, loading: () => <div className="h-full min-h-[230px]" aria-hidden="true" /> },
+  { ssr: false, loading: () => <div className="h-[300px] w-full" aria-hidden="true" /> },
 );
 
 /** Static plate stack used for reduced-motion / no-WebGL: rounded bars, one per
  *  active frame, bottom of the stack at the bottom. The base frame is green. */
 function PlatesCssFallback({ stack }: { stack: number[] }) {
   return (
-    <div aria-hidden="true" className="flex h-full min-h-[230px] flex-col-reverse items-center justify-start gap-1.5 py-2">
+    <div aria-hidden="true" className="flex h-[300px] w-full flex-col-reverse items-center justify-start gap-1.5 py-2">
       {stack.map((k, i) => (
         <div
           key={`${k}-${i}`}
@@ -58,7 +58,7 @@ export function CallStackPlates({ stack }: { stack: number[] }) {
   const use3D = webgl === true && !reduced && active;
 
   return (
-    <div ref={ref} className="h-full">
+    <div ref={ref} className="flex h-full items-center justify-center">
       {use3D ? <PlatesScene stack={stack} /> : <PlatesCssFallback stack={stack} />}
     </div>
   );
