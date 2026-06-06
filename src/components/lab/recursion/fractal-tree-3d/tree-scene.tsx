@@ -178,8 +178,11 @@ function TreeInstances({
 
   return (
     <group ref={groupRef}>
-      <instancedMesh ref={branchRef} args={[BRANCH_GEO, branchMat, MAX_BRANCHES]} />
-      <instancedMesh ref={leafRef} args={[LEAF_GEO, leafMat, MAX_LEAVES]} />
+      {/* frustumCulled off: when the instance count changes (e.g. leaves toggled
+          0 <-> N) the cached bounding sphere goes stale and the mesh can be
+          culled at some camera angles, making leaves flicker in and out. */}
+      <instancedMesh ref={branchRef} args={[BRANCH_GEO, branchMat, MAX_BRANCHES]} frustumCulled={false} />
+      <instancedMesh ref={leafRef} args={[LEAF_GEO, leafMat, MAX_LEAVES]} frustumCulled={false} />
     </group>
   );
 }
