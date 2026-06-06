@@ -40,7 +40,7 @@ function CheckCard({
             <ListChecks aria-hidden="true" className="size-4" />
           )}
         </span>
-        <span className="text-xs font-semibold uppercase tracking-wide text-link">Quick check {index}</span>
+        <span className="text-xs font-semibold uppercase tracking-wide text-link">Question {index}</span>
         {solved ? (
           <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-emerald-300 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:border-emerald-800 dark:text-emerald-300">
             <Check aria-hidden="true" className="size-3" /> Solved
@@ -170,6 +170,11 @@ function FillIn({
           <p className="text-base font-medium text-foreground">
             <RichText text={q.prompt} />
           </p>
+          {"code" in q ? (
+            <pre className="overflow-x-auto whitespace-pre rounded-xl border border-border bg-card p-4 font-mono text-sm text-foreground [font-feature-settings:'liga'_0,'calt'_0]">
+              {q.code}
+            </pre>
+          ) : null}
           <div className="space-y-2">
             {q.labels.map((label, i) => (
               <div key={label} className="flex items-center gap-3">

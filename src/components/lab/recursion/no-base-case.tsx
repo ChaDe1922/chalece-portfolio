@@ -43,6 +43,9 @@ export function NoBaseCase() {
   }, []);
 
   const use3D = webgl === true && !reduced;
+  // What the broken function prints as the calls pile up: 3, 2, 1, 0, -1, ...
+  // (it prints n, then recurses with no base case, so it never stops at 0).
+  const printed = Array.from({ length: count }, (_, i) => 3 - i);
 
   function run() {
     if (reduced) {
@@ -126,6 +129,24 @@ export function NoBaseCase() {
           )}
         </div>
       </div>
+
+      {/* What the program prints: numbers marching past zero, never reaching Go!. */}
+      {phase !== "idle" ? (
+        <div className="rounded-xl border border-border bg-muted p-4 dark:bg-[#0d1016]">
+          <p className="mb-2 font-mono text-xs uppercase tracking-wide text-muted-foreground dark:text-slate-400">
+            Output
+          </p>
+          <div className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-sm text-emerald-700 dark:text-emerald-300">
+            {printed.map((v, i) => (
+              <span key={i}>{v}</span>
+            ))}
+            {phase === "crashed" ? <span className="text-muted-foreground dark:text-slate-500">...</span> : null}
+          </div>
+          <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+            <RichText text="It prints `n`, then calls itself again, so the numbers march straight past `0` and never reach `Go!`." />
+          </p>
+        </div>
+      ) : null}
 
       {/* The crash + reframe + fix */}
       {phase === "crashed" ? (

@@ -112,7 +112,7 @@ export const recursionLab = {
       title: "Writing a recursive function in Python.",
       intro:
         "Every recursive function follows the same recipe. Learn the recipe once, and you can write any of them.",
-      cardsLead: "Hover or tap a step to highlight it in the code below.",
+      cardsLead: "Tap a step to highlight it in the code below.",
       recipe: [
         {
           id: "base",
@@ -359,6 +359,7 @@ export const recursionLab = {
           kind: "fill" as const,
           objective: "Write and trace a simple recursive function in Python.",
           prompt: "Call `countdown(3)`. What gets printed, in order?",
+          code: 'def countdown(n):\n    if n <= 0:\n        print("Go!")\n    else:\n        print(n)\n        countdown(n - 1)',
           labels: ["First print", "Second print", "Third print", "Fourth print"],
           answers: ["3", "2", "1", "Go!"],
           feedbackCorrect:
@@ -446,7 +447,7 @@ export const recursionLab = {
         "I am Chalece DeLaCoudray, a learning experience designer and technologist. If this is the kind of learning you want to build, let's talk.",
       backToPortfolio: "Back to portfolio",
       resume: "Download resume",
-      byline: "Thanks for playing.",
+      byline: "Thanks for visiting.",
     },
   },
 } as const;

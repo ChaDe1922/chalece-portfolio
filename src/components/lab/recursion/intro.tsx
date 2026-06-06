@@ -9,8 +9,8 @@ import { recursionLab } from "@/data/recursion-lab";
 
 const data = recursionLab.slides.intro;
 const RINGS = [56, 44, 32, 20, 9];
-const FOLLOW_RADIUS = 170; // px from the rings' center where attraction starts
-const MAX_SHIFT = 7; // svg units the inner ring drifts toward the pointer
+const FOLLOW_RADIUS = 260; // px from the rings' center where attraction starts
+const MAX_SHIFT = 8; // svg units the inner ring drifts toward the pointer
 
 /** Concentric rings: a thing inside a smaller version of itself. Decorative,
  *  but interactive: the inner rings drift toward a nearby pointer, and a click
@@ -50,6 +50,13 @@ function NestedRings() {
       window.removeEventListener("pointermove", onMove);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
+  }, [reduced]);
+
+  // Flash the ripple once on arrival so it reads as interactive without a click.
+  React.useEffect(() => {
+    if (reduced) return;
+    const t = setTimeout(() => setRippleKey((k) => k + 1), 700);
+    return () => clearTimeout(t);
   }, [reduced]);
 
   return (
