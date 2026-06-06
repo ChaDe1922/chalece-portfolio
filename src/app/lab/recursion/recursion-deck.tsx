@@ -43,7 +43,16 @@ const slides: Slide[] = [
     ),
     render: () => <CountdownCode />,
   },
-  { id: s.callStack.id, title: s.callStack.title, render: () => <CallStack /> },
+  {
+    id: s.callStack.id,
+    title: s.callStack.title,
+    titleNode: (
+      <>
+        Wait, what is a <ClickWord label="call stack">call stack</ClickWord>?
+      </>
+    ),
+    render: () => <CallStack />,
+  },
   { id: s.noBaseCase.id, title: s.noBaseCase.title, render: () => <NoBaseCase /> },
   { id: s.fractal.id, title: s.fractal.title, render: () => <FractalTree /> },
   { id: s.quiz.id, title: s.quiz.title, render: () => <Quiz /> },
