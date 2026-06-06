@@ -65,13 +65,15 @@ export function PlatesPhysicsScene({
   const plates = Array.from({ length: count }, (_, i) => i);
 
   return (
-    <div aria-hidden="true" className="h-[340px] w-full">
+    <div aria-hidden="true" className="h-[260px] w-full">
       <Canvas
         frameloop={paused ? "demand" : "always"}
         dpr={[1, 1.5]}
         gl={{ powerPreference: "low-power", antialias: true, alpha: true }}
       >
-        <PerspectiveCamera makeDefault position={[1.3, 2.0, 8.7]} rotation={[-0.19, 0, 0]} fov={42} near={0.1} far={40} />
+        {/* Close in and aimed at the tower's mid-height so the floor sits near
+            the bottom edge (no empty band below) while the tower top stays in. */}
+        <PerspectiveCamera makeDefault position={[1.2, 2.3, 5.7]} rotation={[-0.18, 0, 0]} fov={42} near={0.1} far={40} />
         <ambientLight intensity={0.7} color="#fff6ee" />
         <directionalLight position={[3, 6, 4]} intensity={1.1} color="#fff4e6" />
         <Physics gravity={[0, -12, 0]} paused={paused}>

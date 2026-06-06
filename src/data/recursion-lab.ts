@@ -219,7 +219,7 @@ export const recursionLab = {
         "There is no `if`, so there is no condition to check. And with no condition, nothing ever tells the function to stop. Every call just calls the next one, and none of them ever returns.",
       runLead: "Press Run and watch the calls pile up.",
       expectNote:
-        "Heads up: we expect a RecursionError here, on purpose. With no base case the calls never stop, so Python steps in. Watch the stack of calls grow until it topples.",
+        "Heads up: we expect a RecursionError here, on purpose. With no base case the calls never stop, so Python steps in. Watch the stack of calls grow until it crashes.",
       run: "Run countdown_broken(3)",
       running: (n: number) => `countdown_broken(${n})`,
       traceback:

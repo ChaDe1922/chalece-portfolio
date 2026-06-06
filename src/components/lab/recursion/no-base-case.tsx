@@ -103,11 +103,11 @@ export function NoBaseCase() {
         {/* Right: physics plates when able, else the DOM growing stack. */}
         <div ref={stageRef}>
           {phase === "idle" ? (
-            <div className="h-[340px] w-full rounded-xl border border-dashed border-border bg-card/50" />
+            <div className="h-[260px] w-full rounded-xl border border-dashed border-border bg-card/50" />
           ) : use3D && active ? (
             <NoBaseCasePlates count={count} phase={phase} />
           ) : (
-            <div className="max-h-[340px] overflow-hidden rounded-xl border border-border bg-[#0d1016] p-3">
+            <div className="max-h-[260px] overflow-hidden rounded-xl border border-border bg-[#0d1016] p-3">
               <ol className="flex flex-col gap-1">
                 {Array.from({ length: count }, (_, i) => (
                   <li
@@ -148,8 +148,7 @@ export function NoBaseCase() {
                 key={i}
                 className={cn(
                   "whitespace-pre rounded px-2 text-foreground",
-                  "base" in line &&
-                    "border-l-2 border-emerald-500 bg-emerald-500/15 dark:bg-emerald-500/20",
+                  "base" in line && "border-l-2 border-primary bg-primary/15",
                 )}
               >
                 {line.text}
