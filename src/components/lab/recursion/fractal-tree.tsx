@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useReducedMotion } from "motion/react";
+import { useTheme } from "next-themes";
 import { Shuffle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
@@ -25,6 +26,7 @@ const rand = (min: number, max: number) => Math.floor(min + Math.random() * (max
  *  the final tree at once. */
 export function FractalTree() {
   const reduced = useReducedMotion();
+  const { resolvedTheme } = useTheme();
   const [depth, setDepth] = React.useState(5);
   const [angle, setAngle] = React.useState(30);
   const [ratio, setRatio] = React.useState(70);
@@ -38,8 +40,8 @@ export function FractalTree() {
   const rd = React.useRef(0); // currently rendered max depth
 
   // Mirror live params into refs so the animation loop never reads stale state.
-  const p = React.useRef({ angle, ratio, leaves, lean, depth, reduced });
-  p.current = { angle, ratio, leaves, lean, depth, reduced };
+  const p = React.useRef({ angle, ratio, leaves, lean, depth, reduced, theme: resolvedTheme });
+  p.current = { angle, ratio, leaves, lean, depth, reduced, theme: resolvedTheme };
 
   const drawAt = React.useCallback((maxDepth: number) => {
     const canvas = canvasRef.current;
@@ -56,9 +58,10 @@ export function FractalTree() {
     canvas.style.height = `${cssH}px`;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
+    const isLight = p.current.theme === "light";
     const bg = ctx.createLinearGradient(0, 0, 0, cssH);
-    bg.addColorStop(0, "#0d1016");
-    bg.addColorStop(1, "#161b22");
+    bg.addColorStop(0, isLight ? "#faf9f6" : "#0d1016");
+    bg.addColorStop(1, isLight ? "#eee9f2" : "#161b22");
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, cssW, cssH);
 
@@ -147,6 +150,11 @@ export function FractalTree() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Repaint when the theme flips so the background follows light/dark.
+  React.useEffect(() => {
+    schedule(rd.current);
+  }, [resolvedTheme, schedule]);
 
   // Slider edits redraw instantly at the new settings (responsive, no grow).
   function setDepthNow(v: number) {

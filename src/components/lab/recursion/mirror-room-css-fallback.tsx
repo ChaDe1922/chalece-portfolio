@@ -39,7 +39,7 @@ function Frame({ level }: { level: number }) {
 export function MirrorRoomCssFallback({ depth, reduced }: { depth: number; reduced: boolean }) {
   const zoom = 1 / Math.pow(SCALE, depth);
   return (
-    <div className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-slate-900">
+    <div className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-slate-200 dark:bg-slate-900">
       <div
         className="relative size-full"
         style={{

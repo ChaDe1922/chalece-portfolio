@@ -107,29 +107,33 @@ export const recursionLab = {
       id: "code",
       title: "Writing a recursive function in Python.",
       intro:
-        "Every recursive function follows the same recipe. Learn the recipe once, and you can write any of them. Tap a step to see that part light up in the code below.",
+        "Every recursive function follows the same recipe. Learn the recipe once, and you can write any of them.",
+      cardsLead: "Hover or tap a step to highlight it in the code below.",
       recipe: [
         {
           id: "base",
           highlight: "base",
           step: "1. Base case",
-          text: "New term. The base case is the one input simple enough to answer on the spot, with no more calls to itself. It is the stop sign: when the function reaches it, the recursion ends. Without a base case, the function would call itself forever.",
+          text: "The stopping point: the one input simple enough to answer on the spot, with no more calls. Without it, the function never stops.",
+          snippet: "if n <= 0:",
         },
         {
           id: "recursive",
           highlight: "recursive",
           step: "2. Recursive case",
-          text: "The part that calls itself. Do one small piece of the work, then call the same function again on a smaller input.",
+          text: "The part that calls itself. It does one small piece of the work, then calls the same function on a smaller input.",
+          snippet: "countdown(n - 1)",
         },
         {
           id: "move",
           highlight: "move",
           step: "3. Move toward the base",
-          text: "Each call must hand the function an input closer to the base case. In countdown that is n - 1: every call shrinks n by one, so it always marches toward 0. If the input never shrinks, the base case is never reached and it never stops.",
+          text: "Each call must shrink the input toward the base case. Here that is n - 1, so every call heads to 0 and the stop is reached.",
+          snippet: "n - 1",
         },
       ],
       buildIntro:
-        "Let us use the recipe to write countdown(n): it counts down from n to zero, printing each step. Reveal each piece, then predict what it prints.",
+        "Let us use the recipe to write `countdown(n)`: it counts down from `n` to zero, printing each step. Write each part, then predict what it prints.",
       // The function as structured lines: the single source for the live code
       // panel. `part` groups lines for the reveal and the card highlighting;
       // `move` marks the token that is the step toward the base case.
@@ -145,22 +149,22 @@ export const recursionLab = {
         {
           part: "signature",
           label: "The signature",
-          note: "def means here comes a new function. It takes one input, n, the number we start from.",
+          note: "`def` means here comes a new function. It takes one input, `n`, the number we start from.",
         },
         {
           part: "base",
           label: "The base case",
-          note: "This is the base case: the stopping point. When n reaches 0 (or less), the function prints Go! and does not call itself again, so the recursion ends right here.",
+          note: "This is the base case: the stopping point. When `n` reaches `0` (or less), the function prints `Go!` and does not call itself again, so the recursion ends right here.",
         },
         {
           part: "recursive",
           label: "The recursive case",
-          note: "This is the recursive case: print n, then call countdown again. The n - 1 is the move toward the base case. Each call shrinks n by one, so it steps closer to 0 every time.",
+          note: "This is the recursive case: print `n`, then call `countdown` again. The `n - 1` is the move toward the base case: each call shrinks `n` by one, so it steps closer to `0` every time.",
         },
       ],
       full: "def countdown(n):\n    if n <= 0:\n        print(\"Go!\")\n    else:\n        print(n)\n        countdown(n - 1)",
       predict: {
-        prompt: "Call countdown(3). What gets printed, in order?",
+        prompt: "If we call `countdown(n)` with n = 3, that runs `countdown(3)`. What does it print, in order?",
         blanks: ["3", "2", "1", "Go!"],
         labels: ["First print", "Second print", "Third print", "Fourth print"],
         correctNote:

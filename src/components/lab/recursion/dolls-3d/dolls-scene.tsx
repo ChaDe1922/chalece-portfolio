@@ -3,6 +3,7 @@
 
 import * as React from "react";
 import * as THREE from "three";
+import { useTheme } from "next-themes";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
 import { DollMesh, DOLL_MATS, TOTAL } from "./doll-mesh";
@@ -151,15 +152,19 @@ export function DollsScene({
     Array.from({ length: TOTAL }, () => React.createRef<THREE.Group | null>()),
   ).current;
 
+  const { resolvedTheme } = useTheme();
+  const isLight = resolvedTheme === "light";
+  const bg = isLight ? "#f4efe8" : "#1a1310";
+
   return (
     <div
       aria-hidden="true"
-      className="mx-auto aspect-[21/9] w-full max-w-xl overflow-hidden rounded-xl border border-border bg-[#1a1310]"
+      className="mx-auto aspect-[21/9] w-full max-w-xl overflow-hidden rounded-xl border border-border bg-[#f4efe8] dark:bg-[#1a1310]"
     >
       <Canvas frameloop="demand" dpr={[1, 1.5]} gl={{ powerPreference: "low-power", antialias: false }}>
-        <color attach="background" args={["#1a1310"]} />
+        <color attach="background" args={[bg]} />
         <PerspectiveCamera makeDefault position={[0, 0.1, 5.2]} fov={42} near={0.1} far={20} />
-        <DollsLighting />
+        <DollsLighting isLight={isLight} />
         {X_POSITIONS.map((p, i) => (
           <DollMesh key={i} index={i} outerRef={outerRefs[i]} topRef={topRefs[i]} position={p} />
         ))}

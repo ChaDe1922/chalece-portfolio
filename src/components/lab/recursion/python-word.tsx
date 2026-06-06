@@ -53,7 +53,11 @@ export function PythonWord({ children = "Python" }: { children?: React.ReactNode
           key={id}
           aria-hidden="true"
           className="python-snake"
-          onAnimationEnd={() => removeSnake(id)}
+          // Only the slither end removes the snake; the tongue flick's
+          // animationend bubbles up here too and would cut it off early.
+          onAnimationEnd={(e) => {
+            if (e.animationName.includes("python-slither")) removeSnake(id);
+          }}
         >
           <svg viewBox="0 0 40 16" width="40" height="16" role="presentation">
             {/* body: a sinuous green serpent, head at the right (leading) end */}

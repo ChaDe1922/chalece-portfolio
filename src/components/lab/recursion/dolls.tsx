@@ -22,7 +22,7 @@ const DollsScene = dynamic(
     loading: () => (
       <div
         aria-hidden="true"
-        className="mx-auto aspect-[21/9] w-full max-w-xl rounded-xl border border-border bg-[#1a1310]"
+        className="mx-auto aspect-[21/9] w-full max-w-xl rounded-xl border border-border bg-[#f4efe8] dark:bg-[#1a1310]"
       />
     ),
   },
@@ -127,7 +127,7 @@ export function Dolls() {
         ) : use3D ? (
           <div
             aria-hidden="true"
-            className="mx-auto aspect-[21/9] w-full max-w-xl rounded-xl border border-border bg-[#1a1310]"
+            className="mx-auto aspect-[21/9] w-full max-w-xl rounded-xl border border-border bg-[#f4efe8] dark:bg-[#1a1310]"
           />
         ) : (
           <Dolls2DFallback revealed={revealed} highlight={highlight} />

@@ -188,13 +188,13 @@ export function CallStack() {
         </div>
 
         {/* Output panel */}
-        <div className="rounded-xl border border-border bg-[#0d1016] p-4">
-          <p className="mb-2 font-mono text-xs uppercase tracking-wide text-slate-400">Output</p>
-          <div className="flex flex-col gap-1 font-mono text-sm text-emerald-300">
+        <div className="rounded-xl border border-border bg-muted p-4 dark:bg-[#0d1016]">
+          <p className="mb-2 font-mono text-xs uppercase tracking-wide text-muted-foreground dark:text-slate-400">Output</p>
+          <div className="flex flex-col gap-1 font-mono text-sm text-emerald-700 dark:text-emerald-300">
             {output.length ? (
               output.map((o, i) => <span key={i}>{o}</span>)
             ) : (
-              <span className="text-slate-500">(nothing yet)</span>
+              <span className="text-muted-foreground dark:text-slate-500">(nothing yet)</span>
             )}
           </div>
         </div>

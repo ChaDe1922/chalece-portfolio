@@ -381,7 +381,8 @@
   margin-left: -10px; /* start tucked behind the last letters */
   pointer-events: none;
   transform-origin: left center;
-  animation: python-slither 1.7s cubic-bezier(0.34, 1.2, 0.5, 1) forwards;
+  /* ease-in-out so it eases back out the same way it eased in */
+  animation: python-slither 1.8s ease-in-out forwards;
 }
 .python-snake svg {
   display: block;
@@ -394,24 +395,23 @@
    then retreats back behind the word and fades. */
 @keyframes python-slither {
   0% {
-    transform: translate(-100%, -50%) rotate(-4deg);
+    transform: translate(-100%, -50%) rotate(-6deg);
     opacity: 0;
   }
-  18% {
+  15% {
     opacity: 1;
   }
-  40% {
-    transform: translate(10%, -56%) rotate(5deg);
+  45% {
+    transform: translate(55%, -54%) rotate(8deg);
   }
   60% {
-    transform: translate(14%, -46%) rotate(-3deg);
+    transform: translate(68%, -47%) rotate(-2deg);
   }
-  78% {
-    transform: translate(2%, -52%) rotate(3deg);
+  80% {
     opacity: 1;
   }
   100% {
-    transform: translate(-100%, -50%) rotate(-4deg);
+    transform: translate(-100%, -50%) rotate(-6deg);
     opacity: 0;
   }
 }

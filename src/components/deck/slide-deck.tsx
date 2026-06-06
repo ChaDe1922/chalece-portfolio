@@ -5,6 +5,7 @@ import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DeckProvider } from "@/components/deck/deck-context";
+import { ThemeToggle } from "@/components/theme-toggle";
 import type { Slide } from "@/components/deck/types";
 
 type SlideDeckProps = {
@@ -239,15 +240,18 @@ export function SlideDeck({ slides, deckId, className }: SlideDeckProps) {
             ))}
           </div>
 
-          <button
-            type="button"
-            onClick={() => goTo(0)}
-            aria-label="Restart from the first slide"
-            className="inline-flex h-11 items-center gap-1.5 rounded-lg border border-border bg-card px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <RotateCcw aria-hidden="true" className="size-4" />
-            <span className="hidden sm:inline">Restart</span>
-          </button>
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <button
+              type="button"
+              onClick={() => goTo(0)}
+              aria-label="Restart from the first slide"
+              className="inline-flex h-11 items-center gap-1.5 rounded-lg border border-border bg-card px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <RotateCcw aria-hidden="true" className="size-4" />
+              <span className="hidden sm:inline">Restart</span>
+            </button>
+          </div>
         </div>
       </section>
     </DeckProvider>
