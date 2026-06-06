@@ -75,7 +75,16 @@ export function PlatesScene({ stack }: { stack: number[] }) {
         dpr={[1, 1.5]}
         gl={{ powerPreference: "low-power", antialias: true, alpha: true }}
       >
-        <PerspectiveCamera makeDefault position={[0, 0.9, 4.3]} fov={32} near={0.1} far={20} />
+        {/* Raised and tilted down so the disc tops read, while still aimed at
+            the stack center (origin) so no plates fall below the view. */}
+        <PerspectiveCamera
+          makeDefault
+          position={[0, 0.9, 4.3]}
+          rotation={[-0.206, 0, 0]}
+          fov={32}
+          near={0.1}
+          far={20}
+        />
         <ambientLight intensity={0.75} color="#fff6ee" />
         <directionalLight position={[2, 4, 3]} intensity={1.1} color="#fff4e6" />
         {Array.from({ length: MAX }, (_, k) => (
