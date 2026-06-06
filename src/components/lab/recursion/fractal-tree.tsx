@@ -2,32 +2,25 @@
 
 import * as React from "react";
 import { useReducedMotion } from "motion/react";
-import { useTheme } from "next-themes";
 import { Shuffle } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
 import { RichText } from "@/components/lab/recursion/rich-text";
+import { FractalTree2D } from "@/components/lab/recursion/fractal-tree-2d";
+import { FractalTree3D } from "@/components/lab/recursion/fractal-tree-3d";
+import { useWebGLSupport } from "@/components/lab/recursion/mirror-tunnel/use-webgl-support";
 
 const data = recursionLab.slides.fractal;
 
-/** Branch color: warm brown trunk (t=0) to fresh green tips (t=1). */
-function branchColor(t: number) {
-  const h = 25 + t * 80;
-  const s = 65 - t * 18;
-  const l = 28 + t * 14;
-  return `hsl(${h.toFixed(0)},${s.toFixed(0)}%,${l.toFixed(0)}%)`;
-}
-
 const rand = (min: number, max: number) => Math.floor(min + Math.random() * (max - min + 1));
 
-/** Slide 5 payoff: a fractal tree drawn by recursion. Sliders + presets +
- *  Surprise me, with a gentle level-by-level grow animation. The canvas is
- *  device-pixel-ratio scaled; controls are keyboard accessible and marked
- *  data-no-swipe so dragging never navigates the deck. Reduced motion draws
- *  the final tree at once. */
+/** Slide 5 payoff: a fractal tree drawn by recursion. A 3D tree you can orbit
+ *  (with leafy, swaying foliage) when WebGL is available and motion is allowed,
+ *  otherwise the 2D canvas fallback. Sliders, presets, and Surprise me drive
+ *  whichever visual is shown. Controls are data-no-swipe so dragging never
+ *  navigates the deck. */
 export function FractalTree() {
   const reduced = useReducedMotion();
-  const { resolvedTheme } = useTheme();
+  const webgl = useWebGLSupport();
   const [depth, setDepth] = React.useState(5);
   const [angle, setAngle] = React.useState(30);
   const [ratio, setRatio] = React.useState(70);
@@ -35,150 +28,23 @@ export function FractalTree() {
   const [leaves, setLeaves] = React.useState(true);
   const [count, setCount] = React.useState(0);
 
-  const canvasRef = React.useRef<HTMLCanvasElement>(null);
-  const rafRef = React.useRef<number | null>(null);
-  const growRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
-  const rd = React.useRef(0); // currently rendered max depth
-
-  // Mirror live params into refs so the animation loop never reads stale state.
-  const p = React.useRef({ angle, ratio, leaves, lean, depth, reduced, theme: resolvedTheme });
-  p.current = { angle, ratio, leaves, lean, depth, reduced, theme: resolvedTheme };
-
-  const drawAt = React.useCallback((maxDepth: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    const { angle, ratio, leaves, lean } = p.current;
-
-    const dpr = window.devicePixelRatio || 1;
-    const cssW = canvas.getBoundingClientRect().width || 480;
-    const cssH = Math.round(cssW * 0.72);
-    canvas.width = Math.round(cssW * dpr);
-    canvas.height = Math.round(cssH * dpr);
-    canvas.style.height = `${cssH}px`;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    const isLight = p.current.theme === "light";
-    const bg = ctx.createLinearGradient(0, 0, 0, cssH);
-    bg.addColorStop(0, isLight ? "#faf9f6" : "#0d1016");
-    bg.addColorStop(1, isLight ? "#eee9f2" : "#161b22");
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, cssW, cssH);
-
-    const angleRad = (angle * Math.PI) / 180;
-    const leanRad = (lean * Math.PI) / 180;
-    const r = ratio / 100;
-    const startX = cssW / 2;
-    const startY = cssH - 10;
-    const trunkLength = cssH * 0.24;
-    let branches = 0;
-
-    const drawBranch = (x: number, y: number, a: number, length: number, d: number) => {
-      if (d > maxDepth || length < 1.5) return;
-      branches++;
-      const endX = x + Math.sin(a) * length;
-      const endY = y - Math.cos(a) * length;
-      const t = maxDepth > 0 ? d / maxDepth : 0;
-      const lineWidth = Math.max(0.8, (maxDepth - d + 1) * (3 / (maxDepth + 1)) * 1.5);
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(endX, endY);
-      ctx.strokeStyle = branchColor(t);
-      ctx.lineWidth = lineWidth;
-      ctx.lineCap = "round";
-      ctx.stroke();
-      if (leaves && d === maxDepth && maxDepth > 0) {
-        const leafR = Math.max(1.5, lineWidth * 1.8);
-        ctx.beginPath();
-        ctx.arc(endX, endY, leafR, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${(95 + Math.random() * 25).toFixed(0)},65%,45%,0.85)`;
-        ctx.fill();
-      }
-      drawBranch(endX, endY, a - angleRad, length * r, d + 1);
-      drawBranch(endX, endY, a + angleRad, length * r, d + 1);
-    };
-
-    drawBranch(startX, startY, leanRad, trunkLength, 0);
-    setCount(branches);
-  }, []);
-
-  const schedule = React.useCallback(
-    (maxDepth: number) => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = null;
-        drawAt(maxDepth);
-      });
-    },
-    [drawAt],
-  );
-
-  // Grow level by level from 0 to target (instant under reduced motion).
-  const grow = React.useCallback(
-    (target: number) => {
-      if (growRef.current) clearInterval(growRef.current);
-      if (p.current.reduced) {
-        rd.current = target;
-        schedule(target);
-        return;
-      }
-      let cur = 0;
-      rd.current = 0;
-      schedule(0);
-      growRef.current = setInterval(() => {
-        cur += 1;
-        rd.current = cur;
-        schedule(cur);
-        if (cur >= target && growRef.current) {
-          clearInterval(growRef.current);
-          growRef.current = null;
-        }
-      }, 110);
-    },
-    [schedule],
-  );
-
-  // Initial grow on mount, and redraw at the current depth on resize.
+  // Pause/unmount the 3D canvas when the stage is hidden or scrolled offscreen.
+  const stageRef = React.useRef<HTMLDivElement>(null);
+  const [active, setActive] = React.useState(true);
   React.useEffect(() => {
-    grow(p.current.depth);
-    const ro = new ResizeObserver(() => schedule(rd.current));
-    if (canvasRef.current) ro.observe(canvasRef.current);
+    const el = stageRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    const onVis = () => setActive(document.visibilityState === "visible");
+    document.addEventListener("visibilitychange", onVis);
     return () => {
-      ro.disconnect();
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      if (growRef.current) clearInterval(growRef.current);
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Repaint when the theme flips so the background follows light/dark.
-  React.useEffect(() => {
-    schedule(rd.current);
-  }, [resolvedTheme, schedule]);
-
-  // Slider edits redraw instantly at the new settings (responsive, no grow).
-  function setDepthNow(v: number) {
-    setDepth(v);
-    rd.current = v;
-    p.current.depth = v;
-    schedule(v);
-  }
-  function setAngleNow(v: number) {
-    setAngle(v);
-    p.current.angle = v;
-    schedule(rd.current);
-  }
-  function setRatioNow(v: number) {
-    setRatio(v);
-    p.current.ratio = v;
-    schedule(rd.current);
-  }
-  function setLeavesNow(v: boolean) {
-    setLeaves(v);
-    p.current.leaves = v;
-    schedule(rd.current);
-  }
+  const use3D = webgl === true && !reduced;
 
   function applyPreset(preset: (typeof data.presets)[number]) {
     setDepth(preset.depth);
@@ -186,21 +52,13 @@ export function FractalTree() {
     setRatio(preset.ratio);
     setLean(preset.lean);
     setLeaves(preset.leaves);
-    p.current = { ...p.current, depth: preset.depth, angle: preset.angle, ratio: preset.ratio, lean: preset.lean, leaves: preset.leaves };
-    grow(preset.depth);
   }
-
   function surprise() {
-    const d = rand(5, 9);
-    const a = rand(15, 55);
-    const ra = rand(60, 85);
-    setDepth(d);
-    setAngle(a);
-    setRatio(ra);
+    setDepth(rand(5, 9));
+    setAngle(rand(15, 55));
+    setRatio(rand(60, 85));
     setLean(0);
     setLeaves(true);
-    p.current = { ...p.current, depth: d, angle: a, ratio: ra, lean: 0, leaves: true };
-    grow(d);
   }
 
   const slider = (
@@ -243,12 +101,24 @@ export function FractalTree() {
     );
   };
 
+  const treeProps = { depth, angle, ratio, lean, leaves, onCount: setCount };
+
   return (
     <div className="lesson-stagger space-y-4">
-      {/* Teaching first: what a fractal is, and the rule in code. */}
+      {/* Teaching first: what a fractal is, the rule as steps, then in code. */}
       <p className="text-lg leading-relaxed text-foreground">
-        <RichText text={data.teach} />
+        <RichText text={data.teachLead} />
       </p>
+      <div className="rounded-xl border border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] p-4">
+        <p className="text-sm font-medium text-foreground">{data.stepsLead}</p>
+        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted-foreground">
+          {data.steps.map((s) => (
+            <li key={s}>
+              <RichText text={s} />
+            </li>
+          ))}
+        </ul>
+      </div>
       <div className="rounded-xl border border-border bg-card p-4 font-mono text-sm [font-feature-settings:'liga'_0,'calt'_0]">
         <pre className="whitespace-pre-wrap text-foreground">{data.codeBase}</pre>
         <pre className="mt-1 whitespace-pre-wrap text-foreground">{data.codeRec}</pre>
@@ -256,19 +126,17 @@ export function FractalTree() {
       <p className="text-sm leading-relaxed text-muted-foreground">
         <RichText text={data.codeNote} />
       </p>
+      <p className="text-sm leading-relaxed text-muted-foreground">
+        <RichText text={data.selfSimilar} />
+      </p>
 
       {/* Then the interaction: grow your own. */}
       <p className="pt-1 text-base leading-relaxed text-foreground">
         <RichText text={data.intro} />
       </p>
 
-      <div data-no-swipe>
-        <canvas
-          ref={canvasRef}
-          role="img"
-          aria-label={`A fractal tree at depth ${depth}, drawn with ${count} branches by a recursive function.`}
-          className="block w-full rounded-xl border border-border shadow-sm"
-        />
+      <div ref={stageRef} data-no-swipe>
+        {use3D && active ? <FractalTree3D {...treeProps} /> : <FractalTree2D {...treeProps} />}
       </div>
 
       <p aria-live="polite" className="text-center text-sm italic text-muted-foreground">
@@ -300,15 +168,15 @@ export function FractalTree() {
 
       {/* Sliders */}
       <div className="space-y-4 rounded-xl border border-border bg-card p-4 pt-7" data-no-swipe>
-        {slider("depth-slider", "Depth", depth, 1, 9, setDepthNow)}
-        {slider("angle-slider", "Angle", angle, 10, 60, setAngleNow, "°")}
-        {slider("ratio-slider", "Ratio", ratio, 50, 90, setRatioNow, "%")}
+        {slider("depth-slider", "Depth", depth, 1, 9, setDepth)}
+        {slider("angle-slider", "Angle", angle, 10, 60, setAngle, "°")}
+        {slider("ratio-slider", "Ratio", ratio, 50, 90, setRatio, "%")}
         <div className="flex items-center gap-2 pt-1">
           <input
             id="leaves-toggle"
             type="checkbox"
             checked={leaves}
-            onChange={(e) => setLeavesNow(e.target.checked)}
+            onChange={(e) => setLeaves(e.target.checked)}
             className="size-4 cursor-pointer [accent-color:var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           />
           <label htmlFor="leaves-toggle" className="cursor-pointer text-sm text-foreground">

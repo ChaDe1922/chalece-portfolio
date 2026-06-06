@@ -63,7 +63,16 @@ const slides: Slide[] = [
     ),
     render: () => <NoBaseCase />,
   },
-  { id: s.fractal.id, title: s.fractal.title, render: () => <FractalTree /> },
+  {
+    id: s.fractal.id,
+    title: s.fractal.title,
+    titleNode: (
+      <>
+        <ClickWord label="Recursion">Recursion</ClickWord> draws the world around us
+      </>
+    ),
+    render: () => <FractalTree />,
+  },
   { id: s.quiz.id, title: s.quiz.title, render: () => <Quiz /> },
 ];
 

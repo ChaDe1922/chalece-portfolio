@@ -243,15 +243,23 @@ export const recursionLab = {
     // 5. Payoff: the fractal tree.
     fractal: {
       id: "fractal",
-      title: "Recursion draws the world",
-      teach:
-        "One last idea, then you play. A fractal is a shape built from a single rule repeated at smaller and smaller scales. The rule for a tree: draw a branch, then draw two smaller branches from its tip, and do the same thing to each of those. `depth` is the base case. When `depth` reaches zero, the branching stops. That repeating-at-smaller-scale property is called self similarity.",
-      intro: "Now drag the sliders and grow your own. The same rule, a branch that splits into two smaller branches, draws all of this.",
+      title: "Recursion draws the world around us",
+      teachLead:
+        "Let's explore one last idea. A **fractal** is a shape built from a single rule repeated at smaller and smaller scales.",
+      stepsLead: "The fractal rule for a tree could be:",
+      steps: [
+        "Draw a branch.",
+        "From its tip, draw two smaller, angled branches.",
+        "Do the same thing to each of those.",
+        "Stop when `depth` reaches zero, the base case.",
+      ],
+      selfSimilar:
+        "Repeating the same rule at smaller and smaller scales is called self similarity.",
+      intro:
+        "Now, let's grow our own tree. Drag the sliders to shape it, then drag the tree to rotate around it.",
       prompt: "Why does this look like a real tree?",
-      explain:
-        "Because that is how trees actually grow. Mandelbrot called shapes built from the same rule at smaller and smaller scales fractals. The key property is self similarity: zoom into any part and you find the same structure. The depth slider is the base case. When depth reaches zero, the branching stops.",
       nature:
-        "The same rule appears in your lungs, in ferns, in river deltas, in snowflakes. Da Vinci sketched the math of tree branching around 1508, about 467 years before the word fractal existed.",
+        "Because recursion, like fractals, draws the world around us. The same rule appears in your lungs, in ferns, in river deltas, in snowflakes. Da Vinci sketched the math of tree branching around 1508, about 467 years before the word fractal existed.",
       codeBase: "def draw_branch(length, depth):\n    if depth == 0:\n        return",
       codeRec: "    draw_branch(length * 0.7, depth - 1)\n    draw_branch(length * 0.7, depth - 1)",
       codeNote:
