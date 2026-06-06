@@ -5,6 +5,8 @@ import { useReducedMotion } from "motion/react";
 import { CornerDownLeft, Play, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
+import { RichText } from "@/components/lab/recursion/rich-text";
+import { CallStackPlates } from "@/components/lab/recursion/call-stack-plates";
 
 const data = recursionLab.slides.callStack;
 const N_RANGE = data.nRange;
@@ -65,7 +67,8 @@ export function CallStack() {
     if (e.t === "call") called.push(e.k);
     else returned.add(e.k);
   }
-  const deepest = called.filter((k) => !returned.has(k)).slice(-1)[0] ?? null;
+  const activeStack = called.filter((k) => !returned.has(k)); // bottom to top
+  const deepest = activeStack.slice(-1)[0] ?? null;
   const output = called.map((k) => (k > 0 ? String(k) : "Go!"));
 
   let caption: string;
@@ -77,8 +80,27 @@ export function CallStack() {
 
   return (
     <div className="lesson-stagger">
-      <p className="mb-3 text-base leading-relaxed text-foreground">{data.framing}</p>
-      <p className="mb-5 text-base leading-relaxed text-muted-foreground">{data.dek}</p>
+      <p className="mb-3 text-base leading-relaxed text-foreground">
+        <RichText text={data.framing} />
+      </p>
+      <p className="mb-4 text-base leading-relaxed text-muted-foreground">
+        <RichText text={data.dek} />
+      </p>
+
+      {/* What "wait" and "return" mean, for first-timers. */}
+      <div className="mb-5 rounded-xl border border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] p-4">
+        <p className="text-sm font-medium text-foreground">{data.glossaryLead}</p>
+        <dl className="mt-2 space-y-2">
+          {data.glossary.map((g) => (
+            <div key={g.term}>
+              <dt className="font-heading text-sm font-semibold text-link">{g.term}</dt>
+              <dd className="text-sm leading-relaxed text-muted-foreground">
+                <RichText text={g.def} />
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
 
       {/* Controls */}
       <div className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-border bg-card p-3">
@@ -131,7 +153,12 @@ export function CallStack() {
         </button>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-[1fr_180px]">
+      <div className="grid gap-4 md:grid-cols-[120px_1fr_180px]">
+        {/* 3D plates: physical stack metaphor (decorative). */}
+        <div className="hidden md:block" aria-hidden="true">
+          <CallStackPlates stack={activeStack} />
+        </div>
+
         {/* Stack */}
         <div className="min-h-[230px] rounded-xl border border-border bg-card p-4">
           <ol className="flex flex-col gap-2">
@@ -201,7 +228,7 @@ export function CallStack() {
       </div>
 
       <p className="mt-4 min-h-[42px] text-sm leading-relaxed text-foreground" aria-live="polite">
-        {done ? data.captions.result : caption}
+        <RichText text={done ? data.captions.result : caption} />
       </p>
     </div>
   );

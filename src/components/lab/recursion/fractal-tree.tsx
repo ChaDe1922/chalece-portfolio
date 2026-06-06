@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { Shuffle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
+import { RichText } from "@/components/lab/recursion/rich-text";
 
 const data = recursionLab.slides.fractal;
 
@@ -245,15 +246,21 @@ export function FractalTree() {
   return (
     <div className="lesson-stagger space-y-4">
       {/* Teaching first: what a fractal is, and the rule in code. */}
-      <p className="text-lg leading-relaxed text-foreground">{data.teach}</p>
+      <p className="text-lg leading-relaxed text-foreground">
+        <RichText text={data.teach} />
+      </p>
       <div className="rounded-xl border border-border bg-card p-4 font-mono text-sm [font-feature-settings:'liga'_0,'calt'_0]">
         <pre className="whitespace-pre-wrap text-foreground">{data.codeBase}</pre>
         <pre className="mt-1 whitespace-pre-wrap text-foreground">{data.codeRec}</pre>
       </div>
-      <p className="text-sm leading-relaxed text-muted-foreground">{data.codeNote}</p>
+      <p className="text-sm leading-relaxed text-muted-foreground">
+        <RichText text={data.codeNote} />
+      </p>
 
       {/* Then the interaction: grow your own. */}
-      <p className="pt-1 text-base leading-relaxed text-foreground">{data.intro}</p>
+      <p className="pt-1 text-base leading-relaxed text-foreground">
+        <RichText text={data.intro} />
+      </p>
 
       <div data-no-swipe>
         <canvas
@@ -311,7 +318,7 @@ export function FractalTree() {
       </div>
 
       <p className="text-base leading-relaxed text-muted-foreground">
-        <span className="font-medium text-link">{data.prompt}</span> {data.nature}
+        <span className="font-medium text-link">{data.prompt}</span> <RichText text={data.nature} />
       </p>
     </div>
   );

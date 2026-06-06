@@ -5,6 +5,7 @@ import { Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDeck } from "@/components/deck/deck-context";
 import { recursionLab } from "@/data/recursion-lab";
+import { RichText } from "@/components/lab/recursion/rich-text";
 
 const data = recursionLab.slides.quiz;
 
@@ -24,7 +25,9 @@ function MultipleChoice({
   const chosenOpt = q.options.find((o) => o.key === chosen);
   return (
     <fieldset className="space-y-3">
-      <legend className="text-base font-medium text-foreground">{q.prompt}</legend>
+      <legend className="text-base font-medium text-foreground">
+        <RichText text={q.prompt} />
+      </legend>
       <div className="space-y-2">
         {q.options.map((o) => {
           const isChosen = chosen === o.key;
@@ -90,7 +93,9 @@ function FillIn({ q }: { q: Extract<Q, { kind: "fill" }> }) {
   const allRight = q.answers.every((_, i) => right(i));
   return (
     <div className="space-y-3">
-      <p className="text-base font-medium text-foreground">{q.prompt}</p>
+      <p className="text-base font-medium text-foreground">
+        <RichText text={q.prompt} />
+      </p>
       <div className="space-y-2">
         {q.labels.map((label, i) => (
           <div key={label} className="flex items-center gap-3">

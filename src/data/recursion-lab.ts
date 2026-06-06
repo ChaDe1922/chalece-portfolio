@@ -179,19 +179,30 @@ export const recursionLab = {
       id: "call-stack",
       title: "Wait, what is a call stack?",
       framing:
-        "The call stack is Python's memory of what is running. Each call is a plate stacked on top, holding its own value of n. The top plate is the function running right now. It is last in, first out: the plate added last is the first one removed.",
+        "The **call stack** is Python's memory of what is running. Each call is a plate stacked on top, holding its own value of `n`. The top plate is the function running right now. It is last in, first out: the plate added last is the first one removed.",
       dek: "Every call waits while the one below it runs. Press Step and watch the calls stack up, hit the base case, then finish in reverse.",
+      glossaryLead: "Two words you will see a lot:",
+      glossary: [
+        {
+          term: "Calls and waits",
+          def: "To call a function is to run it. While that inner call runs, the function that called it pauses and waits, holding its place until the answer comes back.",
+        },
+        {
+          term: "Returns",
+          def: "When a function finishes, it returns: it hands its result back to whoever called it, and that waiting call picks up right where it left off.",
+        },
+      ],
       nRange: [2, 3, 4, 5] as const,
       defaultN: 3,
       captions: {
-        ready: (n: number) => `Ready. Press Step to call countdown(${n}).`,
+        ready: (n: number) => `Ready. Press Step to call \`countdown(${n})\`.`,
         call: (k: number) =>
           k <= 0
-            ? "countdown(0) is the base case. It prints Go! and returns. No more calls."
-            : `countdown(${k}) prints ${k}, then calls countdown(${k - 1}) and waits.`,
+            ? "`countdown(0)` is the base case. It prints `Go!` and returns. No more calls."
+            : `\`countdown(${k})\` prints \`${k}\`, then calls \`countdown(${k - 1})\` and waits.`,
         ret: (k: number) =>
-          `countdown(${k}) is done and returns. The call that was waiting can now finish.`,
-        result: "Done. Output printed on the way in: the numbers, then Go!.",
+          `\`countdown(${k})\` is done and returns. The call that was waiting can now finish.`,
+        result: "Done. Output printed on the way in: the numbers, then `Go!`.",
       },
     },
 
@@ -200,16 +211,16 @@ export const recursionLab = {
       id: "no-base-case",
       title: "What if there is no base case?",
       intro:
-        "The dolls always had a smallest one. But what if a function never stops? Here is countdown with the base case removed.",
+        "The dolls always had a smallest one. But what if a function never stops? Here is `countdown` with the base case removed.",
       broken: "def countdown_broken(n):\n    print(n)\n    countdown_broken(n - 1)   # no base case",
-      brokenNote: "No if. No stopping condition. Every call just calls the next one. Nothing ever returns.",
+      brokenNote: "No `if`. No stopping condition. Every call just calls the next one. Nothing ever returns.",
       run: "Run countdown_broken(3)",
       running: (n: number) => `countdown_broken(${n})`,
       traceback:
         'Traceback (most recent call last):\n  File "countdown.py", line 3, in countdown_broken\n    countdown_broken(n - 1)\n  [Previous line repeated 996 more times]\nRecursionError: maximum recursion depth exceeded',
       reframe:
         "This is not a sign you broke something. Python limits recursion to about 1,000 calls by design, to protect your computer's memory. It is a safety net. Python is telling you something useful: your function did not know when to stop.",
-      fixIntro: "The fix is the base case you already know. One if statement is all it takes.",
+      fixIntro: "The fix is the base case you already know. One `if` statement is all it takes.",
       fixed:
         'def countdown_fixed(n):\n    if n <= 0:        # base case: stop here\n        print("Go!")\n    else:\n        print(n)\n        countdown_fixed(n - 1)',
     },
@@ -219,7 +230,7 @@ export const recursionLab = {
       id: "fractal",
       title: "Recursion draws the world",
       teach:
-        "One last idea, then you play. A fractal is a shape built from a single rule repeated at smaller and smaller scales. The rule for a tree: draw a branch, then draw two smaller branches from its tip, and do the same thing to each of those. Depth is the base case. When depth reaches zero, the branching stops. That repeating-at-smaller-scale property is called self similarity.",
+        "One last idea, then you play. A fractal is a shape built from a single rule repeated at smaller and smaller scales. The rule for a tree: draw a branch, then draw two smaller branches from its tip, and do the same thing to each of those. `depth` is the base case. When `depth` reaches zero, the branching stops. That repeating-at-smaller-scale property is called self similarity.",
       intro: "Now drag the sliders and grow your own. The same rule, a branch that splits into two smaller branches, draws all of this.",
       prompt: "Why does this look like a real tree?",
       explain:
@@ -229,7 +240,7 @@ export const recursionLab = {
       codeBase: "def draw_branch(length, depth):\n    if depth == 0:\n        return",
       codeRec: "    draw_branch(length * 0.7, depth - 1)\n    draw_branch(length * 0.7, depth - 1)",
       codeNote:
-        "There it is again. When depth hits zero, return and stop. Otherwise, two smaller branches at 70 percent length, one level deeper. Left and right. That is the whole tree.",
+        "There it is again. When `depth` hits zero, `return` and stop. Otherwise, two smaller branches at 70 percent length, one level deeper. Left and right. That is the whole tree.",
       presets: [
         { id: "sapling", label: "Sapling", depth: 4, angle: 20, ratio: 68, lean: 0, leaves: true },
         { id: "oak", label: "Oak", depth: 8, angle: 28, ratio: 73, lean: 0, leaves: true },
@@ -282,7 +293,7 @@ export const recursionLab = {
         {
           id: "recursive-case-check",
           kind: "mc-text" as const,
-          prompt: "What happens if you call countdown_broken(5), where it has no base case?",
+          prompt: "What happens if you call `countdown_broken(5)`, where it has no base case?",
           options: [
             {
               key: "A",
@@ -317,7 +328,7 @@ export const recursionLab = {
         {
           id: "trace-countdown",
           kind: "fill" as const,
-          prompt: "Call countdown(3). What gets printed, in order?",
+          prompt: "Call `countdown(3)`. What gets printed, in order?",
           labels: ["First print", "Second print", "Third print", "Fourth print"],
           answers: ["3", "2", "1", "Go!"],
           feedbackCorrect:

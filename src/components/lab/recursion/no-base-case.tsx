@@ -5,6 +5,7 @@ import { useReducedMotion } from "motion/react";
 import { Play, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
+import { RichText } from "@/components/lab/recursion/rich-text";
 
 const data = recursionLab.slides.noBaseCase;
 const MAX_FRAMES = 11; // a tall, clearly-overflowing stack before the crash
@@ -45,18 +46,24 @@ export function NoBaseCase() {
 
   return (
     <div className="lesson-stagger space-y-5">
-      <p className="text-lg leading-relaxed text-foreground">{data.intro}</p>
+      <p className="text-lg leading-relaxed text-foreground">
+        <RichText text={data.intro} />
+      </p>
 
       {/* The broken function */}
       <div className="rounded-xl border border-border bg-card p-4 font-mono text-sm [font-feature-settings:'liga'_0,'calt'_0]">
         <pre className="whitespace-pre-wrap text-foreground">{data.broken}</pre>
       </div>
-      <p className="text-sm leading-relaxed text-muted-foreground">{data.brokenNote}</p>
+      <p className="text-sm leading-relaxed text-muted-foreground">
+        <RichText text={data.brokenNote} />
+      </p>
 
       {/* Teach the outcome first, then let them run it to witness it. */}
       <div className="flex items-start gap-3 rounded-xl border border-emerald-300 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-950/40">
         <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
-        <p className="text-sm leading-relaxed text-foreground">{data.reframe}</p>
+        <p className="text-sm leading-relaxed text-foreground">
+          <RichText text={data.reframe} />
+        </p>
       </div>
 
       {phase === "idle" ? (
@@ -95,7 +102,9 @@ export function NoBaseCase() {
           <pre className="overflow-x-auto whitespace-pre rounded-xl border border-destructive/40 bg-[#0d1016] p-4 font-mono text-xs leading-relaxed text-red-300">
             {data.traceback}
           </pre>
-          <p className="text-base leading-relaxed text-foreground">{data.fixIntro}</p>
+          <p className="text-base leading-relaxed text-foreground">
+            <RichText text={data.fixIntro} />
+          </p>
           <div className="rounded-xl border border-link/30 bg-[color-mix(in_oklch,var(--link)_6%,var(--card))] p-4 font-mono text-sm [font-feature-settings:'liga'_0,'calt'_0]">
             <pre className="whitespace-pre-wrap text-foreground">{data.fixed}</pre>
           </div>
