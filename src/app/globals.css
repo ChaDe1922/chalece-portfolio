@@ -427,23 +427,24 @@
   }
 }
 
-/* ---- Dolls rule card: a quick pop when clicked, signalling the selection. */
-.dolls-rule-pop {
-  animation: card-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+/* ---- Doll pop: the 2D fallback dolls grow and settle when their rule is
+   clicked (the 3D dolls pop in the scene animator). */
+.doll-pop {
+  animation: doll-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
-@keyframes card-pop {
+@keyframes doll-pop {
   0% {
     transform: scale(1);
   }
-  40% {
-    transform: scale(1.055);
+  35% {
+    transform: scale(1.14);
   }
   100% {
     transform: scale(1);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .dolls-rule-pop {
+  .doll-pop {
     animation: none;
   }
 }

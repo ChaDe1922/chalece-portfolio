@@ -50,6 +50,7 @@ function DollsAnimator({
 }) {
   const invalidate = useThree((s) => s.invalidate);
   const st = React.useRef(Array.from({ length: TOTAL }, () => ({ openT: 0, scaleT: 0, posT: 0 })));
+  const pop = React.useRef(Array.from({ length: TOTAL }, () => 0));
   const lastDemo = React.useRef(demoTrigger);
   const demo = React.useRef({ active: false, idx: 0, dwell: 0 });
 
@@ -63,6 +64,13 @@ function DollsAnimator({
     if (demoTrigger !== lastDemo.current) {
       lastDemo.current = demoTrigger;
       demo.current = { active: true, idx: Math.min(TOTAL - 2, Math.max(0, revealed - 1)), dwell: 0 };
+      // Pop the dolls the clicked rule points at: base -> the smallest doll,
+      // recursive -> every bigger doll.
+      for (let i = 0; i < TOTAL; i++) {
+        const isBaseDoll = i === TOTAL - 1;
+        const match = highlight === "base" ? isBaseDoll : highlight === "recursive" ? !isBaseDoll : false;
+        if (match) pop.current[i] = 1;
+      }
     }
 
     let busy = false;
@@ -78,10 +86,12 @@ function DollsAnimator({
       s.scaleT = THREE.MathUtils.lerp(s.scaleT, scaleTarget, 0.14);
       s.posT = THREE.MathUtils.lerp(s.posT, posTarget, 0.13);
       s.openT = THREE.MathUtils.lerp(s.openT, openTarget, 0.1);
+      pop.current[i] = THREE.MathUtils.lerp(pop.current[i], 0, 0.12); // pop grows then settles
       if (
         Math.abs(s.scaleT - scaleTarget) > 0.001 ||
         Math.abs(s.posT - posTarget) > 0.001 ||
-        Math.abs(s.openT - openTarget) > 0.001
+        Math.abs(s.openT - openTarget) > 0.001 ||
+        pop.current[i] > 0.002
       ) {
         busy = true;
       }
@@ -89,7 +99,7 @@ function DollsAnimator({
       const outer = outerRefs[i].current;
       const top = topRefs[i].current;
       if (outer) {
-        outer.scale.setScalar(TARGET_SCALES[i] * s.scaleT);
+        outer.scale.setScalar(TARGET_SCALES[i] * s.scaleT * (1 + pop.current[i] * 0.18));
         // Slide from the previous doll's slot into this doll's slot.
         const parentX = X_POSITIONS[Math.max(0, i - 1)][0];
         outer.position.x = THREE.MathUtils.lerp(parentX, X_POSITIONS[i][0], s.posT);

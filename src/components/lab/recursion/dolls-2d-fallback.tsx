@@ -51,8 +51,13 @@ export function Dolls2DFallback({
             : highlight === "recursive" && !isBase
               ? "recursive"
               : undefined;
+        // Pop the dolls the clicked rule points at (reduced-motion gated in CSS).
+        const popping = highlight === "base" ? isBase : highlight === "recursive" ? !isBase : false;
         return (
-          <div key={i} className="flex flex-col items-center gap-1">
+          <div
+            key={`${i}-${highlight ?? ""}`}
+            className={cn("flex flex-col items-center gap-1", popping && "doll-pop")}
+          >
             <Doll size={64 - i * 9} color={DOLL_COLORS[i]} glow={(isBase && atBase && "base") || glow} />
             {isBase && atBase ? (
               <span className="inline-flex items-center gap-1 rounded-full border border-emerald-300 px-2 py-0.5 text-[0.65rem] font-medium text-emerald-700 dark:border-emerald-800 dark:text-emerald-300">
