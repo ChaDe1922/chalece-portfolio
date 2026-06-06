@@ -50,7 +50,8 @@ function DollsAnimator({
 }) {
   const invalidate = useThree((s) => s.invalidate);
   const st = React.useRef(Array.from({ length: TOTAL }, () => ({ openT: 0, scaleT: 0, posT: 0 })));
-  const pop = React.useRef(Array.from({ length: TOTAL }, () => 0));
+  // Pop = a 0..1 progress envelope; 1 means finished (idle). Set to 0 to play.
+  const pop = React.useRef(Array.from({ length: TOTAL }, () => 1));
   const lastDemo = React.useRef(demoTrigger);
   const demo = React.useRef({ active: false, idx: 0, dwell: 0 });
 
@@ -58,8 +59,11 @@ function DollsAnimator({
     invalidate();
   }, [revealed, highlight, demoTrigger, invalidate]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const t = state.clock.elapsedTime;
+    const dt = Math.min(delta, 1 / 30); // clamp so a post-idle frame does not jump
+    const POP_DUR = 0.95; // seconds, slower
+    const POP_AMP = 0.085; // peak scale bump, gentler
 
     if (demoTrigger !== lastDemo.current) {
       lastDemo.current = demoTrigger;
@@ -69,7 +73,7 @@ function DollsAnimator({
       for (let i = 0; i < TOTAL; i++) {
         const isBaseDoll = i === TOTAL - 1;
         const match = highlight === "base" ? isBaseDoll : highlight === "recursive" ? !isBaseDoll : false;
-        if (match) pop.current[i] = 1;
+        if (match) pop.current[i] = 0;
       }
     }
 
@@ -86,12 +90,14 @@ function DollsAnimator({
       s.scaleT = THREE.MathUtils.lerp(s.scaleT, scaleTarget, 0.14);
       s.posT = THREE.MathUtils.lerp(s.posT, posTarget, 0.13);
       s.openT = THREE.MathUtils.lerp(s.openT, openTarget, 0.1);
-      pop.current[i] = THREE.MathUtils.lerp(pop.current[i], 0, 0.12); // pop grows then settles
+      // Advance the pop envelope; a sine rise-and-fall makes it ease up then settle.
+      if (pop.current[i] < 1) pop.current[i] = Math.min(1, pop.current[i] + dt / POP_DUR);
+      const bump = pop.current[i] < 1 ? POP_AMP * Math.sin(Math.PI * pop.current[i]) : 0;
       if (
         Math.abs(s.scaleT - scaleTarget) > 0.001 ||
         Math.abs(s.posT - posTarget) > 0.001 ||
         Math.abs(s.openT - openTarget) > 0.001 ||
-        pop.current[i] > 0.002
+        pop.current[i] < 1
       ) {
         busy = true;
       }
@@ -99,7 +105,7 @@ function DollsAnimator({
       const outer = outerRefs[i].current;
       const top = topRefs[i].current;
       if (outer) {
-        outer.scale.setScalar(TARGET_SCALES[i] * s.scaleT * (1 + pop.current[i] * 0.18));
+        outer.scale.setScalar(TARGET_SCALES[i] * s.scaleT * (1 + bump));
         // Slide from the previous doll's slot into this doll's slot.
         const parentX = X_POSITIONS[Math.max(0, i - 1)][0];
         outer.position.x = THREE.MathUtils.lerp(parentX, X_POSITIONS[i][0], s.posT);
