@@ -1,7 +1,6 @@
 "use client";
 "use no memo";
 
-import { useTheme } from "next-themes";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { MirrorTunnelCamera } from "./mirror-tunnel-camera";
@@ -12,20 +11,18 @@ import { MirrorTunnelRings } from "./mirror-tunnel-rings";
  *  GPU idles between steps; dynamically imported so three never ships to other
  *  routes. */
 export function MirrorTunnelScene({ depth }: { depth: number }) {
-  const { resolvedTheme } = useTheme();
-  const bg = resolvedTheme === "light" ? "#eef0f6" : "#05040d";
   return (
     <div
       aria-hidden="true"
-      className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-[#eef0f6] dark:bg-[#05040d]"
+      className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-[#05040d]"
     >
       <Canvas
         frameloop="demand"
         dpr={[1, 1.5]}
         gl={{ powerPreference: "low-power", antialias: false }}
       >
-        <color attach="background" args={[bg]} />
-        <fogExp2 attach="fog" args={[bg, 0.09]} />
+        <color attach="background" args={["#05040d"]} />
+        <fogExp2 attach="fog" args={["#05040d", 0.09]} />
         <MirrorTunnelCamera depth={depth} />
         <MirrorTunnelRings />
         <EffectComposer>

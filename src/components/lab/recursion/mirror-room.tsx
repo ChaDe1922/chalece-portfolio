@@ -23,7 +23,7 @@ const MirrorTunnelScene = dynamic(
     loading: () => (
       <div
         aria-hidden="true"
-        className="mx-auto aspect-square w-full max-w-xs rounded-xl border border-border bg-[#eef0f6] dark:bg-[#05040d]"
+        className="mx-auto aspect-square w-full max-w-xs rounded-xl border border-border bg-[#05040d]"
       />
     ),
   },
@@ -75,7 +75,7 @@ export function MirrorRoom() {
         ) : use3D ? (
           <div
             aria-hidden="true"
-            className="mx-auto aspect-square w-full max-w-xs rounded-xl border border-border bg-[#eef0f6] dark:bg-[#05040d]"
+            className="mx-auto aspect-square w-full max-w-xs rounded-xl border border-border bg-[#05040d]"
           />
         ) : (
           <MirrorRoomCssFallback depth={depth} reduced={!!reduced} />
