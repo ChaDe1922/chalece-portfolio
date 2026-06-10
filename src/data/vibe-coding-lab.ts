@@ -37,7 +37,7 @@ export const vibeCodingLab = {
         { id: "school", label: "School tool" },
       ],
       choiceFeedback: "Good. You already made your first design decision. The rest of the lesson follows your pick.",
-      begin: "See what that made",
+      begin: "See what it makes",
       byline: "An interactive lesson by Chalece DeLaCoudray",
     },
 
