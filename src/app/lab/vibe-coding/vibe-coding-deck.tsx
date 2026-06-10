@@ -60,12 +60,13 @@ const slides: Slide[] = [
 
 /** Side-by-side workbench: the lesson deck and a persistent "Try it for real"
  *  AI panel. Desktop splits into two columns (deck left, panel right); mobile
- *  stacks the panel below the full-screen deck. The panel is hidden on the final
- *  slide, which is a conclusion/outro and has its own contact + CTAs. */
+ *  stacks the panel below the full-screen deck. The panel is hidden on the first
+ *  slide (the hook, a framing intro) and the final slide (the conclusion/outro,
+ *  which has its own contact + CTAs); it shows on the three working slides. */
 function VibeCodingWorkbench() {
   const [currentId, setCurrentId] = React.useState(slides[0].id);
   const onSlideChange = React.useCallback((id: string) => setCurrentId(id), []);
-  const showPanel = currentId !== s.reflection.id;
+  const showPanel = currentId !== s.hook.id && currentId !== s.reflection.id;
 
   return (
     <div className="flex min-h-[100svh] w-full flex-col lg:h-[100svh] lg:flex-row lg:overflow-hidden">
