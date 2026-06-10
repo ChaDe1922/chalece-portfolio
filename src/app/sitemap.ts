@@ -8,5 +8,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    {
+      url: `${site.url}/lab`,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${site.url}/lab/vibe-coding`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${site.url}/lab/recursion`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }

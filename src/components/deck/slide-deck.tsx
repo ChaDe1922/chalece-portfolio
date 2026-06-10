@@ -12,6 +12,10 @@ type SlideDeckProps = {
   slides: Slide[];
   deckId: string;
   className?: string;
+  /** Optional: notified with the active slide id on mount and every change.
+   *  Lets a surrounding layout react to the current slide without owning the
+   *  deck's index state. */
+  onSlideChange?: (id: string) => void;
 };
 
 const SWIPE_THRESHOLD = 60; // px of horizontal travel to count as a swipe
@@ -22,7 +26,7 @@ const SWIPE_IGNORE = `${INTERACTIVE}, canvas, [role='slider'], [data-no-swipe]`;
 
 /** Reusable, data-driven full-viewport slide deck. Keyboard, swipe, dots, hash
  *  deep-linking, reduced-motion aware, and a completion gate for slide bodies. */
-export function SlideDeck({ slides, deckId, className }: SlideDeckProps) {
+export function SlideDeck({ slides, deckId, className, onSlideChange }: SlideDeckProps) {
   const reduced = useReducedMotion();
   const count = slides.length;
 
@@ -56,6 +60,13 @@ export function SlideDeck({ slides, deckId, className }: SlideDeckProps) {
     const id = slides[index]?.id;
     if (id) window.history.replaceState(null, "", `#${id}`);
   }, [index, slides]);
+
+  // Report the active slide id (mount + every change) so a surrounding layout
+  // can react. Only calls a callback; the deck keeps owning its index state.
+  React.useEffect(() => {
+    const id = slides[index]?.id;
+    if (id) onSlideChange?.(id);
+  }, [index, slides, onSlideChange]);
 
   // Move focus to the new slide heading on change (not on first mount).
   React.useEffect(() => {

@@ -52,7 +52,7 @@ export function Hero() {
             <FileDown aria-hidden="true" />
             Download resume
           </MagneticButton>
-          <MagneticButton href="/lab/recursion" variant="outline">
+          <MagneticButton href="/lab" variant="outline">
             <Sparkles aria-hidden="true" />
             Try an interactive lesson
           </MagneticButton>

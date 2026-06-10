@@ -512,6 +512,45 @@
   }
 }
 
+/* ---- Cycle nudge: a soft "sonar ping" ring that pulses on the current step of
+   the Vibe Coding cycle, inviting the learner to click through. The active node
+   also keeps a static ring, so the affordance survives reduced motion. */
+.cycle-nudge {
+  animation: cycle-nudge 1.8s ease-out infinite;
+}
+@keyframes cycle-nudge {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 45%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 10px color-mix(in oklch, var(--primary) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 0%, transparent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cycle-nudge {
+    animation: none;
+  }
+}
+
+/* ---- Cycle spin: the center loop icon of the Vibe Coding cycle rotates
+   slowly to reinforce that the loop repeats. */
+.cycle-spin {
+  animation: cycle-spin 9s linear infinite;
+}
+@keyframes cycle-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cycle-spin {
+    animation: none;
+  }
+}
+
 /* ---- Global reduced-motion kill switch (animations + view transitions) ---- */
 @media (prefers-reduced-motion: reduce) {
   *,
