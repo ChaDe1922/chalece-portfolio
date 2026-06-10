@@ -42,7 +42,7 @@ const slides: Slide[] = [
   },
   {
     id: s.remix.id,
-    title: "Remix it",
+    title: "Adjust it",
     titleNode: <RemixTitle />,
     render: () => <RemixPrompts />,
   },

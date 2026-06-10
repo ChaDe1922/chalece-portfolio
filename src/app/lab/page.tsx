@@ -25,7 +25,7 @@ const labs = [
     eyebrow: "Vibe coding · ages 13 to 15",
     title: vibeCodingLab.meta.title,
     blurb:
-      "Pick what to build, then direct, test, and improve a real working example with the say, test, remix loop.",
+      "Pick what to build, then direct, test, and improve a real working example with the say, test, adjust loop.",
   },
   {
     href: "/lab/recursion",
