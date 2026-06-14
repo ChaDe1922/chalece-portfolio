@@ -297,17 +297,17 @@ export const recursionLab = {
             },
             {
               key: "B",
-              code: "def countdown(n):\n    print(n)\n    countdown(n - 1)",
+              code: 'def countdown(n):\n    if n > 0:\n        print(n)\n    else:\n        print("done")\n    countdown(n - 1)',
               correct: true,
               feedback:
-                "Right. There is no if check at all. Every call immediately calls countdown(n - 1) with no condition. Without a base case it calls itself until Python hits its recursion limit.",
+                "Right. The if only decides what to print. The call to countdown(n - 1) runs every time, with nothing to stop it. An if is not a base case unless it stops the recursion.",
             },
             {
               key: "C",
-              code: "def countdown(n):\n    if n == 0:\n        return\n    countdown(n - 1)",
+              code: 'def countdown(n):\n    if n == 0:\n        print("Go!")\n        return\n    print(n)\n    countdown(n - 1)',
               correct: false,
               feedback:
-                "Option C has a base case: if n == 0 it returns without calling itself again. It stops, even though it prints nothing useful.",
+                "Option C stops: when n reaches 0 it prints Go! and returns before calling itself again. That return is its base case.",
             },
             {
               key: "D",
@@ -326,31 +326,31 @@ export const recursionLab = {
           options: [
             {
               key: "A",
-              text: "It prints 5, 4, 3, 2, 1 and then stops on its own",
+              text: "It counts down to 1 and then stops running on its own.",
               correct: false,
               feedback:
-                "Functions do not stop on their own without a base case. There is nothing telling it when to stop, so no call ever returns.",
+                "No. With no base case, nothing tells it to stop at 1. It keeps calling itself with smaller numbers, past zero into negatives.",
             },
             {
               key: "B",
-              text: "Python gives you a RecursionError: maximum recursion depth exceeded",
+              text: "It stops with a RecursionError after about 1,000 calls.",
               correct: true,
               feedback:
-                "Exactly. Python limits recursion to about 1,000 calls by design and stops the program with a RecursionError, protecting your memory. Python is doing its job.",
+                "Exactly. Python caps recursion at about 1,000 calls and raises a RecursionError to protect memory. That cap is the safety net.",
             },
             {
               key: "C",
-              text: "Python keeps running forever and you have to restart your computer",
+              text: "It runs forever and you have to restart your computer.",
               correct: false,
               feedback:
-                "Python will not run forever. It stops after about 1,000 calls with a RecursionError. Your computer is safe.",
+                "Close, but Python does not run forever. It stops itself at the recursion limit with a RecursionError. Your computer is safe.",
             },
             {
               key: "D",
-              text: "The function prints nothing and exits silently",
+              text: "It prints nothing and exits quietly without any error.",
               correct: false,
               feedback:
-                "It does print, and not just 5 numbers. It prints past 0 into negative numbers until Python stops it with a RecursionError.",
+                "It does print, and past zero into negatives. It does not exit quietly either: Python raises a RecursionError.",
             },
           ],
         },
@@ -375,28 +375,28 @@ export const recursionLab = {
           options: [
             {
               key: "A",
-              text: "A function that solves a problem by calling itself on a smaller version of the same problem, until it reaches a base case it can answer directly.",
+              text: "A function that calls itself on a smaller input, stopping at a base case.",
               correct: true,
               feedback:
                 "That is it. Recursion is self reference with a stopping point: it calls itself on something smaller until it hits a base case. You have got it.",
             },
             {
               key: "B",
-              text: "A loop that repeats a block of code a fixed number of times.",
+              text: "A loop that repeats the same block of code a fixed number of times.",
               correct: false,
               feedback:
                 "That describes a loop. Recursion does not count out a fixed number of repeats: it calls itself on a smaller input until it reaches a base case.",
             },
             {
               key: "C",
-              text: "A function that calls a different helper function to finish its work.",
+              text: "A function that calls a different helper function to finish all its work.",
               correct: false,
               feedback:
                 "Close, but the key is that a recursive function calls itself, not a different function, and it shrinks the problem each time until a base case stops it.",
             },
             {
               key: "D",
-              text: "Code that keeps running until you force it to stop.",
+              text: "Code that just keeps running on its own until you force it to stop.",
               correct: false,
               feedback:
                 "That is recursion without a base case, which crashes. Real recursion has a base case so it stops on its own.",
