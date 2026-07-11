@@ -43,9 +43,14 @@ export const site = {
 
 export type NavItem = { label: string; href: string };
 
+// V2 multi-page routes (real routes, not in-page anchors).
 export const navItems: NavItem[] = [
-  { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
-  { label: "Resume", href: "#resume" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "/work" },
+  { label: "Lab", href: "/lab" },
+  { label: "Leadership", href: "/leadership" },
+  { label: "About", href: "/about" },
+  { label: "Resume", href: "/resume" },
 ];
+
+// Right-side header action.
+export const contactNav: NavItem = { label: "Let's talk", href: "/contact" };

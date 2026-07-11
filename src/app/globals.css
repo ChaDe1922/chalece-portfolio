@@ -9,9 +9,17 @@
   --color-foreground: var(--foreground);
   --color-link: var(--link);
   --color-coral: var(--coral);
+  /* V2 fixed signal accents (brand constants, identical across scenes). */
+  --color-signal-iris: var(--v2-iris);
+  --color-signal-cyan: var(--v2-cyan);
+  --color-signal-coral: var(--v2-coral);
+  --color-signal-gold: var(--v2-gold);
+  --color-signal-black: var(--v2-signal-black);
+  --color-ivory: var(--v2-warm-ivory);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-space-grotesk);
+  --font-display: var(--font-instrument-serif);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -74,6 +82,20 @@
   --ring: #6d5ae6;
   --link: #5b45cc; /* accessible violet for text/links, 6.09:1 */
   --coral: #ff6b5e; /* decorative only, never body text on paper */
+  /* ---- Portfolio V2 cinematic brand constants (Signal to Skill) ----
+     Fixed values; the [data-scene] blocks below re-point the SEMANTIC tokens
+     (--background, --foreground, etc.) to these inside the marketing shell only,
+     leaving :root / .dark (and every lab) untouched. */
+  --v2-signal-black: #09090d;
+  --v2-deep-ink: #13121a;
+  --v2-warm-ivory: #f3efe7;
+  --v2-paper-white: #fcfaf6;
+  --v2-graphite: #6f6b75;
+  --v2-soft-fog: #b8b3be;
+  --v2-iris: #8e75ff; /* transformation / learning / synthesis */
+  --v2-cyan: #66dff2; /* sound / systems / data */
+  --v2-coral: #ff7b72; /* people / storytelling / feedback */
+  --v2-gold: #d4ae67; /* leadership / craft / distinction */
   /* Color-coded formula symbols, legible on the light card surface. */
   --formula-signal: #334155;
   --formula-amp: #6d4fd0;
@@ -144,6 +166,74 @@
   --sidebar-ring: #9b8cf0;
 }
 
+/* ---- V2 marketing scenes: scoped semantic-token overrides ----
+   These re-point the existing semantic tokens on a wrapper inside the
+   marketing shell (src/app/(site)/layout.tsx). CSS custom properties inherit
+   from the nearest defining ancestor, so labs (rendered on the root layout,
+   with no [data-scene] wrapper) keep :root / .dark verbatim. The marketing
+   shell is a FIXED scene regardless of the next-themes toggle, because the
+   wrapper is a closer ancestor than <html class="dark">.
+
+   Cinematic: obsidian foundation. Verified contrast on #09090d:
+   foreground ~18.9:1, muted-foreground (soft fog) ~9.6:1, link ~9.9:1,
+   dark text on iris button ~6.1:1. */
+[data-scene="cinematic"] {
+  --background: var(--v2-signal-black);
+  --foreground: var(--v2-paper-white);
+  --card: var(--v2-deep-ink);
+  --card-foreground: var(--v2-paper-white);
+  --popover: var(--v2-deep-ink);
+  --popover-foreground: var(--v2-paper-white);
+  --primary: var(--v2-iris);
+  --primary-foreground: #0a0a0f; /* dark text on the lighter iris (~6:1) */
+  --secondary: #1b1a22;
+  --secondary-foreground: var(--v2-paper-white);
+  --muted: #1b1a22;
+  --muted-foreground: var(--v2-soft-fog);
+  --accent: #1f1d29;
+  --accent-foreground: #e9e5fb;
+  --destructive: #ff8478;
+  --border: color-mix(in oklch, var(--v2-soft-fog) 18%, transparent);
+  --input: color-mix(in oklch, var(--v2-soft-fog) 24%, transparent);
+  --ring: var(--v2-iris);
+  --link: #b9a8ff; /* lighter iris for AA link text on obsidian (~9.9:1) */
+  --coral: var(--v2-coral);
+}
+
+/* Ivory: warm editorial reading surface for text-heavy sections + labs-adjacent
+   pages. Verified on #f3efe7: foreground ~16:1, muted-foreground ~6.4:1,
+   white text on violet primary ~4.9:1. */
+[data-scene="ivory"] {
+  --background: var(--v2-warm-ivory);
+  --foreground: var(--v2-deep-ink);
+  --card: var(--v2-paper-white);
+  --card-foreground: var(--v2-deep-ink);
+  --popover: var(--v2-paper-white);
+  --popover-foreground: var(--v2-deep-ink);
+  --primary: #6d5ae6; /* keep proven violet so white button text stays AA */
+  --primary-foreground: #ffffff;
+  --secondary: #e9e4d8;
+  --secondary-foreground: var(--v2-deep-ink);
+  --muted: #e9e4d8;
+  --muted-foreground: #5a5862; /* proven 6.4:1 on warm paper */
+  --accent: #e9e5fb;
+  --accent-foreground: #2f2a52;
+  --destructive: #d8412f;
+  --border: color-mix(in oklch, var(--v2-deep-ink) 12%, transparent);
+  --input: color-mix(in oklch, var(--v2-deep-ink) 14%, transparent);
+  --ring: var(--v2-iris);
+  --link: #5b45cc;
+  --coral: var(--coral);
+}
+
+/* Every scene wrapper paints its own background + default text, so a
+   data-scene element does not show the surface behind it (e.g. a cinematic
+   shell showing through, or white scene text on a light body). */
+[data-scene] {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -161,6 +251,13 @@
   h4 {
     font-family: var(--font-space-grotesk), var(--font-inter), sans-serif;
     letter-spacing: -0.02em;
+  }
+  /* Editorial display serif — used only for hero + case-study display moments.
+     Opt-in so most headings keep the crisp Space Grotesk sans. */
+  .font-display {
+    font-family: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+    letter-spacing: -0.01em;
+    font-weight: 400;
   }
   /* Respect reduced-motion for native smooth scroll too. */
   @media (prefers-reduced-motion: reduce) {
@@ -587,9 +684,12 @@
    Print-only. Does not affect on-screen rendering. Forces the light/paper
    brand, neutralizes motion, and keeps cards/sections from splitting. */
 @media print {
-  /* Always print light, even if the viewer is in dark mode. */
+  /* Always print light, even if the viewer is in dark mode OR inside a V2
+     cinematic/ivory scene. [data-scene] must be listed so the marketing pages
+     print as paper/ink instead of obsidian. */
   :root,
-  .dark {
+  .dark,
+  [data-scene] {
     --background: #f7f5f2;
     --foreground: #14131a;
     --card: #fffdfa;
