@@ -1,0 +1,54 @@
+/**
+ * Plain mutable store for the hero signal field's per-frame values. Deliberately
+ * NOT React state and NOT a ref: pointer/scroll handlers and the useFrame loop
+ * read and write it directly, so nothing triggers a React render per frame
+ * (protects INP). A component holds one instance via
+ * useState(() => makeSignalStore(...))[0] so the compiler does not treat it as a
+ * ref and it stays identity-stable.
+ */
+
+export type SignalStore = {
+  /** Draw-in progress, 0 (scattered) to 1 (assembled). */
+  assemble: number;
+  /** Where assemble eases toward. */
+  targetAssemble: number;
+  /** Hero scroll progress, 0 (top) to 1 (scrolled past), drives compression. */
+  scroll: number;
+  /** Normalized pointer position, -1..1 (0,0 = centre). */
+  pointerX: number;
+  pointerY: number;
+  /** Elapsed seconds, advanced by the frame loop (for idle drift). */
+  time: number;
+};
+
+export function makeSignalStore(introSeen: boolean): SignalStore {
+  return {
+    assemble: introSeen ? 0.92 : 0,
+    targetAssemble: 1,
+    scroll: 0,
+    pointerX: 0,
+    pointerY: 0,
+    time: 0,
+  };
+}
+
+const INTRO_SEEN_KEY = "signal:introSeen";
+
+export function readIntroSeen(): boolean {
+  try {
+    return (
+      typeof sessionStorage !== "undefined" &&
+      sessionStorage.getItem(INTRO_SEEN_KEY) === "1"
+    );
+  } catch {
+    return false;
+  }
+}
+
+export function markIntroSeen(): void {
+  try {
+    sessionStorage.setItem(INTRO_SEEN_KEY, "1");
+  } catch {
+    // sessionStorage unavailable (private mode / SSR): harmless, intro replays.
+  }
+}

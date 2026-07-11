@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Reveal } from "@/components/reveal";
+import { DirectedReveal } from "@/components/motion/directed-reveal";
 import { ProjectMedia } from "@/components/project/project-media";
 import type { Project, ProjectAccent } from "@/data/projects";
 
@@ -136,14 +136,17 @@ export function ProjectChapter({
       className="border-t border-border/50"
     >
       <div className="mx-auto max-w-6xl px-4 py-20 md:px-8 md:py-28">
-        <Reveal className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
-          {/* Media */}
-          <div className={cn(mediaFirst ? "lg:order-first" : "lg:order-last")}>
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+          {/* Media (enters from the outer edge) */}
+          <DirectedReveal
+            direction={mediaFirst ? "left" : "right"}
+            className={cn(mediaFirst ? "lg:order-first" : "lg:order-last")}
+          >
             <ProjectMedia media={project.heroMedia} accent={project.accent} />
-          </div>
+          </DirectedReveal>
 
-          {/* Text */}
-          <div>
+          {/* Text (enters from the opposite edge) */}
+          <DirectedReveal direction={mediaFirst ? "right" : "left"}>
             <p
               className={cn(
                 "font-mono text-xs uppercase tracking-[0.2em]",
@@ -182,8 +185,8 @@ export function ProjectChapter({
                 <span className="sr-only"> (opens in a new tab)</span>
               ) : null}
             </Link>
-          </div>
-        </Reveal>
+          </DirectedReveal>
+        </div>
       </div>
     </section>
   );

@@ -5,6 +5,10 @@ import { m, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
+// SSR-safe "is client" flag with no effect (avoids a server/client transform
+// mismatch on the motion element during hydration).
+const noopSubscribe = () => () => {};
+
 type MagneticButtonProps = {
   href: string;
   children: React.ReactNode;
@@ -31,6 +35,11 @@ export function MagneticButton({
   ...rest
 }: MagneticButtonProps) {
   const reduced = useReducedMotion();
+  const mounted = React.useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
   const ref = React.useRef<HTMLAnchorElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -63,7 +72,7 @@ export function MagneticButton({
       onMouseMove={handleMove}
       onMouseLeave={reset}
       onBlur={reset}
-      style={reduced ? undefined : { x: springX, y: springY }}
+      style={mounted && !reduced ? { x: springX, y: springY } : undefined}
       className={cn(
         buttonVariants({ variant }),
         "h-12 gap-2 rounded-xl px-6 text-base font-semibold [&_svg:not([class*='size-'])]:size-5",

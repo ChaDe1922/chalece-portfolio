@@ -1,6 +1,7 @@
 import { stats } from "@/data/stats";
 import { StatBlock } from "@/components/stat-block";
-import { Reveal } from "@/components/reveal";
+import { DirectedReveal } from "@/components/motion/directed-reveal";
+import { MetricDivider } from "@/components/home/metric-divider";
 
 /**
  * Slim proof strip. Reuses the verified stats and the count-up StatBlock.
@@ -11,13 +12,21 @@ import { Reveal } from "@/components/reveal";
  */
 export function MetricStrip() {
   return (
-    <section aria-label="Proof points" className="border-y border-border/60">
+    <section
+      aria-label="Proof points"
+      className="relative border-y border-border/60"
+    >
+      <MetricDivider />
       <div className="mx-auto max-w-6xl px-4 py-12 md:px-8 md:py-14">
-        <Reveal className="grid grid-cols-2 gap-8 sm:gap-10 lg:grid-cols-4">
+        <DirectedReveal
+          stagger
+          direction="up"
+          className="grid grid-cols-2 gap-8 sm:gap-10 lg:grid-cols-4"
+        >
           {stats.map((stat) => (
             <StatBlock key={stat.label} stat={stat} />
           ))}
-        </Reveal>
+        </DirectedReveal>
       </div>
     </section>
   );
