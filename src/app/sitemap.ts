@@ -23,5 +23,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${site.url}/lab/spectrum`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${site.url}/lab/fourier`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${site.url}/lab/audio-tools`,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }

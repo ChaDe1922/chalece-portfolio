@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useReducedMotion } from "motion/react";
 import { LogIn, LogOut } from "lucide-react";
 import { recursionLab } from "@/data/recursion-lab";
-import { RichText } from "@/components/lab/recursion/rich-text";
+import { RichText } from "@/components/lab/rich-text";
 import { MirrorRoomCssFallback } from "@/components/lab/recursion/mirror-room-css-fallback";
 import { useWebGLSupport } from "@/components/lab/recursion/mirror-tunnel/use-webgl-support";
 

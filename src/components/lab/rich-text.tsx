@@ -2,7 +2,7 @@ import * as React from "react";
 
 /** Renders `text` with lightweight markup: `` `code` `` spans become inline
  *  code, and **bold** spans become a semibold <strong>. Everything else is
- *  plain text. Sibling of Emphasize. */
+ *  plain text. Sibling of Emphasize. Shared across lab lessons. */
 export function RichText({ text }: { text: string }) {
   const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g);
   return (

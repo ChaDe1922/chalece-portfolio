@@ -5,7 +5,7 @@ import { Check, CircleCheckBig, ListChecks, PenLine, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDeck } from "@/components/deck/deck-context";
 import { recursionLab } from "@/data/recursion-lab";
-import { RichText } from "@/components/lab/recursion/rich-text";
+import { RichText } from "@/components/lab/rich-text";
 
 const data = recursionLab.slides.quiz;
 type Q = (typeof data.questions)[number];

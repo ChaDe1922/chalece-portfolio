@@ -5,7 +5,7 @@ import { useReducedMotion } from "motion/react";
 import { Check, ClipboardCheck, Plus, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
-import { RichText } from "@/components/lab/recursion/rich-text";
+import { RichText } from "@/components/lab/rich-text";
 
 const data = recursionLab.slides.code;
 

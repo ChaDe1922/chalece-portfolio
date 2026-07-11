@@ -18,6 +18,22 @@ type SlideDeckProps = {
   onSlideChange?: (id: string) => void;
 };
 
+/** Content-wrapper classes per layout mode. Undefined and "orientation" return the
+ *  byte-identical original string, so decks that do not opt in are unchanged. `lab`
+ *  is wider and top-aligned (kills the empty band, enlarges visuals); `challenge`
+ *  stays reading-width but top-aligned. */
+function containerClass(layout?: Slide["layout"]) {
+  switch (layout) {
+    case "lab":
+      return "mx-auto flex min-h-full max-w-5xl flex-col justify-start px-5 py-8 sm:py-10 md:px-8";
+    case "challenge":
+      return "mx-auto flex min-h-full max-w-3xl flex-col justify-start px-5 py-8 sm:py-10 md:px-8";
+    case "orientation":
+    default:
+      return "mx-auto flex min-h-full max-w-3xl flex-col justify-center px-5 py-16 md:px-8";
+  }
+}
+
 const SWIPE_THRESHOLD = 60; // px of horizontal travel to count as a swipe
 const INTERACTIVE = "a, button, input, select, textarea, [contenteditable], [role='button']";
 // A swipe must not start on a control (slider, button, canvas, etc.), or
@@ -50,6 +66,7 @@ export function SlideDeck({ slides, deckId, className, onSlideChange }: SlideDec
   React.useEffect(() => {
     const id = window.location.hash.replace(/^#/, "");
     const found = slides.findIndex((s) => s.id === id);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time init from the URL hash on mount (SSR-safe, so not a lazy useState initializer)
     if (found >= 0) setIndex(found);
     mounted.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -192,7 +209,7 @@ export function SlideDeck({ slides, deckId, className, onSlideChange }: SlideDec
               aria-label={`Slide ${index + 1} of ${count}`}
               aria-labelledby={current.title ? headingId(current) : undefined}
             >
-              <div className="mx-auto flex min-h-full max-w-3xl flex-col justify-center px-5 py-16 md:px-8">
+              <div className={containerClass(current.layout)}>
                 {current.title ? (
                   <h2
                     id={headingId(current)}
@@ -231,8 +248,10 @@ export function SlideDeck({ slides, deckId, className, onSlideChange }: SlideDec
             </button>
           </div>
 
-          {/* Progress dots */}
-          <div className="flex items-center gap-2" role="tablist" aria-label="Slides">
+          {/* Progress dots. Hidden on small screens (many decks have 12+ dots, which
+              overflow a phone-width control bar); the top progress bar and Prev/Next
+              still convey position there. */}
+          <div className="hidden items-center gap-2 sm:flex" role="tablist" aria-label="Slides">
             {slides.map((s, i) => (
               <button
                 key={s.id}

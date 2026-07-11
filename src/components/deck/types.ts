@@ -11,6 +11,11 @@ export type Slide = {
   titleNode?: React.ReactNode;
   render: () => React.ReactNode;
   advanceGate?: boolean;
+  /** Content-wrapper layout mode. Undefined renders exactly like today (narrow
+   *  max-w-3xl, vertically centered) so shipped decks are unchanged. `lab` is a
+   *  wider, top-aligned container for interactive screens; `challenge` is
+   *  reading-width but top-aligned; `orientation` matches the default cover look. */
+  layout?: "orientation" | "lab" | "challenge";
 };
 
 /** Exposed to slide bodies through `useDeck()` so a gated slide can signal it

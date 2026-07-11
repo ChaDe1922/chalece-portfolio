@@ -1,7 +1,8 @@
 import * as React from "react";
 
 /** Renders `text` with each phrase in `terms` wrapped in a bold <strong>.
- *  Case-insensitive, matches whole phrases, keeps the original casing. */
+ *  Case-insensitive, matches whole phrases, keeps the original casing. Shared
+ *  across lab lessons. */
 export function Emphasize({ text, terms }: { text: string; terms: string[] }) {
   if (terms.length === 0) return <>{text}</>;
   const escaped = terms

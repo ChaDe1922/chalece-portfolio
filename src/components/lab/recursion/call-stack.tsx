@@ -5,7 +5,7 @@ import { useReducedMotion } from "motion/react";
 import { CornerDownLeft, Play, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
-import { RichText } from "@/components/lab/recursion/rich-text";
+import { RichText } from "@/components/lab/rich-text";
 import { CallStackPlates } from "@/components/lab/recursion/call-stack-plates";
 
 const data = recursionLab.slides.callStack;

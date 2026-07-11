@@ -1,0 +1,8262 @@
+How does a computer find the recipe?
+Music technology · signals · beginner friendly · about 18 minutes
+
+You can look at a spectrum and understand what it means. But how does a computer create that spectrum? A computer does not hear sound like a person; it sees numbers.
+
+A digital sound is a list of samples. This part shows how those samples become a frequency recipe.
+
+The whole method is simpler than the formula looks:
+
+Choose a frequency, and make a test wave.
+Multiply sample by sample, then add the results.
+See if the total is big or small.
+By the end of Part 2, you will be able to:
+
+See where digital samples come from.
+Run the frequency test: multiply sample by sample, then add.
+Interpret the main pieces of the DFT formula.
+Calculate one small frequency result by hand.
+Where this sits in the series:
+
+1. See the recipe
+→
+2. Find the recipe
+→
+3. Use it, and prove it
+Start the frequency test
+
+A computer sees sound as dots
+A microphone captures a changing sound wave. A computer cannot store every point on the smooth curve, so it takes quick measurements. Each measurement is a sample, and a digital sound is a list of samples.
+
+Think of it like taking snapshots of a moving object. More snapshots give a clearer picture.
+
+Choose a number of samples and animate the sampling. Watch each glowing dot land on the curve and drop into the table.
+
+Number of samples
+4
+8
+16
+32
+Animate sampling
+Time, left to right
+Value, up and down
+8 samples taken across one cycle. 0 of 8 dots placed so far.
+
+The sample number is n. The sample value is x[n]. So x[3] means the sound value at sample 3.
+
+This is a cosine-shaped wave, the same smooth shape as a sine, shifted so it starts at the top.
+n	time	x[n]
+0	0.00	...
+1	0.13	...
+2	0.25	...
+3	0.38	...
+4	0.50	...
+5	0.63	...
+6	0.75	...
+7	0.88	...
+A computer starts with samples, dots taken from the sound wave. The Fourier Transform works with those dots.
+
+The mystery sound
+In Part 1 you built sounds: pure tones to a finished sound. Now the computer has to go backward, from a finished sound to the pure tones inside it.
+
+Here is a mystery sound, made from a few hidden pure tones. Your job is to find them. The waveform shows the finished sound over time, but it does not directly tell us which pure tones are inside.
+
+Play it and inspect its waveform. We will not reveal the answer yet.
+
+Play mystery sound
+
+
+The mystery waveform
+A few pure tones are hiding in here. Which ones?
+
+Make a prediction
+
+Where do you think the hidden tones might be? Place a pin or two on the blank spectrum. This is just a guess to spark curiosity.
+
+So we need a test. The test asks: how much of this frequency is in the sound? One frequency at a time.
+
+Ask the sound one question
+To find a frequency, the computer makes a pure test wave. The test wave asks: are you in here?
+
+For a low frequency, make a low test wave; for a high frequency, make a high test wave. Then compare the test wave to the sound.
+
+Move the test frequency. When the test wave is low, its cycles are spread out; when high, its cycles are closer together. Do not calculate yet, just watch it change.
+
+Play mystery sound
+Play test wave
+
+
+Mystery sound
+Test wave
+Test frequency
+
+477 Hz
+Test frequency 477 Hz. Lower than the mystery, so its cycles are more spread out.
+
+Match the spacing
+
+A target wave sits behind the test wave. Adjust the test frequency until the spacing matches.
+
+Show the target wave
+A test wave is a pure tone used to check for one frequency.
+
+Multiply, then add
+Here is the whole idea. For one test frequency: take a sound sample, take the matching test-wave sample, multiply them, add the result to a running total, and repeat for every sample.
+
+A large total means this frequency matches the sound.
+A small total means this frequency is probably not strong in the sound.
+Step through the samples or auto-play. Each product drops into a bucket: positive products add upward, negative pull downward. The match score is what remains.
+
+Next sample
+Auto-play calculation
+Reset
+Sound samples
+Test-wave samples
+Press Next sample to begin.
+
+Positive bucket
+0.00
+Negative bucket
+0.00
+Running total: 0.00
+
+Predict the product
+
+Before each product appears, choose its sign from the two sample values.
+
+positive
+negative
+near zero
+For one frequency, the transform is basically: multiply samples, then add the products.
+
+A match adds up
+Now test a frequency that really is inside the sound. Because the test wave lines up with the sound, many products point the same way. They add instead of canceling, and the total grows.
+
+Compare two lanes. In the matching lane the total grows large. In the wrong lane the products fight, some positive and some negative, and they cancel.
+
+Test matching frequency
+Test wrong frequency
+Compare totals
+Matching test: run it to see the bars
+Wrong test: run it to see the bars
+Which one is hiding?
+
+Three test lanes run at different frequencies. Drag the badge onto the lane with the largest final total.
+
+
+Low test
+total 0.30
+
+Matching test
+total 1.00
+
+High test
+total 0.20
+A large total is evidence that the tested frequency is present. A near-zero total means it is weak or absent.
+
+Phase can hide a match
+There is one problem. Two waves can have the same frequency but start in different places. That starting position is called phase.
+
+If the test wave starts in the wrong place, a single test can miss a frequency that is actually there. The frequency is right; the timing is shifted.
+
+Slide the phase. The frequency stays the same while the starting position changes. Sometimes the match total gets smaller even though the frequency did not change.
+
+The signal (solid) shifting against the fixed cosine test (faint)
+
+Match total (single test)
+1.00
+Phase 0 degrees. Match total 1.00. The frequency never changed, yet a single test can fade as the signal slides.
+
+Phase
+
+0°
+Same or new frequency?
+
+Sort each wave by what changed.
+
+Same spacing, shifted right
+Closer spacing
+Same spacing, shifted left
+
+Same frequency, different phase
+Tap to drop the selected wave here
+
+Different frequency
+Tap to drop the selected wave here
+Phase is where the wave starts in its cycle. A good frequency test must handle phase.
+
+Cosine and sine work as a team
+To avoid missing a shifted wave, the computer uses two test waves: a cosine and a sine. They are the same frequency but start at different positions, like two spotlights on the same frequency from different angles.
+
+Run the test with each. Call the totals C and S. The combined amount is the distance: amount = the square root of (C squared plus S squared).
+
+Change the phase and watch C and S trade strength. On the circle, the point moves around but its distance from the center, the amount, stays the same when the frequency is present.
+
+Horizontal is C, vertical is S. The point rides a circle whose radius is the amount.
+Cosine total C
+1.00
+Sine total S
+0.00
+Combined amount
+1.00
+Phase 0 degrees. C = 1.00, S = 0.00, amount = 1.00. The amount stays steady while C and S trade.
+
+Change phase
+
+0°
+Keep the amount
+
+Can you make C small while keeping the amount large? Slide the phase and watch S catch what C misses.
+
+Cosine and sine together measure a frequency's strength no matter where it starts. Hold on to phase. Later you will see noise-cancelling headphones use it.
+
+The formula is a shortcut
+You have done the transform by feel: make a test wave, multiply, add, check the total. Here is the same method written as the Discrete Fourier Transform. It is not a new idea, it is a shortcut.
+
+X[k]
+ = 
+Σ
+  
+x[n]
+ · 
+e
+−i 2πkn/N
+It means: for this frequency, multiply every sample by the test wave, then add the products.
+
+
+X[k]
+the answer for frequency bin k. Its size tells how strong that frequency is; its angle tells phase.
+
+
+Σ (the sum)
+
+x[n]
+
+n
+
+N
+
+k
+
+e^(-i 2πkn/N)
+Build the formula from blocks
+Drag the blocks into a sentence that describes the method.
+
+
+
+1
+get X[k]
+
+
+2
+add all products
+
+
+3
+multiply by the test wave
+
+
+4
+take each sound sample x[n]
+
+
+5
+For frequency k
+Check the order
+Reset
+The formula is not the beginning of the idea. It is the compact version of the idea you already understand.
+
+For the curious: why e and a circle?
+›
+
+Calculate one frequency by hand
+Now calculate one tiny Fourier result yourself, with eight samples from a simple wave that starts at the top.
+
+Test bin k = 1. For each sample: take the sound sample, take the test-wave sample, multiply, and add to the running totals C and S. At the end, the amount is the square root of (C squared plus S squared).
+
+The sound, eight samples
+
+x[0]
+1.00
+x[1]
+0.71
+x[2]
+0.00
+x[3]
+-0.71
+x[4]
+-1.00
+x[5]
+-0.71
+x[6]
+0.00
+x[7]
+0.71
+Choose frequency bin:
+1
+2
+3
+Next sample, n = 0
+
+C += x[0] · cos(2π·1·0/8) = 1.00 · 1.00 = 1.00
+
+S −= x[0] · sin(2π·1·0/8) = 1.00 · 0.00 = 0.00
+
+C = 0.00
+S = 0.00
+amount = 0.00
+Step through samples
+Auto-animate
+Error detective
+One step has a mistake. Click the wrong product.
+
+
+x[0] · cos = 1.00 · 1.00 = 1.00
+
+0.71 × 0.71 = 0.71
+
+x[4] · cos = -1.00 · -1.00 = 1.00
+You computed one frequency result by hand. The computer does the same kind of process, much faster, across many frequencies.
+
+Checkpoint: find the recipe
+Part 2 check
+
+You have seen the method behind the transform. It is not magic. It is a repeated test.
+
+For each frequency:
+
+Make a test wave.
+Multiply sample by sample.
+Add the products.
+Measure the result.
+Two quick checks, just for you. Nothing is graded.
+
+Method maze
+Put the steps in order. The distractor tiles do not belong, so leave them out.
+
+
+
+Guess instrument
+Leave out
+
+
+Turn up volume
+Leave out
+
+
+Repeat
+Leave out
+
+
+Make test wave
+Leave out
+
+
+Choose frequency
+Leave out
+
+
+Multiply samples
+Leave out
+
+
+Read amount
+Leave out
+
+
+Add products
+Leave out
+Check the order
+Reset
+Quick check
+You test a sound at one frequency and the combined amount comes out large. That tells you...
+
+A
+that frequency is strongly present in the sound
+
+B
+the sound is loud overall
+
+C
+that frequency is missing
+
+You can find the recipe
+You saw where samples come from, built a test wave, multiplied and added sample by sample, read the DFT formula, and calculated one frequency by hand.
+
+What you can do now:
+
+Explain that a digital sound is a list of samples.
+Run the frequency test: multiply sample by sample, then add.
+Read the DFT formula and say what each piece does.
+Next: use it on your gear.
+
+You can find a recipe now. In Part 3 you will use it in the real world, EQ, headphones, voice, and song recognition, then prove you can read a sound.
+
+Continue to Part 3
+
+---
+
+This is part 2 of our lesson. The text is a bit light and not quite explanatory enough for beginners. The interactions and page layouts could use some work as well. Some of the interactions or references are unclear, reducing the effectiveness of the lesson. We're also lacking in formative assessments along the way. 
+
+Let's first audit what we have. 
+Suggest improvements and polish
+Rewrite each page
+Then work on the designing and adjustment of the interactions to make them cohesive with the page and the lesson.
+
+Use the screenshots for visual reference.
+
+Let's give the same attention to part 3 as well.
+
+Use it on your gear
+Music technology · signals · beginner friendly · about 15 minutes
+
+You can read a sound's frequency recipe, and explain how a computer finds it. Now connect it to the real world.
+
+Frequency recipes show up in EQ, headphones, microphones, noise cancelling, compression, song recognition, pitch correction, and voice tools.
+
+By the end of Part 3, you will be able to:
+
+Shape a sound with EQ and predict the result.
+Read a headphone frequency-response curve.
+Recognize a spectrogram, and where frequency thinking shows up in everyday audio.
+Solve short sound mysteries to prove you can read a sound.
+Where this sits in the series:
+
+1. See the recipe
+→
+2. Find the recipe
+→
+3. Use it, and prove it
+Open the audio toolbox
+An interactive lesson by Chalece DeLaCoudray
+
+EQ is recipe editing
+An equalizer, or EQ, changes the balance of frequencies. It does not rewrite the melody, it reshapes the recipe. Boost bass and lows get stronger; cut treble and highs get softer; boost mids and voices move forward.
+
+Play the loop, then try the rescue scenarios. Adjust the band that matches each problem and listen.
+
+Play loop
+
+
+Spectrum, bass on the left to treble on the right
+
+Bass
+0 dB
+
+Mids
+0 dB
+
+Treble
+0 dB
+
+Reset flat
+Fix the mix
+
+The song sounds thin.
+The mix sounds harsh.
+The vocal is buried.
+EQ works because sounds have frequency recipes. The EQ lets you reshape that recipe.
+
+Read a headphone curve
+Headphones and speakers do not play every frequency equally. A frequency-response curve shows how strongly the gear plays each region. A rise in the bass emphasizes the low end; a rise in the treble emphasizes brightness; a dip in the mids makes vocals feel less forward.
+
+Do not look first. Pick a tuning, listen, and guess which curve it is, then reveal it.
+
+Play sample through this curve
+
+
+Bass
+Frequency response (louder above the line, quieter below)
+Treble
+
+
+Neutral-like
+reproduces every region fairly evenly
+
+Bass-emphasized
+lifts the low end
+
+Bright
+lifts the treble, crisp and airy
+
+V-shaped
+lifts bass and treble, scoops the mids
+Curve detective
+
+Pick a voicing above and listen. Then choose the label that matches what you heard.
+
+bass-heavy
+bright
+balanced
+V-shaped
+A headphone curve is like an EQ profile built into the gear, the fit, and the listening system.
+
+From spectrum to spectrogram
+A spectrum shows the frequencies in one slice of sound. But many sounds change over time: speech changes, music changes, drums hit and fade.
+
+A spectrogram stacks spectra over time. Time runs left to right, frequency bottom to top, and strength shows as brightness. It is like a movie of the spectrum.
+
+Play each sound and watch the trail it leaves. A steady note makes horizontal bands; a drum hit makes a sudden burst; speech makes changing shapes.
+
+Play sung note
+Play drum hit
+Play spoken phrase
+
+
+Time
+Low to high frequency, bottom to top
+
+Match sound to spectrogram
+Play each sound, then drag its label onto the matching spectrogram.
+
+
+Steady horizontal bands
+Tap to fill
+
+A sudden vertical burst
+Tap to fill
+
+Changing, shifting shapes
+Tap to fill
+Labels
+
+Spoken word
+Drum hit
+Steady note
+A spectrum shows frequency content. A spectrogram shows how it changes over time.
+
+Where frequency thinking lives
+Frequency analysis is everywhere in audio. These tools do not all work the same way, but they share a big idea: when we can see frequency patterns, we can measure, compare, compress, or change sound.
+
+Noise cancelling
+A microphone listens to outside noise; the headphones estimate what reaches your ear and create a carefully timed anti-noise signal to reduce it. This uses phase: two similar waves in opposite directions can partially cancel.
+
+Play noise
+Add anti-noise
+Press play to hear the tone.
+
+Song recognition
+A song-recognition app looks for strong frequency patterns over time. Those patterns become a fingerprint, which it compares to known songs.
+
+Play noisy clip
+Click the strongest peak points on the spectrogram. They connect into a fingerprint.
+
+Audio compression
+Streaming audio needs smaller files. Compression tools use hearing models to reduce details that are less likely to be noticed, working with frequency information over short time windows.
+
+Original
+Compressed
+Difference
+Listen at each setting and choose which version is acceptable.
+
+Pitch correction
+Pitch tools estimate the main pitch of a voice or instrument, then nudge it toward a target note.
+
+Play sung note
+Snap to target note
+Drag the target note and hear the correction change.
+
+Frequency recipes help audio tools understand what is inside a sound. Once the recipe is visible, a tool can change it, compare it, shrink it, or respond to it.
+
+Checkpoint: use the recipe
+Part 3 check
+
+You have explored the sound recipe from several angles. Make sure you can connect a problem to a fix.
+
+Three quick checks, just for you. Nothing is graded.
+
+Audio repair
+Drag each problem to a likely adjustment.
+
+Items
+
+Too muddy
+Too dull
+Too thin
+Cut some low mids
+Empty
+Boost treble slightly
+Empty
+Boost bass or low mids
+Empty
+Quick check
+A headphone curve rises strongly in the low frequencies and dips through the mids. What would you expect?
+
+A
+More bass, with vocals sitting back: a warm, scooped sound.
+
+B
+Thin and bright, with harsh treble.
+
+C
+Perfectly neutral, with no character.
+Tool sorting
+Sort each tool by what it does with frequency information.
+
+Items
+
+EQ
+Pitch correction
+Spectrum analyzer
+Tuner
+Song recognition
+Noise cancelling
+Compression
+Change it
+Empty
+Measure it
+Empty
+Compare it
+Empty
+Reduce or remove it
+Empty
+
+Decode the sound
+Decode the sound
+You now have the tools to read sound. Solve a few sound puzzles. No long quiz, just listen, look, adjust, and explain.
+
+Start the first challenge
+
+Find the hidden tone
+A sound hides one pure tone. Tune the test frequency until the match strength peaks, then lock your answer.
+
+Find the hidden tone
+Tune the test frequency until the match strength peaks, then lock it in.
+
+Play mystery
+Play test tone
+Match strength
+49%
+Test frequency
+
+495 Hz
+Lock it in
+
+Match the recipe
+Move the harmonic sliders until your spectrum matches the target. You do not need a perfect match.
+
+Match the recipe
+Set the harmonic sliders until your spectrum resembles the target.
+
+Spectrum
+Target
+Spectrum
+Yours
+Play target
+Play yours
+H1
+
+H2
+
+H3
+
+H4
+
+H5
+
+H6
+
+Check match
+Reveal recipe
+
+Match the recipe
+Move the harmonic sliders until your spectrum matches the target. You do not need a perfect match.
+
+Match the recipe
+Solved
+Correct
+
+Close enough. The closer the harmonic amplitudes, the closer the timbre.
+
+You can now: Rebuild a sound from its harmonics.
+
+Sample calculation replay
+Sample calculation replay
+The eight-dot sampled wave is back. We have highlighted sample n = 2. Drag the correct values into the slots.
+
+Complete a guided calculation for one sample, then the animation continues.
+
+Sample n = 2 is highlighted.
+
+x[2] =
+
+0.00
+0.71
+1.00
+-0.71
+test[2] =
+
+0.00
+0.71
+1.00
+-0.71
+product =
+
+0.00
+0.71
+1.00
+-0.71
+
+Sample calculation replay
+Sample calculation replay
+Solved
+Correct
+
+Right. x[2] and test[2] are both 0.00, so the product is 0.00. The animation continues from here.
+
+You can now: Complete one step of the frequency test.
+
+Formula translator
+Drag each plain-language label onto the matching piece of the formula.
+
+X[k]
+ = 
+Σ
+  
+x[n]
+ · 
+e
+−i 2πkn/N
+Formula translator
+Drag each plain-language label onto the matching piece of the formula.
+
+
+X[k]
+Tap to fill
+
+Σ
+Tap to fill
+
+x[n]
+Tap to fill
+
+e^(-i 2πkn/N)
+Tap to fill
+
+k
+Tap to fill
+
+N
+Tap to fill
+Labels
+
+total number of samples
+frequency being tested
+test wave
+sound sample
+add them up
+answer for one frequency
+
+Gear fix
+Apply what you know to a real listening problem.
+
+Your headphones sound exciting, but vocals feel pushed back. The curve shows boosted bass, boosted treble, and dipped mids.
+
+Bass (boosted)
+Mids (dipped)
+Treble (boosted)
+
+Gear fix
+What would help vocal clarity most?
+
+A
+Bring the mids forward.
+
+B
+Boost the bass more.
+
+C
+Boost the treble more.
+
+Gear fix
+Apply what you know to a real listening problem.
+
+Your headphones sound exciting, but vocals feel pushed back. The curve shows boosted bass, boosted treble, and dipped mids.
+
+Bass (boosted)
+Mids (dipped)
+Treble (boosted)
+
+Gear fix
+Solved
+Correct
+
+Right. Vocals live in the mids, and this curve dips them. Lifting the mids brings vocals forward.
+
+You can now: Diagnose a response curve and choose a fix.
+
+You can read a sound
+Return to the beginning. A flute and a violin can play the same note at similar loudness. Now you know why they still sound different: their frequency recipes are different.
+
+Play flute
+Play violin
+Show spectra
+
+
+Look at the spectra now. Explain the difference in one or two sentences.
+What do you understand now that you did not at the beginning?
+Compare with a strong answer
+The takeaway:
+
+Sound has a recipe.
+A spectrum helps you read it.
+The Fourier Transform helps you find it.
+Once you can read the recipe, you can understand and reshape sound: EQ, headphones, voice analysis, song recognition, audio compression, noise cancelling, and pitch correction.
+
+I am Chalece DeLaCoudray, a learning experience designer and technologist. If this is the kind of learning you want to build, let's talk.
+
+Email
+
+cdelacoudray@gmail.com
+
+LinkedIn
+
+in/chalecedelacoudray
+
+(opens in a new tab)
+Coursera
+
+7 published courses
+
+(opens in a new tab)
+Back to portfolio
+Download resume
+Thanks for visiting.
+
+
+The same treatment for the intro sound lesson.
+
+Make your first sound
+Music technology · beginner friendly · about 10 minutes · no setup
+
+You do not need to read music or know any math. In the next ten minutes you will see what a sound actually is, shape one yourself, and play a short tune on a synth you built. Headphones help. Press the button to begin.
+
+By the end, you will be able to:
+
+See what a sound really is.
+Tell pitch and loudness apart.
+Hear why a flute and a violin differ.
+Build a sound and play a short tune on it.
+Press to hear it
+
+What is a sound?
+A sound is a fast vibration moving through the air. To vibrate is to move back and forth quickly. A speaker cone moves out and in, hundreds of times a second. Each push shoves the air in front of it, and that push travels across the room to your ear.
+
+Watch the air between the speaker and the ear. Where the dots bunch together, the air is squeezed tight. That squeeze is a compression. Where they spread apart, the air is thin. That gap is a rarefaction. The pattern of squeeze and spread travels left to right, reaches your eardrum, and your brain calls the whole thing sound.
+
+Press play to send a wave from the speaker to the ear. Drag the pitch slider and the squeezes pack closer together. Drag the loudness slider and each push grows bigger.
+
+Play
+
+
+The air is at rest. Press play to send a wave from the speaker to the ear.
+
+Pitch
+
+Loudness
+
+The moving air is the real thing. Drawn as a graph over time, that same push and pull is the line below.
+
+That line is called a waveform. Left to right is time. Up and down is the push of the air, with the compressions above the middle and the rarefactions below. Every sound you have ever heard is a version of this wave.
+
+Pitch is how fast it vibrates
+Vibrate faster and the sound is higher. Vibrate slower and it is lower. How fast it vibrates is the frequency, measured in hertz (Hz), which means vibrations per second. Each vibration is one of those compressions reaching your ear, so more of them per second reads as a higher note.
+
+Drag the slider. Listen, and watch the wave tighten as the pitch rises.
+
+Play
+
+
+330 Hz, near the note E4.
+
+Frequency
+
+Octave down
+Octave up
+One rule is worth knowing. Double the frequency and you rise one octave, the same note higher. The note A is 440 Hz. Double it to 880 Hz and it is A again, higher up. Pitch is speed.
+
+Loudness is how big the wave is
+Loudness is not pitch. Loudness is how big the wave is, not how fast. A bigger wave moves more air, so it sounds louder. The size of the wave is its amplitude. A larger amplitude is a harder push of air against your eardrum.
+
+Drag the loudness slider. The wave grows taller and shorter, but the pitch does not change.
+
+Play
+
+
+Loudness 0.70. Pitch fixed at 330 Hz, near E4.
+
+Loudness
+
+Pitch and loudness are two separate controls. The same note can be quiet or loud, and any note can be high or low at any loudness. Our ears do not hear every pitch as equally loud, which is part of why mixing music is a craft.
+
+Why a flute and a violin sound different
+Play the same note, at the same loudness, on a flute and a violin. You can still tell them apart at once. That difference is timbre, and it comes from the shape of the wave. Two instruments can vibrate at the very same speed and still trace very different shapes.
+
+Same pitch, same loudness. Tap each shape and hear how different it feels.
+
+Play
+
+
+Sine, sounds smooth. Pitch fixed at 330 Hz.
+
+Sine(smooth)
+Square(buzzy)
+Sawtooth(bright)
+Triangle(mellow)
+Now hear two real instruments. A flute and a violin on the same note, A. Same pitch, same loudness, yet your ear knows them apart at once. That is timbre.
+
+Flute
+Violin
+The pitch is identical. The loudness is identical. They still sound nothing alike. That is timbre, and it lives in the shape of the wave. Hold one question for the next lesson. The square sounds buzzy and busy. Why would so plain a shape sound so complex?
+
+How a sound begins and ends
+Pluck a guitar string and the sound jumps in and fades. Lean on an organ key and it swells and holds. Same note, very different feel. That shape over time is the envelope. It is not about pitch or loudness. It is about timing, how a sound rises when it starts and falls when it ends.
+
+Drag the two handles. Attack is how fast the sound arrives. Decay is how fast it fades. Try the Pluck and Pad presets, then make your own.
+
+Play it
+
+
+Attack 5 ms, decay 250 ms.
+
+Attack
+
+Decay
+
+Pluck
+Pad
+A short, sharp envelope reads as a pluck or a drum. A slow, long envelope reads as a pad or a held note. The envelope is a large part of how your ear names an instrument, even before the timbre.
+
+Build your synth, play a tune
+You have the pieces now: a pitch, a loudness, a waveshape, and an envelope. Put them together and you have an instrument. That is what a synthesizer is. Nothing here is new to you. You have already shaped every one of these by hand.
+
+Pick your sound, then play. Use the keys on screen or your keyboard. Follow the suggested notes, or play freely.
+
+Sine
+Square
+Saw
+Triangle
+
+
+Pluck
+Pad
+
+C4
+a
+
+D4
+s
+
+E4
+d
+
+F4
+f
+
+G4
+g
+
+A4
+h
+
+B4
+j
+
+C5
+k
+Suggested tune (Twinkle, Twinkle): C4 C4 G4 G4 A4 A4 G4
+
+That is a synth. You set how fast it vibrates (pitch), how big the wave is (loudness), the shape of the wave (timbre), and how it starts and stops (envelope). Every synthesizer, from a phone app to a festival stage, is built on these four ideas.
+
+Check what you heard
+A few quick checks, some by ear, then say it in your own words.
+
+Listen 1
+Press play to hear two notes. Which one is higher?
+
+Play the two notes
+
+The first note
+
+The second note
+Listen 2
+Press play. Which shape is this?
+
+Play the sound
+
+Sine (smooth)
+
+Square (buzzy)
+
+Sawtooth (bright)
+
+Triangle (mellow)
+Match
+Match each control to what it changes about the sound.
+
+Pitch
+Loudness
+Timbre
+Envelope
+How the sound starts and ends
+The shape of the wave
+How big the wave is
+How fast the wave vibrates
+Game
+Match the mystery sound. Set the shape and the envelope until yours matches the target.
+
+Play the target
+Play yours
+Sine
+Square
+Saw
+Triangle
+Attack
+
+Decay
+
+Keep adjusting the shape and the envelope.
+
+Reveal the target
+Question
+A waveform (the line you watched) is a picture of what?
+
+A
+A sound's vibration over time.
+
+B
+How loud the sound is, and nothing else.
+
+C
+The musical notes written on a staff.
+
+D
+The color of the speaker.
+0 of 5 checks passed.
+
+In your own words
+In one sentence, explain to a friend what timbre is.
+Aim for one sentence, clear and specific.
+Check it against the rubric
+Prev
+Next
+
+That is a sound
+You saw the wave, changed its speed and its size, heard how its shape makes timbre, gave it an envelope, and played a tune on a synth you built.
+
+What you can do now:
+
+Explain that a sound is a vibration, and a waveform is that vibration over time.
+Tell pitch (frequency) apart from loudness (amplitude).
+Recognize that waveshape creates timbre.
+Shape a sound with an envelope, and play it.
+Remember the buzzy square wave. It looked plain but sounded busy. The reason is that it is not one sound. It is many pure tones stacked together. In the next lesson you will pull a sound apart into its ingredients and meet the most useful idea in audio: the Fourier transform.
+
+I am Chalece DeLaCoudray, a learning experience designer and technologist. If this is the kind of learning you want to build, let's talk.
+
+Email
+
+cdelacoudray@gmail.com
+
+LinkedIn
+
+in/chalecedelacoudray
+
+(opens in a new tab)
+Coursera
+
+7 published courses
+
+(opens in a new tab)
+Back to portfolio
+Download resume
+Thanks for visiting.
+
+Prev
+Next
+
+
+What is inside a sound?
+Music technology · signals · beginner friendly · about 15 minutes
+
+Why the same note can sound completely different
+
+Why does the same song sound thin on earbuds and huge on nice headphones? And why can a flute and a violin play the same note, at the same loudness, and still sound different?
+
+There is more inside a sound than pitch and volume. A sound has a hidden recipe: low ingredients, high ingredients, strong ingredients, quiet ingredients. In this series you will learn to read that recipe.
+
+The main tool is the Fourier Transform 
+(FOOR-ee-ay)
+ It answers one powerful question: which frequencies are inside this sound, and how strong is each one?
+
+
+Same note A, two instruments. Same pitch, similar loudness, yet you can tell them apart.
+
+
+
+Play flute
+Play violin
+Both sounds are playing the same note. What do you notice?
+
+They sound identical
+They sound different
+By the end of this series, you will be able to:
+
+See the difference between a waveform and a spectrum.
+Build richer sounds by stacking pure tones.
+Read bass, mids, and treble on a spectrum.
+Explain the Fourier Transform as a frequency test, and do one by hand.
+Connect frequency recipes to EQ, headphones, voice, and song recognition.
+The path ahead, in four stages:
+
+1
+See the recipe. Waveform, spectrum, pure tones, harmonics, timbre, and bass/mids/treble.
+2
+Find the recipe. How a computer tests a sound for one frequency at a time.
+3
+Use the recipe. Connect it to EQ, headphones, voice, and everyday audio tools.
+4
+Prove you can read a sound. Solve short sound mysteries using what you learned.
+Start the sound lab
+An interactive lesson by Chalece DeLaCoudray
+
+Part 1: see the recipe
+In Part 1, you will learn to see a sound two ways.
+
+Two views, two questions:
+
+Waveform shows how a sound changes over time.
+Spectrum shows which frequencies are inside a sound.
+Think of this like learning to read a map. Once you can read it, everything that comes next makes more sense.
+
+Begin Part 1
+
+
+Sound is a moving shape
+Sound is vibration.
+
+When something vibrates, it pushes and pulls the air around it.
+
+A vibration pushes and pulls the air outward.
+A microphone turns that movement into numbers, and a speaker turns the numbers back into movement.
+
+Sound in
+moving air
+Numbers
+one value per moment
+Sound out
+moving air again
+Sound in becomes Numbers, then a speaker turns the numbers back into Sound out.
+When we draw the changing numbers collected over time, we get a waveform. A waveform is not the sound itself. It is a picture of how the sound changes.
+
+Play each one and watch the shape it draws.
+
+
+
+Short bump
+Steady wave
+Rising swell
+Play a motion to draw a waveform.
+
+The parts of a waveform
+
+Pressure +Pressure -
+
+Time →
+beginning
+middle
+end
+
+Time runs left to right. The wave has a beginning on the left, a middle, and an end on the right.
+
+Up is a push: the air pressure rises above the center line.
+
+Down is a pull: the pressure drops below the center line.
+
+A bigger swing from the center means a stronger, louder signal.
+Hover or tap a line above to light up the matching part of the graph.
+
+Quick check
+Point to the moment
+Tap the beginning of the wave.
+
+Time runs left to right. Tap the point on the wave that matches each moment.
+
+
+
+
+Found 0 of 3.
+
+A waveform shows a sound changing over time. It answers: what is the sound doing moment by moment?
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+Meet the simplest sound
+A pure tone is the simplest sound we can study. It has one main frequency and draws a smooth repeating shape called a sine wave.
+
+A tuning fork, a test tone, or a clean whistle can get close to the sound of a pure tone.
+
+Press play, then move the pitch. When pitch goes up the waveform repeats faster and the spectrum bar moves right; when pitch goes down it repeats slower and the bar moves left.
+
+Play pure tone
+Now hear a real sound
+
+
+The same tone, two ways to see it:
+
+Frequency is how many times the wave repeats each second, measured in hertz (Hz). Higher frequency means higher pitch.
+
+The spectrum shows one bar, because a pure tone is only one frequency. The bar moves right for higher pitch and left for lower.
+
+Peaks: 4
+Draw it again
+The wave draws left to right, over time. Each dot marks a peak. Higher pitch means the peaks come faster.
+
+Spectrum
+Pitch: 440 Hz
+
+Press play, then move the pitch.
+
+Make it move
+0 / 3
+Play the tone, then use the pitch slider to reach each goal.
+
+1
+Make the tone higher without making it louder
+2
+Now make the tone lower
+3
+Return it near 440 Hz
+A pure tone gives you one frequency, one smooth waveform, and one main spectrum bar.
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+The waveform: sound across time
+A waveform shows how a sound changes over time.
+
+It is useful when you want to see:
+
+when a sound starts and ends
+where it gets stronger or weaker
+whether it repeats smoothly
+whether the shape looks simple or detailed
+A simple tone has a smooth waveform. A fuller sound usually has a more detailed shape, because several ingredients are combining.
+
+Pick a sound, play it, and watch its shape. Time runs left to right, and the height shows how loud the sound is at each moment.
+
+Play selected sound
+
+
+Choose a sound
+
+Pure tone
+Flute-like
+Violin-like
+Loudness
+Waveform
+Time →
+Match the description
+0 / 3
+Read each description, then tap the sound it fits. You can hear each one before you choose.
+
+Hear the sounds
+
+Pure tone
+Flute-like
+Violin-like
+Which one looks smoothest?
+
+Pure tone
+Flute-like
+Violin-like
+Quick check
+Order the waveforms
+Play each sound, then order them left to right, smoothest to most detailed.
+
+1
+Violin-like
+Play
+
+
+
+2
+Flute-like
+Play
+
+
+
+3
+Pure tone
+Play
+
+
+
+Check the order
+Reset
+The waveform tells you how the sound changes over time.
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+The spectrum: sound by frequency
+A spectrum shows the frequency ingredients inside a sound. Each bar stands for one frequency: its position tells you whether that frequency is low or high, and its height tells you how strong it is.
+
+Read it like this:
+
+left means lower frequencies
+right means higher frequencies
+taller means stronger
+shorter means weaker
+A pure tone has one main bar. A fuller sound has more bars, because it contains more frequency ingredients.
+
+Pick a sound and play it. Each bar is a frequency inside the sound, and taller bars are stronger.
+
+Play selected sound
+
+
+Choose a sound
+
+Pure tone
+Flute-like
+Violin-like
+Strength
+Spectrum
+low frequency
+Frequency →
+high frequency
+The parts of a spectrum
+
+Strength
+
+Frequency, low to high →
+
+
+Left is low frequencies, the bass of the sound.
+
+Right is high frequencies, the treble.
+
+Taller bars are stronger frequencies.
+
+Shorter bars are weaker frequencies.
+Hover or tap a line above to light up the matching part of the spectrum.
+
+Quick check
+Point to the spectrum
+Tap a low-frequency bar.
+
+Tap the bar on the spectrum that matches each description.
+
+
+Frequency, low to high →
+
+Found 0 of 3.
+
+The spectrum tells you which frequencies are inside the sound, and how strong each one is.
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+Same sound, two views
+The waveform and the spectrum are two pictures of the same sound.
+
+The sound does not change when you switch views. Only the question changes.
+
+Play
+Show waveform
+Show spectrum
+
+
+Choose a sound
+
+Pure tone
+Flute-like
+Violin-like
+Waveform
+Waveform
+
+What happens over time?
+
+Spectrum
+
+What frequencies are inside?
+
+Each task below is answered better by one view. Read the task, then drag its card into the waveform column or the spectrum column.
+
+Quick check
+Choose the better view
+Drag each task into the view that answers it best.
+
+Card 1 of 6
+
+Find when the sound starts
+Drag me to a column, or tap a column below.
+
+Waveform
+
+Spectrum
+You need both views. The waveform shows the sound across time; the spectrum shows it by frequency.
+
+We can read the frequency ingredients in a spectrum. But how do those ingredients get there?
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+The sonic prism
+Have you seen white light pass through a prism? The light spreads into colors. The white light was not one color; it contained many wavelengths at once.
+
+A Fourier Transform is like a prism for sound. A complex sound goes in, and a frequency recipe comes out.
+
+A speaker's sound wave entering a glass prism and fanning out the other side into separate wavy lines, with the Fourier transform formula engraved on the prism.
+One complex wave enters. Its frequency ingredients fan out.
+Choose a sound and send it through the prism. Each band is a different frequency. Taller, brighter bands are stronger components in the sound.
+
+The transform does not physically pull the sound apart. It calculates which frequencies are present and how strong each one is. The prism is our visual metaphor.
+
+Flute-like
+Violin-like
+
+
+Send a sound through the prism to split it into its pure tones.
+
+Left to right is low frequency to high. A band's height and brightness show how strong that frequency is.
+
+The fan of tones is the sound's spectrum, the frequency recipe.
+
+Quick check
+Read the prism
+Tap the strongest band.
+
+After the split, tap the band on the spectrum that matches each description.
+
+
+LowMidHigh
+Frequency, low to high →
+
+Found 0 of 3.
+
+Quick check
+Quick check: name that sound
+Play the mystery sound, then read how it splits.
+
+Play the mystery sound
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+Build a sound from pure tones
+Build a sound by stacking pure tones.
+
+The prism showed one direction: finished sound to frequency ingredients. Now imagine running it backward. Start with pure tones, stack them together, and build a new sound. That is additive synthesis.
+
+Start with H1 only, the fundamental. Then raise H2, H3, H4 and watch the sound change, the spectrum gain bars, and the waveform become more detailed.
+
+the sound changes
+the spectrum gains bars
+the waveform becomes more detailed
+The terms on a stack
+
+
+Fundamental. The first and lowest bar. It sets the pitch.
+
+Harmonics. The taller-numbered bars above it: 2x, 3x, 4x the fundamental.
+
+Amplitude. The height of a bar: how strong that harmonic is.
+
+Timbre. The whole pattern of bar heights, the sound's character.
+Hover or tap a term to see it on the harmonic stack.
+
+The note can stay the same while the recipe changes. That changing recipe changes the timbre.
+
+Play your sound
+
+
+Waveform
+Spectrum
+Live recipe
+
+y(t) =
+1.00·sin(2πf·t)
+That sin is the same sine from school trig, the sin in sine, cosine, and tangent.
+
+Tap a term to hear and see what it adds, then drag its amount to change the mix.
+
+1 harmonic in the mix.
+
+Add or remove harmonics
+
+H1 (base)
+
+H2
+
+H3
+
+H4
+
+H5
+
+H6
+
+Load preset
+
+Pure tone
+Flute-like
+Violin-like
+Bright synth
+Pure tone. Only the fundamental. A clean, hollow tone.
+Flute-like. Mostly the fundamental with a few quiet harmonics, a smooth character.
+Violin-like. A stronger stack of harmonics, a richer, more complex character.
+Make it brighter
+0 / 2
+Use the harmonic sliders above to meet each goal, one at a time.
+
+1
+Make the sound brighter without changing the fundamental
+2
+Now make it smoother
+Match the target recipe
+
+Play target
+Adjust the sliders until your spectrum roughly matches the faint target.
+
+H1
+H2
+H3
+H4
+H5
+H6
+H1
+
+H2
+
+H3
+
+H4
+
+H5
+
+H6
+
+Drag each slider until your bar reaches its faint target.
+
+The note can stay the same while the harmonic recipe changes. That recipe is the sound's timbre.
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+One pure tone, written as a formula
+Every pure tone you added follows the same pattern. Here is one pure tone as a formula. Tap a piece, change its value, and watch the wave respond.
+
+y(t)
+ = 
+A
+ · 
+sin
+(
+2π
+ 
+f
+ 
+t
+ + 
+φ
+)
+Say it out loud
+
+Say it out loud
+y(t)
+=
+A
+·
+sin
+(2π f t
++ φ)
+Press play to hear how to say it.
+
+The wave this makes
+
+Play this tone
+Loudness
+Time →
+Plug in values
+
+A
+0.80
+
+f
+440
+Hz
+
+φ
+0.00
+rad
+
+t
+0.0010
+s
+
+y(t) = 0.80 · sin(2π · 440 · 0.0010 + 0.00) = 0.29
+sin(2.76) = 0.37
+
+
+Fix the wave
+0 / 3
+Use the sliders above to change the wave, one goal at a time.
+
+1
+Make it taller
+2
+Make it repeat faster
+3
+Slide its starting point
+One formula term describes one pure tone. A full sound recipe is made by adding several tone formulas together.
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+How smooth sines build a square wave
+A square wave jumps high, then low, then high, then low. It sounds bright, buzzy, and electronic. But here is the surprise: a square wave can be built from smooth sine waves.
+
+How can smooth curves combine to create sharp-looking edges?
+
+A square wave: high, low, high, low, with sharp vertical edges.
+Smooth vs buzzy
+
+They can share the same fundamental pitch. Listen to the pure sine, then the square wave.
+
+Play sine wave
+Play square wave
+
+
+Why does the square wave sound brighter? Look at the spectrum.
+
+The square-wave recipe
+
+Written out, the series looks like this. Tap any piece to see what it does.
+
+y(t)
+ = 
+
+4
+π
+ [ 
+sin(2πft)
+ + 
+
+1
+3
+ 
+sin(2π·3ft)
+ + 
+
+1
+5
+ 
+sin(2π·5ft)
+ + 
+…
+ ]
+Say the recipe out loud
+
+Say it out loud
+y(t)
+=
+4/π
+[ sin(2πft)
++ 1/3 sin(6πft)
++ 1/5 sin(10πft)
++ … ]
+Press play to hear how to say it.
+
+Build the square
+
+Add one odd harmonic at a time, or watch it build. See the combined waveform, the spectrum, and the sound change with each step.
+
+Play
+
+
+Waveform
+Spectrum
+Just the fundamental, a pure sine.
+
+Add the next odd harmonic
+Watch it build
+H1 only
+Just the fundamental. The sound is smooth and the waveform is still a sine.
+Add H3
+A higher ingredient appears. The waveform begins to flatten and the sound gets brighter.
+Add H5, H7, H9
+The edges get steeper, the tone gets buzzier, and the shape moves closer to a square. Odd harmonics only, each quieter than the last.
+The pattern you built
+
+The added bars appear at H1, H3, H5, H7, and H9: the odd harmonics. An ideal square wave uses odd harmonics whose amplitudes decrease as 1, 1/3, 1/5, 1/7, and so on.
+
+Why do little ripples appear?
+Quick check
+Sort odd from even
+Drag each harmonic into the bin where it belongs in a square wave.
+
+Card 1 of 8
+
+H1
+Drag me to a column, or tap a column below.
+
+Belongs (odd)
+
+Silent (even)
+A square wave is not a mysterious new ingredient. It is smooth sine waves stacked in a precise pattern.
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+Exploring bass, mids, and treble
+A spectrum runs from low frequencies on the left to high frequencies on the right. We split that range into three regions and give each a name: bass is the low end, mids are the middle, and treble is the high end. You do not need to know these already, that is what this screen is for.
+
+A useful map (approximate):
+
+Low frequency
+High frequency
+
+The ranges:
+
+Bass
+about 20 to 250 Hz
+Mids
+about 250 Hz to 4 kHz
+Treble
+about 4 kHz to 20 kHz
+These ranges are approximate, and real sounds often spread across more than one region.
+
+Move slowly from low to high. In the bass it may feel deep or heavy; in the mids more present or voice-like; in the treble bright, sharp, or airy.
+
+Play sweeping tone
+
+
+Listen as the tone crosses bass, mids, and treble. What changes besides the number on the screen?
+
+200 Hz, in the bass: kick weight, bass guitar, 808s, low synths.
+
+Low
+
+High
+Quick check
+Where does its energy live?
+Play each sound, watch its spectrum land on the map, then drag it onto the region where most of its energy sits.
+
+Sound 1 of 3
+
+Play
+Kick drumdrag me onto the map
+Low
+Frequency, low to high
+High
+
+Bass, mids, and treble are not just app labels. They are regions of the frequency map.
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+
+See your own voice
+Your voice is a sound, so it has a recipe too.
+
+Use your microphone or play a sample. Hum a steady aah, try a whistle, try speaking your name, and watch the spectrum change.
+
+A whistle may look close to one strong bar. A sung vowel usually shows a fundamental plus harmonics. Your mouth shapes the sound, so some frequency areas become stronger.
+
+A steady sung vowel usually creates:
+
+a fundamental that relates to the pitch you sing
+a stack of harmonics above it
+stronger frequency regions shaped by your mouth and vocal tract
+Those stronger regions are called formants, and they help create vowel sounds. A whistle is close to one strong frequency, though not always a perfectly pure tone.
+
+Use your mic
+Play sample vowel
+Play sample whistle
+
+
+Use your mic, or play a sample voice.
+
+Your audio stays on your device. Nothing is recorded or sent anywhere.
+
+Voice detective
+0 / 4
+Try each one with the spectrum above, then tap it to mark it off.
+
+
+1
+Make the simplest spectrum you can.
+
+2
+Make the richest spectrum you can.
+
+3
+Make a higher pitch.
+
+4
+Make a lower pitch.
+The transform can reveal the recipe of a real sound while it is happening.
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+Checkpoint: read the recipe
+Part 1 check
+
+Pause and review. You have learned the big picture.
+
+So far:
+
+A pure tone is one main frequency; a waveform shows change over time; a spectrum shows frequency ingredients.
+A fundamental gives the main pitch; harmonics add richness; amplitude is strength.
+Timbre is the sound's character, which is why two sounds can share a pitch and still sound different.
+Three quick checks, just for you. Nothing is graded.
+
+Match the idea
+Tap a term, then its meaning, to draw a line connecting them.
+
+Waveform
+Spectrum
+Fundamental
+Harmonics
+Amplitude
+Timbre
+The character that tells a flute from a violin
+How strong a component is
+Tones at whole-number multiples of the fundamental
+The lowest tone, which sets the pitch
+The frequencies inside a sound
+A sound's change over time
+0 of 6 matched.
+
+Quick check
+A flute-like and a violin-like sound play the same fundamental pitch. Why can they still sound different?
+
+A
+Their harmonic amplitudes are different.
+
+B
+One must be playing the wrong note.
+
+C
+A spectrum cannot represent both sounds.
+In your own words
+In your own words, why can two instruments play the same note but sound different?
+One clear sentence is plenty.
+Compare with a strong answer
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+
+You can read a sound becoming a spectrum
+You started with a single note and ended up able to see what is inside it. You met the pure tone, read a sound as a waveform and a spectrum, stacked pure tones into new sounds, watched a square wave emerge from odd harmonics, and mapped bass, mids, and treble.
+
+What you can do now:
+
+See a sound two ways: a waveform over time and a spectrum by frequency.
+Describe any sound as a fundamental plus harmonics, each with its own strength.
+Find bass, mids, and treble on a spectrum, and hear how the recipe shapes timbre.
+Next: how a computer finds the recipe.
+
+You can read a spectrum now. In Part 2, you will see how a computer builds one, testing one frequency at a time.
+
+Continue to Part 2
+An interactive lesson by Chalece DeLaCoudray.
+
+Prev
+Next
+
+
+Restart
+The Fourier transform, Part 1.
+
+---
+
+Give the same thorough treatment to the Part 1 lesson as well
+
+Part 1 is doing the hardest job in the whole sequence: it has to make learners believe that sound has ingredients before Part 2 asks them to trust the math. The current lesson is strong, but it is trying to teach a lot at once: waveform, spectrum, pure tone, harmonics, additive synthesis, formula reading, square waves, bass/mids/treble, and voice analysis.
+
+The core fix is to make Part 1 feel less like “many audio concepts” and more like one clear transformation:
+
+A sound moves → we draw it as a waveform → we read it as a spectrum → we split it into ingredients → we build it back from ingredients.
+
+That through-line should be visible on every page.
+
+Part 1 audit
+What is working
+
+The lesson has a strong conceptual arc. It starts with a real-world question, gives learners two visual representations, introduces pure tones, uses the sonic prism metaphor, then lets learners build sound from harmonics. That is the right sequence.
+
+The interactions are also much richer now. You have prediction, tapping, matching, dragging, sliders, live spectrum changes, microphone use, and synthesis. That is exactly the direction for beginner-friendly music tech.
+
+The strongest pages conceptually are:
+
+The sonic prism
+Build a sound from pure tones
+Same sound, two views
+See your own voice
+Square wave from sines
+
+Those are the pages that make the lesson feel special.
+
+What needs improvement
+
+The biggest issue is density. Several screenshots show the browser zoomed out because the page is vertically packed. That tells us the interaction is too tall or too many learning moves are living on one screen.
+
+Part 1 also introduces some ideas before learners have enough language for them. For example, “same note, similar loudness” is a great hook, but some learners may not yet know pitch, loudness, timbre, frequency, harmonics, or amplitude. You can still use those words, but the lesson should keep returning to plain-language anchors:
+
+Pitch = which note.
+Loudness = how strong.
+Timbre = what kind of sound.
+Spectrum = ingredient list.
+Harmonics = extra tones stacked above the main one.
+
+The formula page is useful, but it needs to be clearly framed as optional or exploratory. It belongs in Part 1 only if the learner has already built tones with sliders. Otherwise, it may feel like math appeared too early.
+
+The square wave page is excellent, but it may be doing too much for Part 1. It can stay, but it should be framed as a “surprise proof” rather than another major formula lesson.
+
+Recommended Part 1 structure
+
+I would keep the current order with small adjustments:
+
+Series Start: What Is Inside a Sound?
+Part 1 Start: See the Recipe
+Sound Is a Moving Shape
+Meet the Simplest Sound
+The Waveform: Sound Across Time
+The Spectrum: Sound by Frequency
+Same Sound, Two Views
+The Sonic Prism
+Build a Sound from Pure Tones
+One Pure Tone as a Formula
+Square Waves: Smooth Sines in Disguise
+Bass, Mids, and Treble
+See Your Own Voice
+Checkpoint: Read the Recipe
+Part 1 Outro
+
+The only major change: make the formula page feel like a bridge, not a required math stop. The lesson should say: “You can use the sliders without the formula, but the formula is how we write one pure tone precisely.”
+
+Full Part 1 rewrite and interaction polish
+Page 1: Series Start
+Current title
+
+What is inside a sound?
+
+Revised title
+
+What Is Inside a Sound?
+
+Revised copy
+
+Why can the same note sound completely different?
+
+A flute and a violin can play the same note at the same loudness, and you can still tell them apart. A song can sound thin on tiny earbuds and huge on good headphones. A voice can sound warm, bright, nasal, smooth, sharp, or full.
+
+That is because sound has more inside it than pitch and volume.
+
+A sound has a frequency recipe.
+
+Some ingredients are low.
+Some are high.
+Some are strong.
+Some are quiet.
+
+In this lesson series, you will learn to see and shape that recipe.
+
+The main tool is the Fourier Transform:
+FOOR-ee-ay Transform
+
+It answers one powerful question:
+
+Which frequencies are inside this sound, and how strong is each one?
+
+Interaction
+
+Same note. Two instruments.
+
+Buttons:
+
+Play flute
+Play violin
+
+Prompt:
+
+Both sounds are playing the same note at similar loudness. What do you notice?
+
+Choices:
+
+They sound identical
+They sound different
+
+Feedback:
+
+Correct:
+Yes. The pitch is the same, but the sound character is different. That character comes from the sound’s recipe.
+
+Outcome card
+
+By the end of this series, you will be able to:
+
+see the difference between a waveform and a spectrum
+build richer sounds by stacking pure tones
+read bass, mids, and treble on a spectrum
+explain the Fourier Transform as a frequency test
+connect frequency recipes to EQ, headphones, voice, and song recognition
+Path card
+
+The path ahead:
+
+1. See the recipe
+Waveforms, spectra, pure tones, harmonics, timbre, bass, mids, and treble.
+
+2. Find the recipe
+How a computer tests a sound for one frequency at a time.
+
+3. Use the recipe
+EQ, headphones, voice, and everyday audio tools.
+
+4. Prove you can read a sound
+Short sound mysteries using what you learned.
+
+Button:
+
+Start the sound lab
+
+Design adjustment
+
+The current start page is good, but the “path ahead” card is text-heavy. Turn the four stages into a horizontal journey strip with icons:
+
+wave → bars → test wave → headphones → detective badge
+
+Page 2: Part 1 Start
+Revised title
+
+Part 1: See the Recipe
+
+Revised copy
+
+In Part 1, you will learn to see a sound two ways.
+
+A waveform shows how a sound changes over time.
+
+A spectrum shows which frequencies are inside the sound.
+
+These are two views of the same sound.
+
+Think of it like learning to read a map. Once you can read the map, everything that comes next makes more sense.
+
+Button:
+
+Begin Part 1
+
+Design adjustment
+
+This page is very minimal right now, which is fine, but it could do more orienting. Add a small side-by-side preview:
+
+Left card:
+Waveform
+“What happens over time?”
+
+Right card:
+Spectrum
+“What frequencies are inside?”
+
+This prepares learners before the next pages.
+
+Page 3: Sound Is a Moving Shape
+Revised title
+
+Sound Is a Moving Shape
+
+Revised copy
+
+Sound is vibration.
+
+When something vibrates, it pushes and pulls the air around it.
+
+A microphone turns that movement into numbers.
+
+A speaker turns those numbers back into movement.
+
+So the audio chain looks like this:
+
+moving air → numbers → moving air again
+
+When we draw those changing numbers over time, we get a waveform.
+
+A waveform is not the sound itself. It is a picture of how the sound changes.
+
+Interaction 1: Motion to numbers
+
+Use three connected cards:
+
+Sound in
+moving air
+
+Numbers
+one value per moment
+
+Sound out
+moving air again
+
+Animate a pulse moving from left to right.
+
+Interaction 2: Draw the waveform
+
+Prompt:
+
+Play each motion and watch the waveform it draws.
+
+Buttons:
+
+Short bump
+Steady wave
+Rising swell
+
+Feedback examples:
+
+Short bump:
+This sound starts and ends quickly. The waveform has one short event.
+
+Steady wave:
+This sound repeats evenly. The waveform keeps cycling.
+
+Rising swell:
+This sound grows over time. The waveform gets larger as it moves right.
+
+The parts of a waveform
+
+Label directly on the graph:
+
+Time →
+Push / higher pressure
+Pull / lower pressure
+Center line
+
+Explanation:
+
+Time runs left to right.
+
+Up means the air pressure rises above the center line.
+
+Down means the pressure drops below the center line.
+
+A bigger swing from the center means a stronger signal.
+
+Quick check
+
+Point to the moment
+
+Prompt:
+
+Tap the beginning, middle, and end of the wave.
+
+Feedback:
+
+Correct. Time moves left to right, so the beginning is on the left.
+
+Takeaway
+
+A waveform shows a sound changing over time.
+
+It answers:
+
+What is the sound doing moment by moment?
+
+Design adjustment
+
+This page is currently very tall and dense. Split it visually into two cards:
+
+Moving air becomes numbers
+Numbers become a waveform
+
+The waveform labeling task should not sit too far below the first visual. Keep all “waveform parts” in one lab card.
+
+Page 4: Meet the Simplest Sound
+Revised title
+
+Meet the Simplest Sound
+
+Revised copy
+
+A pure tone is the simplest sound we can study.
+
+It has one main frequency.
+
+It draws a smooth repeating shape called a sine wave.
+
+A tuning fork, a test tone, or a clean whistle can get close to a pure tone.
+
+Press play, then move the pitch.
+
+When pitch goes up:
+
+the waveform repeats faster
+the spectrum bar moves right
+
+When pitch goes down:
+
+the waveform repeats slower
+the spectrum bar moves left
+Interaction
+
+Buttons:
+
+Play pure tone
+Now hear a real sound
+
+Slider:
+
+Pitch
+
+Two panels:
+
+Left: Waveform
+Right: Spectrum
+
+Caption:
+
+The waveform shows the tone across time.
+The spectrum shows one bar because a pure tone is mostly one frequency.
+
+Make it move task
+
+Prompt:
+
+Play the tone, then use the pitch slider to reach each goal.
+
+Make the tone higher without making it louder.
+Make the tone lower.
+Return it near 440 Hz.
+
+Feedback:
+
+Higher:
+Yes. Higher pitch means the wave repeats faster and the spectrum bar moves right.
+
+Lower:
+Yes. Lower pitch means the wave repeats slower and the spectrum bar moves left.
+
+Takeaway
+
+A pure tone gives you:
+
+one frequency, one smooth waveform, and one main spectrum bar.
+
+Design adjustment
+
+This page is strong. The main improvement is making the waveform and spectrum equally visible. Right now, the spectrum can feel secondary. Give both panels equal weight.
+
+Page 5: The Waveform
+Revised title
+
+The Waveform: Sound Across Time
+
+Revised copy
+
+A waveform shows how a sound changes over time.
+
+Use a waveform when you want to see:
+
+when a sound starts and ends
+where it gets stronger or weaker
+whether it repeats smoothly
+whether its shape looks simple or detailed
+
+A simple tone has a smooth waveform.
+
+A fuller sound usually has a more detailed shape because several ingredients are combining.
+
+Interaction
+
+Prompt:
+
+Pick a sound, play it, and watch its shape.
+
+Buttons:
+
+Pure tone
+Flute-like
+Violin-like
+
+Graph labels:
+
+Loudness
+Time →
+
+Match the description
+
+Prompt:
+
+Read each description, then tap the sound it fits. You can hear each one before choosing.
+
+Questions:
+
+Which one looks smoothest?
+Answer: Pure tone
+
+Which one has a little more detail but still feels fairly smooth?
+Answer: Flute-like
+
+Which one looks most detailed or complex?
+Answer: Violin-like
+
+Quick check
+
+Order the waveforms
+
+Prompt:
+
+Play each sound, then order them from smoothest to most detailed.
+
+Correct order:
+
+Pure tone → Flute-like → Violin-like
+
+Takeaway
+
+The waveform tells you how the sound changes over time.
+
+Design adjustment
+
+The current interaction is good, but the waveform examples should be visually larger. This is the learner’s first focused waveform page, so the graph should dominate the screen.
+
+Page 6: The Spectrum
+Revised title
+
+The Spectrum: Sound by Frequency
+
+Revised copy
+
+A spectrum shows the frequency ingredients inside a sound.
+
+Each bar stands for one frequency.
+
+Read it like this:
+
+Left means lower frequencies.
+Right means higher frequencies.
+Taller means stronger.
+Shorter means weaker.
+
+A pure tone has one main bar.
+
+A fuller sound has more bars because it contains more frequency ingredients.
+
+Interaction
+
+Prompt:
+
+Pick a sound and play it.
+
+Each bar is a frequency inside the sound.
+
+Buttons:
+
+Pure tone
+Flute-like
+Violin-like
+
+Graph labels:
+
+Strength
+Frequency →
+low frequency
+high frequency
+
+The parts of a spectrum
+
+Use tap-to-highlight labels:
+
+Left = lower frequencies
+Right = higher frequencies
+Taller = stronger frequencies
+Shorter = weaker frequencies
+
+Quick check
+
+Point to the spectrum
+
+Prompt:
+
+Tap:
+
+a low-frequency bar
+the strongest bar
+a weaker high-frequency bar
+Takeaway
+
+The spectrum tells you which frequencies are inside the sound, and how strong each one is.
+
+Design adjustment
+
+This page is visually strong. Improve affordance by making the bars glow on hover/tap and by adding a small “low → high” arrow under every spectrum in the lesson.
+
+Page 7: Same Sound, Two Views
+Revised title
+
+Same Sound, Two Views
+
+Revised copy
+
+The waveform and the spectrum are two pictures of the same sound.
+
+The sound does not change when you switch views.
+
+Only the question changes.
+
+The waveform asks:
+
+What happens over time?
+
+The spectrum asks:
+
+What frequencies are inside?
+
+Interaction
+
+Buttons:
+
+Play
+Show waveform
+Show spectrum
+
+Sound choices:
+
+Pure tone
+Flute-like
+Violin-like
+
+Two definition cards:
+
+Waveform
+What happens over time?
+
+Spectrum
+What frequencies are inside?
+
+Quick check
+
+Choose the better view
+
+Prompt:
+
+Drag each task into the view that answers it best.
+
+Waveform tasks:
+
+Find when the sound starts.
+See whether the sound fades out.
+Notice a sudden hit.
+
+Spectrum tasks:
+
+Find whether high frequencies are present.
+See which frequency is strongest.
+Compare how rich two sounds are.
+Takeaway
+
+You need both views.
+
+The waveform shows sound across time.
+
+The spectrum shows sound by frequency.
+
+Design adjustment
+
+This page is good but should be treated as a major checkpoint before the prism. Add a visual “view switch” animation: the same sound flips between line graph and bar graph without changing the audio.
+
+Page 8: The Sonic Prism
+Revised title
+
+The Sonic Prism
+
+Revised copy
+
+Have you seen white light pass through a prism?
+
+The light spreads into colors.
+
+The white light was not one color. It contained many wavelengths at once.
+
+A Fourier Transform is like a prism for sound.
+
+A complex sound goes in.
+
+A frequency recipe comes out.
+
+The transform does not physically pull the sound apart. It calculates which frequencies are present and how strong each one is.
+
+The prism is our visual metaphor.
+
+Image caption
+
+One complex wave enters. Its frequency ingredients fan out.
+
+Interaction
+
+Prompt:
+
+Choose a sound and send it through the prism.
+
+Buttons:
+
+Flute-like
+Violin-like
+
+Animation:
+
+A complex wave enters the prism. Frequency bands fan out on the other side.
+
+Labels:
+
+Low frequency
+Mid frequency
+High frequency
+
+Band properties:
+
+closer waves = higher frequency
+taller/brighter bands = stronger component
+shorter/dimmer bands = weaker component
+Quick check 1
+
+Read the prism
+
+Prompt:
+
+After the split, tap:
+
+the strongest band
+a low-frequency band
+a weaker high-frequency band
+Quick check 2
+
+Name that sound
+
+Prompt:
+
+Play the mystery sound, then inspect its split.
+
+Which sound does it resemble?
+
+Choices:
+
+Flute-like
+Violin-like
+
+Takeaway
+
+The fan of tones is the sound’s spectrum: its frequency recipe.
+
+Design adjustment
+
+This is a hero page. Make the prism image larger and reduce surrounding text. The metaphor is visually strong enough to carry the page.
+
+Page 9: Build a Sound from Pure Tones
+Revised title
+
+Build a Sound from Pure Tones
+
+Revised copy
+
+The prism showed one direction:
+
+finished sound → frequency ingredients
+
+Now imagine running the prism backward.
+
+Start with pure tones.
+
+Stack them together.
+
+Build a new sound.
+
+That is additive synthesis.
+
+Start with H1, the fundamental.
+
+Then raise H2, H3, H4, and the rest.
+
+As you add harmonics:
+
+the sound changes
+the spectrum gains bars
+the waveform becomes more detailed
+Key terms
+
+Fundamental
+The first and lowest bar. It sets the main pitch.
+
+Harmonics
+Higher tones above the fundamental: 2x, 3x, 4x, and so on.
+
+Amplitude
+The height of a bar. It shows how strong that harmonic is.
+
+Timbre
+The whole pattern of harmonic strengths. This is the sound’s character.
+
+Interaction
+
+Buttons:
+
+Play your sound
+
+Views:
+
+Waveform
+Spectrum
+Live recipe
+
+Sliders:
+
+H1
+H2
+H3
+H4
+H5
+H6
+
+Presets:
+
+Pure tone
+Flute-like
+Violin-like
+Bright synth
+
+Make it brighter task
+
+Prompt:
+
+Use the harmonic sliders to meet each goal.
+
+Make the sound brighter without changing the fundamental.
+Now make it smoother.
+
+Feedback:
+
+Brighter:
+Yes. You raised some higher harmonics, so the sound has more high-frequency energy.
+
+Smoother:
+Yes. You lowered higher harmonics, so the sound is closer to a pure tone.
+
+Match the target recipe
+
+Prompt:
+
+Adjust the sliders until your spectrum roughly matches the faint target.
+
+Feedback:
+
+Close. The closer the bar heights, the closer the timbre.
+
+Takeaway
+
+The note can stay the same while the harmonic recipe changes.
+
+That recipe is the sound’s timbre.
+
+Design adjustment
+
+This page is powerful but very tall. Consider splitting into two pages:
+
+Build a sound from pure tones
+Teach fundamental, harmonics, amplitude, timbre.
+
+Match the recipe
+Use the target recipe challenge.
+
+If it remains one page, use tabs inside the lab card: Build, Preset, Challenge.
+
+Page 10: One Pure Tone as a Formula
+Revised title
+
+One Pure Tone, Written as a Formula
+
+Revised copy
+
+Every pure tone you added follows the same pattern.
+
+You can control:
+
+how tall the wave is
+how fast it repeats
+where it starts
+
+Here is one pure tone written as a formula:
+
+y(t) = A · sin(2πft + φ)
+
+This formula is not here to scare you.
+
+It is just a compact way to describe one smooth tone.
+
+Formula translation
+
+y(t)
+The sound value at this moment in time.
+
+A
+Amplitude. How tall the wave is.
+
+sin
+The smooth repeating wave shape.
+
+2π
+One full trip around a cycle.
+
+f
+Frequency. How fast the wave repeats.
+
+t
+Time.
+
+φ
+Phase. Where the wave starts.
+
+Interaction
+
+Buttons:
+
+Say it out loud
+Play this tone
+
+Sliders:
+
+A
+f
+φ
+t
+
+Graph:
+
+The wave this formula makes.
+
+Live calculation:
+
+y(t) = 0.80 · sin(2π · 440 · 0.0010 + 0.00) = 0.29
+
+Fix the wave task
+
+Prompt:
+
+Use the sliders to change the wave.
+
+Make it taller.
+Make it repeat faster.
+Slide its starting point.
+Takeaway
+
+One formula term describes one pure tone.
+
+A full sound recipe is made by adding several tone formulas together.
+
+Design adjustment
+
+This page should be framed as optional confidence-building:
+
+You do not have to memorize this. Just notice that the sliders match the formula pieces.
+
+Make each formula token clickable and connected to the corresponding slider.
+
+Page 11: Square Waves from Sines
+Revised title
+
+Square Waves: Smooth Sines in Disguise
+
+Revised copy
+
+A square wave jumps high, then low, then high, then low.
+
+It looks simple.
+
+But it sounds bright, buzzy, and electronic.
+
+Here is the surprise:
+
+A square wave can be built from smooth sine waves.
+
+Not all harmonics.
+
+Only the odd ones.
+
+H1, H3, H5, H7, H9...
+
+Each one is quieter than the one before it.
+
+Smooth vs buzzy
+
+Buttons:
+
+Play sine wave
+Play square wave
+
+Prompt:
+
+They can share the same fundamental pitch. Listen to the smooth sine, then the buzzy square.
+
+Question:
+
+Why does the square wave sound brighter?
+
+Answer:
+
+Because its spectrum contains more high harmonics.
+
+Square-wave recipe
+
+Show formula, but keep the plain-language explanation first:
+
+A square wave uses:
+
+H1 at full strength
+H3 at one-third strength
+H5 at one-fifth strength
+H7 at one-seventh strength
+and so on
+
+Formula:
+
+y(t) = 4/π [ sin(2πft) + 1/3 sin(2π·3ft) + 1/5 sin(2π·5ft) + ... ]
+
+Build the square
+
+Buttons:
+
+Play
+Add next odd harmonic
+Watch it build
+
+Stages:
+
+H1 only
+The sound is smooth and the waveform is still a sine.
+
+Add H3
+A higher ingredient appears. The waveform begins to flatten and the sound gets brighter.
+
+Add H5, H7, H9
+The edges get steeper, the tone gets buzzier, and the shape moves closer to a square.
+
+Quick check
+
+Sort odd from even
+
+Prompt:
+
+Drag each harmonic into the bin where it belongs in a square wave.
+
+Belongs:
+
+H1, H3, H5, H7
+
+Silent:
+
+H2, H4, H6, H8
+
+Takeaway
+
+A square wave is not a mysterious new ingredient.
+
+It is smooth sine waves stacked in a precise pattern.
+
+Design adjustment
+
+This page is currently content-heavy and should feel like a “proof by building.” Make the build interaction the main event. Put the formula in a collapsible or secondary “recipe” card.
+
+Page 12: Bass, Mids, and Treble
+Revised title
+
+Exploring Bass, Mids, and Treble
+
+Revised copy
+
+A spectrum runs from low frequencies on the left to high frequencies on the right.
+
+We often split that range into three regions:
+
+Bass is the low end.
+Mids are the middle.
+Treble is the high end.
+
+You do not need to know these already. This screen is for building that map.
+
+Frequency map
+
+Approximate ranges:
+
+Bass
+about 20 to 250 Hz
+kick weight, bass guitar, 808s, low synths
+
+Mids
+about 250 Hz to 4 kHz
+voice, body, guitar, piano, melodies
+
+Treble
+about 4 kHz to 20 kHz
+cymbals, air, brightness, edge
+
+Note:
+
+These ranges are approximate. Real sounds often spread across more than one region.
+
+Interaction
+
+Button:
+
+Play sweeping tone
+
+Slider:
+
+Low → High
+
+Dynamic text:
+
+200 Hz, in the bass: kick weight, bass guitar, 808s, low synths.
+
+As the tone moves:
+
+Bass: deep, heavy, low
+Mids: present, voice-like, musical body
+Treble: bright, sharp, airy
+
+Quick check
+
+Where does its energy live?
+
+Prompt:
+
+Play each sound, watch its spectrum land on the map, then drag it into the region where most of its energy sits.
+
+Sounds:
+
+Kick drum → Bass
+Voice → Mids
+Cymbal → Treble
+
+Takeaway
+
+Bass, mids, and treble are not just app labels.
+
+They are regions of the frequency map.
+
+Design adjustment
+
+This page is strong and practical. Keep it. Make the map larger and use consistent colors for bass/mids/treble that carry into Part 3 EQ.
+
+Page 13: See Your Own Voice
+Revised title
+
+See Your Own Voice
+
+Revised copy
+
+Your voice is a sound, so it has a recipe too.
+
+Use your microphone or play a sample.
+
+Try:
+
+humming a steady “aah”
+whistling
+speaking your name
+singing higher
+singing lower
+
+A whistle may look close to one strong bar.
+
+A sung vowel usually shows a fundamental plus harmonics.
+
+Your mouth shapes the sound, so some frequency areas become stronger.
+
+Those stronger regions are called formants. They help create vowel sounds.
+
+Interaction
+
+Buttons:
+
+Use your mic
+Play sample vowel
+Play sample whistle
+
+Privacy note:
+
+Your audio stays on your device. Nothing is recorded or sent anywhere.
+
+Spectrum panel:
+
+Live bars or smooth frequency display.
+
+Voice detective
+
+Prompt:
+
+Try each one with the spectrum above, then tap it to mark it off.
+
+Make the simplest spectrum you can.
+Make the richest spectrum you can.
+Make a higher pitch.
+Make a lower pitch.
+
+Feedback:
+
+Simplest:
+A whistle often creates fewer strong frequency components.
+
+Richest:
+A sung vowel or spoken sound usually creates more harmonics and formants.
+
+Higher pitch:
+The fundamental moves right.
+
+Lower pitch:
+The fundamental moves left.
+
+Takeaway
+
+The transform can reveal the recipe of a real sound while it is happening.
+
+Design adjustment
+
+This page should feel like a mini lab, not a reading page. Put the mic/spectrum interaction higher and the explanation below as expandable support.
+
+Page 14: Checkpoint
+Revised title
+
+Checkpoint: Read the Recipe
+
+Revised copy
+
+Pause and review.
+
+You have learned the big picture.
+
+So far:
+
+A pure tone has one main frequency.
+
+A waveform shows change over time.
+
+A spectrum shows frequency ingredients.
+
+A fundamental gives the main pitch.
+
+Harmonics add richness.
+
+Amplitude is strength.
+
+Timbre is the sound’s character.
+
+Check 1: Match the idea
+
+Prompt:
+
+Tap a term, then its meaning, to connect them.
+
+Terms:
+
+Waveform
+Spectrum
+Fundamental
+Harmonics
+Amplitude
+Timbre
+
+Meanings:
+
+A sound’s change over time
+The frequencies inside a sound
+The lowest/main tone, which helps set pitch
+Tones above the fundamental that add richness
+How strong a component is
+The character that tells a flute from a violin
+
+Check 2: Quick check
+
+Prompt:
+
+A flute-like and violin-like sound play the same fundamental pitch. Why can they still sound different?
+
+Correct answer:
+
+Their harmonic amplitudes are different.
+
+Feedback:
+
+Yes. They can share the same main pitch, but their harmonic recipes can differ.
+
+Check 3: In your own words
+
+Prompt:
+
+Why can two instruments play the same note but sound different?
+
+Strong answer:
+
+They can have the same fundamental pitch but different harmonics and amplitudes, which creates a different timbre.
+
+Takeaway
+
+You can read a sound as a recipe now.
+
+Design adjustment
+
+The checkpoint is good, but make it feel less like a worksheet. Use three separated cards:
+
+Vocabulary map
+Recipe reasoning
+Explain it simply
+Page 15: Outro
+Revised title
+
+You Can Read a Sound Becoming a Spectrum
+
+Revised copy
+
+You started with one note.
+
+Now you can see what is inside it.
+
+You met the pure tone.
+
+You read sound as a waveform and as a spectrum.
+
+You stacked pure tones into new sounds.
+
+You watched a square wave emerge from odd harmonics.
+
+You mapped bass, mids, and treble.
+
+What you can do now
+
+You can:
+
+see a sound two ways: waveform over time and spectrum by frequency
+describe a sound as a fundamental plus harmonics
+explain that each harmonic has its own strength
+find bass, mids, and treble on a spectrum
+hear how the recipe shapes timbre
+Next: how a computer finds the recipe
+
+You can read a spectrum now.
+
+In Part 2, you will see how a computer builds one, testing one frequency at a time.
+
+Button:
+
+Continue to Part 2
+
+Design adjustment
+
+This outro works. Keep it clean. Add a visual mini-recap strip:
+
+waveform → spectrum → prism → harmonic stack → EQ map
+
+Design and layout audit for Part 1
+Main visual issue
+
+The content is rich, but several pages are too vertically dense. The screenshots show that some pages require zooming out or heavy scrolling, which makes the interface feel smaller and less tactile.
+
+For a beginner audio lab, the main visual should be large enough to manipulate comfortably.
+
+Use the rule:
+
+One core idea per screen. One main interaction per card. One short check per page.
+
+When a page has a main lab plus two quick checks plus a formula plus explanation, it should likely be split.
+
+Layout modes
+1. Orientation mode
+
+For:
+
+Series start
+Part 1 start
+Outro
+
+Use:
+
+narrow centered column
+compact cards
+visual roadmap
+2. Lab mode
+
+For:
+
+Sound is a moving shape
+Pure tone
+Waveform
+Spectrum
+Same sound, two views
+Sonic prism
+Build a sound
+Formula
+Square wave
+Bass/mids/treble
+Voice
+
+Use:
+
+wider card
+graph or animation as main element
+controls directly below
+one live feedback line
+one short task
+3. Checkpoint mode
+
+For:
+
+Checkpoint
+
+Use:
+
+multiple small challenge cards
+clear success feedback
+no dense all-in-one quiz stack
+Page-level design notes
+Series start
+
+The hook is good, but the four-stage path should become a visual path. The learner should immediately understand that this is a full journey, not one long page.
+
+Add:
+
+See → Find → Use → Prove
+
+with icons.
+
+Part 1 intro
+
+Currently very sparse. Add a tiny waveform/spectrum preview so it does not feel like an empty transition screen.
+
+Sound is a moving shape
+
+This page is the most conceptually foundational, but it has too many pieces stacked.
+
+Make the animation larger.
+
+Keep the “moving air → numbers → moving air” visual, but do not let it compete with the waveform graph.
+
+Recommended layout:
+
+Top: sound chain
+Middle: waveform drawing lab
+Bottom: point-to-the-moment check
+
+Pure tone
+
+Very strong. The key improvement is making the spectrum bar visually obvious as the “one ingredient.” When pitch changes, animate both:
+
+waveform cycles get tighter
+spectrum bar moves right
+Waveform
+
+The graph should be larger and more central. The “smoothest to most detailed” ordering task is good because it asks learners to read shape, not memorize definitions.
+
+Spectrum
+
+The bar chart should have consistent labels across the lesson:
+
+low frequency → high frequency
+weaker → stronger
+
+Use the same visual language every time.
+
+Same sound, two views
+
+This is a critical transfer page. Add a “view switch” animation so learners see that the sound is unchanged while the visual changes.
+
+Sonic prism
+
+This should be visually cinematic. The generated prism image is strong enough to serve as a hero object.
+
+Reduce text near the image. Put technical caveat in a small note:
+
+Metaphor note: the transform calculates the split; it does not physically separate sound.
+
+Build a sound from pure tones
+
+This page is currently doing a lot. The core build lab should be bigger and less crowded.
+
+Suggested split:
+
+Page A: Build from harmonics
+Page B: Match the target recipe
+
+This would make the interaction more breathable.
+
+Formula
+
+Keep it, but make it explicitly supportive:
+
+The sliders are the idea. The formula is how we write the idea.
+
+Connect each formula term to a slider or graph feature.
+
+Square wave
+
+This is another dense page. The formula should not be the main thing. The build process should be the main thing.
+
+Best layout:
+
+Listen: sine vs square
+Build: add H1, H3, H5...
+See: odd harmonics appear
+Check: sort odd/even
+
+Put the full formula in a collapsible section.
+
+Bass, mids, treble
+
+Strong and useful. This page connects directly to Part 3, so preserve it.
+
+Carry the same bass/mids/treble colors into EQ and headphone pages later.
+
+Voice
+
+This page is excellent for relevance. Make the microphone/spectrum card the main focus. The explanatory text about formants can sit below or in an expandable “What am I seeing?” card.
+
+Checkpoint
+
+Good content, but make the matching activity more tactile. Use lines or draggable cards, not just rows. The checkpoint should feel like “I can read the map now.”
+
+Outro
+
+Good. Add a visual recap and keep the transition to Part 2 prominent.
+
+Global interaction improvements
+Use a consistent learning loop
+
+Every Part 1 interaction should follow this pattern:
+
+Listen → Look → Change → Explain
+
+Example:
+
+Pure tone:
+
+Listen to the tone.
+Look at the waveform and spectrum.
+Change pitch.
+Explain what moved.
+
+Spectrum:
+
+Listen to the sound.
+Look at the bars.
+Change sound type.
+Explain which bars changed.
+
+Build sound:
+
+Listen to the current recipe.
+Look at harmonics.
+Change sliders.
+Explain timbre.
+
+Add live feedback lines
+
+Every slider interaction should have one sentence that updates live.
+
+Examples:
+
+Pitch:
+
+Higher pitch: the waveform repeats faster and the spectrum bar moves right.
+
+Harmonics:
+
+H4 increased: a higher harmonic is stronger, so the sound is brighter.
+
+Bass/mids/treble:
+
+You are in the mids: this range often carries voice, guitar, and melodic body.
+
+Voice:
+
+Your fundamental moved right, so your pitch went higher.
+
+Use fewer hidden instructions
+
+Some pages say “hover or tap” but the interactive target is not always visually obvious. Add stronger affordances:
+
+glowing hotspots
+dashed drop zones
+“tap me” labels
+active state highlights
+completed checkmarks
+Make all graphs speak the same visual language
+
+Use consistent axis labels:
+
+Waveform:
+
+Time →
+Loudness / pressure
+
+Spectrum:
+
+Frequency →
+Strength
+
+Spectrogram later:
+
+Time →
+Frequency ↑
+Brightness = strength
+
+This consistency matters a lot for beginners.
+
+Priority fixes
+Split or simplify the densest pages: Build a sound, Square wave, and possibly Sound is a moving shape.
+Make the Part 1 intro less empty by adding a waveform/spectrum preview.
+Enlarge the core lab visuals on waveform, spectrum, prism, and harmonic-building pages.
+Make the formula page feel like a translation of the sliders, not a sudden math lesson.
+Keep the sonic prism as a hero moment and reduce text around it.
+Carry bass/mids/treble visual colors into Part 3.
+Add live feedback lines to every slider and sound selection.
+Make the checkpoint more tactile and less worksheet-like.
+
+Part 1 should leave learners with one confident idea:
+
+A sound is not just one thing. It is a recipe of frequency ingredients, and I can see, hear, and change that recipe.
+
+Worked for 1m 26s
+
+I chose “Build a sound from pure tones” because it’s one of the densest and most important Part 1 pages, and it benefits the most from the redesigned lab layout.
+
+Here’s the interactive preview artifact:
+
+part1_build_sound_preview.html
+
+I like the design, the text is okay, but a bit unclear at places "The prism showed one direction"... Showed one direction of what? We want to be sure to be clear and explanatory on every page
+Worked for 38s
+
+Yes, exactly. The design can stay, but the copy needs to name the action and the relationship every time.
+
+For this page, I updated the preview so the opening now says clearly:
+
+The sonic prism showed how to analyze a sound: start with one finished sound and reveal the pure tones inside it. On this page, you do the opposite. Start with pure tones, stack them together, and hear them become one new sound.
+
+I also changed the concept map from vague “one direction / backward” language to:
+
+Analyze: start with a finished sound, then reveal its spectrum.
+Synthesize: start with pure tones, then stack them into one sound.
+
+Updated preview: 
+part1_build_sound_preview.html
+
+For the whole lesson, I’d use this writing rule:
+
+Never say “this,” “it,” “the idea,” or “the direction” unless the sentence already names what that thing is.
+
+So instead of:
+
+Run the idea backward.
+
+Use:
+
+Reverse the process: instead of starting with a finished sound and finding its ingredients, start with ingredients and build a finished sound.
+
+That tiny extra clarity matters a lot for beginners.
+
+I like it. with this updated voice, style, and design consideration, rewrite the extremely detailed and comprehensive update plans for all 1 parts of the Fourier Transform lessons as well as the Beginner Sound lesson with the expectation that these plans will be given to a bundle of claude code agents is vs code to execute
+
+Yes. I would give the agents one unified direction first, then separate execution prompts for the Beginner Sound lesson, Fourier Part 1, Fourier Part 2, Fourier Part 3, and the final “prove it” challenge flow.
+
+Below is a Claude Code-ready plan you can paste into your agent bundle in stages.
+
+Master update direction for all sound and Fourier lessons
+Project goal
+
+Update the interactive sound learning sequence so it feels like a polished, beginner-friendly, exploratory audio lab.
+
+The learner should not feel like they are reading a technical article. They should feel like they are discovering sound by touching it, hearing it, seeing it, changing it, and explaining it in their own words.
+
+The finished sequence should teach:
+
+What sound is.
+How pitch, loudness, timbre, and envelope shape a sound.
+How to see a sound as a waveform.
+How to see a sound as a spectrum.
+How complex sounds are made from pure tones.
+How the Fourier Transform finds the frequency recipe.
+How that recipe connects to EQ, headphones, voice, song recognition, compression, pitch correction, and noise cancelling.
+How learners can prove they can read and use a sound recipe.
+Core writing rule
+
+Every sentence must be clear about what it is referring to.
+
+Avoid vague phrases like:
+
+“the idea”
+“this direction”
+“it”
+“the process”
+“the thing”
+“the flip side”
+“run it backward”
+
+Unless the sentence names the subject clearly.
+
+Use this style instead:
+
+Weak:
+
+The prism showed one direction. Now run it backward.
+
+Strong:
+
+The sonic prism showed how to analyze a sound: start with one finished sound and reveal the pure tones inside it. On this page, you do the opposite: start with pure tones, stack them together, and hear them become one finished sound.
+
+Weak:
+
+This is the recipe.
+
+Strong:
+
+The spectrum is the sound’s frequency recipe: it shows which frequencies are inside the sound and how strong each one is.
+
+Weak:
+
+The formula does this.
+
+Strong:
+
+The formula writes the same frequency test you just ran: choose one frequency, multiply the sound samples by a test wave, then add the products.
+
+Voice and tone
+
+Use a confident, clear, exploratory voice.
+
+The learner may be curious, creative, and intelligent, but new to math, audio, and signal processing. Do not dumb down the concepts. Make the concepts visible.
+
+The voice should feel:
+
+beginner-friendly
+concrete
+precise
+visual
+encouraging
+hands-on
+not childish
+not overly academic
+
+Prefer:
+
+Move the slider and watch the bars change.
+
+Over:
+
+Manipulate the parameter to observe its spectral effect.
+
+Prefer:
+
+A taller bar means that frequency is stronger.
+
+Over:
+
+The bar height corresponds to the magnitude of that frequency component.
+
+Page structure standard
+
+Every major concept page should follow this pattern:
+
+Clear title
+One-sentence concept anchor
+Short explanation
+Main lab interaction
+Live feedback line
+One small formative task
+Takeaway card
+
+Do not let a page become a long article with a widget below it. The interaction should teach the concept.
+
+Interaction pattern
+
+Use this learning loop wherever possible:
+
+Listen → Look → Change → Explain
+
+For example:
+
+Listen to a sound.
+Look at the waveform or spectrum.
+Change one control.
+Explain what changed.
+
+For formula or calculation pages:
+
+See it → Do it physically → Translate it into symbols → Check one step
+
+Never show the formula before the learner has done the action the formula describes.
+
+Visual design standard
+
+Keep the current dark, polished portfolio style, but make the lab visuals larger and more instructional.
+
+Use three layout modes.
+
+1. Orientation mode
+
+For intro, part intro, and outro screens.
+
+Use:
+
+narrow centered column
+short promise
+roadmap or preview strip
+one primary button
+2. Lab mode
+
+For waveform, spectrum, EQ, frequency test, synth, prism, and spectrogram pages.
+
+Use:
+
+wider lab card
+large visualization
+controls directly beneath the visualization
+live feedback sentence
+one small challenge or check
+3. Challenge mode
+
+For checkpoints and capstones.
+
+Use:
+
+one task per card
+clear success feedback
+no dense quiz wall
+skill badges or progress labels instead of intimidating scoring
+Graph language standard
+
+Every graph must be labeled consistently.
+
+Waveform:
+
+x-axis: Time →
+y-axis: Pressure / loudness
+caption: A waveform shows how a sound changes over time.
+
+Spectrum:
+
+x-axis: Frequency, low to high →
+y-axis: Strength
+caption: A spectrum shows which frequencies are inside the sound.
+
+Spectrogram:
+
+x-axis: Time →
+y-axis: Frequency ↑
+brightness legend: Brighter means stronger
+caption: A spectrogram shows how the spectrum changes over time.
+Audio interaction requirements
+
+Use the Web Audio API or the project’s existing audio utilities.
+
+All audio must begin only after a user gesture.
+
+Every sound control should update both the audio and the visual when possible.
+
+Audio concepts should be demonstrated with clear examples:
+
+pure tone
+flute-like sound
+violin-like sound
+square wave
+sung vowel
+whistle
+EQ loop
+headphone response sample
+mystery tone
+target recipe
+Accessibility requirements
+
+All interactions must be keyboard-accessible.
+
+Every button needs a clear accessible label.
+
+Every visual-only interaction needs a text equivalent.
+
+Color cannot be the only cue. Pair color with labels, shape, movement, or position.
+
+Respect reduced motion settings. If prefers-reduced-motion is enabled, replace long animations with stepped changes.
+
+Provide visible focus states.
+
+For microphone use, include a clear privacy note:
+
+Your audio stays on your device. Nothing is recorded or sent anywhere.
+
+Prompt 1: Codebase audit and implementation map
+
+Paste this first.
+
+You are working inside a VS Code project that contains interactive portfolio lessons about sound and the Fourier Transform.
+
+Your first task is to inspect the codebase and produce an implementation map before editing anything.
+
+Do not rewrite files yet.
+
+Find the lesson routes, components, utilities, and data files for:
+
+1. Beginner Sound lesson
+2. Fourier Transform series start
+3. Fourier Part 1: See the recipe
+4. Fourier Part 2: Find the recipe
+5. Fourier Part 3: Use the recipe
+6. Final decode/prove challenge sequence
+
+Look for routes or hashes similar to:
+
+- /lab/sound
+- /lab/spectrum
+- /lab/fourier
+- /lab/audio-tools
+- #start
+- #moving-shape
+- #pure-tone
+- #waveform-view
+- #spectrum-view
+- #sonic-prism
+- #stack-the-sines
+- #one-tone-formula
+- #square-is-sines
+- #bass-mids-treble
+- #your-voice
+- #checkpoint
+- #outro
+
+Create a file named:
+
+docs/audio-lesson-update-map.md
+
+In that file, document:
+
+1. The current route/page structure.
+2. The components used for lesson shell, navigation, cards, buttons, sliders, graphs, audio, waveform, spectrum, and checkpoints.
+3. The current data model for lessons, if one exists.
+4. Any reusable utilities for audio generation, Web Audio API, canvas, SVG, animations, microphone input, and scoring.
+5. Where copy lives.
+6. Where CSS or design tokens live.
+7. Any pages that are too vertically dense or visually cramped.
+8. Any pages where graph labels, button labels, or interaction affordances are unclear.
+9. Any obvious bugs or mismatches between displayed values and calculations.
+10. A recommended implementation order for the updates.
+
+Important:
+Do not make assumptions about file names. Inspect the actual code.
+Do not refactor yet.
+Do not remove existing functionality.
+After creating the map, stop and summarize the recommended implementation plan.
+Prompt 2: Global design system and reusable lesson components
+Use the audit in docs/audio-lesson-update-map.md to update the shared design system and reusable lesson components before editing individual pages.
+
+Goal:
+Create a consistent interactive audio lab system for the Beginner Sound lesson and all Fourier Transform lessons.
+
+Design principles:
+- Keep the current dark portfolio style.
+- Use purple as the primary accent.
+- Use larger lab visuals.
+- Make every interaction clearly touchable.
+- Use consistent graph labels.
+- Make math feel physical and visual.
+- Make each page feel like a lab, not a text article.
+
+Implement or update reusable components as needed. Adapt names to the actual codebase.
+
+Required component patterns:
+
+1. LessonShell
+- Supports route/hash navigation.
+- Shows previous/next controls.
+- Shows progress dots.
+- Shows current part/page label when available.
+- Supports intro mode, lab mode, challenge mode, and outro mode.
+
+2. LabCard
+- Larger card for interactive visuals.
+- Clear internal title.
+- Primary visualization area.
+- Controls area.
+- Live feedback line.
+- Optional challenge area.
+
+3. TakeawayCard
+- Short final summary for a page.
+- Visually distinct from body copy.
+- Should not be overly decorative.
+
+4. ChallengeCard
+- For formative checks.
+- Includes prompt, interaction, feedback, and optional skill badge.
+
+5. AudioButton
+- Handles browser audio unlock safely.
+- Has clear labels such as Play tone, Play target, Play yours, Play flute, Play violin.
+- Avoid generic "Play" when multiple sounds are present.
+
+6. FrequencySlider
+- Label, current value, left/right anchors.
+- Example anchors:
+  - lower pitch / higher pitch
+  - quieter / louder
+  - low frequency / high frequency
+  - instant start / slow start
+  - short fade / long fade
+
+7. WaveformDisplay
+- Must show Time → on x-axis.
+- Must show pressure or loudness on y-axis.
+- Supports active sample dots, ghost waveform, and current waveform.
+
+8. SpectrumDisplay
+- Must show Frequency, low to high → on x-axis.
+- Must show Strength on y-axis.
+- Supports bass/mids/treble labels.
+- Supports highlighted bars and target bars.
+
+9. FormulaToken
+- Used for formulas like y(t) = A sin(2πft + φ) and X[k] = Σ x[n] e^(-i2πkn/N).
+- Each token should be clickable or focusable.
+- Each token should connect to a plain-English explanation.
+
+10. LiveFeedbackLine
+- One sentence that updates as learners interact.
+- Example:
+  "Higher pitch: the waveform repeats faster and the spectrum bar moves right."
+
+11. SkillBadge or SuccessState
+- Used after challenges.
+- Example:
+  "Skill unlocked: You can identify the stronger frequency."
+
+Global visual rules:
+- Do not show empty graph boxes without placeholder labels.
+- Every graph should explain what will happen before the user presses play.
+- Use consistent labels for bass, mids, and treble across all lessons.
+- Use strong hover/focus states for interactive items.
+- Use dashed or highlighted drop zones for drag tasks.
+- Pair color with labels or icons.
+- Preserve accessibility.
+
+After implementation:
+- Update or create docs/audio-lab-design-system.md.
+- Include examples of page modes, graph labels, slider labels, and feedback lines.
+- Verify no current page breaks.
+- Stop and report what changed.
+Prompt 3: Beginner Sound lesson update plan
+Update the Beginner Sound lesson using the new voice, interaction, and design standards.
+
+This lesson is the prerequisite before the Fourier Transform sequence. It should teach what sound is before asking learners to understand spectra or frequency recipes.
+
+Core learner outcome:
+By the end, the learner should feel:
+"I made a sound, changed it on purpose, and know what I changed."
+
+The lesson should teach:
+1. Sound is vibration moving through air.
+2. A waveform is a picture of vibration over time.
+3. Pitch is frequency, or how fast the wave vibrates.
+4. Loudness is amplitude, or how big the wave is.
+5. Timbre is the character of a sound.
+6. Waveshape is one major part of timbre.
+7. Envelope is loudness over time.
+8. A synth combines pitch, loudness, waveshape, and envelope.
+
+Important correction:
+Envelope is not separate from loudness. It is the shape of loudness over time. Do not say "envelope is not about loudness." Say:
+"Envelope is not the note’s pitch. It is the shape of the sound’s loudness over time."
+
+Update these pages or their equivalents.
+
+PAGE 1: Make Your First Sound
+
+Purpose:
+Orient the learner and invite them into a sound lab.
+
+Rewrite copy:
+
+Title:
+Make Your First Sound
+
+Subtitle:
+Music technology · beginner friendly · about 10 minutes · no setup
+
+Body:
+You do not need to read music.
+You do not need to know math.
+
+In the next ten minutes, you will see what a sound actually is, shape one yourself, and play a short tune on a tiny synth you built.
+
+Headphones help.
+
+By the end, you will be able to:
+- explain that sound is vibration moving through air
+- tell pitch and loudness apart
+- hear how wave shape changes timbre
+- shape how a sound begins and ends
+- build a simple synth sound and play it
+
+Primary button:
+Start the sound lab
+
+Design:
+Use intro mode.
+Keep the centered layout.
+Add a small animated sound pulse, sine wave, or mini synth key visual.
+Button hover should subtly animate the sound visual.
+
+PAGE 2: What Is a Sound?
+
+Purpose:
+Show that sound is moving air, then connect moving air to a waveform.
+
+Rewrite for clarity:
+
+A sound is a vibration moving through the air.
+
+To vibrate means to move back and forth quickly.
+
+A speaker cone moves out and in many times per second. Each push squeezes the air in front of it. That squeeze travels across the room to your ear.
+
+Where the dots bunch together, the air is squeezed. That is compression.
+
+Where the dots spread apart, the air is thinner. That is rarefaction.
+
+The pattern of compression and rarefaction travels from the speaker to your ear. Your eardrum moves with it, and your brain understands that movement as sound.
+
+Interaction:
+- Speaker on left.
+- Ear on right.
+- Dots between them.
+- Press Play to send a wave from speaker to ear.
+- Pitch slider controls how close together the compression bands are.
+- Loudness slider controls how strong each push is.
+
+Second visual:
+After the air animation plays, show the waveform below.
+
+Transition copy:
+The moving air is the real sound. When we draw that push and pull as a line over time, we get a waveform.
+
+A waveform is a picture of the vibration.
+
+Graph labels:
+- Time →
+- pressure / loudness
+
+Formative task:
+Tap the compression.
+Learner taps where dots bunch together.
+
+Feedback:
+Yes. Where the dots bunch together, the air is compressed.
+
+Takeaway:
+Sound is vibration moving through air. A waveform is that vibration drawn over time.
+
+PAGE 3: Pitch Is How Fast It Vibrates
+
+Purpose:
+Make frequency physically visible.
+
+Rewrite:
+
+Pitch is how high or low a sound seems.
+
+A sound with faster vibration has a higher pitch.
+A sound with slower vibration has a lower pitch.
+
+The speed of vibration is called frequency.
+
+Frequency is measured in hertz, or Hz.
+One hertz means one vibration per second.
+
+So a 330 Hz sound vibrates 330 times per second.
+
+Interaction:
+- Play tone.
+- Frequency slider.
+- Waveform visibly tightens as frequency increases.
+- Spectrum or simple note label may update if available.
+- Buttons: Octave down, Octave up.
+
+Live feedback examples:
+- 330 Hz, near E4.
+- Higher pitch: the waveform repeats faster.
+- Lower pitch: the waveform repeats slower.
+
+Formative task:
+Make the wave tighter.
+Learner must move slider higher.
+
+Then:
+Make the wave wider.
+Learner must move slider lower.
+
+Takeaway:
+Pitch is speed. Higher pitch means faster vibration. Lower pitch means slower vibration.
+
+PAGE 4: Loudness Is How Big the Wave Is
+
+Purpose:
+Separate loudness from pitch.
+
+Rewrite:
+
+Loudness is not pitch.
+
+Loudness is how strong the sound feels.
+
+On a waveform, loudness is connected to the size of the wave.
+
+A bigger wave pushes more air, so it sounds louder.
+The size of the wave is called amplitude.
+
+A larger amplitude means a stronger push against your eardrum.
+
+Interaction:
+- Play tone.
+- Loudness slider.
+- Pitch remains fixed.
+- Show ghost waveform behind active waveform.
+- Active waveform gets taller or shorter, but spacing stays the same.
+
+Live feedback:
+Same pitch, louder sound. The wave is taller, not faster.
+
+Formative task:
+Make it louder without changing pitch.
+
+Optional A/B:
+Play quiet version.
+Play loud version.
+Ask:
+What changed?
+Correct answer:
+Loudness changed.
+
+Takeaway:
+Pitch is how fast the wave vibrates. Loudness is how big the wave is.
+
+PAGE 5: Why a Flute and Violin Sound Different
+
+Purpose:
+Teach timbre without oversimplifying.
+
+Rewrite:
+
+Now keep the pitch the same.
+
+Keep the loudness the same.
+
+Change the shape of the wave.
+
+The sound still changes.
+
+That difference is part of timbre.
+
+Timbre means the character or color of a sound. It is why a flute, violin, guitar, voice, and synth can play the same note but still sound different.
+
+Wave shape is one major part of timbre.
+
+Envelope, which you will shape next, also changes how a sound feels.
+
+Interaction:
+- Play.
+- Wave shape buttons:
+  - Sine, smooth
+  - Square, buzzy
+  - Sawtooth, bright
+  - Triangle, mellow
+- Keep pitch and loudness fixed.
+- Graph changes shape for each wave.
+
+Real instrument comparison:
+Buttons:
+- Flute
+- Violin
+
+Copy:
+A flute and violin can play the same note at the same loudness. You can still tell them apart. Their waves and frequency recipes are different. You will learn more about that in the Fourier lesson.
+
+Formative task:
+Play a shape. Learner identifies smooth, buzzy, bright, or mellow.
+
+Takeaway:
+Timbre is the character of a sound. Wave shape is one way to change timbre.
+
+PAGE 6: How a Sound Begins and Ends
+
+Purpose:
+Teach envelope as loudness over time.
+
+Rewrite:
+
+A sound is not only a pitch, loudness, and wave shape.
+
+It also has a beginning and an ending.
+
+Pluck a guitar string and the sound jumps in, then fades.
+
+Hold an organ key and the sound swells or sustains.
+
+That shape over time is called the envelope.
+
+An envelope is the shape of a sound’s loudness over time. It describes how the sound starts, changes, and fades.
+
+Interaction:
+- Play it.
+- Attack slider.
+- Decay slider.
+- Presets:
+  - Pluck
+  - Pad
+  - optional Drum
+  - optional Bell
+- Show the envelope as a line wrapped around or above a waveform.
+
+Slider anchors:
+Attack:
+instant start ←→ slow start
+
+Decay:
+short fade ←→ long fade
+
+Live feedback:
+Short attack: the sound starts immediately.
+Long attack: the sound fades in slowly.
+Short decay: the sound disappears quickly.
+Long decay: the sound lingers.
+
+Formative task:
+Make a pluck.
+Then:
+Make a pad.
+
+Takeaway:
+Envelope is loudness over time. It shapes how a sound begins, holds, and ends.
+
+PAGE 7: Build Your Synth, Play a Tune
+
+Purpose:
+Give the learner a payoff by combining all concepts.
+
+Rewrite:
+
+You have the pieces now:
+
+Pitch controls how fast the sound vibrates.
+Loudness controls how big the wave is.
+Wave shape helps create timbre.
+Envelope controls how the sound starts and fades.
+
+Put those pieces together, and you have a simple synthesizer.
+
+A synth lets you shape a sound and play it.
+
+Interaction:
+- Wave shape buttons: Sine, Square, Saw, Triangle.
+- Envelope buttons: Pluck, Pad.
+- Optional loudness control.
+- On-screen keyboard:
+  C4, D4, E4, F4, G4, A4, B4, C5.
+- Keyboard shortcuts:
+  A S D F G H J K.
+- Suggested tune:
+  C4 C4 G4 G4 A4 A4 G4.
+
+Add build checklist:
+1. Choose a wave shape.
+2. Choose an envelope.
+3. Play a key.
+4. Try the tune.
+
+Add small "Your sound" readout:
+Wave shape:
+Envelope:
+Pitch:
+Loudness:
+
+Guided presets:
+- Make a soft pad: Triangle + Pad.
+- Make a bright pluck: Saw + Pluck.
+
+Takeaway:
+A synth is a sound-shaping instrument. You set pitch, loudness, wave shape, and envelope. Then you play.
+
+PAGE 8: Check What You Heard
+
+Purpose:
+Review through playful challenge cards, not a quiz wall.
+
+Replace dense stacked quiz with challenge mode.
+
+Challenge 1:
+Hear pitch.
+Play two notes. Which one is higher?
+
+Challenge 2:
+Name the shape.
+Play a sound. Which shape is it?
+Sine, Square, Sawtooth, Triangle.
+
+Challenge 3:
+Match the controls.
+Pitch = how fast the wave vibrates.
+Loudness = how big the wave is.
+Timbre = character or color of the sound.
+Envelope = how the sound begins and ends.
+
+Challenge 4:
+Mystery sound builder.
+Play target.
+Play yours.
+Adjust shape and envelope until close.
+
+Challenge 5:
+Explain timbre.
+Prompt:
+In one sentence, explain what timbre is.
+
+Rubric:
+A strong answer says timbre is the character of a sound, and it helps us tell sounds apart even when pitch and loudness are similar.
+
+Replace "0 of 5 checks passed" with:
+Sound skills checked: 0 of 5
+
+Skill badges:
+- Heard pitch
+- Named shape
+- Matched controls
+- Built mystery sound
+- Explained timbre
+
+PAGE 9: That Is a Sound
+
+Purpose:
+Close the lesson, reinforce confidence, bridge to Fourier.
+
+Rewrite:
+
+You saw a sound wave.
+
+You changed its speed.
+
+You changed its size.
+
+You heard how its shape changes character.
+
+You shaped how it begins and ends.
+
+Then you played a tune on a synth you built.
+
+What you can do now:
+- explain that sound is vibration moving through air
+- recognize that a waveform shows vibration over time
+- tell pitch, or frequency, apart from loudness, or amplitude
+- hear how wave shape changes timbre
+- shape a sound with an envelope
+- build a simple synth sound and play it
+
+Bridge:
+Remember the buzzy square wave?
+
+It looked simple, but it sounded busy.
+
+That is because a square wave can be built from many pure tones stacked together.
+
+In the next lesson, you will pull sound apart into its ingredients and meet one of the most useful ideas in audio:
+
+the Fourier Transform.
+
+Separate the portfolio CTA from the learning conclusion with spacing and a section label:
+About the designer
+
+Acceptance criteria:
+- All graphs have labels.
+- Every slider has live feedback.
+- Envelope copy is corrected.
+- Check page feels like challenge cards, not a worksheet.
+- Synth page has a build checklist.
+- No generic Play buttons where multiple sounds exist.
+- All interactions are keyboard accessible.
+Prompt 4: Fourier series start and Part 1 update
+Update the Fourier Transform series start and Part 1: See the Recipe.
+
+This part must make learners believe and understand that sound has ingredients.
+
+The learner should finish Part 1 thinking:
+"A sound is not just one thing. It is a frequency recipe, and I can see, hear, and change that recipe."
+
+Use the updated voice style:
+- concrete
+- explanatory
+- no vague pronouns
+- no unclear phrases like "one direction" without saying one direction of what
+- always name the process being reversed, analyzed, built, or changed
+
+PART 1 STRUCTURE:
+1. Series Start: What Is Inside a Sound?
+2. Part 1 Start: See the Recipe
+3. Sound Is a Moving Shape
+4. Meet the Simplest Sound
+5. The Waveform: Sound Across Time
+6. The Spectrum: Sound by Frequency
+7. Same Sound, Two Views
+8. The Sonic Prism
+9. Build a Sound from Pure Tones
+10. One Pure Tone, Written as a Formula
+11. Square Waves: Smooth Sines in Disguise
+12. Bass, Mids, and Treble
+13. See Your Own Voice
+14. Checkpoint: Read the Recipe
+15. Part 1 Outro
+
+PAGE 1: What Is Inside a Sound?
+
+Purpose:
+Hook the learner with a familiar mystery.
+
+Rewrite:
+
+Title:
+What Is Inside a Sound?
+
+Subtitle:
+Music technology · signals · beginner friendly · about 15 minutes
+
+Opening:
+Why can the same note sound completely different?
+
+A flute and a violin can play the same note at the same loudness, and you can still tell them apart. A song can sound thin on tiny earbuds and huge on good headphones. A voice can sound warm, bright, nasal, smooth, sharp, or full.
+
+That is because sound has more inside it than pitch and volume.
+
+A sound has a frequency recipe.
+
+Some ingredients are low.
+Some are high.
+Some are strong.
+Some are quiet.
+
+In this lesson series, you will learn to see and shape that recipe.
+
+The main tool is the Fourier Transform, pronounced FOOR-ee-ay Transform.
+
+It answers one powerful question:
+
+Which frequencies are inside this sound, and how strong is each one?
+
+Interaction:
+Same note. Two instruments.
+Buttons:
+Play flute.
+Play violin.
+
+Prompt:
+Both sounds are playing the same note at similar loudness. What do you notice?
+
+Choices:
+They sound identical.
+They sound different.
+
+Feedback:
+Yes. The pitch is the same, but the sound character is different. That character comes from the sound’s frequency recipe.
+
+Outcome card:
+By the end of this series, you will be able to:
+- see the difference between a waveform and a spectrum
+- build richer sounds by stacking pure tones
+- read bass, mids, and treble on a spectrum
+- explain the Fourier Transform as a frequency test
+- connect frequency recipes to EQ, headphones, voice, and song recognition
+
+Roadmap:
+Use icons and labels:
+1. See the recipe
+2. Find the recipe
+3. Use the recipe
+4. Prove you can read a sound
+
+Button:
+Start the sound lab
+
+PAGE 2: Part 1: See the Recipe
+
+Purpose:
+Orient Part 1.
+
+Copy:
+In Part 1, you will learn to see a sound two ways.
+
+A waveform shows how a sound changes over time.
+
+A spectrum shows which frequencies are inside the sound.
+
+These are two views of the same sound.
+
+Think of this like learning to read a map. Once you can read the map, everything that comes next makes more sense.
+
+Design:
+Show two preview cards:
+Waveform:
+What happens over time?
+
+Spectrum:
+What frequencies are inside?
+
+Button:
+Begin Part 1
+
+PAGE 3: Sound Is a Moving Shape
+
+Purpose:
+Connect sound motion, numbers, and waveform.
+
+Copy:
+Sound is vibration.
+
+When something vibrates, it pushes and pulls the air around it.
+
+A microphone turns that movement into numbers.
+
+A speaker turns those numbers back into movement.
+
+So the audio chain looks like this:
+moving air → numbers → moving air again
+
+When we draw those changing numbers over time, we get a waveform.
+
+A waveform is not the sound itself. It is a picture of how the sound changes.
+
+Interaction:
+Use three connected cards:
+Sound in: moving air
+Numbers: one value per moment
+Sound out: moving air again
+
+Then a waveform drawing lab:
+Buttons:
+Short bump
+Steady wave
+Rising swell
+
+Each button animates a different waveform being drawn left to right.
+
+Waveform labels:
+Time →
+Push / higher pressure
+Pull / lower pressure
+Center line
+
+Quick check:
+Point to the moment.
+Tap beginning, middle, and end of the wave.
+
+Takeaway:
+A waveform shows a sound changing over time. It answers: what is the sound doing moment by moment?
+
+PAGE 4: Meet the Simplest Sound
+
+Purpose:
+Introduce pure tone and connect pitch to waveform and spectrum.
+
+Copy:
+A pure tone is the simplest sound we can study.
+
+It has one main frequency.
+
+It draws a smooth repeating shape called a sine wave.
+
+A tuning fork, a test tone, or a clean whistle can get close to a pure tone.
+
+Press play, then move the pitch.
+
+When pitch goes up:
+- the waveform repeats faster
+- the spectrum bar moves right
+
+When pitch goes down:
+- the waveform repeats slower
+- the spectrum bar moves left
+
+Interaction:
+Two panels:
+Waveform
+Spectrum
+
+Button:
+Play pure tone
+Optional:
+Now hear a real sound
+
+Slider:
+Pitch
+
+Task:
+Make it move.
+1. Make the tone higher without making it louder.
+2. Make the tone lower.
+3. Return it near 440 Hz.
+
+Takeaway:
+A pure tone gives you one frequency, one smooth waveform, and one main spectrum bar.
+
+PAGE 5: The Waveform: Sound Across Time
+
+Purpose:
+Teach waveform as time view.
+
+Copy:
+A waveform shows how a sound changes over time.
+
+Use a waveform when you want to see:
+- when a sound starts and ends
+- where it gets stronger or weaker
+- whether it repeats smoothly
+- whether its shape looks simple or detailed
+
+A simple tone has a smooth waveform.
+
+A fuller sound usually has a more detailed shape because several ingredients are combining.
+
+Interaction:
+Choose sound:
+Pure tone
+Flute-like
+Violin-like
+
+Button:
+Play selected sound
+
+Graph:
+Large waveform with Time → and Loudness / pressure labels.
+
+Challenge:
+Match the description:
+Which one looks smoothest?
+Which one has more detail but still feels fairly smooth?
+Which one looks most detailed?
+
+Quick check:
+Order waveforms from smoothest to most detailed:
+Pure tone → Flute-like → Violin-like
+
+Takeaway:
+The waveform tells you how the sound changes over time.
+
+PAGE 6: The Spectrum: Sound by Frequency
+
+Purpose:
+Teach spectrum as frequency view.
+
+Copy:
+A spectrum shows the frequency ingredients inside a sound.
+
+Each bar stands for one frequency.
+
+Read it like this:
+
+Left means lower frequencies.
+Right means higher frequencies.
+Taller means stronger.
+Shorter means weaker.
+
+A pure tone has one main bar.
+
+A fuller sound has more bars because it contains more frequency ingredients.
+
+Interaction:
+Choose sound:
+Pure tone
+Flute-like
+Violin-like
+
+Button:
+Play selected sound
+
+Graph:
+Spectrum with:
+Strength
+Frequency, low to high →
+
+Quick check:
+Tap:
+- a low-frequency bar
+- the strongest bar
+- a weaker high-frequency bar
+
+Takeaway:
+The spectrum tells you which frequencies are inside the sound, and how strong each one is.
+
+PAGE 7: Same Sound, Two Views
+
+Purpose:
+Make waveform vs spectrum stick.
+
+Copy:
+The waveform and the spectrum are two pictures of the same sound.
+
+The sound does not change when you switch views.
+
+Only the question changes.
+
+The waveform asks:
+What happens over time?
+
+The spectrum asks:
+What frequencies are inside?
+
+Interaction:
+Sound choices:
+Pure tone
+Flute-like
+Violin-like
+
+Toggle:
+Show waveform
+Show spectrum
+
+The visual should flip between views without changing the audio.
+
+Quick check:
+Choose the better view.
+Drag cards into waveform or spectrum.
+
+Waveform tasks:
+- Find when the sound starts.
+- See whether the sound fades out.
+- Notice a sudden hit.
+
+Spectrum tasks:
+- Find whether high frequencies are present.
+- See which frequency is strongest.
+- Compare how rich two sounds are.
+
+Takeaway:
+You need both views. The waveform shows sound across time. The spectrum shows sound by frequency.
+
+PAGE 8: The Sonic Prism
+
+Purpose:
+Use the prism metaphor to explain analysis.
+
+Copy:
+Have you seen white light pass through a prism?
+
+The light spreads into colors.
+
+The white light was not one color. It contained many wavelengths at once.
+
+A Fourier Transform is like a prism for sound.
+
+A complex sound goes in.
+
+A frequency recipe comes out.
+
+The transform does not physically pull the sound apart. It calculates which frequencies are present and how strong each one is.
+
+The prism is our visual metaphor.
+
+Image:
+Use the sonic prism image if available.
+Make it large and cinematic.
+Caption:
+One complex wave enters. Its frequency ingredients fan out.
+
+Interaction:
+Choose:
+Flute-like
+Violin-like
+
+Button:
+Send through prism
+
+Animation:
+Complex waveform enters prism.
+Separated bands come out.
+Bands differ in:
+- frequency spacing
+- amplitude
+- brightness or strength
+
+Labels:
+Low frequency
+Mid frequency
+High frequency
+Weaker
+Stronger
+
+Quick check:
+Tap the strongest band.
+Tap a low-frequency band.
+Tap a weaker high-frequency band.
+
+Mystery check:
+Play the mystery sound.
+Inspect the split.
+Choose which sound it resembles:
+Flute-like or Violin-like.
+
+Takeaway:
+The fan of tones is the sound’s spectrum: its frequency recipe.
+
+PAGE 9: Build a Sound from Pure Tones
+
+Purpose:
+Teach additive synthesis by reversing the analysis process clearly.
+
+Use the updated clear language.
+
+Copy:
+The sonic prism showed how to analyze a sound: start with one finished sound and reveal the pure tones inside it.
+
+On this page, you do the opposite.
+
+Start with pure tones.
+
+Stack them together.
+
+Hear them become one new sound.
+
+That is additive synthesis.
+
+Additive synthesis means building a complex sound by adding simple sine waves together.
+
+Start with H1, the fundamental.
+
+Then raise H2, H3, H4, and the rest.
+
+As you add harmonics:
+- the sound changes
+- the spectrum gains bars
+- the waveform becomes more detailed
+
+Concept map:
+Analyze:
+finished sound → spectrum ingredients
+
+Synthesize:
+pure tones → finished sound
+
+Key terms:
+Fundamental:
+The first and lowest bar. It sets the main pitch.
+
+Harmonics:
+Higher tones above the fundamental: 2x, 3x, 4x, and so on.
+
+Amplitude:
+The height of a bar. It shows how strong that harmonic is.
+
+Timbre:
+The whole pattern of harmonic strengths. This pattern gives the sound its character.
+
+Interaction:
+Use the redesigned preview style if available.
+
+Controls:
+H1 through H6 sliders.
+Presets:
+Pure tone
+Flute-like
+Violin-like
+Bright synth
+
+Views:
+Waveform
+Spectrum
+Live recipe
+
+Live feedback:
+H4 increased. A higher harmonic is stronger, so the sound becomes brighter.
+Higher harmonics lowered. The sound becomes smoother and closer to a pure tone.
+
+Tasks:
+Make it brighter without changing the fundamental.
+Make it smoother.
+Match the target recipe.
+
+Takeaway:
+The note can stay the same while the harmonic recipe changes. That changing recipe changes the sound’s timbre.
+
+Design:
+This page is dense. Either split it into Build and Match pages, or use internal tabs:
+Build
+Presets
+Challenge
+
+PAGE 10: One Pure Tone, Written as a Formula
+
+Purpose:
+Translate sliders into a formula without making it intimidating.
+
+Copy:
+Every pure tone you added follows the same pattern.
+
+You can control:
+- how tall the wave is
+- how fast it repeats
+- where it starts
+
+Here is one pure tone written as a formula:
+
+y(t) = A · sin(2πft + φ)
+
+This formula is not here to scare you.
+
+It is just a compact way to describe one smooth tone.
+
+Formula tokens:
+y(t): the sound value at this moment in time
+A: amplitude, how tall the wave is
+sin: the smooth repeating wave shape
+2π: one full trip around a cycle
+f: frequency, how fast the wave repeats
+t: time
+φ: phase, where the wave starts
+
+Interaction:
+Each formula token connects to a slider or graph feature.
+Sliders:
+A
+f
+φ
+t
+
+Tasks:
+Make it taller.
+Make it repeat faster.
+Slide its starting point.
+
+Takeaway:
+One formula term describes one pure tone. A full sound recipe is made by adding several tone formulas together.
+
+Design:
+Make formula tokens large and clickable.
+Label this as a translation page, not a math test.
+
+PAGE 11: Square Waves: Smooth Sines in Disguise
+
+Purpose:
+Show that complex-looking waves can be built from sine waves.
+
+Copy:
+A square wave jumps high, then low, then high, then low.
+
+It looks simple.
+
+But it sounds bright, buzzy, and electronic.
+
+Here is the surprise:
+
+A square wave can be built from smooth sine waves.
+
+Not all harmonics.
+
+Only the odd ones:
+H1, H3, H5, H7, H9...
+
+Each one is quieter than the one before it.
+
+Interaction:
+Play sine wave.
+Play square wave.
+
+Prompt:
+They can share the same fundamental pitch. Listen to the smooth sine, then the buzzy square.
+
+Ask:
+Why does the square wave sound brighter?
+
+Answer:
+Because its spectrum contains more high harmonics.
+
+Build interaction:
+Add next odd harmonic.
+Watch it build.
+
+Stages:
+H1 only:
+The sound is smooth and the waveform is still a sine.
+
+Add H3:
+A higher ingredient appears. The waveform begins to flatten and the sound gets brighter.
+
+Add H5, H7, H9:
+The edges get steeper, the tone gets buzzier, and the shape moves closer to a square.
+
+Formula:
+Move full square-wave formula into a collapsible "See the recipe as a formula" section.
+
+Quick check:
+Sort odd from even.
+Belongs:
+H1, H3, H5, H7
+Silent:
+H2, H4, H6, H8
+
+Takeaway:
+A square wave is not a mysterious new ingredient. It is smooth sine waves stacked in a precise pattern.
+
+PAGE 12: Exploring Bass, Mids, and Treble
+
+Purpose:
+Teach frequency regions for Part 3 EQ and headphone work.
+
+Copy:
+A spectrum runs from low frequencies on the left to high frequencies on the right.
+
+We often split that range into three regions:
+
+Bass is the low end.
+Mids are the middle.
+Treble is the high end.
+
+You do not need to know these already. This screen is for building that map.
+
+Approximate ranges:
+Bass: about 20 to 250 Hz. Kick weight, bass guitar, 808s, low synths.
+Mids: about 250 Hz to 4 kHz. Voice, body, guitar, piano, melodies.
+Treble: about 4 kHz to 20 kHz. Cymbals, air, brightness, edge.
+
+Note:
+These ranges are approximate. Real sounds often spread across more than one region.
+
+Interaction:
+Play sweeping tone.
+Slider:
+Low to High
+
+Live feedback:
+200 Hz, in the bass: kick weight, bass guitar, 808s, low synths.
+1 kHz, in the mids: voice, guitar, and melodic body.
+8 kHz, in the treble: brightness, edge, cymbals, air.
+
+Quick check:
+Where does its energy live?
+Play each sound and drag it to region:
+Kick drum → Bass
+Voice → Mids
+Cymbal → Treble
+
+Takeaway:
+Bass, mids, and treble are not just app labels. They are regions of the frequency map.
+
+Design:
+Use colors for bass, mids, treble and reuse those colors in Part 3.
+
+PAGE 13: See Your Own Voice
+
+Purpose:
+Make frequency recipes personally relevant.
+
+Copy:
+Your voice is a sound, so it has a recipe too.
+
+Use your microphone or play a sample.
+
+Try:
+- humming a steady aah
+- whistling
+- speaking your name
+- singing higher
+- singing lower
+
+A whistle may look close to one strong bar.
+
+A sung vowel usually shows a fundamental plus harmonics.
+
+Your mouth shapes the sound, so some frequency areas become stronger.
+
+Those stronger regions are called formants. They help create vowel sounds.
+
+Interaction:
+Use your mic.
+Play sample vowel.
+Play sample whistle.
+
+Privacy note:
+Your audio stays on your device. Nothing is recorded or sent anywhere.
+
+Voice detective:
+Try each one with the spectrum above, then mark it off.
+1. Make the simplest spectrum you can.
+2. Make the richest spectrum you can.
+3. Make a higher pitch.
+4. Make a lower pitch.
+
+Feedback:
+Simplest:
+A whistle often creates fewer strong frequency components.
+
+Richest:
+A sung vowel or spoken sound usually creates more harmonics and formants.
+
+Higher pitch:
+The fundamental moves right.
+
+Lower pitch:
+The fundamental moves left.
+
+Takeaway:
+The transform can reveal the recipe of a real sound while it is happening.
+
+PAGE 14: Checkpoint: Read the Recipe
+
+Purpose:
+Review without feeling like a school test.
+
+Copy:
+Pause and review.
+
+You have learned the big picture.
+
+So far:
+A pure tone has one main frequency.
+A waveform shows change over time.
+A spectrum shows frequency ingredients.
+A fundamental gives the main pitch.
+Harmonics add richness.
+Amplitude is strength.
+Timbre is the sound’s character.
+
+Check 1:
+Match the idea.
+
+Terms:
+Waveform
+Spectrum
+Fundamental
+Harmonics
+Amplitude
+Timbre
+
+Meanings:
+A sound’s change over time
+The frequencies inside a sound
+The lowest or main tone, which helps set pitch
+Tones above the fundamental that add richness
+How strong a component is
+The character that tells a flute from a violin
+
+Check 2:
+A flute-like and violin-like sound play the same fundamental pitch. Why can they still sound different?
+
+Correct:
+Their harmonic amplitudes are different.
+
+Feedback:
+Yes. They can share the same main pitch, but their harmonic recipes can differ.
+
+Check 3:
+In your own words:
+Why can two instruments play the same note but sound different?
+
+Strong answer:
+They can have the same fundamental pitch but different harmonics and amplitudes, which creates a different timbre.
+
+PAGE 15: Part 1 Outro
+
+Purpose:
+Close Part 1 and bridge to Part 2.
+
+Copy:
+You started with one note.
+
+Now you can see what is inside it.
+
+You met the pure tone.
+
+You read sound as a waveform and as a spectrum.
+
+You stacked pure tones into new sounds.
+
+You watched a square wave emerge from odd harmonics.
+
+You mapped bass, mids, and treble.
+
+What you can do now:
+- see a sound two ways: waveform over time and spectrum by frequency
+- describe a sound as a fundamental plus harmonics
+- explain that each harmonic has its own strength
+- find bass, mids, and treble on a spectrum
+- hear how the recipe shapes timbre
+
+Next:
+You can read a spectrum now.
+
+In Part 2, you will see how a computer builds one, testing one frequency at a time.
+
+Button:
+Continue to Part 2
+
+Acceptance criteria:
+- All vague references are replaced with named processes.
+- Sonic prism and additive synthesis language is clear.
+- Build from pure tones page matches the new preview voice and style.
+- Square wave page prioritizes building over formula.
+- Voice page has clear privacy note.
+- Bass/mids/treble colors are reusable in Part 3.
+- No graph is unlabeled.
+- No page is too vertically dense without tabs, split pages, or progressive disclosure.
+Prompt 5: Fourier Part 2 update, Find the Recipe
+Update Fourier Part 2: Find the Recipe.
+
+Part 2 explains how a computer creates a spectrum from samples.
+
+The learner should finish thinking:
+"The Fourier Transform is not magic. It tests one frequency at a time by multiplying samples by a test wave, adding the products, and reading the result."
+
+Core teaching sequence:
+1. A computer sees sound as samples.
+2. A mystery sound contains hidden tones.
+3. A test wave asks whether one frequency is present.
+4. Multiply sample by sample.
+5. Add the products.
+6. A match adds up.
+7. Phase can hide a match.
+8. Cosine and sine work together.
+9. The formula is a shortcut.
+10. Calculate one frequency by hand.
+11. Check the method.
+
+Voice rule:
+Do not introduce the formula as a new idea. Present the formula as a compact way to write the physical process the learner already performed.
+
+PAGE 1: How Does a Computer Find the Recipe?
+
+Copy:
+You can already look at a spectrum and understand what it means.
+
+But how does a computer create that spectrum?
+
+A computer does not hear sound like a person. It does not know flute, violin, bright, smooth, or buzzy.
+
+It only sees numbers.
+
+A digital sound is a list of quick measurements called samples.
+
+In this part, you will see how those samples become a frequency recipe.
+
+The whole method is simpler than the formula looks:
+
+1. Choose a frequency.
+2. Make a test wave at that frequency.
+3. Multiply the sound by the test wave, sample by sample.
+4. Add the products.
+5. See whether the total is big or small.
+
+A big total means:
+That frequency is strongly present.
+
+A small total means:
+That frequency is weak or mostly missing.
+
+Design:
+Show flow strip:
+sample dots → test wave → multiply → add → spectrum bar
+
+Quick check:
+What does the computer start with?
+Correct:
+A list of samples.
+
+PAGE 2: A Computer Sees Sound as Dots
+
+Copy:
+A microphone captures a sound wave as it changes.
+
+The real wave is smooth, but a computer cannot store every possible point on that curve.
+
+So it takes quick measurements.
+
+Each measurement is a sample.
+
+A digital sound is a list of samples.
+
+Think of it like taking snapshots of a moving object. More snapshots give a clearer picture of the motion.
+
+Interaction:
+- Smooth wave graph.
+- Choose sample count: 4, 8, 16, 32.
+- Animate sampling.
+- Vertical scanning line moves across wave.
+- Dots land on the curve.
+- Each dot drops into table row.
+
+Table:
+n
+time
+x[n]
+
+Explanation:
+The sample number is n.
+The sample value is x[n].
+So x[3] means the sound value at sample 3.
+
+Formative:
+Catch the sample.
+Highlight one dot. Learner clicks matching table row.
+
+Takeaway:
+A computer starts with samples: dots taken from the sound wave. The Fourier Transform works with those dots.
+
+PAGE 3: The Mystery Sound
+
+Copy:
+In Part 1, you built sounds by going from ingredients to a finished sound.
+
+Pure tones became one complete sound.
+
+Now the computer has to go the other way.
+
+It starts with a finished sound and tries to find the pure tones inside it.
+
+Here is a mystery sound made from a few hidden pure tones.
+
+The waveform shows the finished sound over time, but the waveform does not directly tell us which pure tones are inside.
+
+So we need a test.
+
+The test asks:
+How much of this frequency is in the sound?
+
+One frequency at a time.
+
+Interaction:
+Play mystery sound.
+Show waveform.
+Toggle sample dots.
+
+Prediction:
+Place one or two pins on blank spectrum.
+This is not graded.
+
+Feedback:
+Prediction saved. Next, test waves will help us check where the hidden tones really are.
+
+PAGE 4: Ask the Sound One Question
+
+Copy:
+To find a frequency, the computer makes a pure test wave.
+
+The test wave asks the sound one question:
+
+Are you in here?
+
+If we want to test for a low frequency, we make a low test wave.
+
+If we want to test for a high frequency, we make a high test wave.
+
+Then we compare the test wave to the mystery sound.
+
+Do not calculate yet. First, just watch how the test wave changes.
+
+Interaction:
+Play mystery sound.
+Play test wave.
+Test frequency slider.
+
+Two panels:
+Mystery sound
+Test wave
+
+Dynamic feedback:
+This test wave is lower, so its cycles are more spread out.
+This test wave is higher, so its cycles are closer together.
+The spacing is close. This is a better test candidate.
+
+Mini-task:
+Match the spacing.
+Show a faint target guide behind the test wave.
+Label target guide as practice guide, not the answer.
+
+Takeaway:
+A test wave is a pure tone used to check for one frequency.
+
+PAGE 5: Multiply, Then Add
+
+Copy:
+Now we run the actual frequency test.
+
+For one test frequency:
+
+1. Take one sample from the sound.
+2. Take the matching sample from the test wave.
+3. Multiply them.
+4. Drop the product into a running total.
+5. Repeat for every sample.
+
+At the end, the total becomes a match score.
+
+A large match score means:
+This frequency lines up strongly with the sound.
+
+A small match score means:
+This frequency is weak or mostly missing.
+
+Interaction:
+Use machine layout:
+sound sample dot + test sample dot → multiplication tile → positive/negative bucket → running total meter
+
+Buttons:
+Next sample
+Auto-play calculation
+Reset
+
+Before each product appears:
+Predict the product:
+Positive
+Negative
+Near zero
+
+Show multiplication:
+x[n] × test[n] = product
+
+Product drops into bucket.
+Running total updates.
+
+Takeaway:
+For one frequency, the transform is basically: multiply matching samples, then add the products.
+
+PAGE 6: A Match Adds Up
+
+Copy:
+Now test a frequency that really is inside the sound.
+
+When the test wave lines up with a frequency in the sound, many products point the same way.
+
+They add instead of canceling.
+
+The total grows.
+
+Now compare that with a test wave at the wrong frequency.
+
+The wrong test creates products that fight each other.
+
+Some are positive.
+
+Some are negative.
+
+They cancel, and the total stays smaller.
+
+Interaction:
+Three lanes:
+Low test
+Matching test
+High test
+
+Each lane shows product bars and final total.
+
+Task:
+Drag Present badge onto lane with largest total.
+
+Takeaway:
+A large total is evidence that the tested frequency is present. A near-zero total means that frequency is weak or absent.
+
+PAGE 7: Phase Can Hide a Match
+
+Copy:
+There is one problem.
+
+Two waves can have the same frequency but start in different places.
+
+That starting position is called phase.
+
+Frequency tells us how close together the cycles are.
+
+Phase tells us where the wave starts.
+
+If the test wave starts in the wrong place, a single test can miss a frequency that is actually there.
+
+The frequency is right.
+
+The timing is shifted.
+
+Interaction:
+Signal slides against fixed cosine test.
+Phase slider.
+Single-test match total.
+
+Add visual labels:
+Same spacing = same frequency.
+Different starting point = different phase.
+
+Mini-task:
+Sort wave thumbnails:
+Same spacing, shifted right → same frequency, different phase
+Same spacing, shifted left → same frequency, different phase
+Closer spacing → different frequency
+
+Takeaway:
+Phase is where the wave starts in its cycle. A good frequency test must handle phase.
+
+PAGE 8: Cosine and Sine Work as a Team
+
+Copy:
+To avoid missing a shifted wave, the computer uses two test waves:
+
+cosine and sine.
+
+They test the same frequency from two different starting positions.
+
+Think of them like two spotlights aimed at the same frequency from different angles.
+
+One spotlight may catch what the other misses.
+
+Run the test with both waves.
+
+Call the cosine total C.
+
+Call the sine total S.
+
+Then combine them:
+
+amount = √(C² + S²)
+
+That amount is the strength of the frequency.
+
+Interaction:
+Circle diagram:
+Horizontal = C
+Vertical = S
+Radius = amount
+
+Phase slider.
+C bar.
+S bar.
+Amount bar.
+
+Task:
+Make C small while keeping amount large.
+
+Feedback:
+S caught what C missed. That is why the computer uses both tests.
+
+Takeaway:
+Cosine and sine together measure a frequency’s strength no matter where the wave starts.
+
+PAGE 9: The Formula Is a Shortcut
+
+Copy:
+You have already done the transform by feel.
+
+You made a test wave.
+
+You multiplied.
+
+You added.
+
+You checked the total.
+
+Now here is the same method written as the Discrete Fourier Transform:
+
+X[k] = Σ x[n] · e^(-i2πkn/N)
+
+It looks intense, but it is not a new idea.
+
+It means:
+
+For this frequency, multiply every sound sample by the test wave, then add the products.
+
+Plain English:
+answer for one frequency = add up sound sample × test wave
+
+Formula tokens:
+X[k]: answer for frequency bin k
+Σ: add up the products
+x[n]: sound sample at position n
+n: current sample index
+N: total number of samples
+k: frequency being tested
+e^(-i2πkn/N): the test wave, with cosine and sine packed together
+
+Task:
+Build the formula from blocks:
+For frequency k → take each sound sample x[n] → multiply by the test wave → add all products → get X[k]
+
+Takeaway:
+The formula is the compact version of the frequency test you already understand.
+
+PAGE 10: Calculate One Frequency by Hand
+
+Copy:
+Now calculate one tiny Fourier result yourself.
+
+We will use eight samples.
+
+The samples come from a simple wave that starts at the top.
+
+First, look at where the numbers come from.
+
+The smooth curve is the original wave.
+
+The dots are the samples.
+
+The table is what the computer keeps.
+
+Interaction:
+Four-zone calculation studio:
+1. Source graph with eight dots.
+2. Sample chips and table.
+3. Calculation lane for C and S.
+4. Amount meter.
+
+Important:
+When a step updates C or S, the displayed totals must update immediately. Do not show C = 0 after adding 1.00.
+
+Use sample values:
+x[0] = 1.00
+x[1] = 0.71
+x[2] = 0.00
+x[3] = -0.71
+x[4] = -1.00
+x[5] = -0.71
+x[6] = 0.00
+x[7] = 0.71
+
+Task:
+Step through samples.
+Complete one product.
+Find the dot that created x[3].
+Error detective:
+0.71 × 0.71 is about 0.50, not 0.71.
+
+Takeaway:
+You computed one frequency result by hand. The computer does the same kind of process, much faster, across many frequencies.
+
+PAGE 11: Checkpoint: Find the Recipe
+
+Purpose:
+Review the method.
+
+Copy:
+You have seen the method behind the transform.
+
+It is not magic.
+
+It is a repeated test.
+
+For each frequency:
+1. Make a test wave.
+2. Multiply sample by sample.
+3. Add the products.
+4. Measure the result.
+
+A large result means the frequency is strongly present.
+
+A small result means it is weak or mostly absent.
+
+Checks:
+1. Method maze:
+Choose frequency → Make test wave → Multiply samples → Add products → Read amount → Repeat
+Distractors:
+Guess instrument
+Turn up volume
+
+2. Formula icon match:
+x[n] → sound sample
+e^(-i2πkn/N) → test wave
+Σ → add products
+X[k] → answer for one frequency
+k → frequency being tested
+N → number of samples
+
+3. Quick check:
+A large combined amount means that frequency is strongly present.
+
+Acceptance criteria:
+- Part 2 makes samples visually physical.
+- Multiplication and addition are animated as movement.
+- Formula page is a translation, not a jump.
+- Hand calculation page shows where samples come from.
+- All totals update correctly.
+- Phase is explained through same spacing versus shifted start.
+Prompt 6: Fourier Part 3 update, Use the Recipe
+Update Fourier Part 3: Use the Recipe.
+
+Part 3 connects frequency recipes to real audio tools.
+
+The learner should finish thinking:
+"I can use a frequency recipe to make audio decisions."
+
+Tools to cover:
+- EQ
+- headphone frequency response
+- spectrogram
+- noise cancelling
+- song recognition
+- audio compression
+- pitch correction
+- voice or analyzer tools
+
+Structure:
+1. Open the Audio Toolbox
+2. EQ Is Recipe Editing
+3. Read a Headphone Curve
+4. From Spectrum to Spectrogram
+5. Where Frequency Thinking Lives
+6. Checkpoint: Use the Recipe
+7. Decode the Sound intro
+8. Final challenge pages
+9. Final reflection
+
+PAGE 1: Use the Recipe on Your Gear
+
+Copy:
+You can now read a sound’s frequency recipe.
+
+You can also explain how a computer finds that recipe.
+
+Now connect the recipe to the real world.
+
+Frequency recipes show up in tools you already know:
+
+EQ.
+Headphones.
+Microphones.
+Noise cancelling.
+Compression.
+Song recognition.
+Pitch correction.
+Voice tools.
+
+These tools do different jobs, but they share the same big idea:
+
+When you can see the frequencies inside a sound, you can change them, compare them, shrink them, identify them, or respond to them.
+
+Outcomes:
+- shape a sound with EQ and predict the result
+- read a headphone frequency-response curve
+- recognize a spectrogram and explain what it shows
+- identify how frequency thinking appears in everyday audio tools
+- solve short sound challenges to prove you can read a sound
+
+Design:
+Add audio toolbox visual strip:
+EQ slider → headphone curve → spectrogram → fingerprint → pitch line
+
+Activation:
+Which audio tool have you used before?
+Bass/treble controls
+Headphones
+Noise cancelling
+Song recognition
+Pitch correction
+None yet
+
+PAGE 2: EQ Is Recipe Editing
+
+Copy:
+An equalizer, or EQ, changes the balance of frequencies in a sound.
+
+It does not rewrite the melody.
+
+It reshapes the recipe.
+
+If you boost bass, low frequencies get stronger.
+
+If you cut treble, high frequencies get softer.
+
+If you boost mids, vocals and many instruments can move forward.
+
+The spectrum shows the recipe.
+
+The EQ lets you reshape it.
+
+Interaction:
+Play loop.
+Spectrum shows:
+Original spectrum faint.
+Current spectrum active.
+EQ curve line.
+
+Sliders:
+Bass
+Mids
+Treble
+
+Scenario-driven goals:
+The song sounds thin.
+Goal: make the sound fuller.
+Helpful move: raise bass or low mids slightly.
+
+The mix sounds harsh.
+Goal: make the sound less sharp.
+Helpful move: lower treble slightly.
+
+The vocal is buried.
+Goal: bring the voice forward.
+Helpful move: raise mids slightly.
+
+Feedback:
+The low end gives weight and fullness.
+Treble adds brightness and edge.
+Mids carry much of vocal presence.
+
+Takeaway:
+EQ works because sounds have frequency recipes. An EQ reshapes that recipe by boosting or cutting frequency regions.
+
+PAGE 3: Read a Headphone Curve
+
+Copy:
+Headphones and speakers do not play every frequency equally.
+
+Some make bass stronger.
+
+Some make treble brighter.
+
+Some push vocals forward.
+
+Some make vocals feel farther away.
+
+A frequency-response curve shows how strongly the gear plays each frequency region.
+
+Read it like this:
+- a rise in the bass means the low end is emphasized
+- a rise in the treble means brightness is emphasized
+- a dip in the mids can make vocals feel less forward
+- a flatter curve usually means the gear is trying to reproduce regions more evenly
+
+A curve is not the whole listening experience. Fit, ear shape, volume, distortion, and taste still matter.
+
+But a curve can help you predict the general character of the sound.
+
+Interaction:
+Listen first, then reveal.
+
+Before reveal:
+Graph says Curve hidden.
+Learner chooses tuning.
+Learner plays sample.
+Learner guesses label.
+
+Tunings:
+Neutral-like
+Bass-emphasized
+Bright
+V-shaped
+
+After reveal:
+Curve draws left to right.
+Labels appear:
+Bass
+Mids
+Treble
+Louder than reference
+Quieter than reference
+
+Curve detective:
+bass-heavy
+bright
+balanced
+V-shaped
+
+Takeaway:
+A headphone curve is like an EQ profile built into the gear, the fit, and the listening system.
+
+PAGE 4: From Spectrum to Spectrogram
+
+Copy:
+A spectrum shows the frequencies in one short slice of sound.
+
+But many sounds change over time.
+
+Speech changes.
+
+Music changes.
+
+Drums hit and fade.
+
+A spectrogram shows how the frequency recipe changes over time.
+
+It stacks many spectra together like frames in a movie.
+
+Read it like this:
+- left to right is time
+- bottom to top is low to high frequency
+- brighter areas are stronger frequency energy
+
+A steady note creates horizontal bands.
+
+A drum hit creates a sudden vertical burst.
+
+Speech creates changing, shifting shapes.
+
+Interaction:
+First animate:
+one spectrum slice → pushed into timeline → many slices become spectrogram.
+
+Then play:
+Sung note
+Drum hit
+Spoken phrase
+
+Each sound draws a spectrogram left to right.
+
+Quick check:
+Match sound to spectrogram:
+steady horizontal bands → steady note
+sudden vertical burst → drum hit
+changing shifting shapes → spoken word
+
+Takeaway:
+A spectrum shows frequency content in one slice. A spectrogram shows how that content changes over time.
+
+PAGE 5: Where Frequency Thinking Lives
+
+Design:
+Use expandable mini-lab cards. Do not cram all tools into one dense 2x2 grid.
+
+Overview cards:
+Noise cancelling
+Song recognition
+Audio compression
+Pitch correction
+
+When a card is selected, expand mini-lab.
+
+Noise cancelling:
+Copy:
+Noise cancelling headphones use microphones to listen to outside noise. Then they create a carefully timed anti-noise signal designed to reduce what reaches your ear.
+
+This uses the phase idea from Part 2. When two similar waves line up in opposite directions, they can partially cancel.
+
+Interaction:
+Show noise wave.
+Show anti-noise wave.
+Show result wave.
+Learner drags anti-noise timing to reduce result.
+
+Song recognition:
+Copy:
+A song-recognition app looks for strong frequency patterns over time. Those patterns become a fingerprint. The app compares that fingerprint to known songs.
+
+Interaction:
+Play noisy clip.
+Show spectrogram.
+Learner clicks strongest peaks.
+Peaks connect into fingerprint constellation.
+
+Compression:
+Copy:
+Streaming audio needs smaller files. Compression tools use models of hearing to reduce details that are less likely to be noticed. They often work with short time-frequency slices.
+
+The goal is not to delete sound randomly. The goal is to keep what matters most while using fewer bits.
+
+Interaction:
+Original
+Compressed
+Difference
+Show before/after spectrogram strips.
+Learner chooses acceptable or noticeably worse.
+
+Pitch correction:
+Copy:
+Pitch tools estimate the main pitch of a voice or instrument. Then they can nudge the pitch toward a target note.
+
+Interaction:
+Play sung note.
+Show pitch line.
+Snap to target note.
+Drag target note and hear correction change.
+
+Takeaway:
+Frequency recipes help audio tools understand what is inside a sound. Once the recipe is visible, a tool can change it, compare it, shrink it, reduce it, or respond to it.
+
+PAGE 6: Checkpoint: Use the Recipe
+
+Use three challenge cards.
+
+Audio Repair:
+Drag problem to likely adjustment:
+Too muddy → Cut some low mids.
+Too dull → Boost treble slightly.
+Too thin → Boost bass or low mids.
+
+Curve Prediction:
+A headphone curve rises strongly in the low frequencies and dips through the mids. What would you expect?
+Correct:
+More bass, with vocals sitting back: a warm, scooped sound.
+
+Tool Sorting:
+Sort tools:
+Change it:
+EQ
+Pitch correction
+
+Measure it:
+Spectrum analyzer
+Tuner
+
+Compare it:
+Song recognition
+
+Reduce or remove it:
+Noise cancelling
+Compression
+
+Use icons and category columns.
+
+PAGE 7: Decode the Sound
+
+Purpose:
+Transition into capstone challenges.
+
+Copy:
+You now have the tools to read sound.
+
+This final section gives you a few short puzzles.
+
+No long quiz.
+
+Just listen, look, adjust, and explain.
+
+Each challenge brings back something you already practiced.
+
+Preview cards:
+Find the hidden tone:
+Use the frequency test from Part 2.
+
+Match the recipe:
+Use harmonic sliders from Part 1.
+
+Replay one sample calculation:
+Use the sample dots from Part 2.
+
+Translate the formula:
+Connect symbols to plain language.
+
+Fix the gear:
+Use EQ and headphone-curve thinking.
+
+Button:
+Start Challenge 1
+
+PAGE 8: Challenge 1, Find the Hidden Tone
+
+Copy:
+A sound hides one strong pure tone.
+
+Tune the test frequency until the match strength peaks.
+
+When the match is strongest, lock your answer.
+
+Interaction:
+Play mystery.
+Play test tone.
+Frequency slider.
+Match strength meter.
+
+Feedback:
+Weak:
+The match is weak. Try another frequency.
+Close:
+You are near the hidden tone. Keep tuning.
+Correct:
+You found it. The match strength peaked because your test frequency lined up with a frequency inside the sound.
+
+PAGE 9: Challenge 2, Match the Recipe
+
+Copy:
+This sound is made from harmonics.
+
+Move the sliders until your spectrum resembles the target.
+
+You do not need a perfect match.
+
+Try to match the shape of the recipe.
+
+Interaction:
+Target spectrum.
+Your spectrum.
+H1-H6 sliders.
+Play target.
+Play yours.
+Check match.
+Reveal recipe.
+Optional difference overlay.
+
+Feedback:
+H1 is close.
+H2 is too low.
+H4 is too high.
+
+PAGE 10: Challenge 3, Sample Calculation Replay
+
+Copy:
+The eight-dot sampled wave is back.
+
+This time, you only need to complete one step.
+
+Sample n = 2 is highlighted.
+
+Find the sound sample, the test-wave sample, and the product.
+
+Interaction:
+Graph with highlighted sample.
+Slots:
+x[2] =
+test[2] =
+product =
+
+Choices:
+0.00
+0.71
+1.00
+-0.71
+
+Feedback:
+Right. x[2] and test[2] are both 0.00, so the product is 0.00.
+
+PAGE 11: Challenge 4, Formula Translator
+
+Copy:
+The DFT formula is just the frequency test written compactly.
+
+Drag each plain-language label onto the matching piece of the formula.
+
+Formula:
+X[k] = Σ x[n] · e^(-i2πkn/N)
+
+Labels:
+answer for one frequency
+add them up
+sound sample
+test wave
+frequency being tested
+total number of samples
+
+Feedback:
+Yes. You can translate the formula back into the action: choose a frequency, multiply samples by a test wave, add the products, and get an answer.
+
+PAGE 12: Challenge 5, Gear Fix
+
+Copy:
+Apply what you know to a real listening problem.
+
+Your headphones sound exciting, but vocals feel pushed back.
+
+The curve shows:
+bass boosted
+mids dipped
+treble boosted
+
+That shape is often called V-shaped.
+
+It can sound exciting, but the mid dip can make vocals feel less forward.
+
+Question:
+What would help vocal clarity most?
+
+Correct:
+Bring the mids forward.
+
+Feedback:
+Right. Vocals live strongly in the mids, and this curve dips them. Lifting the mids can bring vocals forward.
+
+PAGE 13: Final Reflection, You Can Read a Sound
+
+Copy:
+Return to the beginning.
+
+A flute and a violin can play the same note at similar loudness.
+
+Now you know why they still sound different.
+
+Their frequency recipes are different.
+
+The fundamental helps set the pitch.
+
+The harmonics help shape the timbre.
+
+The spectrum helps you see the difference.
+
+The Fourier Transform helps a computer find that recipe.
+
+Interaction:
+Play flute.
+Play violin.
+Show spectra.
+
+Prompt:
+Look at the harmonic stacks. What is different?
+
+Strong answer:
+The flute and violin can play the same pitch, but their harmonics have different strengths. Those different frequency recipes create different timbres, so we hear them as different instruments.
+
+Final takeaway:
+Sound has a recipe.
+A spectrum helps you read it.
+The Fourier Transform helps you find it.
+Once you can read the recipe, you can understand and reshape sound with tools like EQ, headphones, voice analysis, song recognition, audio compression, noise cancelling, and pitch correction.
+
+Separate portfolio CTA visually under:
+About the designer
+
+Acceptance criteria:
+- Part 3 feels practical and tool-based.
+- EQ page is scenario-driven.
+- Headphone page has listen-first reveal logic.
+- Spectrogram page shows how spectra stack over time.
+- Everyday tools are expandable mini-labs.
+- Final challenges clearly map back to skills from Parts 1 and 2.
+Prompt 7: Final QA, polish, and lesson continuity
+Perform a full QA and polish pass across the Beginner Sound lesson and Fourier Transform lesson sequence.
+
+Do not add new concepts. Focus on clarity, consistency, accessibility, responsiveness, and learner flow.
+
+QA categories:
+
+1. Voice and clarity
+Check every page for vague references:
+- this
+- it
+- the idea
+- the process
+- the direction
+- flip side
+- backwards
+- recipe
+
+When those words appear, confirm the sentence clearly names what it refers to.
+
+Replace unclear sentences with explicit ones.
+
+Example:
+Bad:
+Run the prism backward.
+
+Good:
+Reverse the analysis process: instead of starting with a finished sound and finding its pure tones, start with pure tones and build a finished sound.
+
+2. Concept accuracy
+Confirm:
+- Envelope is described as loudness over time.
+- Timbre is not reduced only to waveshape.
+- Fourier Transform is described as calculation, not physical separation.
+- Spectrum bar height means strength or amplitude of a frequency component.
+- Frequency response is described as predictive but not the whole listening experience.
+- Compression is not described as randomly deleting tones.
+- Noise cancelling is described as partial cancellation and phase/timing dependent.
+
+3. Graph consistency
+Every waveform graph must show:
+- Time →
+- pressure, loudness, or value label
+
+Every spectrum graph must show:
+- Frequency, low to high →
+- Strength
+
+Every spectrogram must show:
+- Time →
+- Frequency ↑
+- brightness = strength
+
+4. Interaction consistency
+Every interaction should have:
+- clear instruction
+- clear active control
+- live feedback where useful
+- visible success or correction feedback
+- keyboard support
+- accessible labels
+
+5. Audio behavior
+Confirm:
+- No audio plays before user gesture.
+- Play buttons clearly state what they play.
+- Audio stops or cleans up when leaving pages.
+- Multiple oscillators are not leaking.
+- Microphone is stopped when leaving the voice page.
+- Volume is safe and reasonable.
+
+6. Responsiveness
+Test:
+- desktop wide
+- laptop
+- tablet
+- mobile
+
+Make lab visuals usable at all sizes.
+Avoid requiring browser zoom-out.
+Use tabs, progressive disclosure, or split pages when content is too tall.
+
+7. Reduced motion
+If reduced motion is enabled:
+- avoid long animated transitions
+- use stepped state changes
+- keep the learning meaning intact
+
+8. Accessibility
+Check:
+- focus states
+- ARIA labels
+- keyboard interaction for sliders, buttons, drag alternatives
+- color contrast
+- non-color cues
+- captions or descriptions for visual-only concepts
+
+9. Progress and navigation
+Ensure:
+- previous and next work
+- progress dots align with pages
+- page titles match nav labels
+- part transitions are clear
+- final CTA is separated from learning completion
+
+10. Copy final pass
+Make sure the recurring language is consistent:
+- "frequency recipe"
+- "pure tones"
+- "waveform"
+- "spectrum"
+- "test wave"
+- "multiply, then add"
+- "bass, mids, treble"
+- "fundamental"
+- "harmonics"
+- "amplitude"
+- "timbre"
+- "envelope"
+
+Create a final QA report:
+docs/audio-lesson-final-qa.md
+
+Include:
+- pages updated
+- issues found
+- issues fixed
+- remaining risks
+- manual test checklist
+- recommended next improvements
+
+Acceptance criteria:
+- No console errors.
+- No broken routes.
+- No unlabeled major graphs.
+- No vague key explanations.
+- No dense pages requiring zoom-out on normal laptop view.
+- All major interactions work with keyboard or accessible alternatives.
+- The learner journey feels cohesive from Beginner Sound to Fourier Part 3 and final challenges.
+Recommended agent execution order
+
+Use this order so the work does not sprawl:
+
+Audit agent runs Prompt 1.
+Design system agent runs Prompt 2.
+Beginner Sound agent runs Prompt 3.
+Fourier Part 1 agent runs Prompt 4.
+Fourier Part 2 agent runs Prompt 5.
+Fourier Part 3 and challenge agent runs Prompt 6.
+QA and polish agent runs Prompt 7.
+
+The most important standard across all agents is this:
+
+Every page must name the process clearly, show the process visually, let the learner change something, and end with one clear takeaway.
+
+in the same density, respect and style, write 2 more lessons that are not related to music, audio, and technology to be given to the bundle.
+
+- Understanding Git for Beginners
+- Introduction to Bash Scripting
+
+Below are two Claude Code-ready lesson build prompts written in the same style as the Fourier lesson plans: clear voice, beginner respect, exploratory interaction, formative checks, visual metaphor, design expectations, and implementation acceptance criteria.
+
+I structured them so you can hand each one directly to your agent bundle.
+
+Shared direction for both lessons
+You are updating or building interactive beginner lessons for a portfolio-quality learning lab.
+
+These lessons are not passive articles. They should feel like hands-on concept labs where the learner can see, touch, predict, test, fix, and explain.
+
+Core design standard:
+Every page should name the concept clearly, show the concept visually, let the learner do something with it, and end with a clear takeaway.
+
+Voice:
+- Beginner-friendly, but not childish.
+- Concrete, specific, and respectful.
+- Explain every technical word the first time it appears.
+- Avoid vague references like "this," "it," "the process," or "the thing" unless the sentence clearly names what those words refer to.
+- Prefer plain explanation before formal terminology.
+- Do not assume the learner knows developer culture, command-line habits, or software workflow norms.
+
+Page structure:
+1. Clear title
+2. One-sentence concept anchor
+3. Short explanation
+4. Main visual or interaction
+5. Live feedback line
+6. One small formative task
+7. Takeaway card
+
+Interaction style:
+Use active learning patterns:
+- predict before reveal
+- drag to sort
+- build from parts
+- choose the next step
+- fix a mistake
+- compare two outcomes
+- explain in your own words
+- replay a process as an animation
+
+Design:
+Use the existing dark lab style:
+- centered but not cramped
+- large interactive cards
+- purple accent
+- clear buttons
+- generous spacing
+- no dense quiz walls
+- no tiny unreadable diagrams
+- use tabs or progressive disclosure when content is tall
+
+Accessibility:
+- All buttons need descriptive labels.
+- All drag interactions need tap/click alternatives.
+- All simulations need text feedback.
+- Do not rely on color alone.
+- Use visible focus states.
+- Respect reduced motion preferences.
+
+Assessment philosophy:
+Do not overuse multiple choice.
+Use performance-based checks:
+- arrange the steps
+- identify the changed thing
+- fix the broken example
+- predict the result
+- explain the idea simply
+- complete a small build
+
+Technical implementation:
+If command-line behavior is simulated, use a safe, deterministic simulator.
+Do not execute arbitrary shell commands from learner input.
+Use allowlisted commands and scripted responses for safety.
+Lesson 1: Understanding Git for Beginners
+Build or update an interactive beginner lesson called:
+
+Understanding Git for Beginners
+
+Subtitle:
+Developer foundations · version control · beginner friendly · about 18 minutes · no setup
+
+Purpose:
+Teach Git conceptually before teaching memorized commands.
+
+The learner should finish thinking:
+"Git is a system for tracking changes. I can understand the working folder, staging area, commits, branches, remotes, and conflicts as parts of one clear workflow."
+
+The lesson should not assume the learner has used Git, GitHub, a terminal, VS Code, branches, commits, repositories, or collaborative coding.
+
+Important conceptual distinctions:
+- Git is the version-control tool.
+- GitHub is a website that can host Git repositories.
+- A repository is a project folder whose changes Git is tracking.
+- A commit is a saved snapshot with a message.
+- The staging area lets the learner choose what goes into the next commit.
+- A branch is a separate line of work, not a separate copy of the whole universe.
+- A merge combines changes from one branch into another.
+- A conflict happens when Git cannot safely decide which version to keep.
+- Pull brings remote changes down.
+- Push sends local commits up.
+
+Do not teach Git as a list of commands first.
+Teach Git as a visible system.
+
+Core metaphor:
+Git is not just a save button. Git is a project time machine with a packing table.
+
+The learner edits files in the working folder.
+The learner chooses changes for the staging area.
+The learner records staged changes as a commit.
+The commit becomes part of the project timeline.
+
+Core visual model:
+Working folder → Staging area → Repository history → Remote copy
+
+Recommended lesson structure:
+1. Start: Git Is a Project Time Machine
+2. Why Normal Saving Is Not Enough
+3. A Repository Is a Tracked Project Folder
+4. Three Places Git Watches
+5. Make Your First Commit
+6. Read Git Status
+7. Branches Are Safe Side Paths
+8. Merge a Branch
+9. When Git Gets Confused: Conflicts
+10. Remote Repositories: Clone, Pull, Push
+11. GitHub Is Not Git
+12. Everyday Git Workflow
+13. Checkpoint: Can You Read the Project?
+14. Final Challenge: Rescue the Project Timeline
+15. Outro: You Understand Git
+
+PAGE 1: Git Is a Project Time Machine
+
+Purpose:
+Introduce the learner to the central promise of Git.
+
+Copy:
+Git helps you track changes in a project.
+
+A project might be a website, an app, a document, a dataset, or a folder of code.
+
+Without Git, saving a file usually keeps only the latest version.
+
+With Git, you can record meaningful checkpoints as your project changes.
+
+Those checkpoints are called commits.
+
+A commit is not just "save."
+A commit is a named snapshot of your project at a specific moment.
+
+By the end of this lesson, you will be able to:
+- explain what Git tracks
+- tell the difference between working folder, staging area, and commit history
+- make sense of git status
+- describe branches and merges
+- explain why conflicts happen
+- understand clone, pull, and push
+- follow a beginner Git workflow without panic
+
+Primary button:
+Start the Git lab
+
+Interaction:
+Show a project timeline with three checkpoints:
+Start project
+Add homepage
+Fix button
+
+Let the learner click each checkpoint and see the project files change.
+
+Live feedback:
+You are viewing the project as it looked after "Add homepage."
+
+Takeaway:
+Git lets a project keep a meaningful history, not just its latest version.
+
+PAGE 2: Why Normal Saving Is Not Enough
+
+Purpose:
+Create need for version control.
+
+Copy:
+A regular save usually replaces the old file with the new file.
+
+That works until something goes wrong.
+
+Maybe you delete a section by mistake.
+Maybe a teammate changes the same file.
+Maybe the new version breaks something that worked yesterday.
+Maybe you want to try an idea without losing the original.
+
+People often solve this with messy file names:
+
+final.html
+final-new.html
+final-new-really-final.html
+final-new-really-final-v2.html
+
+Git gives that chaos a system.
+
+Instead of making mystery copies, Git records clear checkpoints.
+
+Interaction:
+Show a messy folder with files:
+essay.docx
+essay-final.docx
+essay-final-REAL.docx
+essay-final-REAL-2.docx
+
+Task:
+Drag the messy files into two bins:
+Hard to trust
+Clear checkpoint
+
+Then show Git timeline:
+Commit 1: Draft homepage
+Commit 2: Add contact form
+Commit 3: Fix mobile layout
+
+Feedback:
+A clear commit message explains what changed and why the checkpoint matters.
+
+Takeaway:
+Git replaces messy version names with a reliable project history.
+
+PAGE 3: A Repository Is a Tracked Project Folder
+
+Purpose:
+Define repository.
+
+Copy:
+A repository, often shortened to repo, is a project folder that Git is tracking.
+
+The folder contains your files.
+
+Git also keeps a hidden record of changes inside that project.
+
+You do not need to see every hidden Git file to understand the idea.
+
+The important point is:
+
+A normal folder just holds files.
+A Git repository holds files plus history.
+
+Interaction:
+Two folder cards:
+Normal folder
+Git repository
+
+Normal folder contains:
+index.html
+style.css
+script.js
+
+Git repository contains:
+index.html
+style.css
+script.js
+history timeline
+
+Task:
+Tap the folder that can answer:
+"What did this project look like yesterday?"
+
+Correct:
+Git repository.
+
+Feedback:
+A repository can show earlier commits because Git is tracking history.
+
+Takeaway:
+A repository is a project folder with memory.
+
+PAGE 4: Three Places Git Watches
+
+Purpose:
+Teach working folder, staging area, and repository history.
+
+Copy:
+Git watches your project in three main places.
+
+The working folder is where you edit files.
+
+The staging area is where you choose what will go into the next snapshot.
+
+The repository history is where Git stores finished commits.
+
+Think of the staging area like a packing table.
+
+Your desk may have many papers on it, but you decide which papers go into the box.
+
+The box is the next commit.
+
+Core flow:
+Working folder → Staging area → Commit history
+
+Interaction:
+Visual:
+Left: Working folder
+Middle: Staging area
+Right: Commit history
+
+Files:
+index.html changed
+style.css changed
+notes.txt changed
+
+Learner drags only index.html and style.css into staging.
+
+Button:
+Create commit
+
+Commit message:
+Add homepage layout
+
+Live feedback:
+Two files are staged. notes.txt is still changed, but it will not be included in this commit.
+
+Formative task:
+Choose which file should stay out of the commit.
+
+Scenario:
+You changed homepage files and also wrote private notes.
+Which file should not be staged?
+
+Correct:
+notes.txt
+
+Takeaway:
+The staging area lets you choose what the next commit will include.
+
+PAGE 5: Make Your First Commit
+
+Purpose:
+Make commit concrete.
+
+Copy:
+A commit is a saved snapshot of staged changes.
+
+A good commit has two parts:
+
+The changes Git records.
+The message you write to explain those changes.
+
+The message matters because future you, or a teammate, may need to understand why the project changed.
+
+Command preview:
+git add index.html
+git commit -m "Add homepage layout"
+
+Explain:
+git add moves a change into the staging area.
+git commit records the staged changes as a new checkpoint.
+
+Interaction:
+Commit builder.
+
+Step 1:
+Select changed files.
+
+Step 2:
+Stage selected files.
+
+Step 3:
+Write commit message.
+
+Step 4:
+Create commit.
+
+Show timeline update:
+Commit appears with message and file count.
+
+Formative check:
+Which commit message is more useful?
+
+A:
+Update stuff
+
+B:
+Add homepage hero section
+
+Correct:
+Add homepage hero section.
+
+Feedback:
+A useful commit message names the change clearly.
+
+Takeaway:
+A commit is a meaningful snapshot of staged changes.
+
+PAGE 6: Read Git Status
+
+Purpose:
+Teach git status as the dashboard.
+
+Copy:
+git status is the command that tells you what Git sees right now.
+
+It can tell you:
+
+which files changed
+which changes are staged
+which changes are not staged
+whether your branch has commits to push
+whether your working folder is clean
+
+Think of git status as Git’s dashboard.
+
+Before you panic, run git status.
+
+Interaction:
+Simulated terminal and visual dashboard.
+
+Command:
+git status
+
+Output example:
+On branch main
+
+Changes to be committed:
+  modified: index.html
+
+Changes not staged for commit:
+  modified: style.css
+
+Untracked files:
+  notes.txt
+
+Visual translation:
+index.html → staged
+style.css → changed but not staged
+notes.txt → new file Git is not tracking yet
+
+Task:
+Match each file to its meaning.
+
+Feedback:
+Correct. "Changes to be committed" means the file is already staged.
+
+Takeaway:
+git status translates the project state into words. It tells you what to do next.
+
+PAGE 7: Branches Are Safe Side Paths
+
+Purpose:
+Teach branches visually.
+
+Copy:
+A branch is a separate line of work.
+
+The main branch is usually the stable path.
+
+A feature branch lets you try a change without disturbing the main path.
+
+A branch does not mean you copied the whole project by hand.
+
+A branch means Git is tracking a new line of commits.
+
+Useful command preview:
+git switch -c add-login
+
+This means:
+create a new branch named add-login and move onto it.
+
+Interaction:
+Timeline begins as one line:
+main: Start project → Add homepage
+
+Learner clicks:
+Create feature branch
+
+New branch appears:
+add-login
+
+Learner makes commits on add-login:
+Create login form
+Style login button
+
+Main branch remains unchanged.
+
+Live feedback:
+You are working on add-login. The main branch still points to the stable version.
+
+Formative task:
+Where should you try a risky new feature?
+
+Choices:
+Directly on main
+On a feature branch
+
+Correct:
+On a feature branch.
+
+Takeaway:
+A branch gives you a safe side path for new work.
+
+PAGE 8: Merge a Branch
+
+Purpose:
+Teach merge as combining work.
+
+Copy:
+A merge brings changes from one branch into another branch.
+
+Most often, you merge a feature branch back into main after the feature is ready.
+
+The goal is:
+
+main gets the new work
+the project history keeps the story
+
+Command preview:
+git switch main
+git merge add-login
+
+This means:
+go back to main, then bring in the commits from add-login.
+
+Interaction:
+Show two branches:
+main
+add-login
+
+Button:
+Switch to main
+
+Button:
+Merge add-login
+
+Animation:
+Feature branch line joins main.
+
+Timeline:
+Start project → Add homepage → Create login form → Style login button
+
+Formative check:
+Before merging add-login into main, which branch should you switch to?
+
+Correct:
+main
+
+Feedback:
+Yes. You usually switch to the branch that should receive the changes.
+
+Takeaway:
+A merge combines work from one branch into another.
+
+PAGE 9: When Git Gets Confused: Conflicts
+
+Purpose:
+Explain conflicts without fear.
+
+Copy:
+A conflict happens when Git cannot safely combine changes by itself.
+
+This often happens when two branches change the same part of the same file.
+
+Git is not angry.
+Git is asking you to choose.
+
+A conflict means:
+"I found two versions here. Which version should the final file keep?"
+
+Interaction:
+Show file with conflict markers:
+
+<<<<<<< main
+<h1>Welcome to Our Site</h1>
+=======
+<h1>Welcome to the Learning Lab</h1>
+>>>>>>> add-title
+
+Explain markers:
+Top version came from current branch.
+Bottom version came from branch being merged.
+
+Task:
+Choose final heading.
+
+Options:
+Keep main version
+Keep feature version
+Write combined version
+
+Learner selects:
+<h1>Welcome to the Learning Lab</h1>
+
+Then button:
+Mark resolved
+
+Visual:
+Conflict markers disappear.
+Clean final file appears.
+
+Formative task:
+Tap the line that Git added to separate the two versions.
+
+Correct:
+=======
+
+Takeaway:
+A conflict is a decision point. Git needs a human to choose the final version.
+
+PAGE 10: Remote Repositories: Clone, Pull, Push
+
+Purpose:
+Teach local versus remote.
+
+Copy:
+A local repository lives on your computer.
+
+A remote repository lives somewhere else, often on a service like GitHub.
+
+The remote is useful for backup and collaboration.
+
+Three common actions connect local and remote work:
+
+clone
+pull
+push
+
+Clone means:
+copy a remote repository to your computer for the first time.
+
+Pull means:
+bring new remote changes down to your computer.
+
+Push means:
+send your local commits up to the remote.
+
+Interaction:
+Two zones:
+Your computer
+Remote repository
+
+Actions:
+Clone
+Pull
+Push
+
+Animate:
+Clone: remote → new local copy
+Pull: remote commits → local
+Push: local commits → remote
+
+Task:
+Choose the action.
+
+Scenario 1:
+You want your teammate’s newest commits.
+Correct:
+Pull.
+
+Scenario 2:
+You finished local commits and want GitHub to have them.
+Correct:
+Push.
+
+Scenario 3:
+You want to download the project for the first time.
+Correct:
+Clone.
+
+Takeaway:
+Clone starts a local copy. Pull brings updates down. Push sends your commits up.
+
+PAGE 11: GitHub Is Not Git
+
+Purpose:
+Clear a common beginner confusion.
+
+Copy:
+Git and GitHub are related, but they are not the same thing.
+
+Git is the version-control tool.
+
+Git tracks commits, branches, merges, and history.
+
+GitHub is a website that can host Git repositories online.
+
+You can use Git without GitHub.
+
+You can also use Git with other hosting services.
+
+Beginner-friendly distinction:
+
+Git is the system.
+GitHub is one place your Git project can live online.
+
+Interaction:
+Sort cards into Git or GitHub.
+
+Cards:
+commit
+branch
+merge
+local repository
+pull request
+repository website
+issues
+remote hosting
+
+Expected:
+Git:
+commit, branch, merge, local repository
+
+GitHub:
+pull request, repository website, issues, remote hosting
+
+Note:
+Some words appear in both places in real life, but this beginner sort is about the core idea.
+
+Takeaway:
+Git tracks project history. GitHub hosts and supports collaboration around Git repositories.
+
+PAGE 12: Everyday Git Workflow
+
+Purpose:
+Give a usable beginner workflow.
+
+Copy:
+A beginner Git workflow is a loop.
+
+You do not need to remember every command at once.
+
+Start with this pattern:
+
+1. Check what changed.
+2. Stage the changes you want.
+3. Commit the staged changes.
+4. Pull before sharing.
+5. Push your commits.
+
+Command flow:
+git status
+git add file-name
+git commit -m "Clear message"
+git pull
+git push
+
+Explain:
+git status shows the current state.
+git add chooses changes for the next commit.
+git commit records the staged changes.
+git pull brings down remote updates.
+git push sends your commits to the remote.
+
+Interaction:
+Workflow builder.
+
+Learner drags steps into order.
+
+Distractors:
+delete the project
+guess randomly
+make five final-final folders
+
+Correct order:
+status → add → commit → pull → push
+
+Live feedback:
+This order helps you understand your local changes before sharing them.
+
+Takeaway:
+Most beginner Git work follows one calm loop: check, stage, commit, pull, push.
+
+PAGE 13: Checkpoint: Can You Read the Project?
+
+Purpose:
+Review with applied interpretation.
+
+Copy:
+Pause and review.
+
+You have learned the main Git map.
+
+A repository is a project folder with history.
+
+The working folder is where you edit.
+
+The staging area is where you choose the next snapshot.
+
+A commit records staged changes.
+
+A branch is a safe line of work.
+
+A merge combines branches.
+
+A remote repository lets you back up and collaborate.
+
+Challenge 1:
+Match the place.
+
+Terms:
+Working folder
+Staging area
+Commit history
+Remote repository
+
+Meanings:
+Where you edit files
+Where you choose what goes into the next commit
+Where saved snapshots live
+A copy of the repository hosted somewhere else
+
+Challenge 2:
+Read status.
+
+Show:
+Changes to be committed:
+  modified: index.html
+
+Changes not staged for commit:
+  modified: style.css
+
+Question:
+Which file will be included if you commit right now?
+
+Correct:
+index.html
+
+Challenge 3:
+Conflict decision.
+
+Show two versions of one line.
+Learner chooses final version and removes conflict markers.
+
+Takeaway:
+You can read the Git map and decide the next step.
+
+PAGE 14: Final Challenge: Rescue the Project Timeline
+
+Purpose:
+Capstone.
+
+Scenario:
+You are working on a small website.
+
+Current state:
+main has stable homepage.
+You created a branch called add-about-page.
+You changed about.html and notes.txt.
+Only about.html belongs in the commit.
+Your teammate pushed a new footer update to the remote.
+You need to finish safely.
+
+Learner tasks:
+1. Choose the branch to work on.
+2. Stage only about.html.
+3. Write a clear commit message.
+4. Pull remote changes.
+5. Resolve a small conflict if one appears.
+6. Merge add-about-page into main.
+7. Push main to remote.
+
+Use a visual project board, not a raw terminal-only exercise.
+
+Feedback at each step:
+- Good. You staged only the file that belongs in this commit.
+- Good. The commit message names the change.
+- Good. Pulling before pushing helps you avoid sharing outdated work.
+- Good. You resolved the conflict by choosing the final version.
+- Good. The feature branch has been merged into main.
+
+Completion:
+Project rescued.
+
+Skill badges:
+- Read status
+- Staged carefully
+- Wrote commit
+- Pulled updates
+- Resolved conflict
+- Merged branch
+- Pushed work
+
+PAGE 15: You Understand Git
+
+Purpose:
+Close with confidence.
+
+Copy:
+You started with a folder of files.
+
+Now you can see the Git system around that folder.
+
+You know that Git tracks changes over time.
+
+You know that the staging area lets you choose the next snapshot.
+
+You know that a commit records a meaningful checkpoint.
+
+You know that branches create safe side paths.
+
+You know that merging combines work.
+
+You know that conflicts are decision points, not disasters.
+
+You know that clone, pull, and push connect your computer to a remote repository.
+
+What you can do now:
+- explain the difference between Git and GitHub
+- read the working folder, staging area, and commit history
+- describe what git status is telling you
+- create a commit conceptually
+- explain why branches help
+- understand what happens during a merge
+- respond calmly to a conflict
+- describe clone, pull, and push
+
+Final bridge:
+Git becomes easier when you stop seeing it as a pile of commands and start seeing it as a map.
+
+The map is:
+
+working folder → staging area → commit history → remote copy
+
+Once you can read that map, the commands have somewhere to live.
+
+Acceptance criteria:
+- Lesson teaches Git conceptually before commands.
+- Git and GitHub are clearly distinguished.
+- Working folder, staging area, commit history, and remote are visual and interactive.
+- git status is translated into plain language.
+- Conflict resolution is shown as a human choice.
+- Final challenge requires applied workflow, not memorization.
+- No command is introduced without explaining what action it performs.
+- All terminal examples are safe simulations.
+Lesson 2: Introduction to Bash Scripting
+Build or update an interactive beginner lesson called:
+
+Introduction to Bash Scripting
+
+Subtitle:
+Developer foundations · command line · beginner friendly · about 20 minutes · no setup
+
+Purpose:
+Teach Bash scripting as a way to save and repeat command-line actions.
+
+The learner should finish thinking:
+"A Bash script is a small text file that gives the shell a clear list of commands to run. I can read a simple script, change variables, use arguments, make decisions, repeat steps, and understand common errors."
+
+The lesson should not assume the learner is comfortable with the terminal, command line, Linux, file paths, permissions, variables, conditionals, loops, or pipes.
+
+Important safety rule:
+Use a simulated terminal with allowlisted commands.
+Do not execute arbitrary learner input on the real system.
+Do not teach dangerous commands casually.
+Avoid rm -rf examples.
+When deletion is necessary conceptually, use a fake sandbox and make safety explicit.
+
+Core metaphor:
+A Bash script is a recipe card for the shell.
+
+A command is one instruction.
+A script is a saved list of instructions.
+Variables are labeled containers.
+Arguments are ingredients passed in when the script starts.
+Conditionals let the script choose a path.
+Loops let the script repeat a step.
+Pipes pass output from one command into another.
+
+Recommended lesson structure:
+1. Start: Teach the Terminal a Routine
+2. What Is the Shell?
+3. Commands Have a Shape
+4. Paths Tell Bash Where to Look
+5. A Script Is a Saved Command List
+6. Variables Name Values
+7. Arguments Let the User Pass Values In
+8. If Statements Let Scripts Decide
+9. Loops Let Scripts Repeat
+10. Pipes and Redirects Move Text Around
+11. Permissions and the Shebang
+12. Read and Fix Script Errors
+13. Build a Tiny Organizer Script
+14. Checkpoint: Can You Read the Script?
+15. Outro: You Can Script a Routine
+
+PAGE 1: Teach the Terminal a Routine
+
+Purpose:
+Hook the learner with a concrete need.
+
+Copy:
+A terminal lets you type commands.
+
+A Bash script lets you save a routine so the terminal can run it again.
+
+Imagine you do the same three steps every time you start a project:
+
+create a folder
+create a notes file
+print a reminder
+
+You could type those commands by hand every time.
+
+Or you could save them in one script and run the script whenever you need that routine.
+
+A Bash script is a text file that gives the shell a list of commands.
+
+By the end of this lesson, you will be able to:
+- explain what the shell does
+- read the shape of a command
+- understand paths
+- write a simple Bash script
+- use variables and arguments
+- understand if statements and loops
+- move text with pipes and redirects
+- recognize common script errors
+- build a tiny organizer script
+
+Primary button:
+Start the Bash lab
+
+Interaction:
+Show two workflows.
+
+Manual:
+mkdir project
+cd project
+touch notes.txt
+echo "Project started"
+
+Script:
+./start-project.sh my-project
+
+Animate script expanding into the same commands.
+
+Takeaway:
+A Bash script saves a command-line routine so you can run it again.
+
+PAGE 2: What Is the Shell?
+
+Purpose:
+Explain terminal, shell, and Bash.
+
+Copy:
+The terminal is the window where you type.
+
+The shell is the program that reads what you type and decides what to run.
+
+Bash is one kind of shell.
+
+So when people say "type this in Bash," they usually mean:
+
+type a command into a terminal where Bash is reading your instructions.
+
+The shell does three basic things:
+
+1. reads your command
+2. figures out what command or program you named
+3. runs it and shows the result
+
+Interaction:
+Command machine visual.
+
+Learner types or selects:
+echo hello
+
+Animation:
+Terminal input → Bash reads command → Bash runs echo → Output appears
+
+Output:
+hello
+
+Labels:
+Terminal window
+Bash shell
+Command
+Output
+
+Formative task:
+Tap the part that reads the command.
+
+Correct:
+Bash shell.
+
+Takeaway:
+The terminal is the place you type. Bash is the shell that reads and runs your commands.
+
+PAGE 3: Commands Have a Shape
+
+Purpose:
+Teach command anatomy.
+
+Copy:
+A command usually has a shape.
+
+command options arguments
+
+The command names the action.
+
+Options change how the action behaves.
+
+Arguments tell the command what to act on.
+
+Example:
+ls -l notes
+
+ls is the command.
+-l is an option.
+notes is the argument.
+
+Plain English:
+List the notes folder in long format.
+
+Interaction:
+Command anatomy builder.
+
+Show command:
+ls -l notes
+
+Learner drags labels:
+command
+option
+argument
+
+Then learner builds commands from blocks:
+echo "hello"
+mkdir drafts
+ls -a
+
+Feedback:
+echo prints text.
+mkdir creates a folder.
+ls lists files.
+
+Formative task:
+Translate the command.
+
+Command:
+mkdir reports
+
+Question:
+What does this command do?
+
+Correct:
+Create a folder named reports.
+
+Takeaway:
+A command is easier to read when you know its parts: action, options, and arguments.
+
+PAGE 4: Paths Tell Bash Where to Look
+
+Purpose:
+Explain files, folders, current directory, relative paths.
+
+Copy:
+Bash works inside a folder.
+
+That folder is called the current directory.
+
+A path tells Bash where a file or folder is.
+
+A relative path starts from where you are now.
+
+An absolute path starts from the root of the computer’s file system.
+
+Beginner-friendly version:
+
+If you are standing inside a folder, a relative path gives directions from that folder.
+
+Examples:
+notes.txt means a file in the current folder.
+drafts/notes.txt means a file inside the drafts folder.
+../notes.txt means go up one folder, then find notes.txt.
+
+Interaction:
+Folder map.
+
+Folders:
+home
+projects
+website
+drafts
+
+Current location:
+projects/website
+
+Learner chooses path to:
+drafts/notes.txt
+
+Task:
+Move the avatar through folders using:
+.
+..
+folder names
+
+Commands:
+pwd
+ls
+cd drafts
+
+Simulated output:
+pwd shows where you are.
+ls shows what is nearby.
+cd moves you into a folder.
+
+Formative task:
+You are in projects/website. Which path points to notes.txt inside drafts?
+
+Correct:
+drafts/notes.txt
+
+Takeaway:
+A path is a set of directions to a file or folder.
+
+PAGE 5: A Script Is a Saved Command List
+
+Purpose:
+Teach what a script file is.
+
+Copy:
+A Bash script is a text file full of commands.
+
+Instead of typing each command by hand, you put the commands in a file.
+
+Then Bash runs the file from top to bottom.
+
+Example script:
+
+echo "Starting project"
+mkdir project-notes
+touch project-notes/ideas.txt
+echo "Done"
+
+Plain English:
+Print a message.
+Create a folder.
+Create a file inside that folder.
+Print a final message.
+
+Interaction:
+Script runner.
+
+Left:
+script file
+
+Right:
+terminal output and file system
+
+Learner presses:
+Run script
+
+Animation:
+Line 1 highlights → output appears
+Line 2 highlights → folder appears
+Line 3 highlights → file appears
+Line 4 highlights → output appears
+
+Formative task:
+Which line creates the file?
+
+Correct:
+touch project-notes/ideas.txt
+
+Takeaway:
+A script is a saved list of commands that Bash runs in order.
+
+PAGE 6: Variables Name Values
+
+Purpose:
+Teach variables as labels.
+
+Copy:
+A variable is a name that stores a value.
+
+In Bash, you create a variable like this:
+
+name="Chalece"
+
+There are no spaces around the equals sign.
+
+To use the value, put a dollar sign before the name:
+
+echo "$name"
+
+Plain English:
+Store Chalece in a box called name.
+Print the value inside the name box.
+
+Important:
+Use quotes around variable values when they may contain spaces.
+
+Interaction:
+Variable box visual.
+
+Script:
+name="Avery"
+echo "Hello, $name"
+
+Learner changes name value.
+Output updates:
+Hello, Avery
+
+Common mistake:
+name = "Avery"
+
+Show error:
+Bash sees spaces and no longer treats this as a variable assignment.
+
+Formative task:
+Fix the variable.
+
+Broken:
+folder = "reports"
+
+Correct:
+folder="reports"
+
+Takeaway:
+A variable gives a name to a value so the script can reuse it.
+
+PAGE 7: Arguments Let the User Pass Values In
+
+Purpose:
+Teach script inputs.
+
+Copy:
+Sometimes a script should work with different values each time it runs.
+
+Arguments are values you pass into a script when you start it.
+
+Example:
+./greet.sh Maya
+
+Inside the script:
+$1 means the first argument.
+
+Script:
+name="$1"
+echo "Hello, $name"
+
+If you run:
+./greet.sh Maya
+
+The output is:
+Hello, Maya
+
+Interaction:
+Command line with input:
+./greet.sh Maya
+
+Script panel:
+name="$1"
+echo "Hello, $name"
+
+Animation:
+Maya travels from command line into $1, then into name, then into output.
+
+Task:
+Run script with different names:
+Maya
+Jordan
+Sam
+
+Live feedback:
+$1 contains the first value after the script name.
+
+Formative task:
+If you run ./greet.sh Jordan, what is $1?
+
+Correct:
+Jordan.
+
+Takeaway:
+Arguments let the user give the script information at the moment the script runs.
+
+PAGE 8: If Statements Let Scripts Decide
+
+Purpose:
+Teach conditionals.
+
+Copy:
+An if statement lets a script choose between paths.
+
+Plain English:
+
+If something is true, do one thing.
+Otherwise, do something else.
+
+Example:
+if [ "$name" = "" ]; then
+  echo "Please give me a name."
+else
+  echo "Hello, $name"
+fi
+
+The word fi ends the if statement.
+
+It is "if" backward.
+
+Interaction:
+Decision tree visual.
+
+Input:
+name argument empty or filled
+
+If empty:
+Print "Please give me a name."
+
+Else:
+Print "Hello, Maya"
+
+Learner toggles:
+No argument
+Argument: Maya
+
+Animation:
+Path lights up.
+
+Formative task:
+Choose the branch.
+
+Scenario:
+name is empty.
+
+Which line runs?
+
+Correct:
+echo "Please give me a name."
+
+Takeaway:
+An if statement lets a script choose what to do based on a condition.
+
+PAGE 9: Loops Let Scripts Repeat
+
+Purpose:
+Teach loops.
+
+Copy:
+A loop repeats a set of commands.
+
+Use a loop when the same action should happen for several items.
+
+Example:
+for file in *.txt; do
+  echo "Found $file"
+done
+
+Plain English:
+For each text file, print its name.
+
+The loop runs once for each matching file.
+
+Interaction:
+Folder contains:
+notes.txt
+ideas.txt
+todo.txt
+
+Script:
+for file in *.txt; do
+  echo "Found $file"
+done
+
+Animation:
+file variable becomes notes.txt.
+Output appears.
+file variable becomes ideas.txt.
+Output appears.
+file variable becomes todo.txt.
+Output appears.
+
+Formative task:
+How many times will the loop run?
+
+Correct:
+3
+
+Feedback:
+There are three .txt files, so the loop runs three times.
+
+Takeaway:
+A loop repeats commands for each item in a list.
+
+PAGE 10: Pipes and Redirects Move Text Around
+
+Purpose:
+Teach text flow.
+
+Copy:
+Many command-line tools work with text.
+
+One command can create text.
+
+Another command can search, count, sort, or save that text.
+
+A pipe sends output from one command into another command.
+
+The pipe symbol is:
+
+|
+
+Example:
+cat notes.txt | grep TODO
+
+Plain English:
+Show the contents of notes.txt.
+Send that text into grep.
+grep keeps the lines that contain TODO.
+
+A redirect saves output into a file.
+
+Example:
+echo "hello" > message.txt
+
+Plain English:
+Write hello into message.txt.
+
+Interaction:
+Text flow machine.
+
+Command cards:
+cat notes.txt
+grep TODO
+wc -l
+sort
+
+Learner connects cards with pipe.
+
+Task:
+Build a command that counts TODO lines.
+
+Correct:
+cat notes.txt | grep TODO | wc -l
+
+Redirect mini-task:
+Send output into report.txt:
+echo "done" > report.txt
+
+Safety note:
+In this lesson, redirects happen in a simulated sandbox.
+
+Takeaway:
+A pipe moves text from one command into another. A redirect sends text into a file.
+
+PAGE 11: Permissions and the Shebang
+
+Purpose:
+Teach why scripts sometimes do not run.
+
+Copy:
+A script is a file.
+
+Before you run a script directly, the computer may need two clues.
+
+The first clue is the shebang.
+
+The shebang is the first line of many scripts:
+
+#!/usr/bin/env bash
+
+It tells the computer:
+Run this file with Bash.
+
+The second clue is permission.
+
+A script may need execute permission before you can run it like a program.
+
+Command:
+chmod +x script.sh
+
+Plain English:
+Allow this script file to run.
+
+Then:
+./script.sh
+
+Plain English:
+Run the script in the current folder.
+
+Interaction:
+Script launch checklist.
+
+Checklist:
+Has shebang?
+Has execute permission?
+Run command uses ./ ?
+
+Learner fixes:
+Add shebang
+Run chmod +x
+Use ./script.sh
+
+Formative task:
+The script says Permission denied. What likely needs to change?
+
+Correct:
+Give the script execute permission.
+
+Takeaway:
+The shebang tells the system which shell to use. Execute permission lets the script run like a program.
+
+PAGE 12: Read and Fix Script Errors
+
+Purpose:
+Make errors less scary.
+
+Copy:
+Errors are part of scripting.
+
+An error message is not a personal failure.
+
+It is a clue.
+
+When a Bash script breaks, ask:
+
+Which line failed?
+What command was running?
+Is a variable empty?
+Is a path wrong?
+Is a quote missing?
+Is a permission missing?
+
+Interaction:
+Error detective.
+
+Show broken script examples one at a time.
+
+Example 1:
+folder = "reports"
+mkdir "$folder"
+
+Error type:
+Spaces around equals sign.
+
+Fix:
+folder="reports"
+
+Example 2:
+echo "Starting report
+echo "Done"
+
+Error type:
+Missing quote.
+
+Fix:
+echo "Starting report"
+
+Example 3:
+cd reportz
+
+Error:
+No such file or directory
+
+Fix:
+Use correct path: reports
+
+Example 4:
+./setup.sh
+
+Error:
+Permission denied
+
+Fix:
+chmod +x setup.sh
+
+Task:
+Learner clicks the broken part, then chooses a fix.
+
+Takeaway:
+A Bash error is a clue. Read the line, name the problem, and fix one thing at a time.
+
+PAGE 13: Build a Tiny Organizer Script
+
+Purpose:
+Capstone build before checkpoint.
+
+Scenario:
+You have a messy folder with files:
+
+draft.txt
+ideas.txt
+photo.png
+notes.txt
+logo.png
+
+You want a script that creates two folders and moves files into them:
+
+text files → text-files
+image files → image-files
+
+Important:
+Use a simulated file system.
+Do not move real user files.
+
+Script goal:
+1. Create text-files folder.
+2. Create image-files folder.
+3. Move .txt files into text-files.
+4. Move .png files into image-files.
+5. Print "Done."
+
+Starter script:
+#!/usr/bin/env bash
+
+mkdir -p text-files
+mkdir -p image-files
+
+for file in *.txt; do
+  mv "$file" text-files/
+done
+
+for file in *.png; do
+  mv "$file" image-files/
+done
+
+echo "Done."
+
+Interaction:
+Build from blocks.
+
+Blocks:
+mkdir -p text-files
+mkdir -p image-files
+for file in *.txt; do
+mv "$file" text-files/
+done
+for file in *.png; do
+mv "$file" image-files/
+done
+echo "Done."
+
+Learner orders blocks.
+
+Then presses:
+Run in sandbox
+
+Animation:
+Folders appear.
+Text files move.
+Image files move.
+Output shows Done.
+
+Formative task:
+Which loop moves the image files?
+
+Correct:
+for file in *.png
+
+Takeaway:
+A Bash script can turn repeated file tasks into a reusable routine.
+
+PAGE 14: Checkpoint: Can You Read the Script?
+
+Purpose:
+Review through applied reading.
+
+Copy:
+Pause and review.
+
+You have learned the basic Bash scripting map.
+
+A command is one instruction.
+
+A script is a saved list of instructions.
+
+A variable stores a value.
+
+An argument passes a value into a script.
+
+An if statement chooses a path.
+
+A loop repeats commands.
+
+A pipe passes text from one command to another.
+
+A redirect saves output to a file.
+
+Challenge 1:
+Label the script.
+
+Script:
+#!/usr/bin/env bash
+name="$1"
+echo "Hello, $name"
+
+Labels:
+shebang
+variable assignment
+first argument
+command output
+
+Challenge 2:
+Predict the output.
+
+Script:
+name="Maya"
+echo "Hello, $name"
+
+Correct:
+Hello, Maya
+
+Challenge 3:
+Choose the condition.
+
+Script:
+if [ "$1" = "" ]; then
+  echo "Missing name"
+else
+  echo "Hello, $1"
+fi
+
+Run:
+./greet.sh
+
+Correct output:
+Missing name
+
+Challenge 4:
+Loop count.
+
+Folder:
+a.txt
+b.txt
+c.png
+
+Script:
+for file in *.txt; do
+  echo "$file"
+done
+
+Correct:
+The loop runs 2 times.
+
+Challenge 5:
+Fix one error.
+
+Broken:
+folder = "reports"
+
+Correct:
+folder="reports"
+
+PAGE 15: You Can Script a Routine
+
+Purpose:
+Close with confidence.
+
+Copy:
+You started with a terminal command.
+
+Now you can read a small Bash script.
+
+You know that Bash is a shell that reads and runs commands.
+
+You know that a script is a saved list of commands.
+
+You know that variables name values.
+
+You know that arguments let users pass values into a script.
+
+You know that if statements let scripts choose.
+
+You know that loops let scripts repeat.
+
+You know that pipes and redirects move text around.
+
+You know that errors are clues you can read.
+
+What you can do now:
+- explain the difference between a terminal, shell, and Bash
+- read the shape of a command
+- understand basic paths
+- run through a script line by line
+- use variables and arguments conceptually
+- explain if statements and loops
+- understand pipes and redirects
+- diagnose common beginner script errors
+- build a simple organizer script in a sandbox
+
+Final bridge:
+Bash scripting becomes less intimidating when you stop seeing it as secret code and start seeing it as a routine.
+
+A script says:
+
+Here are the steps.
+Run them in order.
+Use these values.
+Make a decision if needed.
+Repeat when needed.
+
+That is scripting.
+
+Acceptance criteria:
+- Lesson uses a safe simulated terminal.
+- No arbitrary shell execution occurs.
+- All commands are explained in plain language.
+- Every code example has a visible translation.
+- Learners can step through scripts line by line.
+- Variables, arguments, if statements, loops, pipes, redirects, permissions, and shebang are all introduced with interactions.
+- Error examples are supportive and specific.
+- Final organizer script is built in a sandbox and does not touch real files.
+- The lesson feels like a hands-on scripting lab, not a command reference.
+Optional combined series direction
+Create these two lessons as part of a beginner developer foundations collection.
+
+Collection title:
+Developer Foundations Lab
+
+Lessons:
+1. Understanding Git for Beginners
+2. Introduction to Bash Scripting
+
+Shared learner promise:
+You do not need to feel like a programmer before beginning. These lessons teach the mental models behind the tools first, then connect those models to commands.
+
+Shared design:
+- dark interactive lab style
+- purple accent
+- visual process diagrams
+- simulated tools
+- safe sandbox
+- step-by-step replay
+- small formative checks
+- final applied challenge
+
+Shared navigation:
+Each lesson should have:
+- intro page
+- concept pages
+- checkpoint
+- final challenge
+- outro
+- back to portfolio button if this is part of the portfolio site
+
+Shared CTA:
+Keep portfolio/contact CTA separate from the learning conclusion. The learner should first feel completion, then see the designer information.
+
+These two lessons should feel like siblings to the Fourier lessons: highly visual, deeply beginner-aware, technically accurate, and built around conceptual control instead of memorization.

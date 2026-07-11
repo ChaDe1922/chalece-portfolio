@@ -5,7 +5,7 @@ import { useReducedMotion } from "motion/react";
 import { Leaf, Shuffle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
-import { RichText } from "@/components/lab/recursion/rich-text";
+import { RichText } from "@/components/lab/rich-text";
 import { FractalTree2D } from "@/components/lab/recursion/fractal-tree-2d";
 import { FractalTree3D } from "@/components/lab/recursion/fractal-tree-3d";
 import { useWebGLSupport } from "@/components/lab/recursion/mirror-tunnel/use-webgl-support";

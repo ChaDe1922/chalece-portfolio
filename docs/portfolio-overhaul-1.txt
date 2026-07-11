@@ -1,0 +1,3454 @@
+Your current portfolio is polished, legible, restrained, and credible. It would serve a strong instructional designer well. But it does not yet communicate:
+
+This person can lead the creative, pedagogical, technical, and operational direction of a world-class education organization.
+
+Right now, the site describes your multimedia ability. The next version needs to perform it.
+
+What the strongest sites are doing
+
+I reviewed Awwwards’ Sites of the Year from 2021 through 2025, including Pangram Pangram Foundry, Persepolis Reimagined, Lusion v3, Igloo, Opal Tadpole, and the Lando Norris experience. The winning work varies stylistically, but the best sites share several characteristics: a singular creative premise, a distinctive interaction language, confident typography, immersive transitions, strong editorial pacing, and a site experience that acts as proof of the creator’s capabilities.
+
+Lusion, for example, explicitly positions its site around the combination of design, motion, 3D, development, and interactive storytelling. It does not merely list those capabilities; the website itself demonstrates them, including an integrated reel and user-controlled sound. The 2025 Lando Norris site similarly treats navigation as part of the narrative, incorporating device orientation, scrolling modes, interactive prompts, cinematic photography, and live contextual information rather than presenting a conventional page of content.
+
+But “award-worthy” does not mean visually chaotic. The Webby Awards evaluate content, structure, navigation, visual design, functionality, interactivity, and overall experience. Awwwards similarly weights design and UX more heavily than novelty alone.
+
+That balance is especially important for you. Your portfolio has to demonstrate imagination and judgment.
+
+The strategic target
+
+The Anthropic role is not looking only for someone who can write curriculum. It emphasizes:
+
+Teaching advanced AI and machine learning concepts to technical and nontechnical audiences
+Building AI-assisted production workflows while understanding where human oversight is essential
+Designing interactive and adaptive experiences such as simulations, tutoring systems, and hands-on environments
+
+Your site therefore needs to prove four things almost immediately:
+
+Creative direction. You can establish an original vision and quality bar.
+
+Learning leadership. You understand how people move from confusion to competence.
+
+Technical fluency. You can work across AI, code, media, sound, interaction, and systems.
+
+Scale and execution. You have shipped substantial work, led end-to-end production, and reached real learners.
+
+The new site should feel like it was created by someone who could direct a curriculum team, interactive studio, AI content operation, and multimedia production group at the same time.
+
+The recommended concept
+SIGNAL → SENSE → SKILL
+
+This should become the conceptual foundation of your portfolio.
+
+It connects your background in music technology, signals, sound, curriculum, AI, and learning design without turning the site into a music-themed novelty.
+
+Signal
+
+Raw information, technical systems, code, research, data, audio, and complex ideas.
+
+Sense
+
+The layer you create: explanation, visual structure, narrative, sound, animation, interaction, and meaningful practice.
+
+Skill
+
+The result: understanding, capability, confidence, and independent action.
+
+Your entire body of work fits inside that transformation.
+
+Recommended hero message
+From signal to skill.
+
+I transform complex systems into multimedia learning experiences people can see, hear, explore, and master.
+
+Supporting line:
+
+Curriculum strategy, interactive learning, AI-assisted content systems, technical education, sound, motion, and creative technology.
+
+Primary actions:
+
+Explore selected work
+
+Play the 60-second reel
+
+Secondary actions:
+
+Resume · About · Contact
+
+This is substantially more ownable than “I make complex technical concepts click.” The current line is good copy. The new line becomes an entire creative system.
+
+The opening experience
+
+The first screen should be visually arresting before the visitor reads everything.
+
+The audiovisual signal field
+
+The hero contains an elegant generative composition made from four visual channels:
+
+A waveform representing sound and music technology
+A sequence of nodes representing curriculum structure
+A stream of fragments representing code and AI systems
+A frame sequence representing video, animation, and visual storytelling
+
+At first, they appear as separate signals. As the visitor moves the cursor or scrolls, they organize into a unified visual system.
+
+The motion resolves as the headline appears:
+
+From signal to skill.
+
+This should feel sophisticated and deliberate, not like a particle-animation template.
+
+Sound behavior
+
+The site opens silently.
+
+A subtle control reads:
+
+Experience with sound
+
+After the visitor activates it, restrained sound design responds to major transitions, interactions, and the audiovisual field. No background music should loop endlessly. Sound should behave like interface feedback and composition.
+
+Browser autoplay policies generally require audio to begin after a user action, and user-controlled sound is also the more respectful experience.
+
+The showreel
+
+Your site needs a tightly directed 45- to 60-second reel.
+
+It should combine:
+
+Interactive lesson footage
+Course interfaces
+Sound visualizations
+Animated diagrams
+AI agent workflows
+Curriculum maps
+Workshop footage
+Video editing and storytelling
+Learner reach and outcome data
+Code, prototypes, and production artifacts
+Brief appearances from you presenting or leading
+
+The reel should not feel like a résumé slideshow. It should be edited as a piece of media with rhythm, sound design, captions, compositing, and a clear narrative:
+
+Raw complexity enters. A learning experience emerges. People become capable.
+
+A muted autoplay preview can appear in the hero, but full sound should remain user-activated.
+
+The homepage should become a story
+
+The current page is primarily a sequence of sections. The new page should unfold in acts.
+
+Act I: The transformation
+
+Hero experience, positioning, reel, and immediate proof.
+
+A slim animated proof strip follows:
+
+30,630+ learners
+7 published Coursera courses
+14+ AI and multi-agent systems
+10+ years across learning and technology
+M.S. Music Technology
+
+These should not look like generic counters. Each metric should connect to a visual artifact or case study.
+
+Act II: Three flagship case studies
+
+Do not begin with nine equally sized cards.
+
+That treatment makes every project appear equally important and gives the visitor no indication of your strongest work. Instead, use three cinematic, editorial case-study chapters.
+
+01. Building technical learning at scale
+
+Codio and the Coursera Course Ecosystem
+
+The chapter opens with a moving wall of course interfaces, lesson components, code environments, assessment states, and learner data.
+
+It proves:
+
+End-to-end curriculum ownership
+Technical subject-matter fluency
+Authoring and quality systems
+Assessment design
+Large-scale learner impact
+Cross-functional delivery
+
+The narrative should answer:
+
+How did Chalece repeatedly turn dense technical subjects into courses tens of thousands of people could complete?
+
+02. Designing the content operation of the future
+
+AI-Assisted Curriculum and Production Systems
+
+A visual pipeline shows content moving through:
+
+Research → architecture → drafting → interaction design → review → accessibility → validation → human approval
+
+Visitors can click individual stages to see:
+
+Agent roles
+Human decision points
+Failure modes
+Quality gates
+Example outputs
+Revision histories
+Where AI accelerates the process
+Where expert judgment remains indispensable
+
+This directly addresses one of Anthropic’s stated areas of interest.
+
+03. Making the invisible visible
+
+Interactive Music Technology and Signal Learning
+
+This becomes the most experientially impressive case.
+
+The visitor can:
+
+Play or construct a sound
+See its waveform
+Separate it into component frequencies
+Manipulate an EQ
+Watch samples animate through a calculation
+Hear the result
+Move between intuitive and mathematical explanations
+
+This case study demonstrates curriculum, interaction, animation, sound design, technical explanation, assessment design, and software development in one experience.
+
+Act III: The wider body of work
+
+After the flagship cases, reveal the rest of your work through a more art-directed archive:
+
+Your Voice Is Power
+Amazon audio programs
+Creative coding programs
+Planet Bug
+E22 and athlete systems
+Workshops and facilitation
+Audio, video, and storytelling production
+Program leadership and community learning
+
+The archive could switch between:
+
+Editorial view
+Large imagery and project stories
+
+Systems view
+Roles, capabilities, technologies, scale, and outcomes
+
+This gives recruiters a fast scan without reducing every project to another small card.
+
+Signature experiences
+
+The site needs two or three memorable interactions that could only belong to you.
+
+1. The Complexity Translator
+
+A visitor selects a difficult concept such as:
+
+Fourier transform
+Container orchestration
+AI agents
+Signal sampling
+Operating systems
+
+The page transforms the same idea through several representations:
+
+Technical definition
+Plain-language explanation
+Visual model
+Interactive demonstration
+Practice activity
+Transfer challenge
+
+This is your instructional philosophy turned into a usable product.
+
+2. The Curriculum Console
+
+A playful but sophisticated interface lets visitors inspect how you design learning.
+
+Controls might include:
+
+Audience experience
+Technical difficulty
+Time available
+Desired behavior
+Modality
+Level of scaffolding
+
+The interface responds by rearranging a lesson architecture and explaining the design decisions.
+
+This demonstrates that your work is not decorative content production. It is systems-level instructional judgment.
+
+3. The Multimedia Lab
+
+A contained studio environment where visitors can sample small experiments:
+
+Audio-reactive typography
+Sound decomposition
+Motion-based explanation
+Interactive data storytelling
+Video annotations
+Accessible animation alternatives
+Generative visual systems
+
+Think of it as your creative R&D department.
+
+The visual direction
+Overall character
+
+Elegant, cinematic, intelligent, warm, experimental, controlled.
+
+Not:
+
+Cyberpunk
+Generic purple SaaS
+Neon everywhere
+A résumé inside a dark template
+A collection of unrelated WebGL tricks
+A design-agency site with no educational substance
+Palette
+
+I would retain a dark foundation, but move away from the nearly uniform charcoal-purple treatment.
+
+Foundation
+Obsidian black
+Warm ink
+Soft ivory
+Cool graphite
+Signal accents
+Electric iris
+Signal cyan
+Warm coral
+Muted gold
+
+Each major project receives one dominant signal color. The homepage remains mostly black, ivory, and graphite so that media and interaction create the energy.
+
+The result should feel closer to a high-end editorial studio, film title sequence, and interactive research lab than a conventional technology portfolio.
+
+Typography
+
+Use a more expressive pairing.
+
+Display
+
+A high-character editorial serif or variable display face, such as Instrument Serif or a similarly elegant licensed alternative.
+
+Interface and body
+
+A precise contemporary sans such as Geist, Söhne, Neue Montreal, or an appropriate open-source equivalent.
+
+Technical annotation
+
+A restrained mono face for signal values, captions, code fragments, timestamps, and system labels.
+
+The serif creates authorship and sophistication. The sans communicates clarity and technical confidence. The mono introduces the laboratory and systems layer.
+
+Motion language
+
+Every animation should fall into one of three behaviors:
+
+Assemble
+
+Fragments organize into understandable systems.
+
+Reveal
+
+Layers expose the thinking behind the finished work.
+
+Resonate
+
+Visual elements respond to sound, interaction, or one another.
+
+That gives the site a coherent motion grammar. We should not invent a different animation style for every section.
+
+Case-study design
+
+Every major case study should have its own atmosphere, but use the same underlying narrative structure.
+
+Opening proof
+
+A full-screen visual, video, simulation, or interactive excerpt.
+
+The brief
+
+What needed to change?
+
+Your leadership
+
+What did you own, decide, direct, and protect?
+
+The system
+
+How was the content, curriculum, product, or operation structured?
+
+The experience
+
+What did the learner or user actually do?
+
+The craft
+
+Show scripts, storyboards, interaction maps, audio, motion studies, lesson structures, prototypes, assessment logic, and technical artifacts.
+
+The outcome
+
+Reach, completion, adoption, efficiency, learner behavior, publication, or organizational capability.
+
+The judgment
+
+What did not work initially? What changed? Where was human expertise required?
+
+That final section is essential. Senior leaders are not hired because all their work went perfectly. They are hired because they know how to judge, revise, prioritize, and lead through ambiguity.
+
+The leadership layer
+
+The current portfolio proves that you made many things. The new site must also prove that you know which things should be made and why.
+
+Add a section called:
+
+How I direct the work
+
+It should communicate your point of view on:
+
+Establishing learning and performance goals
+Translating strategy into a content portfolio
+Leading subject-matter experts and creators
+Building repeatable production systems
+Using AI without surrendering judgment
+Maintaining voice and instructional quality at scale
+Designing for accessibility
+Deciding when an interaction earns its complexity
+Measuring whether learning transferred
+
+This could appear as a visual decision system rather than another accordion.
+
+Content architecture
+
+The final site should have a simple, understandable navigation despite its visual ambition:
+
+Work
+Learning Lab
+Systems & Leadership
+About
+Resume
+Contact
+
+Recommended routes:
+
+/
+ /work
+ /work/codio-course-ecosystem
+ /work/ai-curriculum-systems
+ /work/music-technology-learning
+ /work/your-voice-is-power
+ /work/amazon-audio-programs
+ /lab
+ /leadership
+ /about
+ /resume
+
+The homepage tells the story. The deeper pages prove it.
+
+Recommended build approach
+Core platform
+Next.js and TypeScript
+Component-driven design system
+MDX or a lightweight CMS for case studies
+Responsive media pipeline
+Strong metadata and structured content
+Progressive enhancement
+Motion and interaction
+GSAP and ScrollTrigger for directed narrative sequences
+Framer Motion for interface states
+Three.js or React Three Fiber for one signature hero environment
+Web Audio API for reactive sound visualization
+Canvas or SVG for diagrams and learning simulations
+Rive or Lottie only where they meaningfully simplify production
+
+The site should not have five simultaneous WebGL environments. One technically excellent signature canvas is more impressive than a page that exhausts the device.
+
+Media production
+WebM and MP4 fallbacks
+Poster frames for every video
+Responsive image sources
+Lazy loading below the fold
+Captions and transcripts
+Clear play, pause, mute, and replay controls
+Static alternatives for interactive demonstrations
+Accessibility and comfort
+
+The site should respect prefers-reduced-motion and provide a motion-reduced experience, not merely turn animation duration down slightly. W3C guidance also recommends that interaction-triggered motion be disableable when it is not essential.
+
+There should be:
+
+A visible sound control
+No forced audio
+A reduced-motion mode
+Keyboard access
+Strong focus states
+Captions and transcripts
+Pausable animated sequences
+High-contrast text
+Semantic structure underneath the experience
+
+That is not a compromise. For a learning leader, it is additional proof of mastery.
+
+What we should preserve
+
+The current site already has several strong foundations:
+
+Clear positioning around complex technical learning
+Impressive quantitative proof
+A substantial body of work
+A warm, direct writing voice
+A credible professional portrait
+Interactive lessons that already separate you from ordinary candidates
+A useful dark-mode foundation
+
+We should preserve the substance and replace the presentation system.
+
+What should disappear
+The three-column wall of similar project cards
+Small text as the primary method of explaining projects
+The separate “about” and “resume” sections repeating similar information
+Decorative purple used as the main source of visual distinction
+Generic reveal animations
+A carousel that feels like an isolated widget rather than part of the portfolio
+Skills represented mainly as pills
+The sense that the multimedia work lives somewhere else
+The final impression
+
+Within the first minute, the visitor should think:
+
+She can explain hard things.
+
+She can direct a multimedia experience.
+
+She understands AI as both a creative tool and a system requiring human judgment.
+
+She has built and shipped real curriculum at scale.
+
+She is technically credible.
+
+She has a distinct point of view.
+
+She could set the standard for an entire education content organization.
+
+That is the bar.
+
+The next deliverable should be a complete page-by-page experience blueprint, including desktop and mobile wireframes, hero animation choreography, exact homepage copy, case-study storyboards, media requirements, and a production-ready Claude Code implementation sequence.
+
+do this.
+Worked for 2m 23s
+Portfolio V2: From Signal to Skill
+
+This is a full creative rebuild, not a reskin.
+
+Anthropic’s role explicitly calls for someone who can own education across courses, tutorials, video, and interactive experiences; define the quality bar; build AI-assisted production systems; manage multidisciplinary creators; measure learning; and push beyond templated courseware toward adaptive, distinctive experiences. The portfolio should demonstrate those capabilities before anyone opens the résumé.
+
+The strongest award-recognized sites do not win by stacking random effects. They establish one memorable creative premise and use motion, media, typography, and interaction to deepen that premise. Awwwards named the immersive Lando Norris experience its 2025 Site of the Year, while CSS Design Awards recognized separate leaders in UI, UX, innovation, portfolio, and agency design. The Webby definition of technical achievement is especially important: technology should improve the experience, not merely decorate it.
+
+The result should feel like:
+
+An editorial learning studio, audiovisual research lab, and senior leadership portfolio combined into one coherent experience.
+
+1. The central creative idea
+SIGNAL → SENSE → SKILL
+
+Your career has repeatedly followed the same transformation:
+
+Signal
+Complex information, code, sound, systems, research, data, operational problems.
+
+Sense
+The structure you create through curriculum, explanation, interaction, media, narrative, feedback, and visual design.
+
+Skill
+What people can understand, perform, build, decide, or lead afterward.
+
+This concept unifies:
+
+Music technology and signal processing
+Technical curriculum
+Interactive learning
+AI-assisted content systems
+Audio and video production
+Learning science
+Creative coding
+Program and operational leadership
+
+It is ownable, elegant, and broad enough to support your entire body of work.
+
+Primary positioning
+From signal to skill.
+
+I design the systems, stories, and experiences that turn complex technology into human capability.
+
+Supporting language:
+
+Curriculum strategy, AI-assisted production, technical education, interactive learning, sound, motion, and creative technology.
+
+This feels more senior than “I make complex technical concepts click.” The old line describes a skill. The new line defines a worldview.
+
+2. The experience principles
+One signature idea, deeply executed
+
+The site should not contain ten unrelated “wow” effects.
+
+The memorable element is a living signal system that appears throughout the portfolio:
+
+Waveforms become timelines.
+Timelines become curriculum pathways.
+Curriculum pathways become agent workflows.
+Agent workflows become learner progress.
+Film frames become case-study chapters.
+Sound components become visual layers.
+Scattered information assembles into understanding.
+Demonstrate before explaining
+
+Visitors should encounter your work in this order:
+
+Experience something
+Become curious
+Understand the design decision
+See evidence and outcomes
+Learn what you led
+
+That is also your learning philosophy.
+
+Seniority must be visible
+
+Every major project should communicate:
+
+What problem mattered
+What you decided
+What you personally owned
+How the system worked
+How people experienced it
+How quality was maintained
+What changed because of the work
+What you learned or revised
+Multimedia must be structural
+
+Video, sound, animation, and interaction should not live in a separate “multimedia” section. They should shape the entire site.
+
+Restraint creates authority
+
+The site should feel rich but not frantic.
+
+Avoid:
+
+Constant floating objects
+Replacing the visitor’s cursor
+Forced horizontal scrolling
+Scroll hijacking
+Autoplaying sound
+Excessive glowing gradients
+Tiny experimental typography
+Motion on every hover
+3D merely because award sites use 3D
+Long introductions that delay access to content
+3. Visual identity
+Overall character
+
+Cinematic. Editorial. Intelligent. Tactile. Experimental. Controlled.
+
+The mood should sit between:
+
+An interactive science museum
+A premium editorial publication
+A film title sequence
+A modern audio laboratory
+A creative technology studio
+A thoughtful research organization
+
+It should not resemble a generic purple SaaS landing page.
+
+Color system
+Foundation
+Role	Color	Use
+Signal Black	#09090D	Hero, cinematic media, dark case-study scenes
+Deep Ink	#13121A	Secondary dark surfaces
+Warm Ivory	#F3EFE7	Editorial sections and reading surfaces
+Paper White	#FCFAF6	High-clarity cards and documents
+Graphite	#6F6B75	Secondary text
+Soft Fog	#B8B3BE	Metadata and dividers
+Signal accents
+Color	Hex	Meaning
+Electric Iris	#8E75FF	Transformation, learning, synthesis
+Signal Cyan	#66DFF2	Sound, systems, data, technology
+Human Coral	#FF7B72	People, storytelling, feedback
+Resonant Gold	#D4AE67	Leadership, craft, distinction
+
+Use one accent as the dominant color for each project. Do not use every accent in every section.
+
+Typography
+Display
+
+Instrument Serif or a similarly expressive editorial serif.
+
+Use it for:
+
+Hero statements
+Major case-study openings
+Pull quotes
+Reflective conclusions
+Interface and body
+
+Geist Sans or Plus Jakarta Sans.
+
+Use it for:
+
+Navigation
+Paragraphs
+Buttons
+Project descriptions
+Metadata
+Technical annotations
+
+Geist Mono or IBM Plex Mono.
+
+Use it for:
+
+Signal values
+Timecodes
+Process labels
+Code
+Data
+Captions
+Agent workflow states
+Type scale
+Purpose	Desktop	Mobile
+Hero display	104–136px	58–72px
+Case-study display	80–104px	48–64px
+Section heading	56–72px	38–48px
+Large statement	36–48px	28–34px
+Body large	20–23px	18–20px
+Body	17–19px	16–18px
+Metadata	12–14px	12–13px
+
+Headlines may use the serif. Most instructional and technical text should remain sans serif for clarity.
+
+4. Motion and sound language
+
+Every motion behavior belongs to one of three families.
+
+Assemble
+
+Separate fragments organize into a comprehensible structure.
+
+Used for:
+
+Hero signals
+Curriculum maps
+Agent workflows
+Course ecosystems
+Metrics
+Reveal
+
+A polished result opens to expose the thought process behind it.
+
+Used for:
+
+Storyboards
+Before-and-after explanations
+Media layers
+Human review gates
+Lesson architecture
+Resonate
+
+One medium responds to another.
+
+Used for:
+
+Audio-reactive type
+Waveforms
+Hover sound previews
+Frequency visualizations
+Interaction feedback
+Sound direction
+
+The site opens silently.
+
+A small persistent control reads:
+
+Sound off
+When activated: Sound on
+
+The sound palette should contain:
+
+A low, warm sine tone
+A soft granular texture
+A precise percussive click
+A light harmonic shimmer
+Subtle stereo movement
+Short transitions under one second
+
+Do not use a looping soundtrack during normal browsing.
+
+Audio should begin only after a deliberate visitor action. Web Audio is subject to autoplay restrictions when started outside a user gesture, and explicit user control is the better experience.
+
+5. Site architecture
+/
+├── work
+│   ├── codio-course-ecosystem
+│   ├── ai-curriculum-systems
+│   ├── making-sound-visible
+│   ├── your-voice-is-power
+│   ├── amazon-audio-programs
+│   ├── creative-coding
+│   ├── planet-bug
+│   └── athlete-data-systems
+├── lab
+│   ├── signal-lab
+│   ├── complexity-translator
+│   └── curriculum-console
+├── leadership
+├── about
+├── resume
+└── contact
+Primary navigation
+
+Work
+Lab
+Leadership
+About
+Résumé
+
+Right-side actions:
+
+Sound off
+Let’s talk
+
+The navigation remains conventional and understandable even when the page itself becomes more expressive.
+
+6. Homepage blueprint
+Desktop wireframe
+┌─────────────────────────────────────────────────────────────────────┐
+│ Chalece DeLaCoudray    Work  Lab  Leadership  About   Sound off    │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│ LEARNING SYSTEMS · AI · INTERACTIVE MEDIA · SOUND                   │
+│                                                                     │
+│ FROM SIGNAL                      [LIVING SIGNAL FIELD]               │
+│ TO SKILL.                        waveform / nodes / frames           │
+│                                 responding to pointer + scroll       │
+│ I design the systems, stories,                                      │
+│ and experiences that turn                                           │
+│ complex technology into human capability.                           │
+│                                                                     │
+│ [Explore selected work] [Play the 60-second reel]                   │
+│                                                                     │
+├─────────────────────────────────────────────────────────────────────┤
+│ 30,630+          7             14+            10+          M.S.      │
+│ learners         courses       AI systems     years        Music Tech│
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│ COMPLEXITY IS NOT THE PROBLEM. THE EXPERIENCE IS.                   │
+│ Full-width editorial statement + assembling signal animation        │
+│                                                                     │
+├─────────────────────────────────────────────────────────────────────┤
+│ SELECTED SYSTEM 01                                                   │
+│ [Large course media]        Seven technical courses.                │
+│                             One repeatable learning system.          │
+│                             [Enter the ecosystem]                    │
+├─────────────────────────────────────────────────────────────────────┤
+│ SELECTED SYSTEM 02                                                   │
+│ Encoding craft into the production engine.     [Agent workflow]     │
+│ [Inspect the system]                                                │
+├─────────────────────────────────────────────────────────────────────┤
+│ SELECTED SYSTEM 03                                                   │
+│ [Interactive waveform]      Hear the math. See the sound.           │
+│                             [Enter the signal lab]                   │
+├─────────────────────────────────────────────────────────────────────┤
+│ I WORK ACROSS THE FULL STACK OF LEARNING                             │
+│ Strategy       Experience       Systems       Media                 │
+├─────────────────────────────────────────────────────────────────────┤
+│ HOW I DIRECT THE WORK                                                │
+│ Interactive quality-bar / decision system                           │
+├─────────────────────────────────────────────────────────────────────┤
+│ LEARNING LAB                                                        │
+│ [Complexity Translator] [Curriculum Console] [Signal Lab]           │
+├─────────────────────────────────────────────────────────────────────┤
+│ MORE PROOF, DIFFERENT CONTEXTS                                       │
+│ Art-directed archive                                                │
+├─────────────────────────────────────────────────────────────────────┤
+│ ABOUT                                                               │
+│ Editorial portrait + short senior biography                         │
+├─────────────────────────────────────────────────────────────────────┤
+│ LET’S BUILD LEARNING WORTHY OF THE TECHNOLOGY.                      │
+│ [Start a conversation]                                              │
+└─────────────────────────────────────────────────────────────────────┘
+Mobile wireframe
+┌────────────────────────────┐
+│ Chalece D.      Menu       │
+├────────────────────────────┤
+│ LEARNING SYSTEMS · AI      │
+│                            │
+│ From signal                │
+│ to skill.                  │
+│                            │
+│ I design the systems...    │
+│                            │
+│ [Signal animation]         │
+│                            │
+│ [Explore work]             │
+│ [Play reel]                │
+├────────────────────────────┤
+│ 30,630+        7           │
+│ learners       courses     │
+│                            │
+│ 14+            M.S.        │
+│ AI systems     Music Tech  │
+├────────────────────────────┤
+│ Complexity is not          │
+│ the problem.               │
+│ The experience is.         │
+├────────────────────────────┤
+│ PROJECT 01                 │
+│ [media]                    │
+│ Seven technical courses.   │
+│ One learning system.       │
+├────────────────────────────┤
+│ PROJECT 02                 │
+│ [workflow]                 │
+├────────────────────────────┤
+│ PROJECT 03                 │
+│ [waveform interaction]     │
+├────────────────────────────┤
+│ Full stack of learning     │
+│ [four stacked disciplines] │
+├────────────────────────────┤
+│ Leadership                 │
+├────────────────────────────┤
+│ Lab                        │
+├────────────────────────────┤
+│ Archive                    │
+├────────────────────────────┤
+│ About                      │
+├────────────────────────────┤
+│ Contact                    │
+└────────────────────────────┘
+
+On mobile, do not squeeze the desktop animation into a smaller canvas. Recompose it as a vertically stacked signal instrument.
+
+7. Exact homepage copy
+Navigation
+
+Chalece DeLaCoudray
+
+Work
+Lab
+Leadership
+About
+Résumé
+
+Sound off
+Let’s talk
+
+Hero
+
+LEARNING SYSTEMS · AI · INTERACTIVE MEDIA · SOUND
+
+From signal to skill.
+
+I design the systems, stories, and experiences that turn complex technology into human capability.
+
+Curriculum strategy, AI-assisted production, technical education, interactive learning, sound, motion, and creative technology.
+
+Explore selected work
+
+Play the 60-second reel
+
+Small footer line:
+
+Atlanta, Georgia · Learning experience designer, technologist, and creative systems builder
+
+Proof strip
+
+30,630+
+Learners reached
+
+7
+Published Coursera courses
+
+14+
+AI and multi-agent systems
+
+10+ years
+Across learning and technology
+
+M.S.
+Music Technology, Georgia Tech
+
+Thesis transition
+Complexity is not the problem.
+The experience is.
+
+People do not need complex ideas stripped of their intelligence. They need better ways to enter them, manipulate them, test them, and make them their own.
+
+Selected work introduction
+
+SELECTED SYSTEMS
+
+The work behind the point of view.
+
+Three projects showing how I think, direct, and build across curriculum, artificial intelligence, technical systems, sound, and interaction.
+
+Flagship project 01
+
+01 · TECHNICAL LEARNING AT SCALE
+
+CODIO × COURSERA
+
+Seven technical courses.
+One repeatable learning system.
+
+I owned course development end to end across DevOps, containers, operating systems, CI/CD, web security, and creative coding. The work combined technical accuracy, clear explanation, hands-on practice, assessments, media, quality assurance, and publication into a system that has reached more than 30,630 learners.
+
+Supporting proof:
+
+7 published courses
+30,630+ learners
+Technical and beginner audiences
+Curriculum, assessment, media, QA
+
+Button:
+
+Enter the course ecosystem
+
+Flagship project 02
+
+02 · AI-ASSISTED CONTENT SYSTEMS
+
+Encoding craft into the production engine.
+
+I built multi-agent workflows that help research, structure, draft, review, and maintain learning content while preserving the places where verification, judgment, learner empathy, and creative taste remain non-negotiable.
+
+Supporting proof:
+
+14+ AI and multi-agent systems
+Human verification gates
+Reusable quality standards
+Content, curriculum, code, and media workflows
+
+Button:
+
+Inspect the system
+
+Flagship project 03
+
+03 · INTERACTIVE MUSIC TECHNOLOGY
+
+Hear the math.
+See the sound.
+
+An exploratory learning experience that lets beginners play a sound, reveal its waveform, separate its frequencies, manipulate its components, and follow the mathematics one visible step at a time.
+
+Supporting proof:
+
+Interactive signal visualization
+Sound-driven animation
+Beginner-first mathematics
+Practice beyond multiple choice
+
+Button:
+
+Enter the signal lab
+
+Full-stack capabilities
+
+THE FULL STACK OF LEARNING
+
+I work from strategy to signal.
+Strategy
+
+Define what people must become able to do, not merely what content must be covered.
+
+Experience
+
+Turn difficult ideas into clear sequences of explanation, exploration, practice, feedback, and transfer.
+
+Systems
+
+Build workflows, standards, agents, and quality gates that allow excellent work to scale.
+
+Media
+
+Choose sound, video, animation, code, simulation, or text according to what makes the idea land.
+
+Leadership section
+
+HOW I DIRECT THE WORK
+
+Quality should survive scale.
+
+I do not treat quality as a final review step. I build it into the strategy, workflow, medium, feedback system, and definition of done.
+
+Interactive principles:
+
+Start with the behavior.
+What must the learner be able to do afterward?
+
+Choose the medium with intent.
+What becomes clearer through sound, motion, interaction, demonstration, or practice?
+
+Teach the misconception.
+Where is the learner most likely to form the wrong model?
+
+Make feedback immediate and useful.
+What information helps the learner make a better next attempt?
+
+Encode the quality bar.
+How can the standard remain intact without one person reviewing everything?
+
+Measure what changed.
+What evidence shows that the learning transferred?
+
+Button:
+
+See my leadership operating system
+
+Learning lab
+
+LEARNING LAB
+
+Learning should invite action.
+
+These are small, working demonstrations of how I make difficult ideas visible, manipulable, and memorable.
+
+Complexity Translator
+
+Watch one technical idea transform from expert language into a visual model, interactive explanation, practice activity, and transfer challenge.
+
+Try the translator
+
+Curriculum Console
+
+Change the learner, goal, time, difficulty, or delivery format and watch the lesson architecture respond.
+
+Open the console
+
+Signal Lab
+
+Build a sound, isolate its frequencies, and watch the underlying mathematics unfold.
+
+Make some noise
+
+Archive
+
+MORE PROOF, DIFFERENT CONTEXTS
+
+One practice. Many forms.
+
+Technical courses, audio operations, creative coding, published research, youth learning, athlete systems, workshops, video, and interactive storytelling.
+
+Projects:
+
+Your Voice Is Power
+Amazon Audio Programs
+Creative Coding Summer Cohort
+Planet Bug
+Music Technology Workshops
+Athlete Data and Storytelling Systems
+Horizons at Georgia Tech
+Interactive Learning Prototypes
+
+Button:
+
+View all work
+
+About preview
+
+ABOUT
+
+Hi, I’m Chalece.
+
+I am a learning experience designer, technologist, curriculum builder, and creative systems thinker.
+
+Across audio engineering, technical operations, education, program leadership, and software development, the pattern has remained consistent: I enter complex systems, find the logic, and make them usable.
+
+At Codio, I published technical courses for a global audience. At Amazon Music, I led audio quality and hardware compatibility programs. In community learning programs, I designed experiences connecting code, music, identity, and storytelling. Today, I also build AI systems that extend how quickly and thoughtfully that work can be done.
+
+Button:
+
+Read my story
+
+Closing section
+Let’s build learning worthy of the technology.
+
+I am interested in ambitious work where content, curriculum, artificial intelligence, creative technology, and human capability meet.
+
+Start a conversation
+
+Secondary links:
+
+Résumé
+LinkedIn
+Email
+Selected work
+
+8. Hero animation choreography
+First paint
+
+The static page must already look complete before the animation begins.
+
+Visible immediately:
+
+Eyebrow
+Headline
+Supporting text
+Buttons
+A static signal composition
+No blank loading screen
+No “enter experience” gate
+Timeline
+0.0–0.8 seconds
+
+A faint field of horizontal measurement lines fades in.
+
+Small mono labels appear:
+
+AUDIO
+CODE
+MOTION
+CURRICULUM
+SYSTEM
+0.8–2.0 seconds
+
+Five different signal forms draw themselves:
+
+A sine wave
+A sequence of data nodes
+A film-frame rhythm
+A block-based curriculum path
+A thin line of code tokens
+
+They remain visually separate.
+
+2.0–3.4 seconds
+
+The signals begin influencing one another:
+
+Wave peaks align with curriculum nodes.
+Film frames snap to rhythmic intervals.
+Code tokens become labels on the system.
+The separate layers begin sharing a common timeline.
+3.4–4.8 seconds
+
+The signals converge into one elegant composite mark.
+
+The serif headline reveals:
+
+From signal to skill.
+
+“Signal” appears first.
+The animated system resolves.
+“Skill” appears as the visual becomes coherent.
+
+4.8–6.0 seconds
+
+Supporting text and calls to action appear.
+
+The system enters a quiet ambient state.
+
+Pointer behavior
+
+Horizontal movement changes the point in the signal timeline.
+
+Vertical movement changes the amount of visible complexity:
+
+Upper region: raw signal
+Middle region: organized explanation
+Lower region: practiced skill
+
+This should be subtle. The visitor should not need instructions to use the page.
+
+Scroll behavior
+
+As the visitor scrolls:
+
+The signal field expands behind the headline.
+The separate layers align.
+The field compresses into one horizontal rule.
+That rule becomes the divider for the proof strip.
+The same line continues into the next section.
+
+This creates continuity instead of treating each section as a separate rectangle.
+
+Reduced-motion experience
+
+The signals appear as a completed editorial illustration.
+
+On scroll:
+
+Crossfade between three states
+No parallax
+No large spatial movement
+No cursor-responsive behavior
+No continuous ambient animation
+
+W3C guidance says interaction-triggered motion should be disableable when it is not essential, and prefers-reduced-motion should be respected in both CSS and JavaScript.
+
+9. Showreel storyboard
+Duration
+
+55–65 seconds
+
+Create:
+
+60-second full reel
+15-second homepage teaser
+6-second silent loops for project previews
+9:16 social cut
+Captioned and audio-described alternatives
+Story structure
+0:00–0:04 · Raw complexity
+
+Visuals:
+
+Dense technical diagrams
+Code
+Waveforms
+Course maps
+Unorganized notes
+
+On-screen text:
+
+Complex ideas arrive as signals.
+
+Sound:
+
+Static texture
+Separated clicks
+Unresolved low tone
+0:04–0:10 · Structure
+
+Visuals:
+
+Content reorganizes into a lesson pathway
+Storyboard frames align
+Curriculum hierarchy assembles
+Objectives connect to activities and assessments
+
+Text:
+
+I find the structure.
+
+0:10–0:18 · Technical curriculum
+
+Visuals:
+
+Coursera course catalog
+Codio lesson pages
+Coding environments
+Assessment interactions
+Learner-facing explanations
+
+Text:
+
+7 published courses
+30,630+ learners
+
+0:18–0:26 · Sound and visualization
+
+Visuals:
+
+Waveform
+Frequency spectrum
+Fourier decomposition
+Interactive EQ
+Animated sample calculation
+
+Text:
+
+See it.
+Hear it.
+Manipulate it.
+
+0:26–0:34 · AI production systems
+
+Visuals:
+
+Intake brief
+Agent orchestration
+Draft
+Review
+QA
+Human approval
+Published output
+
+Text:
+
+Scale the craft.
+Keep the judgment.
+
+0:34–0:42 · Human learning
+
+Visuals:
+
+Youth coding
+Workshops
+Presentations
+Facilitation
+Learners working
+Community projects
+
+Text:
+
+Build capability.
+
+0:42–0:50 · Multimedia leadership
+
+Visuals:
+
+Video edit timeline
+Audio tools
+Storyboards
+Interactive prototypes
+Dashboards
+Project systems
+
+Text:
+
+Curriculum.
+Systems.
+Sound.
+Motion.
+Interaction.
+
+0:50–0:57 · Outcomes
+
+Visuals:
+
+Metrics assemble
+Project titles
+Publication markers
+Learner reach
+
+Text:
+
+From signal to skill.
+
+0:57–1:00 · End card
+
+Chalece DeLaCoudray
+Learning systems · AI · interactive media
+
+10. Flagship case-study storyboard 01
+Codio × Coursera Course Ecosystem
+Core message
+
+I did not merely author seven courses. I built and repeatedly operated a technical learning production system.
+
+Opening scene
+
+Full-screen mosaic of:
+
+Course covers
+Lesson pages
+Coding environments
+Assessments
+Diagrams
+Learner-facing instructions
+
+As the visitor scrolls, seven courses separate into seven vertical tracks.
+
+Opening copy:
+
+Seven courses.
+One system for making difficult technology learnable.
+
+Metadata:
+
+Role: Curriculum developer and course owner
+Audience: Beginner through developing technical learners
+Formats: Written, code, labs, assessments, visuals
+Reach: 30,630+ learners
+Platforms: Codio and Coursera
+Scene 1: The challenge
+
+Copy:
+
+Technical learners do not struggle only because the material is difficult. They struggle when setup, vocabulary, explanation, practice, and feedback fail to form one coherent experience.
+
+Visual:
+
+A learner journey with friction points:
+
+Setup → Vocabulary → Mental model → Practice → Feedback → Transfer
+
+Each friction point opens to show an example.
+
+Scene 2: The course portfolio
+
+Show each course as a visual spine.
+
+Potential categories:
+
+DevOps
+Containers
+Operating systems
+CI/CD
+Web security
+Python or creative coding
+Related technical subjects
+
+Interaction:
+
+Selecting a course changes:
+
+Color
+Audience
+Learning progression
+Lab environment
+Assessment type
+Media examples
+Scene 3: The repeatable system
+
+Animated production model:
+
+Audience
+    ↓
+Performance goal
+    ↓
+Concept architecture
+    ↓
+Demonstration
+    ↓
+Guided practice
+    ↓
+Independent application
+    ↓
+Feedback
+    ↓
+Technical and instructional QA
+    ↓
+Publication
+
+Copy:
+
+The subject changed. The quality logic did not.
+
+Scene 4: Anatomy of a lesson
+
+Create a scroll-driven exploded view of one representative lesson.
+
+Layers:
+
+Learner question
+Conceptual model
+Explanation
+Visual
+Demonstration
+Guided attempt
+Feedback
+Transfer task
+Accessibility and QA
+
+The visitor can turn layers on and off.
+
+Scene 5: Assessment judgment
+
+Show several assessment forms:
+
+Debugging task
+Prediction before execution
+Parsons puzzle
+Scenario decision
+Code completion
+Output interpretation
+Reflection
+Build challenge
+
+Copy:
+
+Assessment should reveal the learner’s model, not merely whether they remembered a sentence.
+
+Scene 6: Technical credibility
+
+Include real but concise artifacts:
+
+Code sample
+Lab setup
+Technical review notes
+Revision comparison
+Common learner error
+Corrected explanation
+
+Do not fill the page with giant code blocks. Show just enough to establish fluency.
+
+Scene 7: Scale and evidence
+
+Visualize:
+
+Courses published
+Learners reached
+Subject range
+Production responsibility
+Reusable components
+
+Do not invent completion or satisfaction statistics unless documented.
+
+Scene 8: Leadership reflection
+
+Heading:
+
+What scale taught me.
+
+Copy themes:
+
+A quality bar must be explicit.
+Technical review and learner review are different.
+Reusable systems should not make every course feel identical.
+The best explanation often changes after watching where learners fail.
+Publishing is not the end of the content lifecycle.
+Closing
+
+The outcome was more than a catalog. It was a repeatable way to turn technical complexity into structured, active learning.
+
+CTA:
+
+Next: Encoding craft into AI systems
+
+11. Flagship case-study storyboard 02
+AI-Assisted Curriculum Systems
+Core message
+
+I use AI to extend expert capacity, not to disguise the absence of expertise.
+
+Opening scene
+
+A raw brief enters from the left:
+
+Create a beginner lesson explaining X.
+
+It passes through a visible system of agents and gates.
+
+The polished learning experience exits on the right.
+
+Headline:
+
+Encoding craft into the production engine.
+
+Supporting copy:
+
+I built multi-agent systems that help generate, inspect, revise, and maintain learning experiences while preserving human accountability for meaning, accuracy, taste, ethics, and learner impact.
+
+Scene 1: Why the system exists
+
+Show the tension:
+
+Without a system	With a system
+Faster drafts, inconsistent quality	Faster production with explicit standards
+Repeated manual work	Reusable specialist workflows
+Hidden assumptions	Visible decision gates
+One giant prompt	Purpose-built roles
+Review at the end	QA throughout
+AI confidence mistaken for accuracy	Verification built into the process
+Scene 2: Agent ecosystem
+
+Present the agents as a coordinated studio, not cartoon robots.
+
+Possible roles:
+
+Intake analyst
+Learning architect
+Research agent
+Subject-matter reviewer
+Drafting agent
+Assessment designer
+Interaction designer
+Accessibility reviewer
+Style editor
+Technical validator
+Media brief generator
+Final QA agent
+Human approver
+
+Selecting an agent reveals:
+
+Input
+Responsibility
+Output
+Failure risk
+Required evidence
+Human oversight level
+Scene 3: The workflow
+INTAKE
+  ↓
+CLARIFY
+  ↓
+RESEARCH
+  ↓
+ARCHITECT
+  ↓
+DRAFT
+  ↓
+DESIGN PRACTICE
+  ↓
+BUILD MEDIA
+  ↓
+VERIFY
+  ↓
+REVIEW
+  ↓
+PUBLISH
+  ↓
+MEASURE
+  ↓
+REGENERATE
+
+The key is the final loop. The system is designed for revision, not permanent static artifacts.
+
+Scene 4: Human judgment map
+
+Use a gradient from “safe to automate” to “human must decide.”
+
+Good candidates for acceleration
+Formatting
+Structural consistency checks
+First-pass summaries
+Variant generation
+Metadata
+Repetitive maintenance
+Preliminary gap detection
+Requires stronger human oversight
+Technical correctness
+Learning progression
+Ethical framing
+Cultural context
+Sensitive audiences
+Final voice
+Originality
+Claim validation
+Decisions about what should be taught
+Scene 5: Failure laboratory
+
+Show sanitized examples of AI failure:
+
+Fluent but incorrect explanation
+Activity that does not assess the objective
+Over-scaffolded task
+Generic tone
+Unsupported claim
+Inaccessible interaction
+False confidence
+Repetition disguised as reinforcement
+
+Allow the visitor to select:
+
+What failed?
+
+Then reveal your diagnosis and correction.
+
+This may become one of the most compelling sections in the portfolio.
+
+Scene 6: Quality as code
+
+Show the quality bar as inspectable criteria:
+
+accuracy
+clarity
+learner action
+feedback quality
+cognitive load
+accessibility
+voice
+evidence
+transfer
+maintainability
+
+Each criterion contains:
+
+Definition
+Observable evidence
+Failure example
+Review method
+Scene 7: The operating result
+
+Use only supported claims.
+
+Possible evidence:
+
+Number of workflows or systems
+Range of supported outputs
+Reduced repeated manual steps
+More consistent review coverage
+Faster prototyping
+Better traceability
+Ability to regenerate and update content
+Scene 8: Leadership reflection
+
+Heading:
+
+The line moves.
+
+Copy:
+
+The question is not whether AI belongs in content production. The question is where it adds leverage, where it introduces risk, and how the workflow changes as the models improve.
+
+A durable system does not freeze today’s answer. It makes the boundary visible, testable, and revisable.
+
+Closing
+
+CTA:
+
+Next: Make the invisible audible
+
+12. Flagship case-study storyboard 03
+Making Sound Visible
+Core message
+
+This case study should itself be a working lesson.
+
+Opening interaction
+
+The visitor hears nothing until they press:
+
+Play a sound
+
+A short tone plays.
+
+The waveform appears.
+
+Prompt:
+
+What do you think is inside that sound?
+
+Choices are exploratory, not graded.
+
+Scene 1: The whole sound
+
+Show:
+
+Time on horizontal axis
+Amplitude on vertical axis
+Sample points
+Playback cursor
+Zoom control
+
+Allow the visitor to:
+
+Play
+Pause
+Scrub
+Slow playback
+Toggle sample points
+Change volume
+Scene 2: Build the sound
+
+Give three pure tones.
+
+The visitor adjusts:
+
+Frequency
+Amplitude
+Phase, only after the simpler controls
+Mute and solo
+
+The combined waveform updates.
+
+Copy:
+
+A complex sound can be understood as simpler waves added together.
+
+Scene 3: Hear frequency
+
+Interactive frequency sweep.
+
+Labels should connect frequency to perception without pretending that hearing is perfectly uniform.
+
+Examples:
+
+Low
+Mid
+High
+Musical references
+Speech references
+Scene 4: From samples to calculation
+
+This should realize the lesson direction you previously described.
+
+Show a dotted sine wave on a labeled graph.
+
+Each sample lights up sequentially.
+
+The visitor sees:
+
+Where the sample came from
+Its time position
+Its amplitude
+The comparison wave
+The multiplication step
+The running sum
+The final result
+
+Use plain language beside every mathematical symbol.
+
+Scene 5: The Fourier transform
+
+Reveal the mathematical notation only after the visitor has performed the underlying actions.
+
+Copy:
+
+The formula is a compact way to describe the comparison you just completed repeatedly.
+
+Let the visitor toggle:
+
+Concept view
+Math view
+Code view
+
+Scene 6: Spectrum
+
+The waveform transforms into a frequency spectrum.
+
+Allow:
+
+Frequency isolation
+EQ-style manipulation
+Before and after listening
+Visual comparison
+Guess-the-component challenge
+Scene 7: Misconceptions
+
+Address:
+
+A waveform is not a picture of air traveling forward.
+High amplitude does not mean high pitch.
+A spectrum is not another moment in time.
+Sampling does not mean randomly choosing points.
+Fourier analysis does not “discover instruments” directly.
+Scene 8: Assessment through creation
+
+Instead of multiple choice:
+
+Rebuild a target sound
+Remove an unwanted frequency
+Match a hidden spectrum
+Explain a mismatch
+Predict what an EQ change will sound like
+Arrange calculation steps
+Diagnose an incorrect learner model
+Scene 9: Design reflection
+
+Show how the lesson was designed:
+
+Why experience came before vocabulary
+Why samples were made visible
+Why sound and visual feedback were synchronized
+Why the mathematics was delayed
+Why the assessment asks for manipulation
+How reduced-motion and silent alternatives work
+Closing
+
+Headline:
+
+Understanding should be something you can operate.
+
+CTA:
+
+Explore the Learning Lab
+
+13. Learning Lab page
+
+The lab should contain three polished experiments, not fifteen unfinished demos.
+
+Experiment 01: Signal Lab
+
+The complete sound and Fourier experience.
+
+Experiment 02: Complexity Translator
+
+Select one concept:
+
+AI agents
+Containers
+Fourier transform
+Operating systems
+Model context
+Sampling
+
+The interface moves through:
+
+Expert definition
+    ↓
+Plain-language explanation
+    ↓
+Visual model
+    ↓
+Interactive demonstration
+    ↓
+Guided practice
+    ↓
+Transfer challenge
+
+The visitor can compare representations side by side.
+
+Experiment 03: Curriculum Console
+
+Inputs:
+
+Audience
+Prior knowledge
+Desired behavior
+Available time
+Delivery mode
+Risk level
+Need for practice
+Need for collaboration
+Assessment context
+
+The lesson architecture responds in real time.
+
+Example:
+
+Audience: First-time learner
+Goal: Diagnose a failed deployment
+Time: 20 minutes
+Mode: Browser-based
+
+Generated architecture:
+
+1. Failure scenario
+2. Predict likely cause
+3. Inspect logs
+4. Guided diagnosis
+5. Immediate feedback
+6. New failure with less support
+7. Explain reasoning
+
+A side panel explains why the architecture changed.
+
+14. Leadership page
+How I Direct the Work
+
+This page establishes you as a potential function leader rather than only an individual contributor.
+
+Opening statement
+Excellent content is not an accident.
+It is an operating system.
+
+I build teams and production systems around a shared definition of what great learning looks like, how it is created, how it is reviewed, and how we know it worked.
+
+Sections
+1. Set the learning thesis
+
+Explain your beliefs:
+
+Capability over coverage
+Experience before vocabulary
+Respect prior knowledge
+Teach misconceptions
+Practice with feedback
+Relevance and autonomy
+Transfer over recognition
+2. Build the portfolio
+
+Show how you decide:
+
+Which audience matters
+Which problems deserve content
+Which format fits
+What should be a course
+What should be a tutorial
+What should be an interactive
+What should be taught by an adaptive tutor
+What should not be built
+3. Design the production engine
+
+Visualize:
+
+Intake
+Prioritization
+Brief
+Research
+Architecture
+Production
+Review
+Launch
+Measurement
+Maintenance
+4. Establish the quality bar
+
+Dimensions:
+
+Accuracy
+Clarity
+Usefulness
+Practice
+Feedback
+Accessibility
+Distinctiveness
+Voice
+Evidence
+Maintainability
+5. Lead multidisciplinary work
+
+Show the roles you can coordinate:
+
+Content strategists
+Curriculum designers
+Subject-matter experts
+Developers
+Media designers
+Video teams
+Audio teams
+Agencies
+AI agents
+Reviewers
+Program stakeholders
+6. Use AI deliberately
+
+Link to the AI systems case study.
+
+7. Measure learning
+
+Show a measurement ladder:
+
+Engagement
+    ↓
+Comprehension
+    ↓
+Performance
+    ↓
+Transfer
+    ↓
+Behavior
+    ↓
+Organizational result
+
+Be transparent that not every past project has formal Level 3 or Level 4 data. State what you measured, what you could not measure, and what you would instrument next.
+
+8. Develop the team
+
+Discuss:
+
+Clear decision rights
+Critique without humiliation
+Coaching through examples
+Documented standards
+Calibration sessions
+Reusable feedback
+Growth through ownership
+Protecting craft while increasing speed
+15. Work index
+
+Do not use another uniform card grid.
+
+Primary browsing modes
+By problem
+Explain
+Teach
+Scale
+Build
+Lead
+Measure
+By medium
+Curriculum
+Interactive
+AI systems
+Audio
+Video
+Software
+Workshops
+Research
+By audience
+Developers
+Adult learners
+Youth
+Educators
+Organizations
+General public
+Project item design
+
+Each item contains:
+
+Large visual
+One-sentence problem
+Your role
+Outcome
+Dominant medium
+One interaction or motion behavior
+
+The archive can switch between:
+
+Editorial view
+Large, visual, narrative.
+
+Index view
+Compact, sortable, recruiter-friendly.
+
+16. About page
+Structure
+Opening portrait
+
+Use a new editorial portrait if possible.
+
+Direction:
+
+Direct eye contact
+Dark or neutral studio
+Warm edge lighting
+No generic corporate office
+Confident but approachable
+Space for typography
+One alternate image showing you working with audio or interactive media
+Opening copy
+I have always worked at the point where systems become human.
+
+I began in audio engineering and technical operations, where tiny decisions could determine whether a complex system worked at all. I moved into education because I became fascinated by a related question: what allows a difficult idea to work inside another person’s mind?
+
+That question has led me through technical curriculum, music technology, creative coding, learning experience design, program leadership, software development, audio quality, research, and AI-assisted production systems.
+
+My work is broad because the problem is broad. Learning is never only writing. It is structure, language, interaction, motivation, media, feedback, technology, operations, and care.
+
+Timeline
+
+Do not create a conventional résumé timeline.
+
+Create “chapters of practice”:
+
+Audio and systems
+Technical operations
+Learning and curriculum
+Creative technology
+Program leadership
+AI-assisted systems
+What comes next
+Personal layer
+
+Include a short human section:
+
+Music
+Sport
+Mentoring
+Community learning
+Building tools
+Making difficult ideas accessible
+
+Keep it specific and intentional, not a random personal-facts collage.
+
+17. Résumé page
+
+The page should contain a complete HTML résumé, not only a download button.
+
+Features
+Printable layout
+Downloadable PDF
+Role-based summary
+Experience
+Selected impact
+Education
+Publications
+Technical skills
+Leadership and production skills
+Speaking or workshops
+Links to related case studies
+
+Each major experience entry should link to evidence on the site.
+
+Example:
+
+Codio — Curriculum Developer
+
+Published seven Coursera courses
+Reached 30,630+ learners
+Owned architecture, authoring, assessments, labs, technical review, and QA
+Built reusable course production practices
+
+View related case study
+
+18. Media production requirements
+Global asset inventory
+Portrait photography
+
+Minimum:
+
+1 horizontal hero portrait, 3:2
+1 vertical editorial portrait, 4:5
+1 environmental portrait with audio or technology
+1 candid facilitation or presentation image
+4 supporting detail images
+1 transparent or clean-background cutout
+Video
+60-second showreel
+15-second teaser
+3 flagship hero loops, 6–10 seconds each
+5–8 short process loops
+Mobile-specific crops
+Poster image for every video
+Caption file
+Transcript
+Audio description or equivalent descriptive transcript
+Audio
+4–6 interface cues
+3 pure-tone demonstrations
+3 complex sound examples
+1 voice or music example with permission
+Silent visual alternatives
+Written descriptions of auditory differences
+Screens and artifacts
+
+For each flagship case study:
+
+8–12 polished screenshots
+3–5 process artifacts
+2 revision or comparison examples
+1 system diagram
+1 outcome visualization
+1 reflection artifact
+Image delivery
+
+Prepare responsive widths:
+
+640px
+960px
+1440px
+1920px
+2560px where genuinely needed
+
+Preferred delivery:
+
+AVIF
+WebP
+JPEG fallback where necessary
+Video delivery
+
+Provide:
+
+MP4
+WebM
+Desktop crop
+Mobile crop
+Poster frame
+
+Do not automatically load every video on initial page load.
+
+Asset naming
+project-name_scene-purpose_variant.ext
+
+codio_course-wall_desktop.webp
+codio_lesson-anatomy_layered.webp
+ai-system_human-gates_desktop.mp4
+signal-lab_fourier-transition_mobile.webm
+19. Technical architecture
+Core
+Next.js App Router
+TypeScript
+Component-driven architecture
+MDX or structured local content for case studies
+CSS custom properties for tokens
+Tailwind only for utility layout where helpful
+Custom CSS for editorial composition
+Vercel deployment
+Automated image optimization
+Structured metadata and social cards
+Motion
+GSAP for directed timeline and scroll choreography
+Native CSS for simple hover and focus transitions
+SVG and Canvas 2D for the signal system
+Web Audio API for sound-reactive demonstrations
+No WebGL dependency for the first release unless a specific experience proves it needs one
+Why Canvas 2D instead of defaulting to 3D
+
+The signature visual is based on:
+
+Lines
+Signals
+Nodes
+Frames
+Graphs
+Timelines
+Transformations
+
+These can be executed more originally and efficiently in SVG and Canvas than through a generic 3D particle environment.
+
+Content model
+type Project = {
+  slug: string;
+  title: string;
+  shortTitle: string;
+  thesis: string;
+  summary: string;
+  role: string[];
+  audiences: string[];
+  disciplines: string[];
+  formats: string[];
+  dateRange: string;
+  metrics: Metric[];
+  featured: boolean;
+  accent: string;
+  heroMedia: MediaAsset;
+  thumbnailMedia: MediaAsset;
+  scenes: ProjectScene[];
+  relatedProjects: string[];
+};
+Core components
+SiteHeader
+MobileMenu
+SoundControl
+SignalField
+HeroStatement
+ShowreelPlayer
+MetricStrip
+EditorialStatement
+ProjectChapter
+ProjectMedia
+ProjectMetadata
+ProcessDiagram
+CaseStudyScene
+StickyChapterNav
+InteractiveEmbed
+QuoteScene
+OutcomeScene
+ArchiveIndex
+FilterControls
+LeadershipPrinciple
+FooterCTA
+AccessibleMediaControls
+ReducedMotionProvider
+20. Performance and accessibility requirements
+
+The site must feel excellent on an ordinary laptop and phone, not only a high-end studio computer.
+
+Performance targets
+LCP at or below 2.5 seconds
+INP at or below 200 milliseconds
+CLS at or below 0.1
+No initial loading of full showreel video
+Lazy-load case-study interactions
+Lazy-load motion libraries where practical
+Disable expensive ambient animation when the tab is hidden
+Pause Canvas rendering outside the viewport
+Supply fixed media dimensions
+Avoid client-side rendering for static portfolio copy
+
+These thresholds align with current Core Web Vitals guidance.
+
+Accessibility requirements
+WCAG 2.2 AA baseline
+Full keyboard navigation
+Visible focus states
+Semantic headings
+Skip link
+Captioned video
+Audio transcripts
+Pausable motion
+User-controlled sound
+Reduced-motion alternative
+High-contrast text
+No flashing visual effects
+Controls labeled for screen readers
+Interactives usable without drag-only gestures
+Charts with textual equivalents
+Case-study content available without JavaScript-dependent animation
+Reduced-motion policy
+
+Reduced motion is not the same as a broken or empty page.
+
+Replace:
+
+Parallax with fixed composition
+Sliding panels with crossfades
+Morphing with discrete states
+Ambient movement with still illustrations
+Scroll-linked motion with ordinary document flow
+21. Build order
+Release 1: The convincing application site
+
+Ship first:
+
+New identity and homepage
+Showreel
+Codio case study
+AI systems case study
+Music technology case study
+Leadership page
+About
+HTML résumé
+Contact
+Accessible static version of the hero
+Release 2: Signature interactions
+
+Add:
+
+Animated signal field
+Signal Lab
+Complexity Translator
+Curriculum Console
+Sound layer
+Advanced project transitions
+Release 3: Portfolio expansion
+
+Add:
+
+Your Voice Is Power
+Amazon Audio Programs
+Creative Coding
+Planet Bug
+Athlete Systems
+Workshop archive
+Additional publications and talks
+
+Do not delay the application-ready site until every experimental feature is complete.
+
+22. Claude Code master context
+
+Place the following in CLAUDE.md or provide it at the beginning of the build.
+
+# Chalece DeLaCoudray Portfolio Rebuild
+
+## Product goal
+
+Rebuild Chalece DeLaCoudray’s portfolio as a premium, editorial, multimedia learning leadership experience.
+
+The site must position Chalece for senior roles such as Head of Content & Curriculum, Education. It must demonstrate curriculum leadership, technical fluency, AI-assisted production systems, interactive learning design, sound, video, motion, creative technology, and the ability to establish and scale a quality bar.
+
+This is not a decorative reskin. The website itself must act as evidence of the work.
+
+## Creative concept
+
+SIGNAL → SENSE → SKILL
+
+Primary headline:
+
+“From signal to skill.”
+
+Primary positioning:
+
+“I design the systems, stories, and experiences that turn complex technology into human capability.”
+
+The visual language should show raw signals organizing into meaningful systems and, ultimately, learner capability.
+
+## Character
+
+Cinematic.
+Editorial.
+Intelligent.
+Warm.
+Experimental.
+Controlled.
+Technically credible.
+Accessible.
+
+## Prohibited directions
+
+Do not create:
+- A generic purple SaaS site
+- A wall of equal project cards
+- A cyberpunk interface
+- A constant neon glow aesthetic
+- Scroll hijacking
+- A custom cursor
+- Forced audio
+- Unnecessary 3D
+- Motion on every element
+- Tiny illegible text
+- Generic AI robot imagery
+- Invented metrics
+- Placeholder claims presented as facts
+
+## Technical approach
+
+Use:
+- Next.js App Router
+- TypeScript
+- Semantic HTML
+- CSS variables
+- Structured content
+- SVG and Canvas 2D for signal visuals
+- GSAP only for directed motion that materially improves the experience
+- Web Audio API only after user activation
+- Progressive enhancement
+- Accessible static fallbacks
+
+## Required pages
+
+- Home
+- Work index
+- Codio/Coursera case study
+- AI curriculum systems case study
+- Interactive music technology case study
+- Learning Lab
+- Leadership
+- About
+- Résumé
+- Contact
+
+## Non-negotiable quality requirements
+
+- WCAG 2.2 AA baseline
+- Complete keyboard support
+- Reduced-motion experience
+- User-controlled sound
+- Captions and transcripts
+- Fast first paint
+- No content hidden behind animation
+- Responsive desktop, tablet, and mobile compositions
+- No unsupported factual claims
+- Every case study clearly distinguishes Chalece’s personal contribution from team work
+
+## Working method
+
+Before changing code:
+1. Inspect the repository.
+2. Explain the relevant architecture.
+3. Identify risks.
+4. Propose the smallest coherent implementation step.
+5. Implement.
+6. Run tests, linting, and type checking.
+7. Summarize files changed and remaining issues.
+
+Do not replace working content without preserving it in version control.
+Do not add a package when the same result can be achieved cleanly with the existing stack.
+Do not leave inaccessible placeholder interactions.
+23. Production-ready Claude Code prompt sequence
+Prompt 0: Audit and preserve the current site
+Begin the portfolio V2 rebuild by auditing the existing repository.
+
+Do not redesign or modify anything yet.
+
+1. Identify the framework, routing approach, styling system, content source, build tooling, testing setup, analytics, deployment configuration, and media handling.
+2. Map every existing page, section, project, route, component, asset, external link, and résumé download.
+3. Identify which current content must be preserved.
+4. Identify broken links, duplicated content, weak semantic structure, accessibility issues, layout limitations, and performance risks.
+5. Capture the existing site structure in docs/current-site-audit.md.
+6. Create docs/content-preservation-map.md showing where each current piece of content will live in the new architecture.
+7. Create a recommended migration plan that avoids a destructive rewrite.
+8. Run the current build, lint, typecheck, and tests. Record the baseline.
+9. Do not install packages or alter production behavior.
+
+Return:
+- Repository summary
+- Current route map
+- Content inventory
+- Risk list
+- Migration recommendation
+- Baseline test results
+Prompt 1: Establish the new architecture
+Using CLAUDE.md, docs/current-site-audit.md, and docs/content-preservation-map.md, establish the architecture for Portfolio V2.
+
+Requirements:
+
+1. Create a route and component architecture for:
+   /
+   /work
+   /work/[slug]
+   /lab
+   /leadership
+   /about
+   /resume
+   /contact
+
+2. Create structured TypeScript content models for:
+   Project
+   ProjectScene
+   Metric
+   MediaAsset
+   LeadershipPrinciple
+   Experiment
+
+3. Store content separately from presentation.
+4. Preserve all existing project information.
+5. Create placeholder content records only where clearly labeled TODO.
+6. Add route metadata and a reusable SEO metadata helper.
+7. Create documentation:
+   docs/architecture.md
+   docs/content-model.md
+   docs/route-map.md
+
+Do not build the visual redesign yet.
+
+Acceptance criteria:
+- Existing application still builds
+- New types pass typecheck
+- Content can be queried by slug
+- No duplicated project data
+- No invented metrics
+Prompt 2: Build the design-token system
+Implement the Portfolio V2 design-token foundation.
+
+Create CSS custom properties for:
+
+Colors:
+- signal black #09090D
+- deep ink #13121A
+- warm ivory #F3EFE7
+- paper white #FCFAF6
+- graphite #6F6B75
+- soft fog #B8B3BE
+- electric iris #8E75FF
+- signal cyan #66DFF2
+- human coral #FF7B72
+- resonant gold #D4AE67
+
+Also create:
+- text roles
+- surface roles
+- border roles
+- focus roles
+- project accent roles
+- spacing scale
+- fluid type scale
+- container widths
+- grid definitions
+- radii
+- shadows
+- z-index scale
+- motion durations and easing tokens
+
+Typography:
+- Editorial display serif
+- Clear sans-serif body/interface face
+- Monospace annotation face
+
+Requirements:
+1. Use fluid clamp-based typography.
+2. Ensure color combinations meet intended contrast.
+3. Do not apply large-scale visual changes yet.
+4. Create a private /dev/design-system route showing every token, type style, button, link, focus state, and surface.
+5. Create docs/design-system.md.
+
+Acceptance criteria:
+- Tokens work in dark and light editorial sections
+- Focus states are unmistakable
+- No text relies on low-contrast purple
+- Design-system route is keyboard accessible
+Prompt 3: Build the semantic site shell
+Build the Portfolio V2 application shell.
+
+Implement:
+
+- Desktop header
+- Mobile navigation
+- Skip link
+- Active route treatment
+- Sound-control placeholder with no sound functionality yet
+- Main content landmark
+- Footer
+- Page transition foundation
+- ReducedMotionProvider
+- Global error boundary
+- Custom 404 page
+
+Navigation:
+Work
+Lab
+Leadership
+About
+Résumé
+Let’s talk
+
+Requirements:
+1. The header must remain clear over dark and light sections.
+2. Mobile navigation must trap focus while open and restore focus when closed.
+3. Escape closes the mobile menu.
+4. Body scroll is correctly managed.
+5. No custom cursor.
+6. Do not implement scroll hijacking.
+7. Page transitions must reduce to a simple crossfade when reduced motion is active.
+8. Include complete keyboard tests for navigation.
+
+Acceptance criteria:
+- Header works at 320px through ultrawide screens
+- All controls have accessible names
+- No layout shift when menu opens
+- Navigation works without animation
+Prompt 4: Build the static homepage first
+Build the complete homepage in a static, production-quality form before introducing advanced animation.
+
+Use the exact approved homepage copy from the project brief.
+
+Required sections:
+
+1. Hero
+2. Proof strip
+3. “Complexity is not the problem. The experience is.”
+4. Selected work introduction
+5. Codio/Coursera flagship chapter
+6. AI-assisted curriculum systems flagship chapter
+7. Interactive music technology flagship chapter
+8. Full stack of learning
+9. How I direct the work
+10. Learning Lab preview
+11. Wider work archive
+12. About preview
+13. Closing contact section
+
+Requirements:
+- Use editorial pacing rather than a card wall.
+- Alternate dark and warm-ivory scenes.
+- Use large project media placeholders with documented aspect ratios.
+- Use real current metrics only.
+- Preserve existing links.
+- Create components that can later accept motion without changing semantic order.
+- Add a static signal illustration to the hero.
+- Ensure the complete page is compelling with JavaScript disabled.
+
+Acceptance criteria:
+- Responsive at mobile, tablet, laptop, desktop, ultrawide
+- Correct heading hierarchy
+- No duplicate H1
+- Every image placeholder has meaningful alt strategy
+- All copy is selectable and present in the DOM
+- No content depends on animation
+Prompt 5: Build the signal-field engine
+Create the hero’s living signal system using SVG and/or Canvas 2D.
+
+Do not use Three.js or WebGL unless you first document a concrete technical reason.
+
+The visual system contains:
+- sine waveform
+- data nodes
+- film-frame rhythm
+- curriculum pathway
+- code-token track
+
+Behavior:
+1. Begin as separate signal layers.
+2. Gradually align into one shared timeline.
+3. Respond subtly to pointer position.
+4. Respond to page scroll without hijacking it.
+5. Compress into the divider above the metric strip.
+6. Pause when offscreen.
+7. Pause when the document is hidden.
+8. Adapt to device pixel ratio without excessive resolution.
+9. Provide a complete static fallback.
+10. Provide a reduced-motion state using discrete crossfades.
+
+Performance:
+- Avoid per-frame React state updates.
+- Use requestAnimationFrame directly.
+- Clean up all listeners and animation frames.
+- Cap rendering complexity on small devices.
+- Do not block first contentful paint.
+
+Create:
+- components/signal/SignalField
+- components/signal/StaticSignalField
+- hooks/useReducedMotion
+- hooks/useDocumentVisibility
+- docs/signal-engine.md
+- unit tests for utility calculations
+
+Acceptance criteria:
+- No memory leaks across navigation
+- No continuous rendering outside viewport
+- No horizontal overflow
+- Static hero remains visually complete if Canvas fails
+Prompt 6: Add hero choreography
+Implement the approved hero choreography.
+
+Sequence:
+0.0–0.8 seconds:
+measurement field and mono labels appear
+
+0.8–2.0:
+five separate signal forms draw
+
+2.0–3.4:
+signals influence and align
+
+3.4–4.8:
+signals converge and the headline reveals
+
+4.8–6.0:
+supporting copy and actions settle
+
+Requirements:
+- The H1 must be present and readable before animation.
+- Animation enhances rather than creates the content.
+- Repeat visitors should not be forced through the full sequence.
+- Store a session-level “intro seen” state and use a shorter settle animation after first view.
+- No full-screen loader.
+- Do not split text into inaccessible per-letter DOM without preserving an intact accessible label.
+- Reduced motion uses a completed static state.
+
+Acceptance criteria:
+- Buttons become usable immediately
+- Sequence does not delay navigation
+- Screen-reader output contains normal uninterrupted text
+- Mobile sequence is independently art-directed
+Prompt 7: Implement the sound system
+Implement an optional, user-controlled sound layer.
+
+Requirements:
+
+1. Sound is off by default.
+2. AudioContext is created or resumed only after explicit user activation.
+3. Persist the user preference locally.
+4. Provide a visible header control labeled Sound off / Sound on.
+5. Allow immediate muting at all times.
+6. Pause or suspend sound when the document is hidden.
+7. Do not play a looping music bed.
+8. Use only short transitioning at all times.
+6. Pause or suspend sound when the document is hidden.
+7. Do not play and interaction cues.
+9. Do not attach sounds to routine keyboard focus.
+10. Provide no-sound equivalents for all meaning.
+11. Respect reduced motion but treat sound preference separately.
+12. Handle unsupported browsers gracefully.
+
+Create:
+- AudioProvider
+- SoundControl
+- useInterfaceSound
+- sound asset manifest
+- audio preload strategy
+- docs/sound-system.md
+
+Acceptance criteria:
+- No autoplay errors
+- No sound before user activation
+- Preference survives reload
+- Muting stops all active nodes
+- Keyboard and screen-reader users receive no surprise audio
+Prompt 8: Build the showreel experience
+Build the 60-second showreel component and homepage section.
+
+Required behavior:
+- Show a lightweight poster on initial load.
+- Do not download the full video until the visitor initiates playback or the browser is idle and network conditions are favorable.
+- Provide Play, Pause, Mute, Volume, Captions, Fullscreen, Replay, and Close.
+- Support keyboard operation.
+- Trap focus when used as a modal.
+- Restore focus to the triggering button.
+- Include captions and transcript.
+- Support desktop and mobile video sources.
+- Use a 15-second muted preview only when motion is allowed and the preview is in view.
+- Pause preview when offscreen.
+- Never autoplay audible content.
+
+Create a temporary reel manifest with clearly labeled asset paths if final video files are not yet available.
+
+Acceptance criteria:
+- Modal is fully accessible
+- Poster reserves dimensions
+- No layout shift
+- Full video is not part of initial critical payload
+- Transcript is available without opening the video
+Prompt 9: Build the project-chapter system
+Create the reusable ProjectChapter system used for the three flagship homepage projects.
+
+The component must support:
+- eyebrow
+- project title
+- thesis
+- summary
+- metrics
+- role labels
+- media
+- project accent
+- light or dark theme
+- CTA
+- optional lightweight interaction
+
+Each chapter should have a distinct composition:
+1. Codio: expanding course ecosystem
+2. AI systems: workflow and human gates
+3. Music technology: waveform and spectrum
+
+Do not make them three variations of the same card.
+
+Requirements:
+- Semantic article structure
+- Media captions
+- Static fallback
+- Responsive art direction
+- Reduced-motion behavior
+- No sticky scene that traps the visitor for excessive scroll distance
+
+Acceptance criteria:
+- Chapters remain understandable without motion
+- Each has a visibly different visual rhythm
+- Metrics come from structured project data
+Prompt 10: Build the work index
+Build /work as a dual-mode portfolio index.
+
+Modes:
+- Editorial view
+- Compact index view
+
+Filters:
+- Problem: Explain, Teach, Scale, Build, Lead, Measure
+- Medium: Curriculum, Interactive, AI Systems, Audio, Video, Software, Workshop, Research
+- Audience: Developers, Adult Learners, Youth, Educators, Organizations, General Public
+
+Requirements:
+1. Filters must be URL-addressable.
+2. Filtering must work with keyboard and screen readers.
+3. Announce result-count changes politely.
+4. Do not hide projects permanently because metadata is incomplete.
+5. Project thumbnails must not all use the same card layout.
+6. Include clear role and outcome language.
+7. Add a “Clear filters” control.
+8. Preserve useful browser history behavior.
+
+Acceptance criteria:
+- Filter state survives sharing the URL
+- Index works without motion
+- No empty unexplained states
+- Mobile filtering is usable without a tiny horizontal chip row
+Prompt 11: Build the case-study framework
+Create the reusable /work/[slug] case-study framework.
+
+Required regions:
+- Opening proof
+- Project metadata
+- Challenge
+- Chalece’s role
+- System or approach
+- Learner/user experience
+- Process artifacts
+- Media and interaction
+- Outcomes
+- Judgment and revision
+- Reflection
+- Related work
+
+Components:
+- CaseStudyHero
+- ProjectFacts
+- Scene
+- StickyChapterNav
+- ArtifactGallery
+- ProcessDiagram
+- BeforeAfter
+- OutcomePanel
+- ReflectionPanel
+- RelatedProjects
+
+Requirements:
+- Deep links to scenes
+- Normal document flow on mobile
+- Sticky navigation must never obscure content
+- Every visual has a caption or descriptive alternative
+- Every case study explicitly separates individual contribution from team contribution
+- Support sanitized or recreated artifacts with transparent labels
+
+Acceptance criteria:
+- Framework can render all three flagship studies
+- Heading outline is valid
+- Print view remains readable
+- No scene requires drag-only input
+Prompt 12: Build the Codio/Coursera case study
+Implement /work/codio-course-ecosystem using the approved storyboard.
+
+Scenes:
+1. Seven-course opening mosaic
+2. Learner friction model
+3. Course portfolio explorer
+4. Repeatable production system
+5. Exploded anatomy of a lesson
+6. Assessment judgment
+7. Technical credibility
+8. Scale and evidence
+9. Leadership reflection
+
+Requirements:
+- Use current verified metrics only.
+- Do not claim outcome measures that are not documented.
+- Use real project names and screenshots when assets exist.
+- Label recreated visualizations as recreations.
+- Make the lesson anatomy explorable by keyboard.
+- Include at least one concrete example of a misconception, feedback decision, or revision.
+- Avoid giant unreadable screenshots.
+- Explain what Chalece personally owned.
+
+Acceptance criteria:
+- Case study communicates leadership and system design, not just authorship
+- Technical detail is credible but understandable
+- All interactive content has a static equivalent
+Prompt 13: Build the AI curriculum systems case study
+Implement /work/ai-curriculum-systems using the approved storyboard.
+
+Scenes:
+1. Raw brief entering the production engine
+2. Why the system exists
+3. Agent ecosystem
+4. End-to-end workflow
+5. Human judgment map
+6. Failure laboratory
+7. Quality as code
+8. Supported outcomes
+9. “The line moves” reflection
+
+Requirements:
+- Never anthropomorphize agents as cute robots.
+- Use a precise systems aesthetic.
+- For every agent show input, responsibility, output, failure risk, and oversight.
+- Include sanitized failure examples.
+- Clearly mark hypothetical, reconstructed, or confidentially adapted examples.
+- Do not expose proprietary information.
+- Use only supportable productivity or quality claims.
+- Make the human decision points visually unmistakable.
+
+Acceptance criteria:
+- Visitor understands both AI leverage and AI risk
+- Case study demonstrates an evolving point of view
+- System is usable by keyboard
+- Failure examples are concrete and educational
+Prompt 14: Build the interactive music technology case study
+Implement /work/making-sound-visible as both a case study and a working learning experience.
+
+Required capabilities:
+- Play a sound
+- Display waveform
+- Display labeled axes
+- Show sample points
+- Scrub playback
+- Build a sound from pure tones
+- Adjust frequency and amplitude
+- Mute and solo components
+- Transform between time and frequency views
+- Animate one sample-based calculation
+- Toggle Concept, Math, and Code views
+- Complete at least one creation-based assessment
+- Operate without sound through textual and visual alternatives
+
+Requirements:
+- Audio starts only after user activation.
+- Synchronize visuals using the audio clock where possible.
+- Do not use color alone to distinguish wave components.
+- Provide direct numeric inputs in addition to sliders.
+- Provide keyboard alternatives to drag.
+- Respect reduced motion.
+- Include a static lesson transcript.
+- Explain the source of every sample used in a calculation.
+- Keep mathematical notation accurate and beginner-friendly.
+
+Acceptance criteria:
+- A beginner can understand the core idea without prior calculus
+- The experience is meaningful with sound muted
+- Screen-reader users can access values and explanations
+- No animation continues unnecessarily offscreen
+Prompt 15: Build the Learning Lab
+Build /lab as a curated studio containing exactly three primary experiments:
+
+1. Signal Lab
+2. Complexity Translator
+3. Curriculum Console
+
+Requirements:
+- Each experiment has a clear learning purpose.
+- Each begins with action rather than a long explanation.
+- Each includes instructions, reset, help, and exit.
+- Each records no personal data by default.
+- Each has a static or textual alternative.
+- Each can be linked directly.
+- Lazy-load experiments independently.
+- Do not show unfinished experiments as if complete.
+- Include a short “Why this was designed this way” section.
+
+For Complexity Translator:
+- Support several predefined technical concepts.
+- Show expert definition, plain language, visual model, interaction, practice, and transfer.
+
+For Curriculum Console:
+- Let users change audience, prior knowledge, goal, time, modality, and scaffolding.
+- Reconfigure a lesson architecture.
+- Explain the reasoning behind every change.
+
+Acceptance criteria:
+- Lab index loads quickly
+- Experiments do not share heavy bundles unnecessarily
+- All controls are keyboard accessible
+Prompt 16: Build the Leadership page
+Build /leadership as a visual operating system for how Chalece directs content and curriculum work.
+
+Sections:
+1. Learning thesis
+2. Portfolio strategy
+3. Medium selection
+4. Production engine
+5. Quality bar
+6. Multidisciplinary leadership
+7. AI and human judgment
+8. Measurement
+9. Team development
+
+Create an interactive quality-bar component with:
+- criterion
+- definition
+- observable evidence
+- failure example
+- review method
+
+Criteria:
+accuracy
+clarity
+learner action
+feedback quality
+cognitive load
+accessibility
+voice
+evidence
+transfer
+maintainability
+
+Requirements:
+- Do not turn the page into a résumé.
+- Use concrete operating decisions.
+- Link principles to supporting project evidence.
+- Be candid where formal measurement was limited.
+- Maintain an executive, precise tone.
+
+Acceptance criteria:
+- Page proves strategic leadership
+- Every principle has at least one example or linked case
+- Content remains complete without interactive expansion
+Prompt 17: Build About, Résumé, and Contact
+Build /about, /resume, and /contact.
+
+About:
+- Editorial biography
+- Chapters of practice rather than a conventional timeline
+- Portrait and environmental media
+- Personal interests only where relevant to the professional story
+- Links to evidence
+
+Résumé:
+- Complete semantic HTML résumé
+- Print stylesheet
+- PDF download
+- Links from experience entries to case studies
+- No dependence on PDF for accessibility
+
+Contact:
+- Direct email CTA
+- LinkedIn
+- Optional simple contact form only if secure form handling already exists
+- Clear response expectations
+- No unnecessary fields
+- Spam protection without inaccessible puzzles
+
+Acceptance criteria:
+- Résumé prints cleanly
+- Contact works with keyboard
+- No personal information is exposed beyond what Chalece approved
+- About page feels senior and human
+Prompt 18: Accessibility and motion audit
+Perform a dedicated accessibility audit across the full site.
+
+Audit:
+- Keyboard navigation
+- Focus order
+- Focus visibility
+- Skip links
+- Heading hierarchy
+- Landmarks
+- Alternative text
+- Captions
+- Transcripts
+- Forms
+- Modal behavior
+- Color contrast
+- Zoom to 200% and 400%
+- Reflow at 320 CSS pixels
+- Reduced motion
+- Sound control
+- Touch targets
+- Drag alternatives
+- Chart descriptions
+- Canvas fallbacks
+- Screen-reader announcements
+
+Test with:
+- Automated accessibility tooling
+- Keyboard-only navigation
+- Browser reduced-motion emulation
+- High zoom
+- At least one screen reader workflow where available
+
+Create:
+docs/accessibility-audit.md
+
+For every issue:
+- severity
+- affected route
+- reproduction steps
+- remediation
+- verification result
+
+Do not merely produce a report. Fix all critical and serious issues discovered.
+Prompt 19: Performance audit
+Perform a production performance audit.
+
+Measure:
+- LCP
+- INP
+- CLS
+- route JavaScript
+- image transfer size
+- video loading behavior
+- Canvas CPU usage
+- animation frame rate
+- mobile performance
+- font loading
+- third-party scripts
+
+Requirements:
+- Full showreel must not load in the initial critical path.
+- Lab code must be route-level or component-level lazy loaded.
+- Signal field must stop rendering offscreen.
+- Images must reserve dimensions.
+- Fonts must avoid invisible text.
+- Remove unused dependencies and duplicated animation libraries.
+- Analyze production bundles.
+- Test throttled mobile conditions.
+
+Create:
+docs/performance-audit.md
+docs/performance-budget.md
+
+Fix regressions before declaring the phase complete.
+Prompt 20: Cross-browser and production QA
+Run final production QA.
+
+Test:
+- Chrome desktop and mobile
+- Safari desktop and iOS
+- Firefox
+- Edge
+- Touch and mouse
+- Reduced motion
+- Sound enabled and disabled
+- JavaScript failure or disabled where practical
+- Slow network
+- Offline media failure
+- Missing image fallback
+- Direct route entry
+- Browser back and forward
+- Shared filtered URLs
+- Print résumé
+- Social preview metadata
+- 404 behavior
+
+Verify:
+- All external links
+- All download links
+- All case-study metrics
+- All project attribution
+- All captions and transcripts
+- Analytics consent and privacy behavior
+- Sitemap
+- robots.txt
+- canonical URLs
+- structured data
+- deployment environment variables
+
+Create docs/release-checklist.md.
+
+Do not mark the build complete with:
+- broken links
+- placeholder copy presented as final
+- unlabeled mockups
+- console errors
+- hydration errors
+- accessibility violations rated critical or serious
+- missing reduced-motion behavior
+Prompt 21: Deploy safely
+Prepare Portfolio V2 for production deployment.
+
+1. Create a preview deployment.
+2. Preserve the current production version for rollback.
+3. Verify environment variables.
+4. Run all tests against the production build.
+5. Validate media URLs and caching.
+6. Validate analytics.
+7. Validate metadata and social cards.
+8. Run accessibility and performance smoke tests against the preview URL.
+9. Create a rollback plan.
+10. Create a post-launch monitoring checklist.
+11. Do not switch the production domain until every release criterion is met.
+
+Return:
+- Preview deployment status
+- Test summary
+- Known limitations
+- Rollback procedure
+- Exact production cutover steps
+24. Creative QA scorecard
+
+Before launch, every major page should pass these tests.
+
+Five-second test
+
+A visitor should understand:
+
+You work in learning and technology.
+Your work is senior and multidisciplinary.
+The site is intentionally designed.
+There is meaningful work to explore.
+Thirty-second test
+
+A visitor should know:
+
+You have reached more than 30,630 learners.
+You published seven technical courses.
+You build AI-assisted content systems.
+You work across interactive media, sound, and technical education.
+You have a distinct learning philosophy.
+Three-minute test
+
+A visitor should have seen evidence of:
+
+Curriculum leadership
+Technical fluency
+AI workflow design
+Multimedia craft
+Interaction design
+Quality systems
+Outcomes
+Reflection and judgment
+Head-of-function test
+
+The portfolio must answer:
+
+Can she set the vision?
+Can she recognize great work?
+Can she explain the standard?
+Can she organize a team around it?
+Can she use AI without losing quality?
+Can she operate across formats?
+Can she teach technical audiences?
+Can she measure and improve the work?
+Can she make the result beautiful and distinctive?
+25. Final launch standard
+
+The rebuilt portfolio is ready only when the website itself proves the claim:
+
+Chalece can take a complex, multidisciplinary problem and turn it into a clear, elegant, interactive system that people can understand and use.
+
+The build should begin with Prompt 0, followed by the static, aplication-ready Release 1 before any ambitious interaction is allowed to delay launch.
+
+---
+
+Worked for 43s
+
+These are the 10 strongest reference websites behind the new portfolio direction. We are not copying any one of them; we are combining specific strengths into an original system built around Signal → Sense → Skill. All ten were recognized by Awwwards as Sites of the Year between 2021 and 2025.
+
+Website	Primary inspiration for your portfolio
+1. Lando Norris	Cinematic pacing, powerful media, bold typography, and motion that reflects the subject rather than feeling decorative. This inspired the showreel-led opening and the idea that the entire site should feel directed like a multimedia production.
+2. Lusion v3	The clearest model for making the portfolio itself demonstrate the creator’s skills. Lusion combines design, motion, 3D, development, interaction, and a showreel into one cohesive experience. This inspired the living signal field, multimedia lab, and experience-first project presentation.
+3. Persepolis Reimagined	Immersive educational storytelling. This reference helped shape the idea that your case studies should not simply describe learning experiences—they should let visitors enter, explore, and understand the subject through the interface.
+4. Pangram Pangram Foundry	Expressive typography, editorial confidence, dynamic browsing, and the treatment of content as something visitors can manipulate. Its card/list switching and interactive type specimens influenced the dual-mode work archive and stronger typographic hierarchy.
+5. Igloo Inc.	Art direction across photography, video, set design, motion, and web. This inspired the recommendation that your photography, video, sound, interface, and typography should feel like one directed visual world—not separate portfolio ingredients.
+6. Opal Tadpole	Precision, minimalism, product-focused interaction, and disciplined use of motion. It influenced the idea that your technical work can feel premium and striking without overwhelming the visitor with constant effects.
+7. Noomo Agency	Immersive storytelling that still prioritizes usability. Noomo’s work combines narrative, animation, interaction, and 3D while remaining centered on the user. This influenced the editorial case-study structure and the balance between experimentation and recruiter-friendly navigation.
+8. The Other Side of Truth	Emotional narrative, strong visual transitions, deliberate calls to action, and a sense that scrolling reveals an argument rather than merely another section. This influenced the act-based homepage structure and the progressive reveal of your leadership point of view.
+9. Messenger by Abeto	A completely coherent interactive world with distinctive atmosphere, character, navigation, sound, and behavior. We would borrow its sense of authorship and wonder—not its game controls—to make your site feel like a place visitors enter rather than a document they skim.
+10. Don’t Board Me	Strong personality, playful illustration, motion-based process explanation, and an approachable way of explaining how a service works. It influenced the idea that your systems diagrams and workflows can be clear and human without becoming sterile corporate infographics.
+The closest references to our actual direction
+
+The most important five are:
+
+Lusion v3 for multimedia and technical demonstration
+Persepolis Reimagined for immersive education
+Lando Norris for cinematic pacing and media direction
+Pangram Pangram for editorial typography and interaction
+Noomo Agency for balancing experimentation with usable portfolio storytelling
+
+Your finished portfolio should feel like the intersection of those five—but grounded in learning science, technical curriculum, audio, AI systems, and your personal creative identity.

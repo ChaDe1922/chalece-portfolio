@@ -74,6 +74,14 @@
   --ring: #6d5ae6;
   --link: #5b45cc; /* accessible violet for text/links, 6.09:1 */
   --coral: #ff6b5e; /* decorative only, never body text on paper */
+  /* Color-coded formula symbols, legible on the light card surface. */
+  --formula-signal: #334155;
+  --formula-amp: #6d4fd0;
+  --formula-sin: #b3760a;
+  --formula-neutral: #5a6472;
+  --formula-freq: #d8412f;
+  --formula-time: #0d9488;
+  --formula-phase: #2563eb;
   --chart-1: #6d5ae6;
   --chart-2: #ff6b5e;
   --chart-3: #5b45cc;
@@ -113,6 +121,14 @@
   --ring: #9b8cf0;
   --link: #9b8cf0; /* lighter violet, 6.33:1 on near-black */
   --coral: #ff8478;
+  /* Color-coded formula symbols, brightened for the dark card surface. */
+  --formula-signal: #cbd5e1;
+  --formula-amp: #a99cf5;
+  --formula-sin: #e6b25a;
+  --formula-neutral: #9aa6b6;
+  --formula-freq: #ff8478;
+  --formula-time: #2dd4bf;
+  --formula-phase: #85a8f8;
   --chart-1: #9b8cf0;
   --chart-2: #ff8478;
   --chart-3: #6d5ae6;

@@ -35,9 +35,10 @@ export function AboutSection() {
             <p>
               I am a learning experience designer and technologist who turns
               complex, technical material into learning that sticks. I started
-              in audio engineering and studio operations, earned a B.A. and an
-              M.S. in Music Technology from Georgia Tech, where my graduate
-              research used music to help toddlers build early literacy, and
+              in audio engineering and studio operations, earned a B.A. from
+              Bethune-Cookman University and an M.S. in Music Technology from
+              Georgia Tech, where my graduate research used music to help
+              toddlers build early literacy, and
               built a decade-long career around one idea: that hard things
               become learnable when you design for the learner, not the spec.
             </p>
@@ -73,14 +74,14 @@ export function AboutSection() {
           </Reveal>
 
           <Reveal className="about-photo order-first lg:order-none lg:pt-2 print:order-2">
-            <div className="about-figure relative mx-auto aspect-[4/5] w-full max-w-[16rem] overflow-hidden rounded-2xl border border-border bg-muted sm:max-w-xs lg:mx-0 print:mx-0 print:max-w-[11rem]">
+            <div className="about-figure relative mx-auto aspect-square w-full max-w-[16rem] overflow-hidden rounded-2xl border border-border bg-muted sm:max-w-xs lg:mx-0 print:mx-0 print:max-w-[11rem]">
               {site.hasHeadshot ? (
                 <Image
                   src={site.headshotPath}
                   alt={`${site.name}, learning experience designer and technologist`}
                   fill
                   sizes="(min-width: 640px) 20rem, 16rem"
-                  className="object-cover object-[22%_center]"
+                  className="object-cover object-top"
                 />
               ) : (
                 <div

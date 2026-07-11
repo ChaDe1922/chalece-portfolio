@@ -5,7 +5,7 @@ import { useReducedMotion } from "motion/react";
 import { Play, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { recursionLab } from "@/data/recursion-lab";
-import { RichText } from "@/components/lab/recursion/rich-text";
+import { RichText } from "@/components/lab/rich-text";
 import { NoBaseCasePlates } from "@/components/lab/recursion/no-base-case-plates";
 import { useWebGLSupport } from "@/components/lab/recursion/mirror-tunnel/use-webgl-support";
 

@@ -7,7 +7,7 @@ import { FolderInput, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDeck } from "@/components/deck/deck-context";
 import { recursionLab } from "@/data/recursion-lab";
-import { Emphasize } from "@/components/lab/recursion/emphasize";
+import { Emphasize } from "@/components/lab/emphasize";
 import { Dolls2DFallback } from "@/components/lab/recursion/dolls-2d-fallback";
 import { useWebGLSupport } from "@/components/lab/recursion/mirror-tunnel/use-webgl-support";
 

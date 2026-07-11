@@ -2,7 +2,7 @@
 
 import { ArrowLeft, ArrowUpRight, Check, FileDown, GraduationCap, Mail } from "lucide-react";
 import { recursionLab } from "@/data/recursion-lab";
-import { RichText } from "@/components/lab/recursion/rich-text";
+import { RichText } from "@/components/lab/rich-text";
 import { CursorTrail } from "@/components/cursor-glow";
 import { ClickRipple } from "@/components/click-ripple";
 import { site } from "@/data/site";

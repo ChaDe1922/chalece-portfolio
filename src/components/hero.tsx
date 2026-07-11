@@ -38,6 +38,15 @@ export function Hero() {
           actually finish and use. Seven published Coursera courses, 30,630+
           learners. M.S. Music Technology, Georgia Tech.
         </p>
+        {/* Print-only: a clickable link to the interactive lessons. Hidden on
+            screen (the hero CTA below covers that); shown in the PDF, where the
+            absolute URL becomes a clickable annotation. */}
+        <p className="mt-5 hidden text-base text-muted-foreground print:block">
+          Try an interactive lesson:{" "}
+          <a className="text-link underline" href={`${site.url}/lab`}>
+            chalece-portfolio.vercel.app/lab
+          </a>
+        </p>
         <div className="enter enter-4 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center print:hidden">
           <MagneticButton href="#work">
             See my work

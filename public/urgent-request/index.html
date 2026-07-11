@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Resolve every relative asset path (styles.css, script.js, assets/*) against
+         this folder. Next.js strips the trailing slash from /urgent-request/, which
+         would otherwise make relative URLs resolve against the site root and 404.
+         Absolute links (/, /lab) and the mailto are unaffected by <base>. -->
+    <base href="/urgent-request/" />
+    <title>The Urgent Request</title>
+    <meta
+      name="description"
+      content="A short, scenario-based security-awareness module. Learn the red flags of an urgent-payment scam, then read a message and decide how to respond."
+    />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f5f2" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17161d" />
+
+    <!-- No-flash theme: honor the portfolio's saved choice (shared localStorage
+         key "theme"), else follow the OS. Runs before the stylesheet. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          var dark =
+            t === "dark" ||
+            (t !== "light" &&
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Fonts: Space Grotesk headings, Inter body, with a system fallback. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236d5ae6'/%3E%3Cpath d='M16 7l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9v-6l8-3z' fill='none' stroke='%23fff' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <!-- Top bar: Back button + clickable progress stepper -->
+    <div class="topbar">
+      <button type="button" class="navback" id="navback" aria-label="Go back" disabled>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+      </button>
+      <nav class="stepper" id="stepper" aria-label="Lesson progress">
+        <button type="button" class="step" data-step="0" aria-label="Go to: Welcome"></button>
+        <button type="button" class="step" data-step="1" aria-label="Go to: Learn"></button>
+        <button type="button" class="step" data-step="2" aria-label="Go to: The message"></button>
+        <button type="button" class="step" data-step="3" aria-label="Go to: Spot the red flags"></button>
+        <button type="button" class="step" data-step="4" aria-label="Go to: Anatomy of the attack"></button>
+        <button type="button" class="step" data-step="5" aria-label="Go to: Your decision"></button>
+        <button type="button" class="step" data-step="6" aria-label="Go to: Report it"></button>
+        <button type="button" class="step" data-step="7" aria-label="Go to: Results"></button>
+      </nav>
+      <button type="button" class="navtheme" id="navtheme" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      </button>
+    </div>
+
+    <main class="stage" id="stage">
+      <!-- ============================ SCREEN 1 · TITLE ============================ -->
+      <section class="screen" id="screen-title" data-screen="title">
+        <article class="card card--title">
+          <div class="title-row">
+            <div class="title-main">
+              <p class="eyebrow">Security awareness · interactive scenario</p>
+              <h1 class="screen__title" id="title-heading" tabindex="-1">The Urgent Request</h1>
+              <p class="lede">A 3-minute decision that protects your company.</p>
+              <p class="body">
+                You will read a message, decide how to respond, and see what happens.
+                Spot the red flags and choose the safe move.
+              </p>
+            </div>
+            <div class="title-art" aria-hidden="true">
+              <svg class="ping" viewBox="0 0 120 120" width="120" height="120">
+                <circle class="ping__ring" cx="60" cy="60" r="24" style="--rd: 0s"></circle>
+                <circle class="ping__ring" cx="60" cy="60" r="33" style="--rd: 0.18s"></circle>
+                <circle class="ping__ring" cx="60" cy="60" r="42" style="--rd: 0.36s"></circle>
+                <g class="ping__glyph">
+                  <rect x="40" y="47" width="40" height="28" rx="5"></rect>
+                  <path d="M41 50l19 14 19-14"></path>
+                </g>
+                <circle class="ping__alert" cx="81" cy="44" r="7.5"></circle>
+              </svg>
+            </div>
+          </div>
+
+          <div class="objectives">
+            <p class="objectives__title">By the end, you will be able to</p>
+            <ul class="objectives__list">
+              <li>Spot the red flags of an urgent-request scam.</li>
+              <li>Verify money or data requests through a channel you already trust.</li>
+              <li>Report it, to protect your whole team.</li>
+            </ul>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn btn--primary" data-action="start">Start</button>
+          </div>
+        </article>
+      </section>
+
+      <!-- ===================== SCREEN 2 · LEARN (TEACH PHASE) ===================== -->
+      <section class="screen" id="screen-learn" data-screen="learn" hidden>
+        <article class="card">
+          <p class="eyebrow">First, the basics</p>
+          <h2 class="screen__title" id="learn-heading" tabindex="-1">How an <button type="button" class="click-word"><span class="click-word-text">urgent-request</span></button> scam works</h2>
+          <p class="body">
+            An urgent-request scam is a message that uses pressure and a trusted name to rush you into
+            sending money or data before you stop to check.
+          </p>
+
+          <div class="ltabs" data-learn-tabs>
+            <p class="ltabs__instruction">
+              Explore all three tabs below to learn more about this social-engineering attack.
+            </p>
+            <div class="ltabs__list" role="tablist" aria-label="What to know before you decide">
+              <button type="button" class="ltab" role="tab" id="lt-how" aria-controls="lp-how" aria-selected="true">
+                <span class="ltab__label">How the scam works</span>
+                <span class="ltab__status" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="ltab" role="tab" id="lt-flags" aria-controls="lp-flags" aria-selected="false" tabindex="-1">
+                <span class="ltab__label">Red flags to spot</span>
+                <span class="ltab__status" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="ltab" role="tab" id="lt-safe" aria-controls="lp-safe" aria-selected="false" tabindex="-1">
+                <span class="ltab__label">The safe move</span>
+                <span class="ltab__status" aria-hidden="true"></span>
+              </button>
+            </div>
+
+            <div class="ltab__panel" role="tabpanel" id="lp-how" aria-labelledby="lt-how" tabindex="0">
+              <p>
+                Attackers impersonate someone you trust, like a boss, a vendor, or a coworker, and they
+                pile on pressure so you act before you think.
+              </p>
+              <p>The goal is almost always money, card or login details, or sensitive data.</p>
+            </div>
+
+            <div class="ltab__panel" role="tabpanel" id="lp-flags" aria-labelledby="lt-flags" tabindex="0" hidden>
+              <p class="flags__intro">
+                Five tells show up again and again. Hover or focus each one to see an example.
+              </p>
+
+              <ul class="flag-list">
+                <li class="flag-item" tabindex="0">
+                  <span class="flag-item__row">
+                    <span class="flag-item__marker" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3.5 1.5v13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><path d="M3.5 2.5h7l-1.5 2.2 1.5 2.2h-7z" fill="currentColor"></path></svg>
+                    </span>
+                    <span class="flag-item__title">Extreme urgency or a tight deadline</span>
+                  </span>
+                  <span class="flag-item__example">Example: "Wire this in the next 10 minutes before the window closes."</span>
+                </li>
+                <li class="flag-item" tabindex="0">
+                  <span class="flag-item__row">
+                    <span class="flag-item__marker" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3.5 1.5v13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><path d="M3.5 2.5h7l-1.5 2.2 1.5 2.2h-7z" fill="currentColor"></path></svg>
+                    </span>
+                    <span class="flag-item__title">Pressure to keep it secret or skip normal steps</span>
+                  </span>
+                  <span class="flag-item__example">Example: "Keep this between us until I tell you it is done."</span>
+                </li>
+                <li class="flag-item" tabindex="0">
+                  <span class="flag-item__row">
+                    <span class="flag-item__marker" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3.5 1.5v13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><path d="M3.5 2.5h7l-1.5 2.2 1.5 2.2h-7z" fill="currentColor"></path></svg>
+                    </span>
+                    <span class="flag-item__title">A lookalike or external email domain</span>
+                  </span>
+                  <span class="flag-item__example">Example: a note from payroll@acme-hr-portal.com</span>
+                </li>
+                <li class="flag-item" tabindex="0">
+                  <span class="flag-item__row">
+                    <span class="flag-item__marker" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3.5 1.5v13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><path d="M3.5 2.5h7l-1.5 2.2 1.5 2.2h-7z" fill="currentColor"></path></svg>
+                    </span>
+                    <span class="flag-item__title">A request for money, card details, or login credentials</span>
+                  </span>
+                  <span class="flag-item__example">Example: "Send the card number and CVV so I can pay the vendor."</span>
+                </li>
+                <li class="flag-item" tabindex="0">
+                  <span class="flag-item__row">
+                    <span class="flag-item__marker" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3.5 1.5v13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><path d="M3.5 2.5h7l-1.5 2.2 1.5 2.2h-7z" fill="currentColor"></path></svg>
+                    </span>
+                    <span class="flag-item__title">A link or attachment to act on under pressure</span>
+                  </span>
+                  <span class="flag-item__example">Example: "Open the attached invoice and enable editing to approve."</span>
+                </li>
+              </ul>
+
+              <div class="not-flag">
+                <span class="not-flag__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>
+                </span>
+                <p>
+                  <span class="not-flag__tag">Not a red flag</span>
+                  A sender using your first name. Personalization is normal in everyday email.
+                </p>
+              </div>
+            </div>
+
+            <div class="ltab__panel" role="tabpanel" id="lp-safe" aria-labelledby="lt-safe" tabindex="0" hidden>
+              <p class="safe-lead">
+                <span class="safe-lead__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8.6 3h6.8L21 8.6v6.8L15.4 21H8.6L3 15.4V8.6L8.6 3z"></path>
+                    <path d="M8.5 8.5l7 7M15.5 8.5l-7 7"></path>
+                  </svg>
+                </span>
+                <strong>Do not act on the message itself.</strong>
+              </p>
+              <p>
+                Verify the request through a channel you already trust, like calling the person on a
+                known number or checking in person. Then report it to your security team.
+              </p>
+              <p>One report can protect everyone.</p>
+            </div>
+
+            <p class="ltabs__progress" id="learn-progress" role="status" aria-live="polite">1 of 3 read</p>
+          </div>
+
+          <div class="actions">
+            <button
+              type="button"
+              class="btn btn--primary is-locked"
+              id="learn-continue"
+              data-action="to-scenario"
+              aria-describedby="learn-gate-hint"
+              disabled
+            >
+              See the message
+            </button>
+            <span class="gate-hint" id="learn-gate-hint">Open all three tabs to continue.</span>
+          </div>
+        </article>
+      </section>
+
+      <!-- ===================== SCREEN 3 · SCENARIO (WORK LAPTOP) ===================== -->
+      <section class="screen" id="screen-scenario" data-screen="scenario" hidden>
+        <h2 class="visually-hidden" id="scenario-heading" tabindex="-1">
+          A new message on your work laptop
+        </h2>
+
+        <div class="deskscene">
+          <img
+            class="deskscene__photo"
+            src="assets/blankLaptop.png"
+            alt="A laptop open on an office desk"
+          />
+          <div class="deskscene__stage">
+              <!-- Phase 1: the notification pops in over the work laptop -->
+              <button
+                type="button"
+                class="laptop__notif"
+                id="laptop-notif"
+                aria-label="Open message: one new message, marked Urgent, from Daniel Okafor, CFO"
+              >
+                <span class="laptop__notif-head">
+                  <span class="laptop__notif-app"
+                    ><span class="laptop__notif-dot" aria-hidden="true"></span> Mail</span
+                  >
+                  <span class="laptop__notif-urgent">Urgent</span>
+                </span>
+                <span class="laptop__notif-title">New message from Daniel Okafor, CFO</span>
+                <span class="laptop__notif-hint">Click to open</span>
+              </button>
+
+              <!-- Phase 2: the email opens on the screen -->
+              <div
+                class="laptop__email"
+                id="laptop-email"
+                tabindex="-1"
+                aria-label="Message from Daniel Okafor"
+                hidden
+              >
+                <p class="email__banner">This message is from outside your organization.</p>
+                <header class="email__head">
+                  <div class="email__avatar" aria-hidden="true">DO</div>
+                  <dl class="email__meta">
+                    <div class="email__row">
+                      <dt>From</dt>
+                      <dd>
+                        <span class="email__from-name">Daniel Okafor, CFO</span>
+                        <span class="email__addr"
+                          >daniel.okafor@<span class="lookalike"
+                            >finance-corp-secure.com<span class="visually-hidden">
+                              (external sender domain, not your company)</span
+                            ></span
+                          ></span
+                        >
+                      </dd>
+                    </div>
+                    <div class="email__row">
+                      <dt>Subject</dt>
+                      <dd class="email__subject">Need this handled in the next 15 minutes</dd>
+                    </div>
+                  </dl>
+                </header>
+                <p class="email__deadline">
+                  <span class="countdown" id="countdown" aria-hidden="true">Reply needed in 15:00</span>
+                </p>
+                <div class="email__body" id="email-body">
+                  <p>
+                    I'm about to step into a board meeting and can't talk. We need to wire $24,800 to a
+                    new vendor today to close a deal. Don't loop in anyone else yet, it's confidential.
+                    Send me the company card details and I'll forward the invoice after. I'll send you a
+                    secure payment link right after I'm out. Thanks, Daniel.
+                  </p>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <p class="caption" id="scenario-caption" hidden>Does anything look off?</p>
+        <div class="actions" id="scenario-actions" hidden>
+          <button type="button" class="btn btn--primary" data-action="to-kc">
+            Spot the red flags
+          </button>
+        </div>
+      </section>
+
+      <!-- ===================== SCREEN 4 · DECISION & COACHING ===================== -->
+      <section class="screen" id="screen-decision" data-screen="decision" hidden>
+        <!-- State: choices -->
+        <div class="decision" id="decision-choices">
+          <div class="coaching__text">
+            <h2 class="screen__title" id="decision-heading" tabindex="-1">How do you <button type="button" class="click-word"><span class="click-word-text">respond</span></button>?</h2>
+            <div class="choices" role="group" aria-labelledby="decision-heading">
+              <button type="button" class="choice" data-choice="A">
+                Reply with the company card details so the deal does not fall through.
+              </button>
+              <button type="button" class="choice" data-choice="B">
+                Click the link Daniel says he will send and follow the payment steps.
+              </button>
+              <button type="button" class="choice" data-choice="C">
+                Do not reply. Verify with Daniel through a known number or in person, and report the
+                message to security.
+              </button>
+            </div>
+          </div>
+          <img
+            class="coaching__img"
+            src="assets/assessment-images/01_thoughtful_woman_at_desk.png"
+            alt="A worker pausing to think at her laptop"
+          />
+        </div>
+
+        <!-- State: layer_A -->
+        <div class="layer layer--corrective" id="layer-A" role="status" aria-live="polite" hidden>
+          <article class="card coaching">
+            <div class="coaching__text">
+              <h3 class="coaching__title" id="layer-A-heading" tabindex="-1">
+                That is what the attacker wanted.
+              </h3>
+              <p class="body">
+                Sharing card details by message hands the attacker direct access to company funds.
+                The pressure and secrecy were the tell. A real executive expects you to verify a
+                money request.
+              </p>
+              <div class="actions">
+                <button type="button" class="btn btn--secondary" data-action="try-again">
+                  Try again
+                </button>
+              </div>
+            </div>
+            <img
+              class="coaching__img"
+              src="assets/assessment-images/02_stressed_man_at_desk.png"
+              alt="A worker looking stressed at his laptop"
+            />
+          </article>
+        </div>
+
+        <!-- State: layer_B -->
+        <div class="layer layer--corrective" id="layer-B" role="status" aria-live="polite" hidden>
+          <article class="card coaching">
+            <div class="coaching__text">
+              <h3 class="coaching__title" id="layer-B-heading" tabindex="-1">Risky move.</h3>
+              <p class="body">
+                Links sent under pressure can capture credentials, authorize payments, or install
+                malware, even if they look legitimate. The pressure and time crunch are
+                designed to stop you from checking. Verify the request through a known channel before
+                clicking anything.
+              </p>
+              <div class="actions">
+                <button type="button" class="btn btn--secondary" data-action="try-again">
+                  Try again
+                </button>
+              </div>
+            </div>
+            <img
+              class="coaching__img"
+              src="assets/assessment-images/03_risky_move_man_at_desk.png"
+              alt="A worker looking uneasy at his laptop"
+            />
+          </article>
+        </div>
+
+        <!-- State: layer_C -->
+        <div class="layer layer--correct" id="layer-C" role="status" aria-live="polite" hidden>
+          <article class="card coaching">
+            <div class="coaching__text">
+              <h3 class="coaching__title" id="layer-C-heading" tabindex="-1">Exactly right.</h3>
+              <p class="body">
+                You slowed down, verified through a trusted channel, and reported it. That single
+                habit stops most social-engineering attacks. Reporting also warns your whole team.
+              </p>
+              <div class="actions">
+                <button type="button" class="btn btn--primary" data-action="to-report">Continue</button>
+              </div>
+            </div>
+            <img
+              class="coaching__img"
+              src="assets/assessment-images/04_confident_woman_at_desk.png"
+              alt="A worker smiling confidently at her laptop"
+            />
+          </article>
+        </div>
+      </section>
+
+      <!-- ======================= SCREEN 5 · KNOWLEDGE CHECK ======================= -->
+      <section class="screen" id="screen-kc" data-screen="kc" hidden>
+        <h2 class="visually-hidden" id="kc-heading" tabindex="-1">Spot the red flags</h2>
+        <article class="card">
+          <form id="kc-form" novalidate>
+            <p class="kc__prompt" id="kc-prompt">Do you see any <button type="button" class="click-word click-word--danger"><span class="click-word-text">red flags</span></button> in this message?</p>
+            <p class="kc__subhead">Select all 4 that apply.</p>
+            <p class="kc__hint" id="kc-hint">
+              Drag each red flag into the box that explains why it is suspicious. On a keyboard,
+              select a phrase, then select a box. Two of these lines are normal and belong in no box.
+            </p>
+
+            <div class="kc-email" role="group" aria-labelledby="kc-prompt kc-hint">
+              <p class="email__banner">This message is from outside your organization.</p>
+              <div class="email__head">
+                <div class="email__avatar" aria-hidden="true">DO</div>
+                <dl class="email__meta">
+                  <div class="email__row">
+                    <dt>From</dt>
+                    <dd>
+                      <span class="email__from-name">Daniel Okafor, CFO</span>
+                      <span class="email__addr"
+                        >daniel.okafor@<button
+                          type="button"
+                          class="select-flag"
+                          data-flag="domain"
+                          draggable="true"
+                        >finance-corp-secure.com</button
+                        ></span
+                      >
+                    </dd>
+                  </div>
+                  <div class="email__row">
+                    <dt>Subject</dt>
+                    <dd>
+                      <button type="button" class="select-flag" data-flag="urgency" draggable="true">
+                        Need this handled in the next 15 minutes</button>
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+              <div class="email__body">
+                <p>
+                  I'm about to step into a board meeting and can't talk. We need to wire $24,800 to a
+                  new vendor today to close a deal.
+                  <button type="button" class="select-flag" data-flag="secrecy" draggable="true">
+                    Don't loop in anyone else yet, it's confidential.</button>
+                  <button type="button" class="select-flag" data-flag="money" draggable="true">
+                    Send me the company card details</button>
+                  and
+                  <button type="button" class="select-flag" data-flag="invoice" draggable="true">
+                    I'll forward the invoice after.</button>
+                  I'll send you a secure payment link right after I'm out.
+                  <button type="button" class="select-flag" data-flag="signoff" draggable="true">
+                    Thanks, Daniel.</button>
+                </p>
+              </div>
+            </div>
+
+            <div class="kc-bins" role="group" aria-label="Sort each red flag by why it is suspicious">
+              <div class="kc-bin" data-bin="urgency">
+                <button type="button" class="kc-bin__label" data-bin="urgency">Urgency</button>
+                <ul class="kc-bin__items" aria-label="Placed in Urgency"></ul>
+              </div>
+              <div class="kc-bin" data-bin="secrecy">
+                <button type="button" class="kc-bin__label" data-bin="secrecy">Secrecy</button>
+                <ul class="kc-bin__items" aria-label="Placed in Secrecy"></ul>
+              </div>
+              <div class="kc-bin" data-bin="domain">
+                <button type="button" class="kc-bin__label" data-bin="domain">Fake sender</button>
+                <ul class="kc-bin__items" aria-label="Placed in Fake sender"></ul>
+              </div>
+              <div class="kc-bin" data-bin="money">
+                <button type="button" class="kc-bin__label" data-bin="money">Money request</button>
+                <ul class="kc-bin__items" aria-label="Placed in Money request"></ul>
+              </div>
+            </div>
+
+            <p class="kc__feedback" id="kc-feedback" role="status" aria-live="polite"></p>
+            <p class="visually-hidden" id="kc-live" role="status" aria-live="polite"></p>
+
+            <div class="actions">
+              <button type="submit" class="btn btn--primary" id="kc-submit">Submit</button>
+              <button
+                type="button"
+                class="btn btn--primary"
+                id="kc-continue"
+                data-action="to-anatomy"
+                hidden
+              >
+                Continue
+              </button>
+            </div>
+          </form>
+        </article>
+      </section>
+
+      <!-- ===================== SCREEN 6 · ANATOMY (DEBRIEF) ===================== -->
+      <section class="screen" id="screen-anatomy" data-screen="anatomy" hidden>
+        <article class="card">
+          <p class="eyebrow">Anatomy of the attack</p>
+          <h2 class="screen__title" id="anatomy-heading" tabindex="-1">
+            Here is what gave it away
+          </h2>
+          <p class="body">
+            The same message, with every red flag highlighted. Select each one to see why it is a
+            tell.
+            <span class="counter" id="hotspot-counter" role="status" aria-live="polite"
+              >Found 0 of 5 red flags.</span
+            >
+          </p>
+
+          <!-- Annotated email: each flagged phrase is a hotspot button -->
+          <div class="card annotated">
+            <p class="email__banner">This message is from outside your organization.</p>
+            <p class="annotated__row">
+              <span class="annotated__label">From:</span> Daniel Okafor, CFO &middot; daniel.okafor@<button
+                type="button"
+                class="hotspot"
+                data-flag="domain"
+                aria-expanded="false"
+                aria-controls="pop-domain"
+              >
+                finance-corp-secure.com</button
+              >
+            </p>
+            <p id="pop-domain" class="popover" role="status" hidden>
+              This is a lookalike external domain, not your company's real domain. The name is
+              built to look trustworthy.
+            </p>
+
+            <p class="annotated__row">
+              <span class="annotated__label">Subject:</span>
+              <button
+                type="button"
+                class="hotspot"
+                data-flag="urgency"
+                aria-expanded="false"
+                aria-controls="pop-urgency"
+              >
+                Need this handled in the next 15 minutes</button
+              >
+            </p>
+            <p id="pop-urgency" class="popover" role="status" hidden>
+              Extreme urgency and a tight deadline are designed to make you act before you can
+              think.
+            </p>
+
+            <div class="annotated__body">
+              <p>
+                I'm about to step into a board meeting and can't talk. We need to wire $24,800 to a
+                new vendor today to close a deal.
+                <button
+                  type="button"
+                  class="hotspot"
+                  data-flag="secrecy"
+                  aria-expanded="false"
+                  aria-controls="pop-secrecy"
+                >
+                  Don't loop in anyone else yet, it's confidential.</button
+                >
+                <button
+                  type="button"
+                  class="hotspot"
+                  data-flag="money"
+                  aria-expanded="false"
+                  aria-controls="pop-money"
+                >
+                  Send me the company card details</button
+                >
+                and I'll forward the invoice after.
+                <button
+                  type="button"
+                  class="hotspot"
+                  data-flag="link"
+                  aria-expanded="false"
+                  aria-controls="pop-link"
+                >
+                  I'll send you a secure payment link right after I'm out.</button
+                >
+                Thanks, Daniel.
+              </p>
+            </div>
+            <p id="pop-secrecy" class="popover" role="status" hidden>
+              Pressure to keep it secret stops you from checking with anyone who might catch the
+              scam.
+            </p>
+            <p id="pop-money" class="popover" role="status" hidden>
+              A request to move money and share card details is the attacker's goal. Treat it as a
+              stop signal.
+            </p>
+            <p id="pop-link" class="popover" role="status" hidden>
+              A link to act on under pressure can capture credentials or trigger a payment. Verify
+              before clicking anything.
+            </p>
+          </div>
+
+          <!-- Side-by-side address breakdown -->
+          <h3 class="subhead">Check the address</h3>
+          <p class="body">
+            The display name can say anything. What matters is the domain, the part right before .com.
+          </p>
+          <div class="addr-compare">
+            <div class="addr-row addr-row--real">
+              <span class="addr-tag addr-tag--real">Real</span>
+              <span class="addr-text"
+                >daniel.okafor@<span class="addr-domain addr-domain--good">yourcompany.com</span></span
+              >
+            </div>
+            <div class="addr-row addr-row--fake">
+              <span class="addr-tag addr-tag--fake">Fake</span>
+              <span class="addr-text"
+                >daniel.okafor@<span class="addr-domain addr-domain--bad"
+                  >finance-corp-secure.com</span
+                ></span
+              >
+            </div>
+          </div>
+          <button
+            type="button"
+            class="addr-reveal"
+            data-addr-reveal
+            aria-expanded="false"
+            aria-controls="addr-tip"
+          >
+            Why is this one fake?
+          </button>
+          <p id="addr-tip" class="popover" hidden>
+            The word right before .com is who really owns the address. Yours is "yourcompany"; this
+            sender's is "finance-corp-secure", an outside domain dressed up to look official.
+          </p>
+
+          <div class="actions">
+            <button type="button" class="btn btn--primary" data-action="to-decision">Continue</button>
+          </div>
+        </article>
+      </section>
+
+      <!-- ===================== SCREEN 7 · REPORT IT (COMPOSE) ===================== -->
+      <section class="screen" id="screen-report" data-screen="report" hidden>
+        <div class="report__head">
+          <p class="eyebrow eyebrow--center">One more step</p>
+          <h2 class="screen__title" id="report-heading" tabindex="-1">
+            <button type="button" class="click-word"><span class="click-word-text">Report</span></button> it
+            the right way
+          </h2>
+          <p class="report__intro">
+            Build the report on the laptop. Drag each piece into the message, or tap it. Two of the three
+            choices in each step are wrong.
+          </p>
+        </div>
+
+        <div class="deskscene deskscene--report">
+          <img class="deskscene__photo" src="assets/blankLaptop.png" alt="" />
+          <div class="deskscene__stage is-reading">
+            <div class="compose" id="report-compose" aria-live="polite">
+              <p class="compose__step" id="report-step"></p>
+              <dl class="compose__template" id="report-template">
+                <div class="compose__row" data-slot="to">
+                  <dt>To</dt>
+                  <dd class="compose__slot" id="slot-to"></dd>
+                </div>
+                <div class="compose__row" data-slot="subject">
+                  <dt>Subject</dt>
+                  <dd class="compose__slot" id="slot-subject"></dd>
+                </div>
+                <div class="compose__row" data-slot="body">
+                  <dt>Message</dt>
+                  <dd class="compose__slot" id="slot-body"></dd>
+                </div>
+              </dl>
+              <p class="compose__prompt" id="report-prompt"></p>
+              <div class="compose__options" id="report-options"></div>
+              <p class="compose__note" id="report-note" role="status" aria-live="polite"></p>
+              <div class="compose__actions">
+                <button type="button" class="btn btn--primary" id="report-next" hidden>Next</button>
+              </div>
+            </div>
+
+            <div class="report-sent" id="report-sent" hidden>
+              <span class="report-sent__check" aria-hidden="true">
+                <svg viewBox="0 0 52 52" width="58" height="58">
+                  <circle class="report-sent__ring" cx="26" cy="26" r="23" fill="none" stroke-width="3"></circle>
+                  <path class="report-sent__tick" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M15 27l7 7 15-16"></path>
+                </svg>
+              </span>
+              <p class="report-sent__title">Report sent</p>
+              <p class="report-sent__body">Security can warn the team and block the sender.</p>
+              <div class="actions">
+                <button type="button" class="btn btn--primary" id="report-continue" data-action="to-results">
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="visually-hidden" id="report-live" role="status" aria-live="polite"></p>
+      </section>
+
+      <!-- ========================== SCREEN 8 · RESULTS ========================== -->
+      <section class="screen" id="screen-results" data-screen="results" hidden>
+        <article class="card">
+          <div class="badge" id="badge" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path class="badge__shield" d="M32 6l20 7v14c0 13-9 21-20 25-11-4-20-12-20-25V13l20-7z"></path>
+              <path class="badge__check" d="M22 32l7 7 14-14"></path>
+            </svg>
+          </div>
+          <p class="eyebrow eyebrow--center">Module complete</p>
+          <h2 class="screen__title screen__title--center" id="results-heading" tabindex="-1">
+            The move that protects everyone
+          </h2>
+
+          <div class="recap">
+            <div class="recap__item">
+              <span class="recap__label">What you found</span>
+              <p id="recap-found"></p>
+            </div>
+          </div>
+
+          <p class="recap__heading">What you learned</p>
+          <ol class="process">
+            <li class="process__step">
+              <span class="process__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+              </span>
+              <span class="process__text">Slow down. Urgency is a pressure tactic.</span>
+            </li>
+            <li class="process__step">
+              <span class="process__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"></path><path d="M9 12l2 2 4-4"></path></svg>
+              </span>
+              <span class="process__text"
+                >Verify money, credential, or data requests through a known channel.</span
+              >
+            </li>
+            <li class="process__step">
+              <span class="process__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M4 5h12l-2 4 2 4H4"></path></svg>
+              </span>
+              <span class="process__text">Report it. One report protects the whole team.</span>
+            </li>
+          </ol>
+
+          <p class="closing">Spotting one red flag is enough to stop the attack.</p>
+          <p class="verdict" id="results-verdict"></p>
+
+          <div class="outro">
+            <p class="outro__lead">
+              I'm Chalece DeLaCoudray, a learning experience designer and technologist. If this is the kind
+              of learning you want to build, let's talk.
+            </p>
+            <div class="outro__contacts">
+              <a class="contact-card" href="mailto:cdelacoudray@gmail.com">
+                <span class="contact-card__top">
+                  <svg class="contact-card__icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7.5l9 6 9-6"></path></svg>
+                  <svg class="contact-card__arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"></path><path d="M8 7h9v9"></path></svg>
+                </span>
+                <span class="contact-card__label">Email</span>
+                <span class="contact-card__value">cdelacoudray@gmail.com</span>
+              </a>
+              <a class="contact-card" href="https://www.linkedin.com/in/chalecedelacoudray" target="_blank" rel="noopener noreferrer">
+                <span class="contact-card__top">
+                  <svg class="contact-card__icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM.5 8h4V24h-4zM8 8h3.83v2.2h.05c.53-1 1.84-2.2 3.78-2.2 4.04 0 4.79 2.66 4.79 6.11V24h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V24H8z"></path></svg>
+                  <svg class="contact-card__arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"></path><path d="M8 7h9v9"></path></svg>
+                </span>
+                <span class="contact-card__label">LinkedIn</span>
+                <span class="contact-card__value">in/chalecedelacoudray</span>
+                <span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+              <a class="contact-card" href="https://www.coursera.org/instructor/~88911140" target="_blank" rel="noopener noreferrer">
+                <span class="contact-card__top">
+                  <svg class="contact-card__icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-5"></path></svg>
+                  <svg class="contact-card__arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"></path><path d="M8 7h9v9"></path></svg>
+                </span>
+                <span class="contact-card__label">Coursera</span>
+                <span class="contact-card__value">7 published courses</span>
+                <span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </div>
+            <div class="outro__nav">
+              <a class="btn btn--primary" href="/">Back to portfolio</a>
+              <a class="btn btn--secondary" href="/lab">More lesson examples</a>
+              <button type="button" class="btn btn--ghost" data-action="restart">Restart</button>
+            </div>
+          </div>
+        </article>
+        <div class="confetti" id="confetti" aria-hidden="true"></div>
+      </section>
+    </main>
+
+    <footer class="colophon">
+      <p>An interactive learning demo by Chalece DeLaCoudray.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
