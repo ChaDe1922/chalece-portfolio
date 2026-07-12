@@ -364,34 +364,38 @@
    the pointer path (mouse move or finger drag) while moving and fades out when
    it stops. The component does not mount under reduced-motion. Soft radial dots
    (no filter blur) keep many short-lived elements cheap. */
-/* ---- Signal-node reticle cursor: a minimal glowing node + measurement ticks
-   that ACCOMPANIES (never replaces) the native cursor. Fine-pointer only; never
-   intercepts input. Position is set by JS transform; the reticle scales up over
-   interactive elements via [data-active]. ---- */
-.signal-cursor {
+/* ---- Ripple-on-move cursor: faint signal rings emitted along the pointer path
+   (throttled by travel) so moving the cursor "sends signal". Skips the hero,
+   where the wave field ripples under the cursor instead. ---- */
+.cursor-ripple-layer {
   position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 60;
+  inset: 0;
+  z-index: 55;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  will-change: transform;
-  color: #8e75ff; /* signal iris */
 }
-.signal-cursor .reticle {
-  opacity: 0.72;
-  transition:
-    transform 0.18s ease,
-    opacity 0.18s ease;
-  filter: drop-shadow(0 0 4px color-mix(in oklch, #8e75ff 55%, transparent));
+.cursor-ripple {
+  position: fixed;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px; /* center on the path point */
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklch, #8e75ff 55%, transparent);
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: cursor-ripple 0.75s ease-out forwards;
 }
-.signal-cursor[data-active="true"] .reticle {
-  transform: scale(1.5);
-  opacity: 1;
+@keyframes cursor-ripple {
+  from {
+    transform: scale(0.4);
+    opacity: 0.55;
+  }
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
 }
 @media print {
-  .signal-cursor {
+  .cursor-ripple-layer {
     display: none !important;
   }
 }

@@ -62,6 +62,8 @@ export function SignalField({ className }: { className?: string }) {
     if (!mount || !interactive) return;
     const el = containerRef.current;
     if (!el) return;
+    let lastRx = -999;
+    let lastRy = -999;
     const onMove = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
       const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
@@ -69,6 +71,21 @@ export function SignalField({ className }: { className?: string }) {
       const inside = nx >= -1.05 && nx <= 1.05 && ny >= -1.05 && ny <= 1.05;
       store.pointerX = inside ? nx : -3;
       store.pointerY = inside ? ny : -3;
+      // Ripple-on-move: emit a field ripple every ~55px of travel over the hero,
+      // so the cursor continuously sends signal through the waves.
+      if (inside) {
+        const dx = e.clientX - lastRx;
+        const dy = e.clientY - lastRy;
+        if (dx * dx + dy * dy > 55 * 55) {
+          lastRx = e.clientX;
+          lastRy = e.clientY;
+          const h = store.rippleHead;
+          store.ripples[h * 3] = (e.clientX - r.left) / r.width;
+          store.ripples[h * 3 + 1] = 1 - (e.clientY - r.top) / r.height;
+          store.ripples[h * 3 + 2] = store.time;
+          store.rippleHead = (h + 1) % RIPPLE_MAX;
+        }
+      }
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);

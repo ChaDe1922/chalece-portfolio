@@ -30,8 +30,8 @@ export type SignalStore = {
 /** Full cinematic intro length (seconds). */
 export const INTRO_DURATION = 3.8;
 
-/** Max concurrent click ripples in the hero wave field. */
-export const RIPPLE_MAX = 6;
+/** Max concurrent ripples in the hero wave field (click + move trail). */
+export const RIPPLE_MAX = 10;
 
 export function makeSignalStore(introSeen: boolean): SignalStore {
   const ripples = new Float32Array(RIPPLE_MAX * 3);
