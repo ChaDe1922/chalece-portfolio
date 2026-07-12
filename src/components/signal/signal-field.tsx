@@ -55,43 +55,43 @@ export function SignalField({ className }: { className?: string }) {
 
   // Pointer position writes straight to the plain store (no React render). Drives
   // the hover reveal (a spotlight that uncovers the waves under the cursor).
+  // Listens on window so the spotlight follows the cursor across the WHOLE hero:
+  // the field sits behind the copy, so a container-level listener would flicker
+  // off wherever the text covers it. Parked off-screen when the cursor leaves.
   React.useEffect(() => {
     if (!mount || !interactive) return;
     const el = containerRef.current;
     if (!el) return;
     const onMove = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
-      store.pointerX = ((e.clientX - r.left) / r.width) * 2 - 1;
-      store.pointerY = ((e.clientY - r.top) / r.height) * 2 - 1;
+      const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+      const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
+      const inside = nx >= -1.05 && nx <= 1.05 && ny >= -1.05 && ny <= 1.05;
+      store.pointerX = inside ? nx : -3;
+      store.pointerY = inside ? ny : -3;
     };
-    const onLeave = () => {
-      // Park the spotlight off-screen so the reveal fades out on leave.
-      store.pointerX = -3;
-      store.pointerY = -3;
-    };
-    el.addEventListener("pointermove", onMove, { passive: true });
-    el.addEventListener("pointerleave", onLeave);
-    return () => {
-      el.removeEventListener("pointermove", onMove);
-      el.removeEventListener("pointerleave", onLeave);
-    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
   }, [mount, interactive, store]);
 
-  // A click sends a ripple through the wave field (works on touch too).
+  // A click anywhere over the hero sends a ripple through the wave field.
   React.useEffect(() => {
     if (!mount) return;
     const el = containerRef.current;
     if (!el) return;
     const onDown = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
+      const u = (e.clientX - r.left) / r.width;
+      const v = 1 - (e.clientY - r.top) / r.height;
+      if (u < 0 || u > 1 || v < 0 || v > 1) return; // outside the hero
       const h = store.rippleHead;
-      store.ripples[h * 3] = (e.clientX - r.left) / r.width;
-      store.ripples[h * 3 + 1] = 1 - (e.clientY - r.top) / r.height;
+      store.ripples[h * 3] = u;
+      store.ripples[h * 3 + 1] = v;
       store.ripples[h * 3 + 2] = store.time;
       store.rippleHead = (h + 1) % RIPPLE_MAX;
     };
-    el.addEventListener("pointerdown", onDown);
-    return () => el.removeEventListener("pointerdown", onDown);
+    window.addEventListener("pointerdown", onDown);
+    return () => window.removeEventListener("pointerdown", onDown);
   }, [mount, store]);
 
   // Scroll-driven morph: as the hero scrolls away, the one signal line morphs

@@ -47,8 +47,8 @@ export function HeroSignalCanvas({
       {quality === "high" ? (
         <EffectComposer>
           <Bloom
-            intensity={0.95}
-            luminanceThreshold={0.3}
+            intensity={0.5}
+            luminanceThreshold={0.35}
             luminanceSmoothing={0.25}
             mipmapBlur
           />

@@ -67,7 +67,7 @@ const FRAG = /* glsl */ `
         + 0.022 * sin(x * 21.0 - uTime * 0.42 + fi * 0.9);
       float d = abs((uv.y + rippleDisp) - w);
       field += smoothstep(0.009, 0.0, d);
-      glow += smoothstep(0.07, 0.0, d) * 0.16;
+      glow += smoothstep(0.07, 0.0, d) * 0.11;
     }
 
     // Scroll reveal wavefront (bottom -> up).
@@ -83,9 +83,9 @@ const FRAG = /* glsl */ `
 
     vec3 col = mix(uCyan, uIris, x);
     float amp = (field + glow) * vis
-      + edge * (field + 0.5)
-      + hover * (field + glow) * 0.7          // extra glow under the cursor
-      + rippleGlow * (field + 0.6) * 1.4;     // punchier ripple ring
+      + edge * (field + 0.4)
+      + hover * (field + glow) * 0.45         // extra glow under the cursor
+      + rippleGlow * (field + 0.6) * 1.15;    // ripple ring
     gl_FragColor = vec4(col * amp, amp);
   }
 `;
@@ -102,7 +102,10 @@ function updateWavefield(
   aspect: number,
 ) {
   const u = mat.uniforms;
-  u.uTime.value += Math.min(delta, 0.05);
+  // Drive the shader clock from store.time so click ripples (stamped with
+  // store.time) share the same clock and actually render.
+  store.time += Math.min(delta, 0.05);
+  u.uTime.value = store.time;
   // Uncover completes by ~55% of the hero scroll, while the hero is still in view.
   u.uReveal.value = smooth01(0, 0.55, store.scroll);
   (u.uPointer.value as THREE.Vector2).set(
