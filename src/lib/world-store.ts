@@ -7,12 +7,14 @@
  */
 
 export type WorldStore = {
-  /** 0..1 progress through the current approach (far -> arrived in the room). */
+  /** 0..1 progress through the whole Act I journey (hero -> Codio room). */
   worldProgress: number;
   /** Elapsed seconds, advanced by the frame loop, so the waves stay alive. */
   time: number;
+  /** 1 = hero fully visible, 0 = past the doorway (crossfades hero -> world). */
+  heroFade: number;
 };
 
 export function makeWorldStore(): WorldStore {
-  return { worldProgress: 0, time: 0 };
+  return { worldProgress: 0, time: 0, heroFade: 1 };
 }

@@ -25,11 +25,12 @@ export function WorldCanvas({
       dpr={quality === "high" ? [1, 1.75] : [1, 1.25]}
       gl={{ powerPreference: "low-power", antialias: false, alpha: true }}
     >
+      <color attach="background" args={["#09090d"]} />
       <fogExp2 attach="fog" args={["#09090d", 0.028]} />
       <WorldScene store={store} />
       {quality === "high" ? (
         <EffectComposer>
-          <Bloom intensity={0.5} luminanceThreshold={0.3} luminanceSmoothing={0.25} mipmapBlur />
+          <Bloom intensity={0.32} luminanceThreshold={0.5} luminanceSmoothing={0.28} mipmapBlur />
         </EffectComposer>
       ) : null}
     </Canvas>

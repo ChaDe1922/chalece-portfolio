@@ -6,13 +6,18 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
 import { SIGNAL_CYAN, SIGNAL_IRIS } from "@/components/signal/hero-morph";
+import { cameraAt } from "@/components/world/camera-rig";
+import {
+  Act1Decor,
+  makeAct1Decor,
+  updateDecor,
+} from "@/components/world/act1-decor";
 import type { WorldStore } from "@/lib/world-store";
 
 // A living 3D wave terrain the camera flies through: a floor and ceiling of
 // animated wave-lines receding into the fog. The waves flow over time (alive);
 // the camera dollies forward as the approach scroll advances.
 const START_Z = 16;
-const END_Z = -64;
 const ROW_STEP = 1.8;
 const FLOOR_ROWS = 64;
 const CEIL_ROWS = 44;
@@ -27,8 +32,6 @@ const smooth01 = (a: number, b: number, x: number) => {
   const t = clamp01((x - a) / (b - a));
   return t * t * (3 - 2 * t);
 };
-const ease = (t: number) => t * t * (3 - 2 * t);
-const lerp = THREE.MathUtils.lerp;
 
 /** Flowing wave height at (x, z) and time t. */
 function waveY(x: number, z: number, t: number): number {
@@ -95,6 +98,39 @@ function buildWorld(): BuiltWorld {
   addBand(FLOOR_ROWS, FLOOR_Y, 1, 0.6);
   addBand(CEIL_ROWS, CEIL_Y, -1, 0.32);
 
+  // Corridor walls: static wave-lines running along z at x = ±6.2 (the stat
+  // plaques sit on these). Kept in `mats` for the world fade, not in `rows`, so
+  // they stay still while the floor/ceiling flow.
+  const WALL_X_W = 6.2;
+  const WALL_LINES_V = 9;
+  const WN = 60;
+  for (const side of [-1, 1]) {
+    for (let i = 0; i < WALL_LINES_V; i++) {
+      const y = (i / (WALL_LINES_V - 1) - 0.5) * 9;
+      const pos = new Float32Array((WN + 1) * 3);
+      for (let s = 0; s <= WN; s++) {
+        const z = 4 - (s / WN) * 32; // +4 down to -28
+        const wob =
+          0.35 * Math.sin(z * 0.5 + i * 0.9) + 0.15 * Math.sin(z * 1.1 + i);
+        pos[s * 3] = side * WALL_X_W + side * wob;
+        pos[s * 3 + 1] = y + 0.2 * Math.sin(z * 0.4 + i);
+        pos[s * 3 + 2] = z;
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      const mat = new THREE.LineBasicMaterial({
+        color: cyan.clone().lerp(iris, i / WALL_LINES_V),
+        transparent: true,
+        opacity: 0,
+        toneMapped: false,
+      });
+      mat.userData.faint = 0.32;
+      disposables.push(geo, mat);
+      mats.push(mat);
+      root.add(new THREE.Line(geo, mat));
+    }
+  }
+
   return { root, rows, mats, disposables };
 }
 
@@ -119,9 +155,8 @@ function updateWorld(
   }
   for (const m of w.mats) m.opacity = fade * (m.userData.faint as number);
 
-  // Fly forward through the terrain as the approach advances.
-  camera.position.z = lerp(START_Z, END_Z, ease(p));
-  camera.position.y = 1.2;
+  // Fly the storyboard camera path (dolly -> through -> turn -> rise).
+  cameraAt(p, camera as THREE.PerspectiveCamera);
 }
 
 /**
@@ -131,17 +166,22 @@ function updateWorld(
  */
 export function WorldScene({ store }: { store: WorldStore }) {
   const world = React.useMemo(() => buildWorld(), []);
+  const decor = React.useMemo(() => makeAct1Decor(), []);
   React.useEffect(
     () => () => world.disposables.forEach((d) => d.dispose()),
     [world],
   );
 
-  useFrame((state, delta) => updateWorld(world, store, state.camera, delta));
+  useFrame((state, delta) => {
+    updateWorld(world, store, state.camera, delta);
+    updateDecor(decor, state.camera);
+  });
 
   return (
     <>
-      <PerspectiveCamera makeDefault position={[0, 1.2, START_Z]} fov={62} near={0.1} far={90} />
+      <PerspectiveCamera makeDefault position={[0, 1.2, 20]} fov={62} near={0.1} far={120} />
       <primitive object={world.root} />
+      <Act1Decor decor={decor} />
     </>
   );
 }
