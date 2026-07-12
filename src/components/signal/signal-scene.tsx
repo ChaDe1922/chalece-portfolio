@@ -123,11 +123,12 @@ function buildOutlines(
   for (let i = 0; i < count; i++) {
     const xn = elementX(i, count, lane.seed);
     xs.push(xn);
+    // Plain (non-additive) so the frame reads as a crisp faint outline like the
+    // loved SVG, not a glowing rectangle.
     const mat = new THREE.LineBasicMaterial({
       color: toneColor(lane, xn, c).clone(),
       transparent: true,
       opacity: laneAlpha(xn),
-      blending: THREE.AdditiveBlending,
     });
     disposables.push(mat);
     const o = new THREE.LineSegments(edges, mat);
@@ -258,12 +259,14 @@ function updateLane(l: Lane3D, assemble: number, scroll: number) {
   const la = phasedAssemble(assemble, l.lane.phase);
   const fade = 1 - mergeFactor(scroll);
   const n = l.items.length;
+  const y = wy(l.lane.center);
   for (let i = 0; i < n; i++) {
     const xn = l.xs[i];
     const item = l.items[i] as THREE.Mesh;
-    item.position.y = wy(l.lane.center * (1 - convergeAt(xn, scroll)));
-    // Scale is draw-in only; the merge dissolves elements via opacity so they
-    // fade out cleanly instead of collapsing into shrinking dark boxes.
+    // Discrete elements stay in their lane and DISSOLVE in place (opacity) as the
+    // merge progresses. Only the lines converge to the node, so nothing slides to
+    // centre and lingers as a glowing ghost. Scale is draw-in only.
+    item.position.y = y;
     item.scale.setScalar(laneReveal(la, i, n));
     (item.material as THREE.Material).opacity = laneAlpha(xn) * fade;
   }

@@ -3,9 +3,10 @@ import { MagneticButton } from "@/components/magnetic-button";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { site } from "@/data/site";
+import { continuedLearningSummary } from "@/data/learning";
 
 const highlights = [
-  "Seven published Coursera courses on DevOps, OS, CI/CD and more, 30,630+ learners reached.",
+  "Ten published Coursera courses on DevOps, OS, CI/CD and more, 48,000+ learners reached.",
   "M.S. Music Technology, Georgia Tech (3.75 GPA), plus a B.A. from Bethune-Cookman University.",
   "Led Audio Quality and Hardware Compatibility programs at Amazon Music.",
   "Published research at ACM CHI 2020, with practical AI-tooling proficiency.",
@@ -26,21 +27,29 @@ export function ResumeSection() {
         </Reveal>
 
         <Reveal className="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-center print:mt-5">
-          <ul className="resume-highlights space-y-4">
-            {highlights.map((line) => (
-              <li key={line} className="flex gap-3">
-                <span
-                  aria-hidden="true"
-                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground"
-                >
-                  <Check className="size-4" />
-                </span>
-                <span className="text-base leading-relaxed text-foreground/90 print:text-[15px]">
-                  {line}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <ul className="resume-highlights space-y-4">
+              {highlights.map((line) => (
+                <li key={line} className="flex gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground"
+                  >
+                    <Check className="size-4" />
+                  </span>
+                  <span className="text-base leading-relaxed text-foreground/90 print:text-[15px]">
+                    {line}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground print:text-[13px]">
+              <span className="font-medium text-foreground/80">
+                Continued learning:
+              </span>{" "}
+              {continuedLearningSummary}
+            </p>
+          </div>
 
           <div className="lg:justify-self-end print:hidden">
             <MagneticButton

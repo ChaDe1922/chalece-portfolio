@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { site } from "@/data/site";
+import { continuedLearning } from "@/data/learning";
 
 const skills = [
   "Learning experience design",
@@ -43,9 +44,9 @@ export function AboutSection() {
               become learnable when you design for the learner, not the spec.
             </p>
             <p>
-              At Codio I authored seven published Coursera courses, on DevOps,
+              At Codio I authored ten published Coursera courses, on DevOps,
               containers, CI/CD, operating systems, and more, reaching over
-              thirty thousand learners. At Amazon Music I led technical programs
+              48,000 learners. At Amazon Music I led technical programs
               and stood up the systems behind them. Along the way I co-founded
               an athletics-development venture, mentored young coders, published
               research at ACM CHI, and work fluently with AI tooling to
@@ -67,6 +68,25 @@ export function AboutSection() {
                     <Badge variant="outline" className="font-normal">
                       {skill}
                     </Badge>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="pt-2">
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                Continued learning
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Courses I have completed myself, separate from the ten I authored.
+              </p>
+              <ul className="mt-3 space-y-2 text-base leading-relaxed text-foreground/85 sm:text-[15px]">
+                {continuedLearning.map((item) => (
+                  <li key={item.source}>
+                    <span className="font-medium text-foreground">
+                      {item.source}:
+                    </span>{" "}
+                    {item.detail}
                   </li>
                 ))}
               </ul>

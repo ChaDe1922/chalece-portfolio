@@ -74,8 +74,9 @@ export function phasedAssemble(assemble: number, phase: number): number {
 }
 
 /** How much a lane has merged into the single path (fade its own identity).
- *  Starts a touch earlier so discrete elements dissolve before they cluster. */
-export const mergeFactor = (scroll: number) => smooth(0.4, 0.82, scroll);
+ *  Early so the discrete elements dissolve in place before the merged path
+ *  forms, leaving no lingering ghosts. */
+export const mergeFactor = (scroll: number) => smooth(0.22, 0.5, scroll);
 /** How present the single merged iris path is. */
 export const mergedPathAlpha = (scroll: number) => smooth(0.55, 0.95, scroll);
 /** Opacity ramp: dim on the raw left, bright by the aligning middle. */

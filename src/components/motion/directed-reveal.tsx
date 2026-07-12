@@ -81,9 +81,9 @@ export function DirectedReveal({
                 scale: 1,
                 autoAlpha: 1,
                 rotateZ: 0,
-                duration: 1.0,
-                ease: "back.out(1.3)",
-                stagger: 0.14,
+                duration: 1.1,
+                ease: "power3.out",
+                stagger: 0.13,
               },
             );
           } else {

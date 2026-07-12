@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Resume",
   description:
-    "Resume highlights for Chalece DeLaCoudray: 7 published Coursera courses, 30,630+ learners, M.S. Music Technology from Georgia Tech. Full PDF one click away.",
+    "Resume highlights for Chalece DeLaCoudray: 10 published Coursera courses, 48,000+ learners, M.S. Music Technology from Georgia Tech. Full PDF one click away.",
   path: "/resume",
 });
 

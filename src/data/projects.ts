@@ -27,7 +27,7 @@ export type MediaAsset = {
 };
 
 export type Metric = {
-  /** Display string, e.g. "30,630+" or "M.S." Allows non-numeric values. */
+  /** Display string, e.g. "48,000+" or "M.S." Allows non-numeric values. */
   value: string;
   label: string;
   /** Optional numeric target so a MetricStrip can count up (reuses StatBlock). */
@@ -106,9 +106,9 @@ export const projects: Project[] = [
     slug: "codio-course-ecosystem",
     title: "Codio and the Coursera Course Ecosystem",
     shortTitle: "Codio × Coursera",
-    thesis: "Seven technical courses. One repeatable learning system.",
+    thesis: "Ten technical courses. One repeatable learning system.",
     summary:
-      "I owned course development end to end across DevOps, containers, operating systems, CI/CD, Unix, Bash scripting, and web security. The work combined technical accuracy, clear explanation, hands-on labs, assessments, media, and quality assurance into a system that has reached more than 30,630 learners.",
+      "I owned course development end to end across DevOps, containers, operating systems, CI/CD, Unix, Bash scripting, and web security, including a four-course Introduction to Operating Systems specialization. The work combined technical accuracy, clear explanation, hands-on labs, assessments, media, and quality assurance into a system that has reached more than 48,000 learners.",
     role: [
       "Curriculum developer and course owner",
       "Assessment design",
@@ -119,18 +119,18 @@ export const projects: Project[] = [
     formats: ["Written", "Code labs", "Assessments", "Visuals"],
     dateRange: "",
     metrics: [
-      { value: "7", label: "Published courses", countTo: 7, verified: true },
+      { value: "10", label: "Published courses", countTo: 10, verified: true },
       {
-        value: "30,630+",
+        value: "48,000+",
         label: "Learners reached",
-        countTo: 30630,
+        countTo: 48000,
         suffix: "+",
         verified: true,
       },
     ],
     highlights: [
-      "7 published courses",
-      "30,630+ learners",
+      "10 published courses",
+      "48,000+ learners",
       "Technical and beginner audiences",
       "Curriculum, assessment, media, and QA",
     ],

@@ -35,7 +35,7 @@ export function Hero() {
         </h1>
         <p className="enter enter-3 mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl print:text-base">
           Ten years turning complex technical content into learning people
-          actually finish and use. Seven published Coursera courses, 30,630+
+          actually finish and use. Ten published Coursera courses, 48,000+
           learners. M.S. Music Technology, Georgia Tech.
         </p>
         {/* Print-only: a clickable link to the interactive lessons. Hidden on
