@@ -1,83 +1,37 @@
 import { cn } from "@/lib/utils";
 import {
-  LANES,
-  NEUTRAL,
-  RESOLVE_COLOR,
-  NODE_COUNT,
-  FRAME_COUNT,
-  PATHWAY_COUNT,
-  CODE_COUNT,
-  WAVEFORM_SAMPLES,
-  convergeFactor,
-  laneAlpha,
-  laneTint,
-  resolveTint,
-  laneYNorm,
-  waveY,
-  elementX,
-  type Lane,
-} from "@/components/signal/signal-lanes";
+  FOCAL_X,
+  FOCAL_Y,
+  SIGNAL_CYAN,
+  SIGNAL_IRIS,
+  SKILL_CORE,
+  stillPoint,
+  type Pt,
+} from "@/components/signal/hero-morph";
 
-// Normalized -> SVG space (viewBox 0 0 640 480). Resolve point at (600, 240).
-// Art starts at x=102 (~16%) so each lane begins right next to its DOM label.
-const RX = 600;
-const RY = 240;
-const sx = (xn: number) => 102 + xn * (RX - 102);
-const sy = (yn: number) => RY - yn * 185;
-
-function mix(a: string, b: string, t: number): string {
-  const pa = [1, 3, 5].map((i) => parseInt(a.slice(i, i + 2), 16));
-  const pb = [1, 3, 5].map((i) => parseInt(b.slice(i, i + 2), 16));
-  const c = pa.map((v, i) => Math.round(v + (pb[i] - v) * t));
-  return `#${c.map((v) => v.toString(16).padStart(2, "0")).join("")}`;
-}
-/** Per-element color: neutral on the raw left, accent through the middle, iris
- *  as it nears the resolve. */
-const tone = (lane: Lane, xn: number) =>
-  mix(mix(NEUTRAL, lane.color, laneTint(xn)), RESOLVE_COLOR, resolveTint(xn));
-
-const baseline = (lane: Lane, xn: number) => lane.center * (1 - convergeFactor(xn));
+// Normalized -> SVG space (viewBox 0 0 640 480). The still sweeps left->right.
+const sx = (xn: number) => 40 + xn * 560;
+const sy = (yn: number) => 240 - yn * 150;
 
 /**
- * Static hero signal field. Reads left-to-right: five raw signals (Sound, Data,
- * Motion, Curriculum, Code) start scattered and dim on the left, align and
- * brighten through the middle, and converge into one glowing point (skill) on
- * the right. This is the first paint / no-WebGL / reduced-motion / context-loss
- * state; the WebGL scene mirrors this exact composition. Decorative
- * (aria-hidden): the H1 and the DOM labels carry the meaning.
+ * Static hero signal field: one completed editorial still of the morph's full
+ * journey. Reads left-to-right as one luminous line that is a raw waveform on
+ * the left, gains structure through the middle, and resolves into the glowing
+ * "skill" node on the right. This is the first paint / LCP / no-WebGL /
+ * reduced-motion / context-loss state; the WebGL scene animates the same form.
+ * Decorative (aria-hidden): the H1 carries the meaning.
  */
 export function StaticSignalField({ className }: { className?: string }) {
-  const wave = LANES[0];
-  const nodes = LANES[1];
-  const frames = LANES[2];
-  const pathway = LANES[3];
-  const code = LANES[4];
-
-  // Waveform path (baseline bend + wave, noisy left -> clean right).
-  const wavePts: string[] = [];
-  for (let i = 0; i <= WAVEFORM_SAMPLES; i++) {
-    const xn = i / WAVEFORM_SAMPLES;
-    const yn = baseline(wave, xn) + waveY(xn);
-    wavePts.push(`${sx(xn).toFixed(1)} ${sy(yn).toFixed(1)}`);
+  const N = 160;
+  const p: Pt = { x: 0, y: 0 };
+  const pts: string[] = [];
+  for (let i = 0; i <= N; i++) {
+    stillPoint(i / N, p);
+    pts.push(`${sx(p.x).toFixed(1)} ${sy(p.y).toFixed(1)}`);
   }
-  const wavePath = `M ${wavePts.join(" L ")}`;
-
-  const nodePts = Array.from({ length: NODE_COUNT }, (_, i) => {
-    const xn = elementX(i, NODE_COUNT, nodes.seed);
-    return { xn, x: sx(xn), y: sy(laneYNorm(nodes, xn)) };
-  });
-  const framePts = Array.from({ length: FRAME_COUNT }, (_, i) => {
-    const xn = elementX(i, FRAME_COUNT, frames.seed);
-    return { xn, x: sx(xn), y: sy(laneYNorm(frames, xn)) };
-  });
-  const pathPts = Array.from({ length: PATHWAY_COUNT }, (_, i) => {
-    const xn = elementX(i, PATHWAY_COUNT, pathway.seed);
-    return { xn, x: sx(xn), y: sy(laneYNorm(pathway, xn)) };
-  });
-  const codePts = Array.from({ length: CODE_COUNT }, (_, i) => {
-    const xn = elementX(i, CODE_COUNT, code.seed);
-    return { xn, x: sx(xn), y: sy(laneYNorm(code, xn)) };
-  });
+  const path = `M ${pts.join(" L ")}`;
+  const fx = sx(FOCAL_X);
+  const fy = sy(FOCAL_Y);
 
   return (
     <svg
@@ -88,116 +42,38 @@ export function StaticSignalField({ className }: { className?: string }) {
     >
       <defs>
         <linearGradient
-          id="sig-wave"
+          id="morph-line"
           gradientUnits="userSpaceOnUse"
           x1="40"
           y1="0"
-          x2={RX}
+          x2="600"
           y2="0"
         >
-          <stop offset="0" stopColor={NEUTRAL} stopOpacity="0.12" />
-          <stop offset="0.5" stopColor={wave.color} stopOpacity="0.85" />
-          <stop offset="1" stopColor={RESOLVE_COLOR} stopOpacity="1" />
+          <stop offset="0" stopColor={SIGNAL_CYAN} stopOpacity="0.25" />
+          <stop offset="0.55" stopColor={SIGNAL_CYAN} stopOpacity="0.85" />
+          <stop offset="1" stopColor={SIGNAL_IRIS} stopOpacity="1" />
         </linearGradient>
-        <radialGradient id="sig-glow">
-          <stop offset="0" stopColor={RESOLVE_COLOR} stopOpacity="0.55" />
-          <stop offset="0.55" stopColor={RESOLVE_COLOR} stopOpacity="0.16" />
-          <stop offset="1" stopColor={RESOLVE_COLOR} stopOpacity="0" />
+        <radialGradient id="morph-glow">
+          <stop offset="0" stopColor={SIGNAL_IRIS} stopOpacity="0.55" />
+          <stop offset="0.55" stopColor={SIGNAL_IRIS} stopOpacity="0.16" />
+          <stop offset="1" stopColor={SIGNAL_IRIS} stopOpacity="0" />
         </radialGradient>
       </defs>
 
-      {/* Waveform */}
-      <g data-layer="waveform">
-        <path d={wavePath} fill="none" stroke="url(#sig-wave)" strokeWidth="2" />
-      </g>
+      <path
+        d={path}
+        fill="none"
+        stroke="url(#morph-line)"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
 
-      {/* Data nodes */}
-      <g data-layer="nodes">
-        <polyline
-          points={nodePts.map((p) => `${p.x},${p.y}`).join(" ")}
-          fill="none"
-          stroke={nodes.color}
-          strokeWidth="1.25"
-          opacity="0.35"
-        />
-        {nodePts.map((p, i) => (
-          <circle
-            key={i}
-            cx={p.x}
-            cy={p.y}
-            r={2.5 + p.xn * 2.5}
-            fill={tone(nodes, p.xn)}
-            opacity={laneAlpha(p.xn)}
-          />
-        ))}
-      </g>
-
-      {/* Film frames */}
-      <g data-layer="frames">
-        {framePts.map((p, i) => (
-          <rect
-            key={i}
-            x={p.x - 12}
-            y={p.y - 9}
-            width="24"
-            height="18"
-            rx="3"
-            fill="none"
-            stroke={tone(frames, p.xn)}
-            strokeWidth="1.5"
-            opacity={laneAlpha(p.xn)}
-          />
-        ))}
-      </g>
-
-      {/* Curriculum pathway */}
-      <g data-layer="pathway">
-        <polyline
-          points={pathPts.map((p) => `${p.x},${p.y}`).join(" ")}
-          fill="none"
-          stroke={pathway.color}
-          strokeWidth="1.25"
-          opacity="0.3"
-        />
-        {pathPts.map((p, i) => (
-          <rect
-            key={i}
-            x={p.x - 11}
-            y={p.y - 9}
-            width="22"
-            height="18"
-            rx="4"
-            fill={tone(pathway, p.xn)}
-            opacity={laneAlpha(p.xn) * 0.9}
-          />
-        ))}
-      </g>
-
-      {/* Code tokens */}
-      <g data-layer="code">
-        {codePts.map((p, i) => {
-          const w = 10 + p.xn * 26;
-          return (
-            <line
-              key={i}
-              x1={p.x - w / 2}
-              y1={p.y}
-              x2={p.x + w / 2}
-              y2={p.y}
-              stroke={tone(code, p.xn)}
-              strokeWidth="4"
-              strokeLinecap="round"
-              opacity={laneAlpha(p.xn)}
-            />
-          );
-        })}
-      </g>
-
-      {/* Resolve node (the focal "skill") - no radiating lines */}
+      {/* Resolve node (the focal "skill") */}
       <g data-layer="resolve">
-        <circle cx={RX} cy={RY} r="52" fill="url(#sig-glow)" />
-        <circle cx={RX} cy={RY} r="7" fill={RESOLVE_COLOR} />
-        <circle cx={RX} cy={RY} r="3" fill="#e7ddff" />
+        <circle cx={fx} cy={fy} r="52" fill="url(#morph-glow)" />
+        <circle cx={fx} cy={fy} r="7" fill={SIGNAL_IRIS} />
+        <circle cx={fx} cy={fy} r="3" fill={SKILL_CORE} />
       </g>
     </svg>
   );

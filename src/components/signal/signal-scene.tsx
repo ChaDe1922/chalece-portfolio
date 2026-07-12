@@ -5,232 +5,102 @@ import * as React from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import {
-  LANES,
-  NEUTRAL,
-  RESOLVE_COLOR,
-  NODE_COUNT,
-  FRAME_COUNT,
-  PATHWAY_COUNT,
-  CODE_COUNT,
-  WAVEFORM_SAMPLES,
-  laneAlpha,
-  laneTint,
-  resolveTint,
-  convergeAt,
-  phasedAssemble,
-  mergeFactor,
-  mergedPathAlpha,
-  waveY,
-  elementX,
-  laneReveal,
-  type Lane,
-} from "@/components/signal/signal-lanes";
+  SAMPLE_COUNT,
+  FOCAL_X,
+  FOCAL_Y,
+  SIGNAL_IRIS,
+  SKILL_CORE,
+  morphPoint,
+  brightness,
+  colorAt,
+  type Pt,
+} from "@/components/signal/hero-morph";
 import { INTRO_DURATION, type SignalStore } from "@/lib/signal-store";
 
-// Normalized -> WebGL space. Resolve point at (5, 0); art starts at x=-3.5
-// (~16% from left) so each lane begins right next to its DOM label.
-const wx = (xn: number) => -3.5 + xn * 8.5;
-// Scale chosen so a lane's centre projects to `50 - center*LANE_VSPAN` at the
-// settled camera (z=10, fov 42, half-height ~3.839), matching labels + SVG.
-const wy = (yn: number) => yn * 2.96;
+// Normalized -> WebGL space. The form spans the box; the skill node sits at
+// FOCAL_X (right of centre). Scale chosen to sit comfortably at the settled
+// camera (z=10, fov 42).
+const wx = (xn: number) => -4.0 + xn * 8.0;
+const wy = (yn: number) => yn * 2.6;
 
-const NEUTRAL_C = new THREE.Color(NEUTRAL);
-const RESOLVE_C = new THREE.Color(RESOLVE_COLOR);
 const lerp = THREE.MathUtils.lerp;
 const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
-/** Neutral -> accent -> iris tone (full brightness; faintness comes from
- *  material opacity, matching the SVG's clean look rather than dark ghosts). */
-function toneColor(lane: Lane, xn: number, out: THREE.Color): THREE.Color {
-  out.copy(NEUTRAL_C).lerp(new THREE.Color(lane.color), laneTint(xn));
-  out.lerp(RESOLVE_C, resolveTint(xn));
-  return out;
-}
-/** For vertex-colored lines (no per-vertex alpha): keep a floor so the raw left
- *  reads as faint, never a hard black smear. */
-function dimVertex(lane: Lane, xn: number, out: THREE.Color): THREE.Color {
-  toneColor(lane, xn, out);
-  return out.multiplyScalar(0.42 + 0.58 * laneAlpha(xn));
-}
-
-type Lane3D = { lane: Lane; items: THREE.Object3D[]; xs: number[] };
-
-type BuiltField = {
+type BuiltMorph = {
   root: THREE.Group;
-  waveform: THREE.Line;
-  nodes: Lane3D;
-  frames: Lane3D;
-  pathway: Lane3D;
-  code: THREE.LineSegments;
-  mergedPath: THREE.Line;
+  line: THREE.Line;
   resolve: THREE.Group;
+  haloMat: THREE.MeshBasicMaterial;
   burstRing: THREE.Mesh;
+  baseColor: THREE.Color;
   disposables: Array<THREE.BufferGeometry | THREE.Material>;
 };
 
-/** Filled elements (nodes, curriculum blocks): faint on the left via opacity. */
-function buildFilled(
-  lane: Lane,
-  count: number,
-  makeGeo: () => THREE.BufferGeometry,
-  disposables: BuiltField["disposables"],
-  bright = false,
-): Lane3D {
-  const geo = makeGeo();
-  disposables.push(geo);
-  const c = new THREE.Color();
-  const items: THREE.Object3D[] = [];
-  const xs: number[] = [];
-  for (let i = 0; i < count; i++) {
-    const xn = elementX(i, count, lane.seed);
-    xs.push(xn);
-    const mat = new THREE.MeshBasicMaterial({
-      color: toneColor(lane, xn, c).clone(),
-      transparent: true,
-      opacity: laneAlpha(xn),
-      depthWrite: false,
-      // Additive over the dark field: faint elements read as a faint glow, never
-      // a dark "shadow" box.
-      blending: THREE.AdditiveBlending,
-      toneMapped: !(bright && xn > 0.72),
-    });
-    disposables.push(mat);
-    const m = new THREE.Mesh(geo, mat);
-    m.position.set(wx(xn), wy(lane.center), 0);
-    m.scale.setScalar(0);
-    items.push(m);
-  }
-  return { lane, items, xs };
-}
-
-/** Outline elements (film frames): rect outlines, faint on the left, matching
- *  the SVG's stroke-only frames (never filled ghost blocks). */
-function buildOutlines(
-  lane: Lane,
-  count: number,
-  w: number,
-  h: number,
-  disposables: BuiltField["disposables"],
-): Lane3D {
-  const plane = new THREE.PlaneGeometry(w, h);
-  const edges = new THREE.EdgesGeometry(plane);
-  plane.dispose();
-  disposables.push(edges);
-  const c = new THREE.Color();
-  const items: THREE.Object3D[] = [];
-  const xs: number[] = [];
-  for (let i = 0; i < count; i++) {
-    const xn = elementX(i, count, lane.seed);
-    xs.push(xn);
-    // Plain (non-additive) so the frame reads as a crisp faint outline like the
-    // loved SVG, not a glowing rectangle.
-    const mat = new THREE.LineBasicMaterial({
-      color: toneColor(lane, xn, c).clone(),
-      transparent: true,
-      opacity: laneAlpha(xn),
-    });
-    disposables.push(mat);
-    const o = new THREE.LineSegments(edges, mat);
-    o.position.set(wx(xn), wy(lane.center), 0);
-    o.scale.setScalar(0);
-    items.push(o);
-  }
-  return { lane, items, xs };
-}
-
-function buildSignalField(quality: "high" | "low"): BuiltField {
+function buildMorphField(quality: "high" | "low"): BuiltMorph {
   const root = new THREE.Group();
-  const disposables: BuiltField["disposables"] = [];
-  const c = new THREE.Color();
+  const disposables: BuiltMorph["disposables"] = [];
+  const seg = quality === "high" ? 20 : 12;
 
-  // waveform (Sound)
-  const wave = LANES[0];
-  const wGeo = new THREE.BufferGeometry();
-  const wPos = new Float32Array((WAVEFORM_SAMPLES + 1) * 3);
-  const wCol = new Float32Array((WAVEFORM_SAMPLES + 1) * 3);
-  for (let i = 0; i <= WAVEFORM_SAMPLES; i++) {
-    const xn = i / WAVEFORM_SAMPLES;
-    wPos[i * 3] = wx(xn);
-    wPos[i * 3 + 1] = wy(wave.center + waveY(xn));
-    dimVertex(wave, xn, c);
-    wCol[i * 3] = c.r;
-    wCol[i * 3 + 1] = c.g;
-    wCol[i * 3 + 2] = c.b;
+  // The single signal line (one polyline that morphs waveform->...->skill).
+  const geo = new THREE.BufferGeometry();
+  const pos = new Float32Array(SAMPLE_COUNT * 3);
+  const col = new Float32Array(SAMPLE_COUNT * 3);
+  const scratch: Pt = { x: 0, y: 0 };
+  const base = new THREE.Color(colorAt(0));
+  for (let i = 0; i < SAMPLE_COUNT; i++) {
+    const u = i / (SAMPLE_COUNT - 1);
+    morphPoint(0, u, 0, scratch);
+    pos[i * 3] = wx(scratch.x);
+    pos[i * 3 + 1] = wy(scratch.y);
+    pos[i * 3 + 2] = 0;
+    const b = brightness(u);
+    col[i * 3] = base.r * b;
+    col[i * 3 + 1] = base.g * b;
+    col[i * 3 + 2] = base.b * b;
   }
-  wGeo.setAttribute("position", new THREE.BufferAttribute(wPos, 3));
-  wGeo.setAttribute("color", new THREE.BufferAttribute(wCol, 3));
-  const wMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 1 });
-  disposables.push(wGeo, wMat);
-  const waveform = new THREE.Line(wGeo, wMat);
-
-  const nodes = buildFilled(LANES[1], NODE_COUNT, () => new THREE.SphereGeometry(0.09, 12, 12), disposables, true);
-  const frames = buildOutlines(LANES[2], FRAME_COUNT, 0.34, 0.24, disposables);
-  const pathway = buildFilled(LANES[3], PATHWAY_COUNT, () => new THREE.PlaneGeometry(0.3, 0.22), disposables, true);
-
-  // code tokens (dashes)
-  const code = LANES[4];
-  const codeGeo = new THREE.BufferGeometry();
-  const codePos = new Float32Array(CODE_COUNT * 2 * 3);
-  const codeCol = new Float32Array(CODE_COUNT * 2 * 3);
-  for (let i = 0; i < CODE_COUNT; i++) {
-    const xn = elementX(i, CODE_COUNT, code.seed);
-    const y = wy(code.center);
-    const w = 0.12 + xn * 0.4;
-    dimVertex(code, xn, c);
-    const set = (o: number, xx: number) => {
-      codePos[o] = xx;
-      codePos[o + 1] = y;
-      codePos[o + 2] = 0;
-      codeCol[o] = c.r;
-      codeCol[o + 1] = c.g;
-      codeCol[o + 2] = c.b;
-    };
-    set(i * 6, wx(xn) - w);
-    set(i * 6 + 3, wx(xn) + w);
-  }
-  codeGeo.setAttribute("position", new THREE.BufferAttribute(codePos, 3));
-  codeGeo.setAttribute("color", new THREE.BufferAttribute(codeCol, 3));
-  const codeMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 1 });
-  disposables.push(codeGeo, codeMat);
-  const codeSeg = new THREE.LineSegments(codeGeo, codeMat);
-
-  // the single merged path (fades in as the lanes collapse to centre)
-  const mpGeo = new THREE.BufferGeometry();
-  mpGeo.setAttribute(
-    "position",
-    new THREE.BufferAttribute(new Float32Array([wx(0), 0, 0, 5, 0, 0]), 3),
-  );
-  const mpMat = new THREE.LineBasicMaterial({
-    color: RESOLVE_C.clone(),
+  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+  const mat = new THREE.LineBasicMaterial({
+    vertexColors: true,
     transparent: true,
-    opacity: 0,
+    opacity: 1,
     toneMapped: false,
   });
-  disposables.push(mpGeo, mpMat);
-  const mergedPath = new THREE.Line(mpGeo, mpMat);
+  disposables.push(geo, mat);
+  const line = new THREE.Line(geo, mat);
 
-  // resolve node (the glowing "skill" focal point) - no radiating lines
+  // Resolve node (the glowing "skill" focal point): halo + core + spark.
   const resolve = new THREE.Group();
-  const coreGeo = new THREE.SphereGeometry(0.16, 20, 20);
-  const coreMat = new THREE.MeshBasicMaterial({ color: RESOLVE_C.clone(), toneMapped: false });
-  const haloGeo = new THREE.SphereGeometry(0.34, 20, 20);
+  const irisC = new THREE.Color(SIGNAL_IRIS);
+  const haloGeo = new THREE.SphereGeometry(0.36, seg, seg);
   const haloMat = new THREE.MeshBasicMaterial({
-    color: RESOLVE_C.clone(),
+    color: irisC.clone(),
     transparent: true,
-    opacity: 0.3,
-    toneMapped: false,
+    opacity: 0.2,
     depthWrite: false,
+    toneMapped: false,
   });
-  disposables.push(coreGeo, coreMat, haloGeo, haloMat);
-  resolve.add(new THREE.Mesh(haloGeo, haloMat), new THREE.Mesh(coreGeo, coreMat));
-  resolve.position.set(5, 0, 0);
+  const coreGeo = new THREE.SphereGeometry(0.16, seg, seg);
+  const coreMat = new THREE.MeshBasicMaterial({ color: irisC.clone(), toneMapped: false });
+  const sparkGeo = new THREE.SphereGeometry(0.07, seg, seg);
+  const sparkMat = new THREE.MeshBasicMaterial({
+    color: new THREE.Color(SKILL_CORE),
+    toneMapped: false,
+  });
+  disposables.push(haloGeo, haloMat, coreGeo, coreMat, sparkGeo, sparkMat);
+  resolve.add(
+    new THREE.Mesh(haloGeo, haloMat),
+    new THREE.Mesh(coreGeo, coreMat),
+    new THREE.Mesh(sparkGeo, sparkMat),
+  );
+  resolve.position.set(wx(FOCAL_X), wy(FOCAL_Y), 0);
   resolve.scale.setScalar(0);
 
-  // Burst ring: fires outward when the Skill node fills (see updateField).
+  // Burst ring: fires outward when the skill node ignites (see updateMorph).
   const ringGeo = new THREE.RingGeometry(0.8, 1.0, 40);
   const ringMat = new THREE.MeshBasicMaterial({
-    color: RESOLVE_C.clone(),
+    color: irisC.clone(),
     transparent: true,
     opacity: 0,
     toneMapped: false,
@@ -239,41 +109,21 @@ function buildSignalField(quality: "high" | "low"): BuiltField {
   });
   disposables.push(ringGeo, ringMat);
   const burstRing = new THREE.Mesh(ringGeo, ringMat);
-  burstRing.position.set(5, 0, 0);
+  burstRing.position.set(wx(FOCAL_X), wy(FOCAL_Y), 0);
   burstRing.scale.setScalar(0.3);
 
-  root.add(waveform, codeSeg, mergedPath, resolve, burstRing);
-  nodes.items.forEach((m) => root.add(m));
-  frames.items.forEach((m) => root.add(m));
-  pathway.items.forEach((m) => root.add(m));
-  if (quality === "low") frames.items.forEach((m) => (m.visible = false));
-
-  return { root, waveform, nodes, frames, pathway, code: codeSeg, mergedPath, resolve, burstRing, disposables };
+  root.add(line, resolve, burstRing);
+  return { root, line, resolve, haloMat, burstRing, baseColor: new THREE.Color(), disposables };
 }
 
-function disposeField(field: BuiltField) {
+function disposeField(field: BuiltMorph) {
   field.disposables.forEach((d) => d.dispose());
 }
 
-function updateLane(l: Lane3D, assemble: number, scroll: number) {
-  const la = phasedAssemble(assemble, l.lane.phase);
-  const fade = 1 - mergeFactor(scroll);
-  const n = l.items.length;
-  const y = wy(l.lane.center);
-  for (let i = 0; i < n; i++) {
-    const xn = l.xs[i];
-    const item = l.items[i] as THREE.Mesh;
-    // Discrete elements stay in their lane and DISSOLVE in place (opacity) as the
-    // merge progresses. Only the lines converge to the node, so nothing slides to
-    // centre and lingers as a glowing ghost. Scale is draw-in only.
-    item.position.y = y;
-    item.scale.setScalar(laneReveal(la, i, n));
-    (item.material as THREE.Material).opacity = laneAlpha(xn) * fade;
-  }
-}
+const scratch: Pt = { x: 0, y: 0 };
 
-function updateField(
-  field: BuiltField,
+function updateMorph(
+  field: BuiltMorph,
   store: SignalStore,
   delta: number,
   interactive: boolean,
@@ -285,55 +135,41 @@ function updateField(
   const a = easeOutCubic(clamp01(store.introElapsed / INTRO_DURATION));
   store.assemble = a;
   const scroll = store.scroll;
-  const fade = 1 - mergeFactor(scroll);
 
   const dolly = easeOutCubic(clamp01(store.introElapsed / 4.0));
   camera.position.z = lerp(13.5, 10, dolly) + Math.sin(store.time * 0.3) * 0.12 * dolly;
 
   const root = field.root;
-  // Only pointer parallax rotates the field; no idle vertical drift, so each
-  // lane stays locked level with its label.
-  root.rotation.y = lerp(root.rotation.y, interactive ? store.pointerX * 0.2 : 0, 0.06);
-  root.rotation.x = lerp(root.rotation.x, interactive ? -store.pointerY * 0.12 : 0, 0.06);
+  // Only pointer parallax rotates the form; no idle drift.
+  root.rotation.y = lerp(root.rotation.y, interactive ? store.pointerX * 0.18 : 0, 0.06);
+  root.rotation.x = lerp(root.rotation.x, interactive ? -store.pointerY * 0.1 : 0, 0.06);
 
-  // Waveform: bend to centre + flatten as it merges; fade out into the path.
-  const wave = LANES[0];
-  const pos = field.waveform.geometry.attributes.position as THREE.BufferAttribute;
-  const arr = pos.array as Float32Array;
-  for (let i = 0; i <= WAVEFORM_SAMPLES; i++) {
-    const xn = i / WAVEFORM_SAMPLES;
-    const conv = convergeAt(xn, scroll);
-    const clean = Math.max(0, (xn - 0.3) / 0.7);
-    const w = (waveY(xn) + Math.sin(xn * 6.5 + store.time * 1.4) * 0.06 * clean * a) * (1 - conv);
-    arr[i * 3 + 1] = wy(wave.center * (1 - conv) + w);
+  // Morph the single line + recolour per frame (cyan raw -> iris skill).
+  const posAttr = field.line.geometry.attributes.position as THREE.BufferAttribute;
+  const colAttr = field.line.geometry.attributes.color as THREE.BufferAttribute;
+  const parr = posAttr.array as Float32Array;
+  const carr = colAttr.array as Float32Array;
+  const br = field.baseColor.set(colorAt(scroll));
+  for (let i = 0; i < SAMPLE_COUNT; i++) {
+    const u = i / (SAMPLE_COUNT - 1);
+    morphPoint(scroll, u, store.time, scratch);
+    parr[i * 3] = wx(scratch.x);
+    parr[i * 3 + 1] = wy(scratch.y);
+    parr[i * 3 + 2] = 0;
+    const b = brightness(u);
+    carr[i * 3] = br.r * b;
+    carr[i * 3 + 1] = br.g * b;
+    carr[i * 3 + 2] = br.b * b;
   }
-  pos.needsUpdate = true;
-  field.waveform.geometry.setDrawRange(0, Math.max(2, Math.floor((WAVEFORM_SAMPLES + 1) * Math.min(1, a * 1.1))));
-  (field.waveform.material as THREE.LineBasicMaterial).opacity = fade;
+  posAttr.needsUpdate = true;
+  colAttr.needsUpdate = true;
+  field.line.geometry.setDrawRange(
+    0,
+    Math.max(2, Math.floor(SAMPLE_COUNT * Math.min(1, a * 1.1))),
+  );
 
-  updateLane(field.nodes, a, scroll);
-  updateLane(field.frames, a, scroll);
-  updateLane(field.pathway, a, scroll);
-
-  // Code: bend to centre + fade.
-  const code = LANES[4];
-  const cpos = field.code.geometry.attributes.position as THREE.BufferAttribute;
-  const carr = cpos.array as Float32Array;
-  for (let i = 0; i < CODE_COUNT; i++) {
-    const xn = elementX(i, CODE_COUNT, code.seed);
-    const y = wy(code.center * (1 - convergeAt(xn, scroll)));
-    carr[i * 6 + 1] = y;
-    carr[i * 6 + 4] = y;
-  }
-  cpos.needsUpdate = true;
-  field.code.geometry.setDrawRange(0, Math.floor(CODE_COUNT * 2 * phasedAssemble(a, code.phase)));
-  (field.code.material as THREE.LineBasicMaterial).opacity = fade;
-
-  // The single merged path fades in as the lanes dissolve into it.
-  (field.mergedPath.material as THREE.LineBasicMaterial).opacity = mergedPathAlpha(scroll) * a;
-
-  // Burst: a one-shot pop + expanding ring when the Skill node fills (merge
-  // completes). Re-arms if the visitor scrolls back up.
+  // Burst: a one-shot pop + expanding ring when the skill node ignites (the
+  // morph resolves). Re-arms if the visitor scrolls back up.
   if (store.burstT < 0 && scroll > 0.92) store.burstT = 0;
   if (scroll < 0.5) store.burstT = -1;
   const ringMat = field.burstRing.material as THREE.MeshBasicMaterial;
@@ -352,8 +188,10 @@ function updateField(
     ringMat.opacity = 0;
   }
 
-  // Resolve node ignites with assemble, flares with scroll, pops on burst.
-  field.resolve.scale.setScalar(laneReveal(a, 7, 8) * (1 + scroll * 1.3) * pop);
+  // Node grows in with the intro, flares as the morph resolves (scroll), pops on
+  // burst; halo brightens as skill resolves.
+  field.resolve.scale.setScalar(easeOutCubic(a) * (0.5 + scroll * 1.1) * pop);
+  field.haloMat.opacity = 0.18 + 0.32 * scroll;
 }
 
 export function SignalScene({
@@ -365,10 +203,10 @@ export function SignalScene({
   quality: "high" | "low";
   interactive: boolean;
 }) {
-  const field = React.useMemo(() => buildSignalField(quality), [quality]);
+  const field = React.useMemo(() => buildMorphField(quality), [quality]);
   React.useEffect(() => () => disposeField(field), [field]);
   useFrame((state, delta) => {
-    updateField(field, store, delta, interactive, state.camera);
+    updateMorph(field, store, delta, interactive, state.camera);
   });
   return <primitive object={field.root} />;
 }

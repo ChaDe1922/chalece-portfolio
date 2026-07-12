@@ -4,7 +4,6 @@ import * as React from "react";
 import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
 import { StaticSignalField } from "@/components/signal/static-signal-field";
-import { SignalLabels } from "@/components/signal/signal-labels";
 import { useSignalCanvasGate } from "@/hooks/use-signal-canvas-gate";
 import {
   makeSignalStore,
@@ -75,47 +74,25 @@ export function SignalField({ className }: { className?: string }) {
     };
   }, [mount, interactive, store]);
 
-  // Scroll-driven merge: the five lanes zip into one path. On desktop the hero
-  // PINS briefly so the merge plays as a controlled sequence, then releases; on
-  // mobile it scrubs on scroll-away without a pin (pinning is jank-prone there);
+  // Scroll-driven morph: as the hero scrolls away, the one signal line morphs
+  // waveform -> timeline -> pathway -> skill. NO PIN (a shape morph needs no held
+  // viewport, and pinning was the source of the position-recalc bug that forced
+  // the reveals below onto IntersectionObserver). Pure scrub, all breakpoints;
   // reduced-motion creates nothing (store.scroll stays 0, canvas never mounts).
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add(
-        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
-        () => {
-          ScrollTrigger.create({
-            trigger: "#hero",
-            start: "top top",
-            end: "+=85%",
-            pin: true,
-            pinSpacing: true,
-            scrub: 1,
-            // The pin shifts every trigger below it; a higher refreshPriority
-            // makes it recalculate first so the card-deal reveals further down
-            // get correct positions (otherwise they never fire and stay hidden).
-            refreshPriority: 1,
-            onUpdate: (self) => {
-              store.scroll = self.progress;
-            },
-          });
-        },
-      );
-      mm.add(
-        "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
-        () => {
-          ScrollTrigger.create({
-            trigger: "#hero",
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-            onUpdate: (self) => {
-              store.scroll = self.progress;
-            },
-          });
-        },
-      );
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        ScrollTrigger.create({
+          trigger: "#hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: 1,
+          onUpdate: (self) => {
+            store.scroll = self.progress;
+          },
+        });
+      });
     },
     { dependencies: [store] },
   );
@@ -132,7 +109,10 @@ export function SignalField({ className }: { className?: string }) {
       <StaticSignalField
         className={cn(
           "transition-opacity duration-[1400ms]",
-          ready ? "opacity-10" : "opacity-100",
+          // Fully fade the static still once the canvas owns the frame: the
+          // WebGL scene renders the same form, so any lingering static layer
+          // would just be a ghost behind the transparent canvas.
+          ready ? "opacity-0" : "opacity-100",
         )}
       />
       {mount ? (
@@ -154,7 +134,6 @@ export function SignalField({ className }: { className?: string }) {
           />
         </div>
       ) : null}
-      <SignalLabels />
     </div>
   );
 }
