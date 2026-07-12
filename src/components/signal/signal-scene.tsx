@@ -30,7 +30,9 @@ import { INTRO_DURATION, type SignalStore } from "@/lib/signal-store";
 // Normalized -> WebGL space. Resolve point at (5, 0); art starts at x=-3.5
 // (~16% from left) so each lane begins right next to its DOM label.
 const wx = (xn: number) => -3.5 + xn * 8.5;
-const wy = (yn: number) => yn * 2.6;
+// Scale chosen so a lane's centre projects to `50 - center*LANE_VSPAN` at the
+// settled camera (z=10, fov 42, half-height ~3.839), matching labels + SVG.
+const wy = (yn: number) => yn * 2.96;
 
 const NEUTRAL_C = new THREE.Color(NEUTRAL);
 const RESOLVE_C = new THREE.Color(RESOLVE_COLOR);
@@ -63,6 +65,7 @@ type BuiltField = {
   code: THREE.LineSegments;
   mergedPath: THREE.Line;
   resolve: THREE.Group;
+  burstRing: THREE.Mesh;
   disposables: Array<THREE.BufferGeometry | THREE.Material>;
 };
 
@@ -219,13 +222,28 @@ function buildSignalField(quality: "high" | "low"): BuiltField {
   resolve.position.set(5, 0, 0);
   resolve.scale.setScalar(0);
 
-  root.add(waveform, codeSeg, mergedPath, resolve);
+  // Burst ring: fires outward when the Skill node fills (see updateField).
+  const ringGeo = new THREE.RingGeometry(0.8, 1.0, 40);
+  const ringMat = new THREE.MeshBasicMaterial({
+    color: RESOLVE_C.clone(),
+    transparent: true,
+    opacity: 0,
+    toneMapped: false,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+  });
+  disposables.push(ringGeo, ringMat);
+  const burstRing = new THREE.Mesh(ringGeo, ringMat);
+  burstRing.position.set(5, 0, 0);
+  burstRing.scale.setScalar(0.3);
+
+  root.add(waveform, codeSeg, mergedPath, resolve, burstRing);
   nodes.items.forEach((m) => root.add(m));
   frames.items.forEach((m) => root.add(m));
   pathway.items.forEach((m) => root.add(m));
   if (quality === "low") frames.items.forEach((m) => (m.visible = false));
 
-  return { root, waveform, nodes, frames, pathway, code: codeSeg, mergedPath, resolve, disposables };
+  return { root, waveform, nodes, frames, pathway, code: codeSeg, mergedPath, resolve, burstRing, disposables };
 }
 
 function disposeField(field: BuiltField) {
@@ -262,9 +280,10 @@ function updateField(
   camera.position.z = lerp(13.5, 10, dolly) + Math.sin(store.time * 0.3) * 0.12 * dolly;
 
   const root = field.root;
+  // Only pointer parallax rotates the field; no idle vertical drift, so each
+  // lane stays locked level with its label.
   root.rotation.y = lerp(root.rotation.y, interactive ? store.pointerX * 0.2 : 0, 0.06);
   root.rotation.x = lerp(root.rotation.x, interactive ? -store.pointerY * 0.12 : 0, 0.06);
-  root.position.y = Math.sin(store.time * 0.22) * 0.05 * (1 - scroll);
 
   // Waveform: bend to centre + flatten as it merges; fade out into the path.
   const wave = LANES[0];
@@ -302,8 +321,28 @@ function updateField(
   // The single merged path fades in as the lanes dissolve into it.
   (field.mergedPath.material as THREE.LineBasicMaterial).opacity = mergedPathAlpha(scroll) * a;
 
-  // Resolve node ignites with assemble, then flares as the merge completes.
-  field.resolve.scale.setScalar(laneReveal(a, 7, 8) * (1 + scroll * 1.3));
+  // Burst: a one-shot pop + expanding ring when the Skill node fills (merge
+  // completes). Re-arms if the visitor scrolls back up.
+  if (store.burstT < 0 && scroll > 0.92) store.burstT = 0;
+  if (scroll < 0.5) store.burstT = -1;
+  const ringMat = field.burstRing.material as THREE.MeshBasicMaterial;
+  let pop = 1;
+  if (store.burstT >= 0) {
+    store.burstT += dt;
+    const b = clamp01(store.burstT / 0.7);
+    field.burstRing.scale.setScalar(0.3 + b * 3.4);
+    ringMat.opacity = (1 - b) * 0.85;
+    pop = 1 + Math.sin(clamp01(store.burstT / 0.32) * Math.PI) * 0.5;
+    if (b >= 1) {
+      field.burstRing.scale.setScalar(0.3);
+      ringMat.opacity = 0;
+    }
+  } else {
+    ringMat.opacity = 0;
+  }
+
+  // Resolve node ignites with assemble, flares with scroll, pops on burst.
+  field.resolve.scale.setScalar(laneReveal(a, 7, 8) * (1 + scroll * 1.3) * pop);
 }
 
 export function SignalScene({

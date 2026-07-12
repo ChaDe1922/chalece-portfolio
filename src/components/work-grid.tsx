@@ -2,6 +2,7 @@ import { work, type WorkItem } from "@/data/work";
 import { WorkCard } from "@/components/work-card";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
+import { DirectedReveal } from "@/components/motion/directed-reveal";
 
 type WorkGridProps = {
   items?: WorkItem[];
@@ -34,11 +35,14 @@ export function WorkGrid({
           />
         </Reveal>
 
-        <Reveal className="work-grid mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 print:mt-4 print:gap-3">
+        <DirectedReveal
+          deal
+          className="work-grid mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 print:mt-4 print:gap-3"
+        >
           {items.map((item) => (
             <WorkCard key={item.title} item={item} />
           ))}
-        </Reveal>
+        </DirectedReveal>
       </div>
     </section>
   );

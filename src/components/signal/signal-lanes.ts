@@ -85,19 +85,30 @@ export const resolveTint = (x: number) => smooth(0.78, 1.0, x);
 /** Scatter strength: strong on the far left, gone by the aligning zone. */
 export const scatterAmp = (x: number) => 1 - smooth(0.02, 0.42, x);
 
+/** Vertical span (screen %) per unit yNorm. Shared by the labels, the SVG
+ *  (sy half-range 185 of 480 = 38.5%), and the WebGL wy scale, so a lane's
+ *  centre renders at the SAME height in all three. */
+export const LANE_VSPAN = 38.5;
+
+/** 0 at the very start, ramping to 1 just after, so each lane/wave begins
+ *  exactly at its centre (level with its label) before any scatter. */
+export const startFade = (x: number) => smooth(0, 0.14, x);
+
 /** Lane baseline y at xNorm: jittered around its centre on the left, then bent
  *  toward the centre (0) as it approaches the resolve. */
 export function laneYNorm(lane: Lane, x: number): number {
-  const jitter = (hash(lane.seed + x * 13.0) - 0.5) * 0.5 * scatterAmp(x);
+  const jitter =
+    (hash(lane.seed + x * 13.0) - 0.5) * 0.5 * scatterAmp(x) * startFade(x);
   const base = lane.center + jitter;
   return base * (1 - convergeFactor(x));
 }
 
-/** Waveform displacement: noisy on the left, a clean low wave on the right. */
+/** Waveform displacement: noisy on the left, a clean low wave on the right.
+ *  The start fade keeps the wave anchored at centre where it meets its label. */
 export function waveY(x: number): number {
   const clean = Math.sin(x * 6.5) * 0.13;
-  const noise = (hash(x * 90.0) - 0.5) * 0.22 * scatterAmp(x);
-  return clean * (1 - 0.5 * scatterAmp(x)) + noise;
+  const noise = (hash(x * 90.0) - 0.5) * 0.22 * scatterAmp(x) * startFade(x);
+  return clean * (1 - 0.5 * scatterAmp(x)) * startFade(x) + noise;
 }
 
 /** Element x for discrete lanes: evenly spaced, with slight left-side jitter. */
@@ -134,7 +145,8 @@ export function laneLabelAnchors(): Array<{
   return LANES.map((l) => ({
     kind: l.kind,
     label: labels[l.kind],
-    // yNorm +1 (top) -> 0%, -1 (bottom) -> 100%
-    topPct: (1 - (l.center + 1) / 2) * 100,
+    // Same vertical mapping the renderers use, so the label sits level with
+    // the lane's centre (where the lane now begins).
+    topPct: 50 - l.center * LANE_VSPAN,
   }));
 }

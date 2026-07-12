@@ -14,6 +14,8 @@ export type SignalStore = {
   introElapsed: number;
   /** Hero scroll progress, 0 (top) to 1 (scrolled past), drives the merge. */
   scroll: number;
+  /** Skill-burst timer: -1 = armed, >=0 = seconds since it fired. */
+  burstT: number;
   /** Normalized pointer position, -1..1 (0,0 = centre). */
   pointerX: number;
   pointerY: number;
@@ -31,6 +33,7 @@ export function makeSignalStore(introSeen: boolean): SignalStore {
     // ~0.8s instead of replaying the full overture.
     introElapsed: introSeen ? INTRO_DURATION - 0.8 : 0,
     scroll: 0,
+    burstT: -1,
     pointerX: 0,
     pointerY: 0,
     time: 0,

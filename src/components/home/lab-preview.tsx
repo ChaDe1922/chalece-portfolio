@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
+import { DirectedReveal } from "@/components/motion/directed-reveal";
 import { liveExperiments } from "@/data/experiments";
 import type { ProjectAccent } from "@/data/projects";
 
@@ -34,7 +35,7 @@ export function LabPreview() {
           />
         </Reveal>
 
-        <Reveal className="mt-12 grid gap-6 md:grid-cols-3">
+        <DirectedReveal deal className="mt-12 grid gap-6 md:grid-cols-3">
           {items.map((exp) => (
             <Link
               key={exp.id}
@@ -64,7 +65,7 @@ export function LabPreview() {
               </span>
             </Link>
           ))}
-        </Reveal>
+        </DirectedReveal>
 
         <Reveal className="mt-10">
           <Link

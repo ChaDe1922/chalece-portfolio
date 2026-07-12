@@ -1,5 +1,6 @@
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
+import { DirectedReveal } from "@/components/motion/directed-reveal";
 
 const disciplines = [
   {
@@ -36,7 +37,7 @@ export function FullStack() {
             title="I work from strategy to signal."
           />
         </Reveal>
-        <Reveal className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <DirectedReveal deal className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {disciplines.map((d, i) => (
             <div
               key={d.title}
@@ -53,7 +54,7 @@ export function FullStack() {
               </p>
             </div>
           ))}
-        </Reveal>
+        </DirectedReveal>
       </div>
     </section>
   );
