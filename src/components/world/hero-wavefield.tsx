@@ -34,25 +34,26 @@ const FRAG = /* glsl */ `
   uniform float uAspect;
   uniform vec3 uCyan;
   uniform vec3 uIris;
-  uniform vec3 uRipples[RIPPLE_MAX]; // xy = uv origin, z = start time
+  uniform vec4 uRipples[RIPPLE_MAX]; // xy = uv origin, z = start time, w = strength
 
   void main() {
     vec2 uv = vUv;
     float x = uv.x;
     vec2 auv = vec2(uv.x * uAspect, uv.y); // aspect-corrected for round ripples
 
-    // Click ripples: expand outward, ripple the ribbons, add a glow ring.
+    // Ripples expand outward, ripple the ribbons, and add a glow ring. Each is
+    // scaled by its own strength (clicks strong, cursor-move faint).
     float rippleDisp = 0.0;
     float rippleGlow = 0.0;
     for (int i = 0; i < RIPPLE_MAX; i++) {
-      vec3 rp = uRipples[i];
+      vec4 rp = uRipples[i];
       float age = uTime - rp.z;
       if (age < 0.0 || age > 2.4) continue;
       vec2 aorigin = vec2(rp.x * uAspect, rp.y);
       float r = distance(auv, aorigin);
       float radius = age * 0.55;
       float ring = smoothstep(0.075, 0.0, abs(r - radius));
-      float fade = exp(-age * 1.6);
+      float fade = exp(-age * 1.6) * rp.w;
       rippleDisp += sin((radius - r) * 40.0) * ring * fade * 0.028;
       rippleGlow += ring * fade;
     }
@@ -113,12 +114,13 @@ function updateWavefield(
     (1 - store.pointerY) * 0.5,
   );
   u.uAspect.value = aspect;
-  const rips = u.uRipples.value as THREE.Vector3[];
+  const rips = u.uRipples.value as THREE.Vector4[];
   for (let i = 0; i < RIPPLE_MAX; i++) {
     rips[i].set(
-      store.ripples[i * 3],
-      store.ripples[i * 3 + 1],
-      store.ripples[i * 3 + 2],
+      store.ripples[i * 4],
+      store.ripples[i * 4 + 1],
+      store.ripples[i * 4 + 2],
+      store.ripples[i * 4 + 3],
     );
   }
 }
@@ -141,7 +143,7 @@ export function HeroWavefield({ store }: { store: SignalStore }) {
         uCyan: { value: new THREE.Color(SIGNAL_CYAN) },
         uIris: { value: new THREE.Color(SIGNAL_IRIS) },
         uRipples: {
-          value: Array.from({ length: RIPPLE_MAX }, () => new THREE.Vector3(0, 0, -1000)),
+          value: Array.from({ length: RIPPLE_MAX }, () => new THREE.Vector4(0, 0, -1000, 0)),
         },
       },
     });

@@ -21,8 +21,9 @@ export type SignalStore = {
   pointerY: number;
   /** Elapsed seconds, advanced by the frame loop (for idle drift). */
   time: number;
-  /** Ripple pool: RIPPLE_MAX * 3 = [x_uv, y_uv, startTime] per ripple. A click
-   *  writes the next slot; the shader expands + fades each active ripple. */
+  /** Ripple pool: RIPPLE_MAX * 4 = [x_uv, y_uv, startTime, strength] per ripple.
+   *  A click writes a strong ripple; cursor movement writes faint ones. The
+   *  shader expands + fades each active ripple, scaled by its strength. */
   ripples: Float32Array;
   rippleHead: number;
 };
@@ -34,9 +35,9 @@ export const INTRO_DURATION = 3.8;
 export const RIPPLE_MAX = 10;
 
 export function makeSignalStore(introSeen: boolean): SignalStore {
-  const ripples = new Float32Array(RIPPLE_MAX * 3);
-  // Park every ripple far in the past so none render until a real click.
-  for (let i = 0; i < RIPPLE_MAX; i++) ripples[i * 3 + 2] = -1000;
+  const ripples = new Float32Array(RIPPLE_MAX * 4);
+  // Park every ripple far in the past so none render until a real one fires.
+  for (let i = 0; i < RIPPLE_MAX; i++) ripples[i * 4 + 2] = -1000;
   return {
     assemble: introSeen ? 0.9 : 0,
     // On an in-session revisit, start most of the way through so it settles in

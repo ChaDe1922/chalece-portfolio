@@ -76,13 +76,14 @@ export function SignalField({ className }: { className?: string }) {
       if (inside) {
         const dx = e.clientX - lastRx;
         const dy = e.clientY - lastRy;
-        if (dx * dx + dy * dy > 55 * 55) {
+        if (dx * dx + dy * dy > 65 * 65) {
           lastRx = e.clientX;
           lastRy = e.clientY;
           const h = store.rippleHead;
-          store.ripples[h * 3] = (e.clientX - r.left) / r.width;
-          store.ripples[h * 3 + 1] = 1 - (e.clientY - r.top) / r.height;
-          store.ripples[h * 3 + 2] = store.time;
+          store.ripples[h * 4] = (e.clientX - r.left) / r.width;
+          store.ripples[h * 4 + 1] = 1 - (e.clientY - r.top) / r.height;
+          store.ripples[h * 4 + 2] = store.time;
+          store.ripples[h * 4 + 3] = 0.3; // faint: much gentler than a click
           store.rippleHead = (h + 1) % RIPPLE_MAX;
         }
       }
@@ -102,9 +103,10 @@ export function SignalField({ className }: { className?: string }) {
       const v = 1 - (e.clientY - r.top) / r.height;
       if (u < 0 || u > 1 || v < 0 || v > 1) return; // outside the hero
       const h = store.rippleHead;
-      store.ripples[h * 3] = u;
-      store.ripples[h * 3 + 1] = v;
-      store.ripples[h * 3 + 2] = store.time;
+      store.ripples[h * 4] = u;
+      store.ripples[h * 4 + 1] = v;
+      store.ripples[h * 4 + 2] = store.time;
+      store.ripples[h * 4 + 3] = 1.0; // full-strength on click
       store.rippleHead = (h + 1) % RIPPLE_MAX;
     };
     window.addEventListener("pointerdown", onDown);
