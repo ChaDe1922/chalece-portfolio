@@ -13,20 +13,18 @@ const WorldCanvas = dynamic(
 );
 
 /**
- * Mounts the persistent world canvas behind the content and drives the approach:
- * a pin-less ScrollTrigger over the run into the flagship work scrubs
- * worldProgress, and the world camera dollies from far down the corridor into
- * the wave room. Reduced-motion / no-WebGL renders nothing (the cinematic
- * sections read as normal document). Decorative: aria-hidden + pointer-events-none.
+ * Mounts the living world canvas behind the content and drives the approach: a
+ * pin-less ScrollTrigger over the run into the flagship work scrubs
+ * worldProgress, and the world camera flies forward through the wave terrain.
+ * The always-rendering canvas is mounted only when the work run is near (and the
+ * tab is visible), so it does not burn the GPU at the top of the page.
+ * Reduced-motion / no-WebGL render nothing. Decorative: aria-hidden.
  */
 export function WorldLayer() {
   const reduced = useReducedMotion();
   const webgl = useWebGLSupport(); // null until probed
   const [store] = React.useState(() => makeWorldStore());
-  const invalidateRef = React.useRef<(() => void) | null>(null);
-  const registerInvalidate = React.useCallback((fn: () => void) => {
-    invalidateRef.current = fn;
-  }, []);
+  const [active, setActive] = React.useState(false);
   const [tier] = React.useState<{ quality: "high" | "low" }>(() => {
     if (typeof window === "undefined") return { quality: "high" };
     const wide = window.matchMedia("(min-width: 768px)").matches;
@@ -35,6 +33,29 @@ export function WorldLayer() {
   });
 
   const use3D = webgl === true && !reduced;
+
+  // Mount the always-rendering canvas only when the work run is near + visible.
+  React.useEffect(() => {
+    if (!use3D) return;
+    const el = document.querySelector("#selected-systems");
+    if (!el) return;
+    let inView = false;
+    const sync = () =>
+      setActive(inView && document.visibilityState === "visible");
+    const io = new IntersectionObserver(
+      ([e]) => {
+        inView = e.isIntersecting;
+        sync();
+      },
+      { rootMargin: "1400px 0px 1400px 0px" },
+    );
+    io.observe(el);
+    document.addEventListener("visibilitychange", sync);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", sync);
+    };
+  }, [use3D]);
 
   useGSAP(
     () => {
@@ -48,7 +69,6 @@ export function WorldLayer() {
           scrub: 1,
           onUpdate: (self) => {
             store.worldProgress = self.progress;
-            invalidateRef.current?.();
           },
         });
       });
@@ -56,15 +76,11 @@ export function WorldLayer() {
     { dependencies: [use3D, store] },
   );
 
-  if (!use3D) return null;
+  if (!use3D || !active) return null;
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
-      <WorldCanvas
-        store={store}
-        registerInvalidate={registerInvalidate}
-        quality={tier.quality}
-      />
+      <WorldCanvas store={store} quality={tier.quality} />
     </div>
   );
 }
