@@ -9,6 +9,7 @@ import { LabPreview } from "@/components/home/lab-preview";
 import { ArchivePreview } from "@/components/home/archive-preview";
 import { AboutPreview } from "@/components/home/about-preview";
 import { ClosingCta } from "@/components/home/closing-cta";
+import { WorldLayer } from "@/components/world/world-layer";
 import { getFeaturedProjects } from "@/data/projects";
 
 /**
@@ -53,6 +54,11 @@ export default function HomePage() {
 
   return (
     <>
+      {/* Persistent world behind the content: the camera dollies into the distant
+          wave rooms as you scroll. Decorative; renders nothing under
+          reduced-motion / no-WebGL. */}
+      <WorldLayer />
+
       {/* Act I: the transformation */}
       <HeroStatement />
       <MetricStrip />
