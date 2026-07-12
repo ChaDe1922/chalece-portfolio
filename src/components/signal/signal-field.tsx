@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import dynamic from "next/dynamic";
-import { useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { StaticSignalField } from "@/components/signal/static-signal-field";
 import { SignalLabels } from "@/components/signal/signal-labels";
@@ -12,7 +11,7 @@ import {
   readIntroSeen,
   markIntroSeen,
 } from "@/lib/signal-store";
-import { ScrollTrigger, useGSAP } from "@/components/motion/gsap";
+import { gsap, ScrollTrigger, useGSAP } from "@/components/motion/gsap";
 
 // three / R3F stays out of the initial bundle: only loads once the gate passes.
 const HeroSignalCanvas = dynamic(
@@ -31,7 +30,6 @@ const HeroSignalCanvas = dynamic(
  */
 export function SignalField({ className }: { className?: string }) {
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
   const [store] = React.useState(() => makeSignalStore(readIntroSeen()));
   const shouldMount = useSignalCanvasGate(containerRef);
   const [ready, setReady] = React.useState(false);
@@ -77,28 +75,50 @@ export function SignalField({ className }: { className?: string }) {
     };
   }, [mount, interactive, store]);
 
-  // Scroll continuity: the hero field compresses into a line as it scrolls away.
-  // Reduced-motion never creates the trigger (store.scroll stays 0).
+  // Scroll-driven merge: the five lanes zip into one path. On desktop the hero
+  // PINS briefly so the merge plays as a controlled sequence, then releases; on
+  // mobile it scrubs on scroll-away without a pin (pinning is jank-prone there);
+  // reduced-motion creates nothing (store.scroll stays 0, canvas never mounts).
   useGSAP(
     () => {
-      if (reduced) return;
-      ScrollTrigger.create({
-        trigger: "#hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-        onUpdate: (self) => {
-          store.scroll = self.progress;
+      const mm = gsap.matchMedia();
+      mm.add(
+        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          ScrollTrigger.create({
+            trigger: "#hero",
+            start: "top top",
+            end: "+=85%",
+            pin: true,
+            scrub: 1,
+            onUpdate: (self) => {
+              store.scroll = self.progress;
+            },
+          });
         },
-      });
+      );
+      mm.add(
+        "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          ScrollTrigger.create({
+            trigger: "#hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+            onUpdate: (self) => {
+              store.scroll = self.progress;
+            },
+          });
+        },
+      );
     },
-    { dependencies: [reduced, store] },
+    { dependencies: [store] },
   );
 
-  // Once the intro has run, mark it so in-session revisits start settled.
+  // Once the cinematic intro has run, mark it so in-session revisits settle fast.
   React.useEffect(() => {
     if (!ready) return;
-    const t = window.setTimeout(() => markIntroSeen(), 2600);
+    const t = window.setTimeout(() => markIntroSeen(), 4200);
     return () => window.clearTimeout(t);
   }, [ready]);
 
@@ -106,14 +126,14 @@ export function SignalField({ className }: { className?: string }) {
     <div ref={containerRef} className={cn("relative h-full w-full", className)}>
       <StaticSignalField
         className={cn(
-          "transition-opacity duration-700",
+          "transition-opacity duration-[1400ms]",
           ready ? "opacity-10" : "opacity-100",
         )}
       />
       {mount ? (
         <div
           className={cn(
-            "absolute inset-0 transition-opacity duration-700",
+            "absolute inset-0 transition-opacity duration-[1400ms]",
             ready ? "opacity-100" : "opacity-0",
           )}
         >

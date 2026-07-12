@@ -38,7 +38,7 @@ export function DirectedReveal({
   className,
   direction = "up",
   stagger = false,
-  distance = 40,
+  distance = 64,
   ...props
 }: DirectedRevealProps) {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -53,12 +53,12 @@ export function DirectedReveal({
         gsap.from(targets, {
           ...offset(direction, distance),
           autoAlpha: 0,
-          duration: 0.9,
+          duration: 1.3,
           ease: "power3.out",
-          stagger: stagger ? 0.12 : 0,
+          stagger: stagger ? 0.18 : 0,
           scrollTrigger: {
             trigger: el,
-            start: "top 82%",
+            start: "top 85%",
             toggleActions: "play none none none",
           },
         });

@@ -8,11 +8,11 @@
  */
 
 export type SignalStore = {
-  /** Draw-in progress, 0 (scattered) to 1 (assembled). */
+  /** Draw-in progress, 0 (scattered) to 1 (assembled). Derived from introElapsed. */
   assemble: number;
-  /** Where assemble eases toward. */
-  targetAssemble: number;
-  /** Hero scroll progress, 0 (top) to 1 (scrolled past), drives compression. */
+  /** Seconds since the intro started; drives the slow staged assemble + dolly. */
+  introElapsed: number;
+  /** Hero scroll progress, 0 (top) to 1 (scrolled past), drives the merge. */
   scroll: number;
   /** Normalized pointer position, -1..1 (0,0 = centre). */
   pointerX: number;
@@ -21,10 +21,15 @@ export type SignalStore = {
   time: number;
 };
 
+/** Full cinematic intro length (seconds). */
+export const INTRO_DURATION = 3.8;
+
 export function makeSignalStore(introSeen: boolean): SignalStore {
   return {
-    assemble: introSeen ? 0.92 : 0,
-    targetAssemble: 1,
+    assemble: introSeen ? 0.9 : 0,
+    // On an in-session revisit, start most of the way through so it settles in
+    // ~0.8s instead of replaying the full overture.
+    introElapsed: introSeen ? INTRO_DURATION - 0.8 : 0,
     scroll: 0,
     pointerX: 0,
     pointerY: 0,

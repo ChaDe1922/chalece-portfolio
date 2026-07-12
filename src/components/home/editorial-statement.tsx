@@ -1,4 +1,4 @@
-import { Reveal } from "@/components/reveal";
+import { DirectedReveal } from "@/components/motion/directed-reveal";
 
 /**
  * Full-width editorial thesis on a warm ivory scene, creating the dark-to-warm
@@ -13,7 +13,7 @@ export function EditorialStatement() {
       className="bg-background"
     >
       <div className="mx-auto max-w-4xl px-4 py-24 text-center md:px-8 md:py-32">
-        <Reveal>
+        <DirectedReveal stagger direction="up">
           <h2
             id="thesis-heading"
             className="font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl"
@@ -27,7 +27,7 @@ export function EditorialStatement() {
             They need better ways to enter them, manipulate them, test them, and
             make them their own.
           </p>
-        </Reveal>
+        </DirectedReveal>
       </div>
     </section>
   );

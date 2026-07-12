@@ -13,82 +13,122 @@ import {
   PATHWAY_COUNT,
   CODE_COUNT,
   WAVEFORM_SAMPLES,
-  convergeFactor,
   laneAlpha,
   laneTint,
   resolveTint,
-  laneYNorm,
+  convergeAt,
+  phasedAssemble,
+  mergeFactor,
+  mergedPathAlpha,
   waveY,
   elementX,
   laneReveal,
   type Lane,
 } from "@/components/signal/signal-lanes";
-import type { SignalStore } from "@/lib/signal-store";
+import { INTRO_DURATION, type SignalStore } from "@/lib/signal-store";
 
-// Normalized -> WebGL space. Resolve point at (5, 0); art starts at x=-3.4
-// (~17% from left) to leave a gutter for the DOM labels, matching the SVG.
-const wx = (xn: number) => -3.4 + xn * 8.4;
+// Normalized -> WebGL space. Resolve point at (5, 0); art starts at x=-3.5
+// (~16% from left) so each lane begins right next to its DOM label.
+const wx = (xn: number) => -3.5 + xn * 8.5;
 const wy = (yn: number) => yn * 2.6;
-const baseline = (lane: Lane, xn: number) => lane.center * (1 - convergeFactor(xn));
 
 const NEUTRAL_C = new THREE.Color(NEUTRAL);
 const RESOLVE_C = new THREE.Color(RESOLVE_COLOR);
 const lerp = THREE.MathUtils.lerp;
+const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
+const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
-/** Per-position tone: neutral -> accent -> iris across the width. */
+/** Neutral -> accent -> iris tone (full brightness; faintness comes from
+ *  material opacity, matching the SVG's clean look rather than dark ghosts). */
 function toneColor(lane: Lane, xn: number, out: THREE.Color): THREE.Color {
   out.copy(NEUTRAL_C).lerp(new THREE.Color(lane.color), laneTint(xn));
   out.lerp(RESOLVE_C, resolveTint(xn));
   return out;
 }
-/** Dim on the left (dark = dim on the obsidian bg), bright on the right. */
-function dimTone(lane: Lane, xn: number, out: THREE.Color): THREE.Color {
+/** For vertex-colored lines (no per-vertex alpha): keep a floor so the raw left
+ *  reads as faint, never a hard black smear. */
+function dimVertex(lane: Lane, xn: number, out: THREE.Color): THREE.Color {
   toneColor(lane, xn, out);
-  return out.multiplyScalar(0.15 + 0.85 * laneAlpha(xn));
+  return out.multiplyScalar(0.42 + 0.58 * laneAlpha(xn));
 }
 
-type MeshLane = { meshes: THREE.Mesh[]; xs: number[] };
+type Lane3D = { lane: Lane; items: THREE.Object3D[]; xs: number[] };
 
 type BuiltField = {
   root: THREE.Group;
   waveform: THREE.Line;
-  waveBaseY: Float32Array;
-  nodes: MeshLane;
-  frames: MeshLane;
-  pathway: MeshLane;
+  nodes: Lane3D;
+  frames: Lane3D;
+  pathway: Lane3D;
   code: THREE.LineSegments;
-  convergence: THREE.LineSegments;
+  mergedPath: THREE.Line;
   resolve: THREE.Group;
   disposables: Array<THREE.BufferGeometry | THREE.Material>;
 };
 
-function buildDiscrete(
+/** Filled elements (nodes, curriculum blocks): faint on the left via opacity. */
+function buildFilled(
   lane: Lane,
   count: number,
   makeGeo: () => THREE.BufferGeometry,
   disposables: BuiltField["disposables"],
   bright = false,
-): MeshLane {
+): Lane3D {
   const geo = makeGeo();
   disposables.push(geo);
   const c = new THREE.Color();
-  const meshes: THREE.Mesh[] = [];
+  const items: THREE.Object3D[] = [];
   const xs: number[] = [];
   for (let i = 0; i < count; i++) {
     const xn = elementX(i, count, lane.seed);
     xs.push(xn);
-    dimTone(lane, xn, c);
     const mat = new THREE.MeshBasicMaterial({
-      color: c.clone(),
+      color: toneColor(lane, xn, c).clone(),
+      transparent: true,
+      opacity: laneAlpha(xn),
+      depthWrite: false,
       toneMapped: !(bright && xn > 0.72),
     });
     disposables.push(mat);
     const m = new THREE.Mesh(geo, mat);
-    m.position.set(wx(xn), wy(laneYNorm(lane, xn)), 0);
+    m.position.set(wx(xn), wy(lane.center), 0);
     m.scale.setScalar(0);
-    meshes.push(m);
+    items.push(m);
   }
-  return { meshes, xs };
+  return { lane, items, xs };
+}
+
+/** Outline elements (film frames): rect outlines, faint on the left, matching
+ *  the SVG's stroke-only frames (never filled ghost blocks). */
+function buildOutlines(
+  lane: Lane,
+  count: number,
+  w: number,
+  h: number,
+  disposables: BuiltField["disposables"],
+): Lane3D {
+  const plane = new THREE.PlaneGeometry(w, h);
+  const edges = new THREE.EdgesGeometry(plane);
+  plane.dispose();
+  disposables.push(edges);
+  const c = new THREE.Color();
+  const items: THREE.Object3D[] = [];
+  const xs: number[] = [];
+  for (let i = 0; i < count; i++) {
+    const xn = elementX(i, count, lane.seed);
+    xs.push(xn);
+    const mat = new THREE.LineBasicMaterial({
+      color: toneColor(lane, xn, c).clone(),
+      transparent: true,
+      opacity: laneAlpha(xn),
+    });
+    disposables.push(mat);
+    const o = new THREE.LineSegments(edges, mat);
+    o.position.set(wx(xn), wy(lane.center), 0);
+    o.scale.setScalar(0);
+    items.push(o);
+  }
+  return { lane, items, xs };
 }
 
 function buildSignalField(quality: "high" | "low"): BuiltField {
@@ -96,61 +136,40 @@ function buildSignalField(quality: "high" | "low"): BuiltField {
   const disposables: BuiltField["disposables"] = [];
   const c = new THREE.Color();
 
-  // --- waveform (Sound) as a vertex-colored line ---------------------------
+  // waveform (Sound)
   const wave = LANES[0];
   const wGeo = new THREE.BufferGeometry();
   const wPos = new Float32Array((WAVEFORM_SAMPLES + 1) * 3);
   const wCol = new Float32Array((WAVEFORM_SAMPLES + 1) * 3);
-  const waveBaseY = new Float32Array(WAVEFORM_SAMPLES + 1);
   for (let i = 0; i <= WAVEFORM_SAMPLES; i++) {
     const xn = i / WAVEFORM_SAMPLES;
-    const yn = baseline(wave, xn) + waveY(xn);
-    waveBaseY[i] = wy(yn);
     wPos[i * 3] = wx(xn);
-    wPos[i * 3 + 1] = wy(yn);
-    dimTone(wave, xn, c);
+    wPos[i * 3 + 1] = wy(wave.center + waveY(xn));
+    dimVertex(wave, xn, c);
     wCol[i * 3] = c.r;
     wCol[i * 3 + 1] = c.g;
     wCol[i * 3 + 2] = c.b;
   }
   wGeo.setAttribute("position", new THREE.BufferAttribute(wPos, 3));
   wGeo.setAttribute("color", new THREE.BufferAttribute(wCol, 3));
-  const wMat = new THREE.LineBasicMaterial({ vertexColors: true });
+  const wMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 1 });
   disposables.push(wGeo, wMat);
   const waveform = new THREE.Line(wGeo, wMat);
 
-  // --- discrete lanes ------------------------------------------------------
-  const nodes = buildDiscrete(
-    LANES[1],
-    NODE_COUNT,
-    () => new THREE.SphereGeometry(0.09, 12, 12),
-    disposables,
-    true,
-  );
-  const frames = buildDiscrete(
-    LANES[2],
-    FRAME_COUNT,
-    () => new THREE.PlaneGeometry(0.34, 0.24),
-    disposables,
-  );
-  const pathway = buildDiscrete(
-    LANES[3],
-    PATHWAY_COUNT,
-    () => new THREE.BoxGeometry(0.3, 0.22, 0.05),
-    disposables,
-    true,
-  );
+  const nodes = buildFilled(LANES[1], NODE_COUNT, () => new THREE.SphereGeometry(0.09, 12, 12), disposables, true);
+  const frames = buildOutlines(LANES[2], FRAME_COUNT, 0.34, 0.24, disposables);
+  const pathway = buildFilled(LANES[3], PATHWAY_COUNT, () => new THREE.BoxGeometry(0.3, 0.22, 0.05), disposables, true);
 
-  // --- code tokens (dashes) as a vertex-colored line-segment set -----------
+  // code tokens (dashes)
   const code = LANES[4];
   const codeGeo = new THREE.BufferGeometry();
   const codePos = new Float32Array(CODE_COUNT * 2 * 3);
   const codeCol = new Float32Array(CODE_COUNT * 2 * 3);
   for (let i = 0; i < CODE_COUNT; i++) {
     const xn = elementX(i, CODE_COUNT, code.seed);
-    const y = wy(laneYNorm(code, xn));
+    const y = wy(code.center);
     const w = 0.12 + xn * 0.4;
-    dimTone(code, xn, c);
+    dimVertex(code, xn, c);
     const set = (o: number, xx: number) => {
       codePos[o] = xx;
       codePos[o + 1] = y;
@@ -164,122 +183,127 @@ function buildSignalField(quality: "high" | "low"): BuiltField {
   }
   codeGeo.setAttribute("position", new THREE.BufferAttribute(codePos, 3));
   codeGeo.setAttribute("color", new THREE.BufferAttribute(codeCol, 3));
-  const codeMat = new THREE.LineBasicMaterial({ vertexColors: true });
+  const codeMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 1 });
   disposables.push(codeGeo, codeMat);
   const codeSeg = new THREE.LineSegments(codeGeo, codeMat);
 
-  // --- convergence lines (each lane's right end -> resolve) ----------------
-  const rightEnds: Array<[number, number]> = [
-    [wx(0.9), waveBaseY[Math.round(WAVEFORM_SAMPLES * 0.9)]],
-    [wx(nodes.xs[NODE_COUNT - 1]), wy(laneYNorm(LANES[1], nodes.xs[NODE_COUNT - 1]))],
-    [wx(frames.xs[FRAME_COUNT - 1]), wy(laneYNorm(LANES[2], frames.xs[FRAME_COUNT - 1]))],
-    [wx(pathway.xs[PATHWAY_COUNT - 1]), wy(laneYNorm(LANES[3], pathway.xs[PATHWAY_COUNT - 1]))],
-    [wx(0.98), wy(laneYNorm(LANES[4], 0.98))],
-  ];
-  const convGeo = new THREE.BufferGeometry();
-  const convPos = new Float32Array(rightEnds.length * 2 * 3);
-  rightEnds.forEach(([x, y], i) => {
-    convPos[i * 6] = x;
-    convPos[i * 6 + 1] = y;
-    convPos[i * 6 + 3] = 5;
-    convPos[i * 6 + 4] = 0;
-  });
-  convGeo.setAttribute("position", new THREE.BufferAttribute(convPos, 3));
-  const convMat = new THREE.LineBasicMaterial({
+  // the single merged path (fades in as the lanes collapse to centre)
+  const mpGeo = new THREE.BufferGeometry();
+  mpGeo.setAttribute(
+    "position",
+    new THREE.BufferAttribute(new Float32Array([wx(0), 0, 0, 5, 0, 0]), 3),
+  );
+  const mpMat = new THREE.LineBasicMaterial({
     color: RESOLVE_C.clone(),
     transparent: true,
-    opacity: 0.5,
+    opacity: 0,
     toneMapped: false,
   });
-  disposables.push(convGeo, convMat);
-  const convergence = new THREE.LineSegments(convGeo, convMat);
+  disposables.push(mpGeo, mpMat);
+  const mergedPath = new THREE.Line(mpGeo, mpMat);
 
-  // --- resolve node (the glowing "skill" focal point) ----------------------
+  // resolve node (the glowing "skill" focal point) - no radiating lines
   const resolve = new THREE.Group();
   const coreGeo = new THREE.SphereGeometry(0.16, 20, 20);
   const coreMat = new THREE.MeshBasicMaterial({ color: RESOLVE_C.clone(), toneMapped: false });
-  const haloGeo = new THREE.SphereGeometry(0.32, 20, 20);
+  const haloGeo = new THREE.SphereGeometry(0.34, 20, 20);
   const haloMat = new THREE.MeshBasicMaterial({
     color: RESOLVE_C.clone(),
     transparent: true,
-    opacity: 0.28,
+    opacity: 0.3,
     toneMapped: false,
+    depthWrite: false,
   });
   disposables.push(coreGeo, coreMat, haloGeo, haloMat);
-  const core = new THREE.Mesh(coreGeo, coreMat);
-  const halo = new THREE.Mesh(haloGeo, haloMat);
-  resolve.add(halo, core);
+  resolve.add(new THREE.Mesh(haloGeo, haloMat), new THREE.Mesh(coreGeo, coreMat));
   resolve.position.set(5, 0, 0);
   resolve.scale.setScalar(0);
 
-  root.add(waveform, codeSeg, convergence, resolve);
-  nodes.meshes.forEach((m) => root.add(m));
-  frames.meshes.forEach((m) => root.add(m));
-  pathway.meshes.forEach((m) => root.add(m));
-  if (quality === "low") frames.meshes.forEach((m) => (m.visible = false));
+  root.add(waveform, codeSeg, mergedPath, resolve);
+  nodes.items.forEach((m) => root.add(m));
+  frames.items.forEach((m) => root.add(m));
+  pathway.items.forEach((m) => root.add(m));
+  if (quality === "low") frames.items.forEach((m) => (m.visible = false));
 
-  return {
-    root,
-    waveform,
-    waveBaseY,
-    nodes,
-    frames,
-    pathway,
-    code: codeSeg,
-    convergence,
-    resolve,
-    disposables,
-  };
+  return { root, waveform, nodes, frames, pathway, code: codeSeg, mergedPath, resolve, disposables };
 }
 
 function disposeField(field: BuiltField) {
   field.disposables.forEach((d) => d.dispose());
 }
 
-function revealMeshes(lane: MeshLane, assemble: number) {
-  const n = lane.meshes.length;
-  for (let i = 0; i < n; i++) lane.meshes[i].scale.setScalar(laneReveal(assemble, i, n));
+function updateLane(l: Lane3D, assemble: number, scroll: number) {
+  const la = phasedAssemble(assemble, l.lane.phase);
+  const fade = 1 - mergeFactor(scroll);
+  const n = l.items.length;
+  for (let i = 0; i < n; i++) {
+    const xn = l.xs[i];
+    l.items[i].position.y = wy(l.lane.center * (1 - convergeAt(xn, scroll)));
+    l.items[i].scale.setScalar(laneReveal(la, i, n) * fade);
+  }
 }
 
-function updateField(field: BuiltField, store: SignalStore, delta: number, interactive: boolean) {
+function updateField(
+  field: BuiltField,
+  store: SignalStore,
+  delta: number,
+  interactive: boolean,
+  camera: THREE.Camera,
+) {
   const dt = Math.min(delta, 0.05);
   store.time += dt;
-  store.assemble = lerp(store.assemble, store.targetAssemble, 1 - Math.pow(0.02, dt));
-  const a = store.assemble;
+  store.introElapsed += dt;
+  const a = easeOutCubic(clamp01(store.introElapsed / INTRO_DURATION));
+  store.assemble = a;
   const scroll = store.scroll;
+  const fade = 1 - mergeFactor(scroll);
+
+  const dolly = easeOutCubic(clamp01(store.introElapsed / 4.0));
+  camera.position.z = lerp(13.5, 10, dolly) + Math.sin(store.time * 0.3) * 0.12 * dolly;
 
   const root = field.root;
-  const targetRotY = interactive ? store.pointerX * 0.22 : 0;
-  const targetRotX = interactive ? -store.pointerY * 0.14 : 0;
-  root.rotation.y = lerp(root.rotation.y, targetRotY, 0.08);
-  root.rotation.x = lerp(root.rotation.x, targetRotX, 0.08);
-  root.scale.y = lerp(1, 0.05, scroll);
-  root.position.y = Math.sin(store.time * 0.25) * 0.04 * (1 - scroll);
+  root.rotation.y = lerp(root.rotation.y, interactive ? store.pointerX * 0.2 : 0, 0.06);
+  root.rotation.x = lerp(root.rotation.x, interactive ? -store.pointerY * 0.12 : 0, 0.06);
+  root.position.y = Math.sin(store.time * 0.22) * 0.05 * (1 - scroll);
 
-  // Waveform: base shape + a gentle undulation on the aligned (right) portion.
+  // Waveform: bend to centre + flatten as it merges; fade out into the path.
+  const wave = LANES[0];
   const pos = field.waveform.geometry.attributes.position as THREE.BufferAttribute;
   const arr = pos.array as Float32Array;
   for (let i = 0; i <= WAVEFORM_SAMPLES; i++) {
     const xn = i / WAVEFORM_SAMPLES;
+    const conv = convergeAt(xn, scroll);
     const clean = Math.max(0, (xn - 0.3) / 0.7);
-    arr[i * 3 + 1] =
-      field.waveBaseY[i] + Math.sin(xn * 6.5 + store.time * 1.4) * 0.06 * clean * a;
+    const w = (waveY(xn) + Math.sin(xn * 6.5 + store.time * 1.4) * 0.06 * clean * a) * (1 - conv);
+    arr[i * 3 + 1] = wy(wave.center * (1 - conv) + w);
   }
   pos.needsUpdate = true;
-  field.waveform.geometry.setDrawRange(
-    0,
-    Math.max(2, Math.floor((WAVEFORM_SAMPLES + 1) * Math.min(1, a * 1.1))),
-  );
+  field.waveform.geometry.setDrawRange(0, Math.max(2, Math.floor((WAVEFORM_SAMPLES + 1) * Math.min(1, a * 1.1))));
+  (field.waveform.material as THREE.LineBasicMaterial).opacity = fade;
 
-  revealMeshes(field.nodes, a);
-  revealMeshes(field.frames, a);
-  revealMeshes(field.pathway, a);
+  updateLane(field.nodes, a, scroll);
+  updateLane(field.frames, a, scroll);
+  updateLane(field.pathway, a, scroll);
 
-  field.code.geometry.setDrawRange(0, Math.floor(CODE_COUNT * 2 * a));
-  field.convergence.geometry.setDrawRange(0, Math.floor(field.convergence.geometry.attributes.position.count * a));
-  (field.convergence.material as THREE.LineBasicMaterial).opacity = a * (0.4 + scroll * 0.5);
+  // Code: bend to centre + fade.
+  const code = LANES[4];
+  const cpos = field.code.geometry.attributes.position as THREE.BufferAttribute;
+  const carr = cpos.array as Float32Array;
+  for (let i = 0; i < CODE_COUNT; i++) {
+    const xn = elementX(i, CODE_COUNT, code.seed);
+    const y = wy(code.center * (1 - convergeAt(xn, scroll)));
+    carr[i * 6 + 1] = y;
+    carr[i * 6 + 4] = y;
+  }
+  cpos.needsUpdate = true;
+  field.code.geometry.setDrawRange(0, Math.floor(CODE_COUNT * 2 * phasedAssemble(a, code.phase)));
+  (field.code.material as THREE.LineBasicMaterial).opacity = fade;
 
-  field.resolve.scale.setScalar(laneReveal(a, 7, 8) * (1 + scroll * 1.1));
+  // The single merged path fades in as the lanes dissolve into it.
+  (field.mergedPath.material as THREE.LineBasicMaterial).opacity = mergedPathAlpha(scroll) * a;
+
+  // Resolve node ignites with assemble, then flares as the merge completes.
+  field.resolve.scale.setScalar(laneReveal(a, 7, 8) * (1 + scroll * 1.3));
 }
 
 export function SignalScene({
@@ -293,8 +317,8 @@ export function SignalScene({
 }) {
   const field = React.useMemo(() => buildSignalField(quality), [quality]);
   React.useEffect(() => () => disposeField(field), [field]);
-  useFrame((_, delta) => {
-    updateField(field, store, delta, interactive);
+  useFrame((state, delta) => {
+    updateField(field, store, delta, interactive, state.camera);
   });
   return <primitive object={field.root} />;
 }

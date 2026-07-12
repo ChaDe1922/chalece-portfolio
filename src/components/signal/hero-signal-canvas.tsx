@@ -31,7 +31,7 @@ export function HeroSignalCanvas({
       frameloop="always"
       dpr={quality === "high" ? [1, 2] : [1, 1.25]}
       gl={{ powerPreference: "low-power", antialias: false, alpha: true }}
-      camera={{ position: [0, 0, 10], fov: 42, near: 0.1, far: 40 }}
+      camera={{ position: [0, 0, 13.5], fov: 42, near: 0.1, far: 40 }}
       onCreated={({ gl }) => {
         gl.domElement.addEventListener(
           "webglcontextlost",
@@ -49,9 +49,9 @@ export function HeroSignalCanvas({
       {quality === "high" ? (
         <EffectComposer>
           <Bloom
-            intensity={0.7}
-            luminanceThreshold={0.35}
-            luminanceSmoothing={0.2}
+            intensity={0.95}
+            luminanceThreshold={0.3}
+            luminanceSmoothing={0.25}
             mipmapBlur
           />
         </EffectComposer>

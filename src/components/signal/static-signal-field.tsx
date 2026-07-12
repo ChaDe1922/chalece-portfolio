@@ -19,10 +19,10 @@ import {
 } from "@/components/signal/signal-lanes";
 
 // Normalized -> SVG space (viewBox 0 0 640 480). Resolve point at (600, 240).
-// Art starts at x=108 (~17%), leaving a left gutter for the DOM labels.
+// Art starts at x=102 (~16%) so each lane begins right next to its DOM label.
 const RX = 600;
 const RY = 240;
-const sx = (xn: number) => 108 + xn * (RX - 108);
+const sx = (xn: number) => 102 + xn * (RX - 102);
 const sy = (yn: number) => RY - yn * 185;
 
 function mix(a: string, b: string, t: number): string {
@@ -78,16 +78,6 @@ export function StaticSignalField({ className }: { className?: string }) {
     const xn = elementX(i, CODE_COUNT, code.seed);
     return { xn, x: sx(xn), y: sy(laneYNorm(code, xn)) };
   });
-
-  // Convergence: bright strokes from each lane's rightmost element to resolve.
-  const lastOf = (pts: { x: number; y: number }[]) => pts[pts.length - 1];
-  const convergeFrom = [
-    { x: sx(0.9), y: sy(baseline(wave, 0.9) + waveY(0.9)) },
-    lastOf(nodePts),
-    lastOf(framePts),
-    lastOf(pathPts),
-    lastOf(codePts),
-  ];
 
   return (
     <svg
@@ -203,20 +193,8 @@ export function StaticSignalField({ className }: { className?: string }) {
         })}
       </g>
 
-      {/* Convergence + resolve node (the focal "skill") */}
+      {/* Resolve node (the focal "skill") - no radiating lines */}
       <g data-layer="resolve">
-        {convergeFrom.map((p, i) => (
-          <line
-            key={i}
-            x1={p.x}
-            y1={p.y}
-            x2={RX}
-            y2={RY}
-            stroke={RESOLVE_COLOR}
-            strokeWidth="1.5"
-            opacity="0.45"
-          />
-        ))}
         <circle cx={RX} cy={RY} r="52" fill="url(#sig-glow)" />
         <circle cx={RX} cy={RY} r="7" fill={RESOLVE_COLOR} />
         <circle cx={RX} cy={RY} r="3" fill="#e7ddff" />

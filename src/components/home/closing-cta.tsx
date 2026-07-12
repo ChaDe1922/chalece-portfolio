@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { Reveal } from "@/components/reveal";
+import { DirectedReveal } from "@/components/motion/directed-reveal";
 import { site } from "@/data/site";
 
 const secondary = [
@@ -15,7 +15,7 @@ export function ClosingCta() {
   return (
     <section aria-labelledby="closing-heading" className="border-t border-border/50">
       <div className="mx-auto max-w-4xl px-4 py-24 text-center md:px-8 md:py-32">
-        <Reveal>
+        <DirectedReveal stagger direction="up">
           <h2
             id="closing-heading"
             className="font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl"
@@ -54,7 +54,7 @@ export function ClosingCta() {
               </li>
             ))}
           </ul>
-        </Reveal>
+        </DirectedReveal>
       </div>
     </section>
   );

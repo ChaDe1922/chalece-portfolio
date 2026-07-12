@@ -20,14 +20,16 @@ export type Lane = {
   center: number;
   /** Stable seed for deterministic scatter. */
   seed: number;
+  /** Draw-in phase offset (0..1): later lanes start assembling later. */
+  phase: number;
 };
 
 export const LANES: Lane[] = [
-  { kind: "waveform", color: "#66dff2", center: 0.86, seed: 11 }, // Sound (cyan)
-  { kind: "nodes", color: "#8e75ff", center: 0.44, seed: 23 }, // Data (iris)
-  { kind: "frames", color: "#d4ae67", center: 0.0, seed: 37 }, // Motion (gold)
-  { kind: "pathway", color: "#ff7b72", center: -0.44, seed: 41 }, // Curriculum (coral)
-  { kind: "code", color: "#b8b3be", center: -0.86, seed: 53 }, // Code (fog)
+  { kind: "waveform", color: "#66dff2", center: 0.86, seed: 11, phase: 0.0 }, // Sound (cyan)
+  { kind: "nodes", color: "#8e75ff", center: 0.44, seed: 23, phase: 0.1 }, // Data (iris)
+  { kind: "frames", color: "#d4ae67", center: 0.0, seed: 37, phase: 0.2 }, // Motion (gold)
+  { kind: "pathway", color: "#ff7b72", center: -0.44, seed: 41, phase: 0.3 }, // Curriculum (coral)
+  { kind: "code", color: "#b8b3be", center: -0.86, seed: 53, phase: 0.4 }, // Code (fog)
 ];
 
 /** Neutral used for the raw/dim left; accent emerges toward the right. */
@@ -51,8 +53,30 @@ const hash = (n: number) => {
   return s - Math.floor(s);
 };
 
-/** 0 through acts 1-2, easing to 1 at the resolve (lanes bend to centre). */
+const mix1 = (a: number, b: number, t: number) => a + (b - a) * t;
+
+/** 0 through acts 1-2, easing to 1 at the resolve (lanes bend to centre).
+ *  Static resting composition (scroll = 0). */
 export const convergeFactor = (x: number) => smooth(0.66, 1.0, x);
+
+/** Scroll-driven convergence: the merge threshold sweeps LEFT as scroll rises,
+ *  so at scroll 1 every lane sits at centre across the full width (one path). */
+export function convergeAt(x: number, scroll: number): number {
+  const start = mix1(0.66, -0.3, scroll);
+  const end = mix1(1.0, -0.05, scroll);
+  return smooth(start, end, x);
+}
+
+/** Per-lane assemble: later-phase lanes start drawing later, so the five lanes
+ *  arrive in sequence rather than all at once. */
+export function phasedAssemble(assemble: number, phase: number): number {
+  return clamp01((assemble - phase) / Math.max(0.001, 1 - phase));
+}
+
+/** How much a lane has merged into the single path (fade its own identity). */
+export const mergeFactor = (scroll: number) => smooth(0.5, 0.9, scroll);
+/** How present the single merged iris path is. */
+export const mergedPathAlpha = (scroll: number) => smooth(0.55, 0.95, scroll);
 /** Opacity ramp: dim on the raw left, bright by the aligning middle. */
 export const laneAlpha = (x: number) => 0.2 + 0.72 * smooth(0.04, 0.55, x);
 /** Neutral -> accent blend factor, and a final push to iris near the resolve. */

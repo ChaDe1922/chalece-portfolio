@@ -2,10 +2,11 @@ import { laneLabelAnchors, LANES } from "@/components/signal/signal-lanes";
 
 /**
  * Crisp, accessible DOM labels over the signal field (WebGL text is bad; this
- * layer stays sharp in both the SVG and WebGL states). The five discipline
- * labels sit in the left gutter, aligned to each lane's start where the signal
- * is dim, then the eye follows the lanes as they converge (unlabeled) into the
- * bright "Skill" node on the right. Decorative; the H1 carries the meaning.
+ * layer stays sharp in both the SVG and WebGL states). Each label is
+ * right-aligned so its accent dot butts up against the left edge of the art
+ * (~16%), i.e. every signal begins right next to its label. The eye then follows
+ * the lanes as they converge into the bright "Skill" node on the right.
+ * Decorative; the H1 carries the meaning.
  */
 export function SignalLabels() {
   const anchors = laneLabelAnchors();
@@ -14,14 +15,15 @@ export function SignalLabels() {
       {anchors.map((a, i) => (
         <span
           key={a.kind}
-          className="absolute left-[1%] flex -translate-y-1/2 items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground"
-          style={{ top: `${a.topPct}%` }}
+          className="absolute flex -translate-y-1/2 items-center gap-1.5 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground"
+          // right edge at 16% from the left, so the dot sits at the lane's start.
+          style={{ right: "84%", top: `${a.topPct}%` }}
         >
+          {a.label}
           <span
             className="h-1 w-1 shrink-0 rounded-full"
-            style={{ background: LANES[i].color, opacity: 0.75 }}
+            style={{ background: LANES[i].color, opacity: 0.8 }}
           />
-          {a.label}
         </span>
       ))}
       <span className="absolute right-[1.5%] top-[61%] font-mono text-[10px] uppercase tracking-[0.18em] text-signal-iris">
