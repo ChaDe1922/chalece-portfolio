@@ -76,14 +76,14 @@ export function SignalField({ className }: { className?: string }) {
       if (inside) {
         const dx = e.clientX - lastRx;
         const dy = e.clientY - lastRy;
-        if (dx * dx + dy * dy > 65 * 65) {
+        if (dx * dx + dy * dy > 85 * 85) {
           lastRx = e.clientX;
           lastRy = e.clientY;
           const h = store.rippleHead;
           store.ripples[h * 4] = (e.clientX - r.left) / r.width;
           store.ripples[h * 4 + 1] = 1 - (e.clientY - r.top) / r.height;
           store.ripples[h * 4 + 2] = store.time;
-          store.ripples[h * 4 + 3] = 0.3; // faint: much gentler than a click
+          store.ripples[h * 4 + 3] = 0.18; // very faint, spaced further apart
           store.rippleHead = (h + 1) % RIPPLE_MAX;
         }
       }
