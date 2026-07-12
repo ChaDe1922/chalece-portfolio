@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ClickRipple } from "@/components/click-ripple";
-import { CursorTrail } from "@/components/cursor-glow";
+import { SignalCursor } from "@/components/signal-cursor";
 import { ScrollRefresh } from "@/components/motion/scroll-refresh";
 
 /**
@@ -35,7 +35,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
         {children}
       </main>
       <SiteFooter />
-      <CursorTrail />
+      <SignalCursor />
       <ClickRipple />
       <ScrollRefresh />
     </div>

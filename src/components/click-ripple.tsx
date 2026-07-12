@@ -2,16 +2,15 @@
 
 import * as React from "react";
 
-type Ripple = { id: number; x: number; y: number; color: string };
+type Ripple = { id: number; x: number; y: number };
 
-const COLORS = ["var(--ring)", "var(--coral)"];
 const INTERACTIVE = "a, button, input, select, textarea, label, [role='button']";
 
 /**
- * Decorative click feedback: a soft, blurred color glow blooms from each
- * background click and fades, reinforcing "I make complex technical concepts click."
- * Purely visual: the layer never intercepts pointer events, it skips clicks on
- * interactive elements, and it is disabled under prefers-reduced-motion and in
+ * Signal-pulse click feedback: a thin iris ring expands from each background
+ * click, matching the reticle cursor. Skips real controls AND the hero (where
+ * the wave-field ripple is the click feedback, so the two never double up).
+ * Never intercepts pointer events; disabled under prefers-reduced-motion and in
  * print.
  */
 export function ClickRipple() {
@@ -23,26 +22,22 @@ export function ClickRipple() {
 
     let lastTouch = 0;
 
-    const bloom = (x: number, y: number, target: Element | null) => {
-      if (target?.closest(INTERACTIVE)) return; // let real controls be
+    const pulse = (x: number, y: number, target: Element | null) => {
+      // Let real controls be, and let the hero's wave field own hero clicks.
+      if (target?.closest(INTERACTIVE) || target?.closest("#hero")) return;
       const id = next.current++;
-      const color = COLORS[id % COLORS.length];
-      setRipples((prev) => [...prev, { id, x, y, color }]);
+      setRipples((prev) => [...prev, { id, x, y }]);
     };
 
-    // Mouse only: touch is handled by touchstart below (real/synthesized touch
-    // pointerdowns don't reliably report button 0).
     const onPointerDown = (e: PointerEvent) => {
       if (e.pointerType !== "mouse" || e.button !== 0) return;
       if (Date.now() - lastTouch < 700) return; // ignore ghost mouse after touch
-      bloom(e.clientX, e.clientY, e.target as Element | null);
+      pulse(e.clientX, e.clientY, e.target as Element | null);
     };
     const onTouchStart = (e: TouchEvent) => {
       lastTouch = Date.now();
       const t = e.changedTouches[0];
-      // Use the event target (topmost element under the touch) for the
-      // interactive-skip; Touch.target can be stale.
-      if (t) bloom(t.clientX, t.clientY, e.target as Element | null);
+      if (t) pulse(t.clientX, t.clientY, e.target as Element | null);
     };
 
     window.addEventListener("pointerdown", onPointerDown);
@@ -65,14 +60,8 @@ export function ClickRipple() {
         <span
           key={r.id}
           onAnimationEnd={() => remove(r.id)}
-          className="click-burst"
-          style={
-            {
-              left: r.x,
-              top: r.y,
-              "--burst-color": r.color,
-            } as React.CSSProperties
-          }
+          className="signal-pulse"
+          style={{ left: r.x, top: r.y }}
         />
       ))}
     </div>
