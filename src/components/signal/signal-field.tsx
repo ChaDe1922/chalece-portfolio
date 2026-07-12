@@ -90,7 +90,12 @@ export function SignalField({ className }: { className?: string }) {
             start: "top top",
             end: "+=85%",
             pin: true,
+            pinSpacing: true,
             scrub: 1,
+            // The pin shifts every trigger below it; a higher refreshPriority
+            // makes it recalculate first so the card-deal reveals further down
+            // get correct positions (otherwise they never fire and stay hidden).
+            refreshPriority: 1,
             onUpdate: (self) => {
               store.scroll = self.progress;
             },

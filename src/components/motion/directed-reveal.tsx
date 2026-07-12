@@ -28,12 +28,15 @@ function offset(direction: Direction, distance: number) {
 }
 
 /**
- * GSAP scroll-triggered reveal: children enter from a direction on first scroll
- * into view (toggleActions play-once, so no scrub jank / no smooth-scroll
- * conflict). The hidden "from" state is applied ONLY inside the
- * no-preference matchMedia branch, in useGSAP's layout-effect phase, so SSR /
- * no-JS / reduced-motion always render the readable end state with no CLS and no
- * flash. Drop-in replacement for <Reveal> where directed pacing is wanted.
+ * Scroll-in reveal. The animation is GSAP, but the TRIGGER is an
+ * IntersectionObserver, not ScrollTrigger: the hero pin shifts scroll positions
+ * for everything below it, which made ScrollTrigger's scroll math miss the
+ * lower sections and leave their cards stuck hidden. IO fires purely on real
+ * viewport intersection, so it is immune to the pin.
+ *
+ * The hidden "from" state is applied only inside the no-preference matchMedia
+ * branch, so SSR / no-JS / reduced-motion always render the content visible in
+ * place (no CLS, no stuck-hidden content).
  */
 export function DirectedReveal({
   children,
@@ -52,35 +55,61 @@ export function DirectedReveal({
       if (!el) return;
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const trigger = {
-          trigger: el,
-          start: "top 85%",
-          toggleActions: "play none none none",
+        const targets = deal || stagger ? Array.from(el.children) : [el];
+        if (targets.length === 0) return;
+
+        gsap.set(targets, { autoAlpha: 0 });
+
+        let io: IntersectionObserver | null = null;
+        let played = false;
+        const play = () => {
+          if (played) return;
+          played = true;
+          io?.disconnect();
+          if (deal) {
+            gsap.fromTo(
+              targets,
+              {
+                yPercent: 18,
+                scale: 0.9,
+                autoAlpha: 0,
+                rotateZ: (i, _t, ts) => (i - (ts.length - 1) / 2) * 4,
+                transformOrigin: "center bottom",
+              },
+              {
+                yPercent: 0,
+                scale: 1,
+                autoAlpha: 1,
+                rotateZ: 0,
+                duration: 1.0,
+                ease: "back.out(1.3)",
+                stagger: 0.14,
+              },
+            );
+          } else {
+            gsap.fromTo(
+              targets,
+              { ...offset(direction, distance), autoAlpha: 0 },
+              {
+                x: 0,
+                y: 0,
+                autoAlpha: 1,
+                duration: 1.3,
+                ease: "power3.out",
+                stagger: stagger ? 0.18 : 0,
+              },
+            );
+          }
         };
-        if (deal) {
-          // Cards fan + stagger into place, like being dealt.
-          gsap.from(Array.from(el.children), {
-            yPercent: 18,
-            scale: 0.9,
-            autoAlpha: 0,
-            rotateZ: (i, _t, ts) => (i - (ts.length - 1) / 2) * 4,
-            transformOrigin: "center bottom",
-            duration: 1.0,
-            ease: "back.out(1.3)",
-            stagger: 0.14,
-            scrollTrigger: trigger,
-          });
-          return;
-        }
-        const targets = stagger ? Array.from(el.children) : el;
-        gsap.from(targets, {
-          ...offset(direction, distance),
-          autoAlpha: 0,
-          duration: 1.3,
-          ease: "power3.out",
-          stagger: stagger ? 0.18 : 0,
-          scrollTrigger: trigger,
-        });
+
+        io = new IntersectionObserver(
+          (entries) => {
+            if (entries.some((e) => e.isIntersecting)) play();
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+        );
+        io.observe(el);
+        return () => io?.disconnect();
       });
     },
     { scope: ref, dependencies: [direction, stagger, distance, deal] },

@@ -90,6 +90,9 @@ function buildFilled(
       transparent: true,
       opacity: laneAlpha(xn),
       depthWrite: false,
+      // Additive over the dark field: faint elements read as a faint glow, never
+      // a dark "shadow" box.
+      blending: THREE.AdditiveBlending,
       toneMapped: !(bright && xn > 0.72),
     });
     disposables.push(mat);
@@ -124,6 +127,7 @@ function buildOutlines(
       color: toneColor(lane, xn, c).clone(),
       transparent: true,
       opacity: laneAlpha(xn),
+      blending: THREE.AdditiveBlending,
     });
     disposables.push(mat);
     const o = new THREE.LineSegments(edges, mat);
@@ -161,7 +165,7 @@ function buildSignalField(quality: "high" | "low"): BuiltField {
 
   const nodes = buildFilled(LANES[1], NODE_COUNT, () => new THREE.SphereGeometry(0.09, 12, 12), disposables, true);
   const frames = buildOutlines(LANES[2], FRAME_COUNT, 0.34, 0.24, disposables);
-  const pathway = buildFilled(LANES[3], PATHWAY_COUNT, () => new THREE.BoxGeometry(0.3, 0.22, 0.05), disposables, true);
+  const pathway = buildFilled(LANES[3], PATHWAY_COUNT, () => new THREE.PlaneGeometry(0.3, 0.22), disposables, true);
 
   // code tokens (dashes)
   const code = LANES[4];
@@ -256,8 +260,12 @@ function updateLane(l: Lane3D, assemble: number, scroll: number) {
   const n = l.items.length;
   for (let i = 0; i < n; i++) {
     const xn = l.xs[i];
-    l.items[i].position.y = wy(l.lane.center * (1 - convergeAt(xn, scroll)));
-    l.items[i].scale.setScalar(laneReveal(la, i, n) * fade);
+    const item = l.items[i] as THREE.Mesh;
+    item.position.y = wy(l.lane.center * (1 - convergeAt(xn, scroll)));
+    // Scale is draw-in only; the merge dissolves elements via opacity so they
+    // fade out cleanly instead of collapsing into shrinking dark boxes.
+    item.scale.setScalar(laneReveal(la, i, n));
+    (item.material as THREE.Material).opacity = laneAlpha(xn) * fade;
   }
 }
 

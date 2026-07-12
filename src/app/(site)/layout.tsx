@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ClickRipple } from "@/components/click-ripple";
 import { CursorTrail } from "@/components/cursor-glow";
+import { ScrollRefresh } from "@/components/motion/scroll-refresh";
 
 /**
  * Marketing chrome for the main site. The whole shell is wrapped in
@@ -32,6 +33,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <SiteFooter />
       <CursorTrail />
       <ClickRipple />
+      <ScrollRefresh />
     </div>
   );
 }
