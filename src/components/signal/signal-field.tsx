@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { StaticSignalField } from "@/components/signal/static-signal-field";
+import { SignalLabels } from "@/components/signal/signal-labels";
 import { useSignalCanvasGate } from "@/hooks/use-signal-canvas-gate";
 import {
   makeSignalStore,
@@ -128,6 +129,7 @@ export function SignalField({ className }: { className?: string }) {
           />
         </div>
       ) : null}
+      <SignalLabels />
     </div>
   );
 }

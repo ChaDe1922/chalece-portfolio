@@ -1,17 +1,94 @@
 import { cn } from "@/lib/utils";
+import {
+  LANES,
+  NEUTRAL,
+  RESOLVE_COLOR,
+  NODE_COUNT,
+  FRAME_COUNT,
+  PATHWAY_COUNT,
+  CODE_COUNT,
+  WAVEFORM_SAMPLES,
+  convergeFactor,
+  laneAlpha,
+  laneTint,
+  resolveTint,
+  laneYNorm,
+  waveY,
+  elementX,
+  type Lane,
+} from "@/components/signal/signal-lanes";
+
+// Normalized -> SVG space (viewBox 0 0 640 480). Resolve point at (600, 240).
+// Art starts at x=108 (~17%), leaving a left gutter for the DOM labels.
+const RX = 600;
+const RY = 240;
+const sx = (xn: number) => 108 + xn * (RX - 108);
+const sy = (yn: number) => RY - yn * 185;
+
+function mix(a: string, b: string, t: number): string {
+  const pa = [1, 3, 5].map((i) => parseInt(a.slice(i, i + 2), 16));
+  const pb = [1, 3, 5].map((i) => parseInt(b.slice(i, i + 2), 16));
+  const c = pa.map((v, i) => Math.round(v + (pb[i] - v) * t));
+  return `#${c.map((v) => v.toString(16).padStart(2, "0")).join("")}`;
+}
+/** Per-element color: neutral on the raw left, accent through the middle, iris
+ *  as it nears the resolve. */
+const tone = (lane: Lane, xn: number) =>
+  mix(mix(NEUTRAL, lane.color, laneTint(xn)), RESOLVE_COLOR, resolveTint(xn));
+
+const baseline = (lane: Lane, xn: number) => lane.center * (1 - convergeFactor(xn));
 
 /**
- * Static, server-rendered signal field for the hero. Five signal layers
- * (waveform, data nodes, film frames, curriculum pathway, code tokens) drawn as
- * discrete <g data-layer> groups that read as separate signals on the left and
- * resolve toward a single point on the right, echoing "from signal to skill".
- *
- * This is decorative (aria-hidden): the H1 carries the meaning. It is also the
- * complete reduced-motion / JS-disabled state. A later increment can mount a
- * <canvas> sibling over this identical structure without changing the DOM
- * contract or the semantic order around it (no WebGL).
+ * Static hero signal field. Reads left-to-right: five raw signals (Sound, Data,
+ * Motion, Curriculum, Code) start scattered and dim on the left, align and
+ * brighten through the middle, and converge into one glowing point (skill) on
+ * the right. This is the first paint / no-WebGL / reduced-motion / context-loss
+ * state; the WebGL scene mirrors this exact composition. Decorative
+ * (aria-hidden): the H1 and the DOM labels carry the meaning.
  */
 export function StaticSignalField({ className }: { className?: string }) {
+  const wave = LANES[0];
+  const nodes = LANES[1];
+  const frames = LANES[2];
+  const pathway = LANES[3];
+  const code = LANES[4];
+
+  // Waveform path (baseline bend + wave, noisy left -> clean right).
+  const wavePts: string[] = [];
+  for (let i = 0; i <= WAVEFORM_SAMPLES; i++) {
+    const xn = i / WAVEFORM_SAMPLES;
+    const yn = baseline(wave, xn) + waveY(xn);
+    wavePts.push(`${sx(xn).toFixed(1)} ${sy(yn).toFixed(1)}`);
+  }
+  const wavePath = `M ${wavePts.join(" L ")}`;
+
+  const nodePts = Array.from({ length: NODE_COUNT }, (_, i) => {
+    const xn = elementX(i, NODE_COUNT, nodes.seed);
+    return { xn, x: sx(xn), y: sy(laneYNorm(nodes, xn)) };
+  });
+  const framePts = Array.from({ length: FRAME_COUNT }, (_, i) => {
+    const xn = elementX(i, FRAME_COUNT, frames.seed);
+    return { xn, x: sx(xn), y: sy(laneYNorm(frames, xn)) };
+  });
+  const pathPts = Array.from({ length: PATHWAY_COUNT }, (_, i) => {
+    const xn = elementX(i, PATHWAY_COUNT, pathway.seed);
+    return { xn, x: sx(xn), y: sy(laneYNorm(pathway, xn)) };
+  });
+  const codePts = Array.from({ length: CODE_COUNT }, (_, i) => {
+    const xn = elementX(i, CODE_COUNT, code.seed);
+    return { xn, x: sx(xn), y: sy(laneYNorm(code, xn)) };
+  });
+
+  // Convergence: bright strokes from each lane's rightmost element to resolve.
+  const lastOf = (pts: { x: number; y: number }[]) => pts[pts.length - 1];
+  const convergeFrom = [
+    { x: sx(0.9), y: sy(baseline(wave, 0.9) + waveY(0.9)) },
+    lastOf(nodePts),
+    lastOf(framePts),
+    lastOf(pathPts),
+    lastOf(codePts),
+  ];
+
   return (
     <svg
       aria-hidden="true"
@@ -19,119 +96,130 @@ export function StaticSignalField({ className }: { className?: string }) {
       preserveAspectRatio="xMidYMid meet"
       className={cn("h-full w-full", className)}
     >
-      {/* Faint measurement grid */}
-      <g data-layer="grid" stroke="var(--v2-soft-fog)" opacity="0.14">
-        {[80, 160, 240, 320, 400].map((y) => (
-          <line key={y} x1="24" y1={y} x2="616" y2={y} strokeWidth="1" />
-        ))}
-        <line x1="470" y1="40" x2="470" y2="440" strokeWidth="1" strokeDasharray="3 6" />
+      <defs>
+        <linearGradient
+          id="sig-wave"
+          gradientUnits="userSpaceOnUse"
+          x1="40"
+          y1="0"
+          x2={RX}
+          y2="0"
+        >
+          <stop offset="0" stopColor={NEUTRAL} stopOpacity="0.12" />
+          <stop offset="0.5" stopColor={wave.color} stopOpacity="0.85" />
+          <stop offset="1" stopColor={RESOLVE_COLOR} stopOpacity="1" />
+        </linearGradient>
+        <radialGradient id="sig-glow">
+          <stop offset="0" stopColor={RESOLVE_COLOR} stopOpacity="0.55" />
+          <stop offset="0.55" stopColor={RESOLVE_COLOR} stopOpacity="0.16" />
+          <stop offset="1" stopColor={RESOLVE_COLOR} stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      {/* Waveform */}
+      <g data-layer="waveform">
+        <path d={wavePath} fill="none" stroke="url(#sig-wave)" strokeWidth="2" />
       </g>
 
-      {/* Convergence lines: each lane funnels toward one resolve point */}
-      <g data-layer="resolve" stroke="var(--v2-iris)" opacity="0.25" fill="none">
-        {[80, 160, 240, 320, 400].map((y) => (
-          <path key={y} d={`M470 ${y} L616 240`} strokeWidth="1" />
-        ))}
-        <circle cx="616" cy="240" r="4" fill="var(--v2-iris)" opacity="0.9" stroke="none" />
-      </g>
-
-      {/* Lane labels (decorative, laboratory feel) */}
-      <g
-        data-layer="labels"
-        fill="var(--v2-soft-fog)"
-        opacity="0.55"
-        fontSize="9"
-        fontFamily="var(--font-geist-mono), monospace"
-        letterSpacing="1.5"
-      >
-        <text x="24" y="70">AUDIO</text>
-        <text x="24" y="150">SYSTEM</text>
-        <text x="24" y="230">MOTION</text>
-        <text x="24" y="310">CURRICULUM</text>
-        <text x="24" y="390">CODE</text>
-      </g>
-
-      {/* 1. waveform (sound) */}
-      <g data-layer="waveform" fill="none" stroke="var(--v2-cyan)" strokeWidth="2">
-        <path d="M24 80 Q54 44 84 80 T144 80 T204 80 T264 80 T324 80 T384 80 T444 80 T504 80 T564 80" opacity="0.9" />
-      </g>
-
-      {/* 2. data nodes (systems) */}
-      <g data-layer="nodes" stroke="var(--v2-iris)">
+      {/* Data nodes */}
+      <g data-layer="nodes">
         <polyline
-          points="40,168 96,150 152,176 208,158 264,168 320,160 376,164 432,160 488,162 544,160"
+          points={nodePts.map((p) => `${p.x},${p.y}`).join(" ")}
           fill="none"
-          strokeWidth="1.5"
-          opacity="0.6"
+          stroke={nodes.color}
+          strokeWidth="1.25"
+          opacity="0.35"
         />
-        {[40, 96, 152, 208, 264, 320, 376, 432, 488, 544].map((x, i) => {
-          const ys = [168, 150, 176, 158, 168, 160, 164, 160, 162, 160];
+        {nodePts.map((p, i) => (
+          <circle
+            key={i}
+            cx={p.x}
+            cy={p.y}
+            r={2.5 + p.xn * 2.5}
+            fill={tone(nodes, p.xn)}
+            opacity={laneAlpha(p.xn)}
+          />
+        ))}
+      </g>
+
+      {/* Film frames */}
+      <g data-layer="frames">
+        {framePts.map((p, i) => (
+          <rect
+            key={i}
+            x={p.x - 12}
+            y={p.y - 9}
+            width="24"
+            height="18"
+            rx="3"
+            fill="none"
+            stroke={tone(frames, p.xn)}
+            strokeWidth="1.5"
+            opacity={laneAlpha(p.xn)}
+          />
+        ))}
+      </g>
+
+      {/* Curriculum pathway */}
+      <g data-layer="pathway">
+        <polyline
+          points={pathPts.map((p) => `${p.x},${p.y}`).join(" ")}
+          fill="none"
+          stroke={pathway.color}
+          strokeWidth="1.25"
+          opacity="0.3"
+        />
+        {pathPts.map((p, i) => (
+          <rect
+            key={i}
+            x={p.x - 11}
+            y={p.y - 9}
+            width="22"
+            height="18"
+            rx="4"
+            fill={tone(pathway, p.xn)}
+            opacity={laneAlpha(p.xn) * 0.9}
+          />
+        ))}
+      </g>
+
+      {/* Code tokens */}
+      <g data-layer="code">
+        {codePts.map((p, i) => {
+          const w = 10 + p.xn * 26;
           return (
-            <circle
-              key={x}
-              cx={x}
-              cy={ys[i]}
-              r={x > 470 ? 5 : 3.5}
-              fill={x > 470 ? "var(--v2-iris)" : "var(--v2-signal-black)"}
-              stroke="var(--v2-iris)"
-              strokeWidth="1.5"
+            <line
+              key={i}
+              x1={p.x - w / 2}
+              y1={p.y}
+              x2={p.x + w / 2}
+              y2={p.y}
+              stroke={tone(code, p.xn)}
+              strokeWidth="4"
+              strokeLinecap="round"
+              opacity={laneAlpha(p.xn)}
             />
           );
         })}
       </g>
 
-      {/* 3. film-frame rhythm (motion / video) */}
-      <g data-layer="frames" fill="none" stroke="var(--v2-gold)" strokeWidth="1.5" opacity="0.85">
-        {[40, 92, 144, 196, 248, 300, 352, 404, 456, 508, 560].map((x) => (
-          <rect key={x} x={x} y="226" width="34" height="28" rx="3" />
-        ))}
-        {[40, 92, 144, 196, 248, 300, 352, 404, 456, 508, 560].map((x) => (
-          <line key={`p-${x}`} x1={x + 17} y1="226" x2={x + 17} y2="254" strokeWidth="0.75" opacity="0.5" />
-        ))}
-      </g>
-
-      {/* 4. curriculum pathway (structure) */}
-      <g data-layer="pathway" stroke="var(--v2-coral)">
-        <polyline
-          points="48,320 120,320 192,320 264,320 336,320 408,320 480,320 552,320"
-          fill="none"
-          strokeWidth="1.5"
-          opacity="0.5"
-        />
-        {[48, 120, 192, 264, 336, 408, 480, 552].map((x) => (
-          <rect
-            key={x}
-            x={x - 14}
-            y="308"
-            width="28"
-            height="24"
-            rx="4"
-            fill={x > 470 ? "var(--v2-coral)" : "var(--v2-signal-black)"}
-            stroke="var(--v2-coral)"
+      {/* Convergence + resolve node (the focal "skill") */}
+      <g data-layer="resolve">
+        {convergeFrom.map((p, i) => (
+          <line
+            key={i}
+            x1={p.x}
+            y1={p.y}
+            x2={RX}
+            y2={RY}
+            stroke={RESOLVE_COLOR}
             strokeWidth="1.5"
-            opacity="0.9"
+            opacity="0.45"
           />
         ))}
-      </g>
-
-      {/* 5. code tokens (raw signal) */}
-      <g data-layer="code-track" stroke="var(--v2-soft-fog)" strokeWidth="4" strokeLinecap="round">
-        {[
-          [40, 34],
-          [84, 20],
-          [116, 48],
-          [176, 26],
-          [214, 40],
-          [266, 18],
-          [296, 52],
-          [360, 30],
-          [402, 22],
-          [436, 44],
-          [492, 28],
-          [532, 36],
-        ].map(([x, w]) => (
-          <line key={x} x1={x} y1="400" x2={x + w} y2="400" opacity="0.5" />
-        ))}
+        <circle cx={RX} cy={RY} r="52" fill="url(#sig-glow)" />
+        <circle cx={RX} cy={RY} r="7" fill={RESOLVE_COLOR} />
+        <circle cx={RX} cy={RY} r="3" fill="#e7ddff" />
       </g>
     </svg>
   );
