@@ -9,6 +9,7 @@ import {
   makeSignalStore,
   readIntroSeen,
   markIntroSeen,
+  RIPPLE_MAX,
 } from "@/lib/signal-store";
 import { gsap, ScrollTrigger, useGSAP } from "@/components/motion/gsap";
 
@@ -52,7 +53,8 @@ export function SignalField({ className }: { className?: string }) {
 
   const mount = shouldMount && !failed;
 
-  // Pointer parallax writes straight to the plain store (no React render).
+  // Pointer position writes straight to the plain store (no React render). Drives
+  // the hover reveal (a spotlight that uncovers the waves under the cursor).
   React.useEffect(() => {
     if (!mount || !interactive) return;
     const el = containerRef.current;
@@ -63,8 +65,9 @@ export function SignalField({ className }: { className?: string }) {
       store.pointerY = ((e.clientY - r.top) / r.height) * 2 - 1;
     };
     const onLeave = () => {
-      store.pointerX = 0;
-      store.pointerY = 0;
+      // Park the spotlight off-screen so the reveal fades out on leave.
+      store.pointerX = -3;
+      store.pointerY = -3;
     };
     el.addEventListener("pointermove", onMove, { passive: true });
     el.addEventListener("pointerleave", onLeave);
@@ -73,6 +76,23 @@ export function SignalField({ className }: { className?: string }) {
       el.removeEventListener("pointerleave", onLeave);
     };
   }, [mount, interactive, store]);
+
+  // A click sends a ripple through the wave field (works on touch too).
+  React.useEffect(() => {
+    if (!mount) return;
+    const el = containerRef.current;
+    if (!el) return;
+    const onDown = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      const h = store.rippleHead;
+      store.ripples[h * 3] = (e.clientX - r.left) / r.width;
+      store.ripples[h * 3 + 1] = 1 - (e.clientY - r.top) / r.height;
+      store.ripples[h * 3 + 2] = store.time;
+      store.rippleHead = (h + 1) % RIPPLE_MAX;
+    };
+    el.addEventListener("pointerdown", onDown);
+    return () => el.removeEventListener("pointerdown", onDown);
+  }, [mount, store]);
 
   // Scroll-driven morph: as the hero scrolls away, the one signal line morphs
   // waveform -> timeline -> pathway -> skill. NO PIN (a shape morph needs no held
@@ -125,7 +145,6 @@ export function SignalField({ className }: { className?: string }) {
           <HeroSignalCanvas
             store={store}
             quality={quality}
-            interactive={interactive}
             onReady={() => setReady(true)}
             onContextLost={() => {
               setFailed(true);

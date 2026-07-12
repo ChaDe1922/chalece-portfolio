@@ -3,7 +3,6 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { SignalScene } from "@/components/signal/signal-scene";
 import { HeroWavefield } from "@/components/world/hero-wavefield";
 import type { SignalStore } from "@/lib/signal-store";
 
@@ -17,13 +16,11 @@ import type { SignalStore } from "@/lib/signal-store";
 export function HeroSignalCanvas({
   store,
   quality,
-  interactive,
   onReady,
   onContextLost,
 }: {
   store: SignalStore;
   quality: "high" | "low";
-  interactive: boolean;
   onReady: () => void;
   onContextLost: () => void;
 }) {
@@ -47,7 +44,6 @@ export function HeroSignalCanvas({
     >
       <fogExp2 attach="fog" args={["#09090d", 0.02]} />
       <HeroWavefield store={store} />
-      <SignalScene store={store} quality={quality} interactive={interactive} />
       {quality === "high" ? (
         <EffectComposer>
           <Bloom
