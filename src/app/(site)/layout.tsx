@@ -18,7 +18,11 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div
       data-scene="cinematic"
-      className="flex min-h-full flex-1 flex-col bg-background text-foreground"
+      // `isolate` makes this a stacking context so the homepage's persistent
+      // stage canvas (fixed, -z-10) paints above this obsidian fallback
+      // background but below the content. No visual effect on pages without the
+      // stage.
+      className="isolate flex min-h-full flex-1 flex-col bg-background text-foreground"
     >
       <a
         href="#main"
