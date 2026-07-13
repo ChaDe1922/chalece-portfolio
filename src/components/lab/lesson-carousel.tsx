@@ -201,7 +201,7 @@ export function LessonCarousel({ labs }: { labs: Lab[] }) {
 
       {reduced ? (
         // Flat, calm fallback: a single upright card, no perspective or rotation.
-        <div className="mx-auto max-w-md">
+        <div className="mx-auto max-w-md lg:max-w-lg">
           <div className={cardShell} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${count}: ${active.title}`}>
             <CardBody lab={active} front />
           </div>
@@ -209,7 +209,7 @@ export function LessonCarousel({ labs }: { labs: Lab[] }) {
       ) : (
         // 3D coverflow ring.
         <div className="relative overflow-hidden px-1 py-4" style={{ perspective: 1200 }} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
-          <div className="relative mx-auto h-[460px] max-w-3xl lg:max-w-5xl xl:max-w-6xl" style={{ transformStyle: "preserve-3d" }}>
+          <div className="relative mx-auto h-[460px] max-w-3xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl" style={{ transformStyle: "preserve-3d" }}>
             {items.map((lab, i) => {
               const off = ringOffset(i, index, count);
               const a = Math.abs(off);
@@ -219,7 +219,7 @@ export function LessonCarousel({ labs }: { labs: Lab[] }) {
                 <m.div
                   key={lab.id}
                   className={cn(
-                    "absolute inset-x-0 top-0 mx-auto max-w-sm will-change-transform",
+                    "absolute inset-x-0 top-0 mx-auto max-w-sm md:max-w-md xl:max-w-lg will-change-transform",
                     cardShell,
                     !front && "cursor-pointer",
                     a >= 1 && "max-sm:hidden", // mobile: front card only

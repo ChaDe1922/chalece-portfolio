@@ -96,7 +96,7 @@ const labs: Lab[] = [
 
 export default function LabIndexPage() {
   return (
-    <main className="mx-auto flex min-h-[100svh] max-w-3xl flex-col justify-center px-5 py-16 md:px-8 lg:max-w-5xl xl:max-w-6xl">
+    <main className="mx-auto flex min-h-[100svh] w-full max-w-3xl flex-col justify-center px-5 py-16 md:px-8 md:max-w-5xl lg:max-w-6xl xl:max-w-7xl">
       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-link">Interactive lessons</p>
       <h1 className="mt-3 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
         Learn by doing.
