@@ -96,7 +96,7 @@ const labs: Lab[] = [
 
 export default function LabIndexPage() {
   return (
-    <main className="mx-auto flex min-h-[100svh] max-w-3xl flex-col justify-center px-5 py-16 md:px-8">
+    <main className="mx-auto flex min-h-[100svh] max-w-3xl flex-col justify-center px-5 py-16 md:px-8 lg:max-w-5xl xl:max-w-6xl">
       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-link">Interactive lessons</p>
       <h1 className="mt-3 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
         Learn by doing.
@@ -109,9 +109,12 @@ export default function LabIndexPage() {
       {/* The lessons, as a spotlight carousel. */}
       <LessonCarousel labs={labs} />
 
-      {/* Andragogy beliefs, below the lessons, as interactive dropdowns. */}
+      {/* Andragogy beliefs, below the lessons, as interactive dropdowns. The
+          divider spans the full column; the content stays a readable width. */}
       <div className="mt-16 border-t border-border pt-10">
-        <TeachingBeliefs />
+        <div className="max-w-3xl">
+          <TeachingBeliefs />
+        </div>
       </div>
 
       <div className="mt-12">

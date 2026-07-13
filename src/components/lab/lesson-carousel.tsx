@@ -209,7 +209,7 @@ export function LessonCarousel({ labs }: { labs: Lab[] }) {
       ) : (
         // 3D coverflow ring.
         <div className="relative overflow-hidden px-1 py-4" style={{ perspective: 1200 }} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
-          <div className="relative mx-auto h-[460px] max-w-3xl" style={{ transformStyle: "preserve-3d" }}>
+          <div className="relative mx-auto h-[460px] max-w-3xl lg:max-w-5xl xl:max-w-6xl" style={{ transformStyle: "preserve-3d" }}>
             {items.map((lab, i) => {
               const off = ringOffset(i, index, count);
               const a = Math.abs(off);
