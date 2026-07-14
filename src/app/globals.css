@@ -567,6 +567,24 @@
   }
 }
 
+/* ---- Gentle color cross-fade on theme toggle ----
+   The `.theme-transition` class is added to <html> for ~500ms around a
+   light/dark switch (see theme-toggle.tsx), so colors ease only during the
+   change, never on hover. Unlayered so it wins over Tailwind's transition
+   utilities for the moment of the switch. Gated to no-preference so reduced-
+   motion users get an instant switch. */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-transition,
+  .theme-transition *,
+  .theme-transition *::before,
+  .theme-transition *::after {
+    transition-property: color, background-color, border-color,
+      text-decoration-color, fill, stroke;
+    transition-duration: 450ms;
+    transition-timing-function: ease;
+  }
+}
+
 /* ---- Global reduced-motion kill switch (animations + view transitions) ---- */
 @media (prefers-reduced-motion: reduce) {
   *,

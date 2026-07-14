@@ -13,13 +13,23 @@ import { Button } from "@/components/ui/button";
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
 
+  // Flag <html> for the duration of the switch so globals.css eases the colors
+  // (see the ".theme-transition" rule). Scoping it to the toggle keeps hover
+  // states snappy; reduced-motion is handled in CSS, so the class is a no-op there.
+  const toggle = () => {
+    const root = document.documentElement;
+    root.classList.add("theme-transition");
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    window.setTimeout(() => root.classList.remove("theme-transition"), 500);
+  };
+
   return (
     <Button
       variant="ghost"
       size="icon"
       className="size-11"
       aria-label="Toggle dark mode"
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      onClick={toggle}
     >
       <Sun className="hidden size-5 dark:block" aria-hidden="true" />
       <Moon className="size-5 dark:hidden" aria-hidden="true" />

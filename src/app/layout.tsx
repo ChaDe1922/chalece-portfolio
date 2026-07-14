@@ -101,7 +101,6 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
         >
           <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
