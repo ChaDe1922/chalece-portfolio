@@ -21,7 +21,7 @@ function LinkedinIcon({ className }: { className?: string }) {
 const channels = [
   { label: "Email", value: site.email, href: site.links.email, Icon: Mail, external: false },
   { label: "LinkedIn", value: "in/chalecedelacoudray", href: site.links.linkedin, Icon: LinkedinIcon, external: true },
-  { label: "Coursera", value: "7 published courses", href: site.links.coursera, Icon: GraduationCap, external: true },
+  { label: "Coursera", value: "10 published courses", href: site.links.coursera, Icon: GraduationCap, external: true },
 ];
 
 /** Closing slide: recap, a teaser to the Fourier lesson, and contact. */

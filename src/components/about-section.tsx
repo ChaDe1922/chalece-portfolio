@@ -43,9 +43,9 @@ export function AboutSection() {
               become learnable when you design for the learner, not the spec.
             </p>
             <p>
-              At Codio I authored seven published Coursera courses, on DevOps,
+              At Codio I authored ten published Coursera courses, on DevOps,
               containers, CI/CD, operating systems, and more, reaching over
-              thirty thousand learners. At Amazon Music I led technical programs
+              48,000 learners. At Amazon Music I led technical programs
               and stood up the systems behind them. Along the way I co-founded
               an athletics-development venture, mentored young coders, published
               research at ACM CHI, and work fluently with AI tooling to

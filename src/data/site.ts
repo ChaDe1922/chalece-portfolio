@@ -27,7 +27,7 @@ export const site = {
   seo: {
     title: "Chalece DeLaCoudray | Learning Experience Designer & Technologist",
     description:
-      "Learning experience designer and technologist in Atlanta. 7 published Coursera courses, 30,630+ learners. M.S. Music Technology, Georgia Tech. Open to remote roles.",
+      "Learning experience designer and technologist in Atlanta. 10 published Coursera courses, 48,000+ learners. M.S. Music Technology, Georgia Tech. Open to remote roles.",
     keywords: [
       "Chalece DeLaCoudray",
       "learning experience designer",

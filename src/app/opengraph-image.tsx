@@ -67,7 +67,7 @@ export default function OpengraphImage() {
             color: "#a7a4ae",
           }}
         >
-          7 Coursera courses · 30,630+ learners · M.S. Georgia Tech
+          10 Coursera courses · 48,000+ learners · M.S. Georgia Tech
         </div>
       </div>
     ),

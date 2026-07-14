@@ -14,7 +14,7 @@ export const work: WorkItem[] = [
   {
     title: "Coursera Course Catalog (Codio)",
     description:
-      "Authored 7 published courses on DevOps, containers, CI/CD, operating systems, Unix, Bash scripting, and web security, reaching 30,630+ learners.",
+      "Authored 10 published courses on DevOps, containers, CI/CD, operating systems, Unix, Bash scripting, and web security, reaching 48,000+ learners.",
     tags: ["Curriculum", "Assessment", "Technical"],
     href: "https://www.coursera.org/instructor/~88911140",
   },

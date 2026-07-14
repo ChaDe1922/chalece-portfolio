@@ -39,7 +39,7 @@ const channels: Channel[] = [
   },
   {
     label: "Coursera",
-    value: "7 published courses",
+    value: "10 published courses",
     href: site.links.coursera,
     icon: GraduationCap,
     external: true,

@@ -14,8 +14,8 @@ export type Stat = {
 };
 
 export const stats: Stat[] = [
-  { value: 30630, suffix: "+", label: "Learners reached" },
-  { value: 7, label: "Published Coursera courses" },
+  { value: 48000, suffix: "+", label: "Learners reached" },
+  { value: 10, label: "Published Coursera courses" },
   { value: 10, suffix: "+", label: "Years in learning and technology" },
   { value: null, display: "M.S.", label: "Music Technology, Georgia Tech" },
 ];

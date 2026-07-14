@@ -5,7 +5,7 @@ import { Reveal } from "@/components/reveal";
 import { site } from "@/data/site";
 
 const highlights = [
-  "Seven published Coursera courses on DevOps, OS, CI/CD and more, 30,630+ learners reached.",
+  "Ten published Coursera courses on DevOps, OS, CI/CD and more, 48,000+ learners reached.",
   "M.S. Music Technology, Georgia Tech (3.75 GPA), plus a B.A. from Bethune-Cookman University.",
   "Led Audio Quality and Hardware Compatibility programs at Amazon Music.",
   "Published research at ACM CHI 2020, with practical AI-tooling proficiency.",
