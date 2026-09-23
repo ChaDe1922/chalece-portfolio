@@ -49,7 +49,7 @@ export function Nav() {
       >
         <a
           href="#hero"
-          className="font-heading text-base font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm print:text-2xl print:font-bold"
+          className="font-heading text-xl tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm print:text-2xl"
         >
           {site.name}
         </a>
@@ -63,7 +63,7 @@ export function Nav() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  aria-current={isActive ? "page" : undefined}
+                  aria-current={isActive ? "location" : undefined}
                   className={cn(
                     "relative rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     isActive ? "text-foreground" : "text-muted-foreground"
@@ -73,7 +73,7 @@ export function Nav() {
                   <span
                     aria-hidden="true"
                     className={cn(
-                      "absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-primary transition-transform duration-200",
+                      "absolute inset-x-3 bottom-0.5 h-px bg-link transition-transform duration-200",
                       isActive ? "scale-x-100" : "scale-x-0"
                     )}
                   />

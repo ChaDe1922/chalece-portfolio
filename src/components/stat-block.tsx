@@ -63,14 +63,13 @@ export function StatBlock({ stat }: { stat: Stat }) {
   }, [stat.value, suffix, reduced]);
 
   return (
-    <div className="stat-block">
-      <p
-        ref={ref}
-        className="font-heading text-4xl font-bold tabular-nums sm:text-5xl"
-      >
+    <div className="stat-block lg:px-6 lg:first:pl-0 lg:last:pr-0">
+      {/* AT reads the stable final value; the animating numeral is hidden. */}
+      <p className="sr-only">{finalText}</p>
+      <p ref={ref} aria-hidden="true" className="stat-numeral">
         {text}
       </p>
-      <p className="mt-2 text-sm leading-snug text-muted-foreground">
+      <p className="mt-3 text-sm leading-snug text-muted-foreground">
         {stat.label}
       </p>
     </div>

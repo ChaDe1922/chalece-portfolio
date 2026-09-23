@@ -1,5 +1,6 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
@@ -23,12 +24,23 @@ export function ThemeToggle() {
     window.setTimeout(() => root.classList.remove("theme-transition"), 750);
   };
 
+  // The pressed state and label depend on the resolved theme, which is only
+  // known on the client. Report "not mounted" during SSR and hydration so the
+  // attributes match, then re-render once with the real value.
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+  const isDark = mounted && resolvedTheme === "dark";
+
   return (
     <Button
       variant="ghost"
       size="icon"
       className="size-11"
-      aria-label="Toggle dark mode"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-pressed={isDark}
       onClick={toggle}
     >
       <Sun className="hidden size-5 dark:block" aria-hidden="true" />

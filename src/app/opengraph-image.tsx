@@ -18,9 +18,8 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "80px",
-          color: "#f2f0ec",
-          background:
-            "radial-gradient(120% 120% at 0% 0%, #2a2350 0%, #17161d 55%)",
+          color: "#ece7dd",
+          background: "#161511",
         }}
       >
         <div
@@ -29,8 +28,8 @@ export default function OpengraphImage() {
             fontSize: 30,
             letterSpacing: "0.18em",
             textTransform: "uppercase",
-            color: "#9b8cf0",
-            fontWeight: 600,
+            color: "#c9a55c",
+            fontWeight: 500,
           }}
         >
           {site.location}
@@ -41,9 +40,9 @@ export default function OpengraphImage() {
             style={{
               display: "flex",
               fontSize: 92,
-              fontWeight: 800,
+              fontWeight: 600,
               lineHeight: 1.02,
-              letterSpacing: "-0.03em",
+              letterSpacing: "-0.02em",
             }}
           >
             {site.name}
@@ -53,7 +52,7 @@ export default function OpengraphImage() {
               display: "flex",
               marginTop: 20,
               fontSize: 38,
-              color: "#c9c6cf",
+              color: "#aaa397",
             }}
           >
             {site.role}
@@ -64,7 +63,7 @@ export default function OpengraphImage() {
           style={{
             display: "flex",
             fontSize: 30,
-            color: "#a7a4ae",
+            color: "#aaa397",
           }}
         >
           10 Coursera courses · 48,000+ learners · M.S. Georgia Tech

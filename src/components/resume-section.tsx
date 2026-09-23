@@ -1,5 +1,4 @@
-import { Check, FileDown } from "lucide-react";
-import { MagneticButton } from "@/components/magnetic-button";
+import { CtaLink } from "@/components/cta-link";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { site } from "@/data/site";
@@ -11,46 +10,47 @@ const highlights = [
   "Published research at ACM CHI 2020, with practical AI-tooling proficiency.",
 ];
 
-/** Resume highlights plus a download button for the full PDF. */
+/** Experience highlights plus a link to the full PDF résumé. */
 export function ResumeSection() {
   return (
-    <section id="resume" aria-labelledby="resume-heading" className="scroll-mt-24">
+    <section
+      id="resume"
+      aria-labelledby="resume-heading"
+      className="scroll-mt-24 border-t border-border"
+    >
       <div className="mx-auto max-w-5xl px-4 py-20 md:px-8 md:py-28 print:py-6">
         <Reveal>
           <SectionHeading
             id="resume-heading"
-            eyebrow="Resume"
-            title="The short version."
+            eyebrow="Résumé"
+            title="Experience"
             description="The full history, formatted for ATS, is one click away."
           />
         </Reveal>
 
-        <Reveal className="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-center print:mt-5">
-          <ul className="resume-highlights space-y-4">
-            {highlights.map((line) => (
-              <li key={line} className="flex gap-3">
-                <span
-                  aria-hidden="true"
-                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground"
-                >
-                  <Check className="size-4" />
+        <Reveal className="mt-12 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-start print:mt-5">
+          <ol className="resume-highlights divide-y divide-border border-y border-border">
+            {highlights.map((line, i) => (
+              <li key={line} className="flex gap-5 py-4">
+                <span aria-hidden="true" className="eyebrow pt-1">
+                  {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="text-base leading-relaxed text-foreground/90 print:text-[15px]">
                   {line}
                 </span>
               </li>
             ))}
-          </ul>
+          </ol>
 
-          <div className="lg:justify-self-end print:hidden">
-            <MagneticButton
+          <div className="lg:justify-self-end lg:pt-4 print:hidden">
+            <CtaLink
               href={site.resumePath}
+              variant="outline"
               download
-              aria-label="Download resume, PDF"
+              aria-label="Résumé, PDF download"
             >
-              <FileDown aria-hidden="true" />
-              Download resume (PDF)
-            </MagneticButton>
+              Résumé (PDF)
+            </CtaLink>
           </div>
         </Reveal>
       </div>

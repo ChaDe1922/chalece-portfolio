@@ -3,8 +3,9 @@ import { WorkCard } from "@/components/work-card";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 
-/** Featured work, laid out as a uniform, even card grid: 1 column on mobile,
- *  2 on tablet, 3 on desktop. Cards stretch to equal heights per row. */
+/** Selected work as a hairline grid: 1 column on mobile, 2 on tablet, 3 on
+ *  desktop. The 1px gap over a border-colored ground draws the rules between
+ *  cells, so the cards need no individual borders. */
 export function WorkGrid() {
   return (
     <section id="work" aria-labelledby="work-heading" className="scroll-mt-24">
@@ -12,16 +13,20 @@ export function WorkGrid() {
         <Reveal>
           <SectionHeading
             id="work-heading"
-            eyebrow="Featured work"
-            title="Proof, not promises."
-            description="A decade of turning complex technical ideas into learning and systems that ship. Public work links out where it lives."
+            eyebrow="Selected work"
+            title="Ten years of technical learning, programs, and research."
+            description="Public work links out where it lives."
           />
         </Reveal>
 
-        <Reveal className="work-grid mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 print:mt-4 print:gap-3">
-          {work.map((item) => (
-            <WorkCard key={item.title} item={item} />
-          ))}
+        <Reveal className="mt-12 print:mt-4">
+          <ul className="work-grid grid grid-cols-1 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+            {work.map((item, i) => (
+              <li key={item.title} className="contents">
+                <WorkCard item={item} index={i + 1} />
+              </li>
+            ))}
+          </ul>
         </Reveal>
       </div>
     </section>

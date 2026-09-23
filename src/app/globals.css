@@ -9,9 +9,9 @@
   --color-foreground: var(--foreground);
   --color-link: var(--link);
   --color-coral: var(--coral);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-geist);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-space-grotesk);
+  --font-heading: var(--font-instrument-serif);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -50,30 +50,30 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Light theme: warm paper + ink, electric-violet accent, coral highlight.
-   Values chosen to pass WCAG 2.2 AA (verified): ink/paper 16.96:1,
-   link 6.09:1, white-on-primary 4.93:1, muted 6.42:1. */
+/* Light theme, "Studio Bronze": warm ivory + ink with one bronze accent.
+   Values chosen to pass WCAG 2.2 AA (verified): ink/ivory 16.27:1,
+   link 5.60:1, white-on-primary 5.02:1, muted 6.18:1. */
 :root {
-  --background: #f7f5f2; /* paper */
-  --foreground: #14131a; /* ink */
-  --card: #fffdfa;
-  --card-foreground: #14131a;
-  --popover: #fffdfa;
-  --popover-foreground: #14131a;
-  --primary: #6d5ae6; /* violet (button bg, white text = 4.93:1) */
+  --background: #f6f3ee; /* ivory */
+  --foreground: #17161a; /* ink */
+  --card: #fdfbf7;
+  --card-foreground: #17161a;
+  --popover: #fdfbf7;
+  --popover-foreground: #17161a;
+  --primary: #8a6a2f; /* bronze (button bg, white text = 5.02:1) */
   --primary-foreground: #ffffff;
-  --secondary: #edeae5;
-  --secondary-foreground: #14131a;
-  --muted: #edeae5;
-  --muted-foreground: #5a5862; /* 6.42:1 on paper */
-  --accent: #e9e5fb; /* subtle violet-tinted hover surface */
-  --accent-foreground: #2f2a52;
-  --destructive: #d8412f;
-  --border: #e3dfd8;
-  --input: #e3dfd8;
-  --ring: #6d5ae6;
-  --link: #5b45cc; /* accessible violet for text/links, 6.09:1 */
-  --coral: #ff6b5e; /* decorative only, never body text on paper */
+  --secondary: #ece8e0;
+  --secondary-foreground: #17161a;
+  --muted: #ece8e0;
+  --muted-foreground: #5f5a52; /* 6.18:1 on ivory */
+  --accent: #efe6d6; /* warm bronze-tinted hover surface */
+  --accent-foreground: #4a3a1c;
+  --destructive: #b53a2b;
+  --border: #dcd6cb;
+  --input: #dcd6cb;
+  --ring: #8a6a2f;
+  --link: #7a5c26; /* deeper bronze for text/links, 5.60:1 */
+  --coral: #b8743a; /* muted terracotta, decorative only (labs) */
   /* Color-coded formula symbols, legible on the light card surface. */
   --formula-signal: #334155;
   --formula-amp: #6d4fd0;
@@ -82,45 +82,46 @@
   --formula-freq: #d8412f;
   --formula-time: #0d9488;
   --formula-phase: #2563eb;
-  --chart-1: #6d5ae6;
-  --chart-2: #ff6b5e;
-  --chart-3: #5b45cc;
-  --chart-4: #5a5862;
-  --chart-5: #14131a;
-  --radius: 0.75rem;
-  --sidebar: #f7f5f2;
-  --sidebar-foreground: #14131a;
-  --sidebar-primary: #6d5ae6;
+  --chart-1: #8a6a2f;
+  --chart-2: #b8743a;
+  --chart-3: #7a5c26;
+  --chart-4: #5f5a52;
+  --chart-5: #17161a;
+  --radius: 0.375rem;
+  --sidebar: #f6f3ee;
+  --sidebar-foreground: #17161a;
+  --sidebar-primary: #8a6a2f;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e9e5fb;
-  --sidebar-accent-foreground: #2f2a52;
-  --sidebar-border: #e3dfd8;
-  --sidebar-ring: #6d5ae6;
+  --sidebar-accent: #efe6d6;
+  --sidebar-accent-foreground: #4a3a1c;
+  --sidebar-border: #dcd6cb;
+  --sidebar-ring: #8a6a2f;
 }
 
-/* Dark theme: near-black (not pure #000), raised surfaces, lighter violet
-   for AA text contrast. Verified: fg/bg 15.78:1, link 6.33:1, muted 7.33:1. */
+/* Dark theme: warm near-black (not pure #000), raised surfaces, the accent
+   lifts from bronze to brass for AA text contrast.
+   Verified: fg/bg 14.83:1, link 9.17:1, muted 7.30:1. */
 .dark {
-  --background: #17161d; /* near-black */
-  --foreground: #f2f0ec;
-  --card: #201f28; /* raised surface */
-  --card-foreground: #f2f0ec;
-  --popover: #201f28;
-  --popover-foreground: #f2f0ec;
-  --primary: #6d5ae6;
-  --primary-foreground: #ffffff;
-  --secondary: #262530;
-  --secondary-foreground: #f2f0ec;
-  --muted: #262530;
-  --muted-foreground: #a7a4ae; /* 7.33:1 on near-black */
-  --accent: #2a2640;
-  --accent-foreground: #e7e2fb;
-  --destructive: #ff7a6b;
-  --border: #322f3c;
-  --input: #322f3c;
-  --ring: #9b8cf0;
-  --link: #9b8cf0; /* lighter violet, 6.33:1 on near-black */
-  --coral: #ff8478;
+  --background: #161511; /* warm near-black */
+  --foreground: #ece7dd;
+  --card: #1f1d19; /* raised surface */
+  --card-foreground: #ece7dd;
+  --popover: #1f1d19;
+  --popover-foreground: #ece7dd;
+  --primary: #c9a55c; /* brass */
+  --primary-foreground: #161511;
+  --secondary: #26231e;
+  --secondary-foreground: #ece7dd;
+  --muted: #26231e;
+  --muted-foreground: #aaa397; /* 7.30:1 on near-black */
+  --accent: #2e2818;
+  --accent-foreground: #e6d4a8;
+  --destructive: #f08a7a;
+  --border: #2e2b25;
+  --input: #2e2b25;
+  --ring: #c9a55c;
+  --link: #d4b46b; /* lighter brass, 9.17:1 on near-black */
+  --coral: #d9925a;
   /* Color-coded formula symbols, brightened for the dark card surface. */
   --formula-signal: #cbd5e1;
   --formula-amp: #a99cf5;
@@ -129,19 +130,19 @@
   --formula-freq: #ff8478;
   --formula-time: #2dd4bf;
   --formula-phase: #85a8f8;
-  --chart-1: #9b8cf0;
-  --chart-2: #ff8478;
-  --chart-3: #6d5ae6;
-  --chart-4: #a7a4ae;
-  --chart-5: #f2f0ec;
-  --sidebar: #17161d;
-  --sidebar-foreground: #f2f0ec;
-  --sidebar-primary: #9b8cf0;
-  --sidebar-primary-foreground: #17161d;
-  --sidebar-accent: #2a2640;
-  --sidebar-accent-foreground: #e7e2fb;
-  --sidebar-border: #322f3c;
-  --sidebar-ring: #9b8cf0;
+  --chart-1: #c9a55c;
+  --chart-2: #d9925a;
+  --chart-3: #d4b46b;
+  --chart-4: #aaa397;
+  --chart-5: #ece7dd;
+  --sidebar: #161511;
+  --sidebar-foreground: #ece7dd;
+  --sidebar-primary: #c9a55c;
+  --sidebar-primary-foreground: #161511;
+  --sidebar-accent: #2e2818;
+  --sidebar-accent-foreground: #e6d4a8;
+  --sidebar-border: #2e2b25;
+  --sidebar-ring: #c9a55c;
 }
 
 @layer base {
@@ -150,17 +151,24 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+    text-wrap: pretty;
   }
   html {
     scroll-behavior: smooth;
   }
+  /* Display face: Instrument Serif at its single regular weight. Bold is
+     never synthesized (lab headings that still ask for font-bold render at
+     the true weight); hierarchy comes from size and space instead. */
   h1,
   h2,
   h3,
   h4 {
-    font-family: var(--font-space-grotesk), var(--font-inter), sans-serif;
-    letter-spacing: -0.02em;
+    font-family: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-synthesis-weight: none;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
   }
   /* Respect reduced-motion for native smooth scroll too. */
   @media (prefers-reduced-motion: reduce) {
@@ -180,15 +188,38 @@
   }
 }
 
-/* ---- Grain overlay: inline SVG feTurbulence, tiny payload, decorative ----
-   Rendered as a sibling layer (not an ancestor ::before) so it never sits in
-   the contrast-resolution path of the text above it. */
-.grain-overlay {
-  opacity: 0.045;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* ---- Editorial type scale (marketing page) ----
+   Fluid display sizes so headings scale with the viewport instead of snapping
+   at breakpoints. Ratio is roughly 1.25 between steps at the desktop end. */
+@utility display-1 {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 1.9rem + 3.4vw, 4.9rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
 }
-.dark .grain-overlay {
-  opacity: 0.07;
+@utility display-2 {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(1.9rem, 1.45rem + 1.6vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+@utility stat-numeral {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 2rem + 2vw, 3.75rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+/* Small mono label: section eyebrows, card indices, tag meta lines. */
+@utility eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
 }
 
 /* ---- Scroll-driven reveal: progressive enhancement only ----
@@ -263,49 +294,9 @@
   .lesson-stagger > *:nth-child(n + 10) { animation-delay: 0.58s; }
 }
 
-/* ---- Cursor trail: a light, delicate trail of soft violet dots that traces
-   the pointer path (mouse move or finger drag) while moving and fades out when
-   it stops. The component does not mount under reduced-motion. Soft radial dots
-   (no filter blur) keep many short-lived elements cheap. */
-.cursor-trail {
-  position: fixed;
-  inset: 0;
-  z-index: 55;
-  pointer-events: none;
-}
-.cursor-trail-dot {
-  position: fixed;
-  width: 26px;
-  height: 26px;
-  margin: -13px 0 0 -13px; /* center on the path point */
-  border-radius: 9999px;
-  pointer-events: none;
-  background: radial-gradient(
-    circle,
-    color-mix(in oklch, var(--ring) 42%, transparent) 0%,
-    transparent 72%
-  );
-  filter: blur(3px);
-  will-change: transform, opacity;
-  animation: cursor-trail 0.6s ease-out forwards;
-}
-@keyframes cursor-trail {
-  from {
-    opacity: 0.34;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-}
-@media print {
-  .cursor-trail {
-    display: none !important;
-  }
-}
-
-/* ---- Hero "click." word: violet, clickable, with a pop + spark surprise ---- */
+/* ---- Click word: the tappable word in the lab deck intros. The marketing
+   hero no longer uses it; the seven lab decks and the recursion python-word
+   still do. The bloom uses the accent tokens, so it inherits the palette. */
 .click-word {
   position: relative;
   display: inline-block;
@@ -346,7 +337,7 @@
     transform: scale(1);
   }
 }
-/* Soft violet/coral halo that blooms behind the word and dissipates. */
+/* Soft accent halo that blooms behind the word and dissipates. */
 .click-word-bloom {
   position: absolute;
   left: 50%;
@@ -386,7 +377,7 @@
 }
 
 /* ---- "Python" word: a little green snake slithers out from behind the word
-   and retreats. Reuses .click-word for the violet color/focus. The snake sits
+   and retreats. Reuses .click-word for the accent color/focus. The snake sits
    behind the word (z-0) and is removed on animation end. The component does
    not mount the snake under prefers-reduced-motion. */
 .python-snake {
@@ -498,36 +489,6 @@
   }
 }
 
-/* ---- Click burst: a soft, blurred color glow that blooms from a background
-   click and fades. Gentle (not hard rings). Only transform/opacity animate.
-   The component does not mount under prefers-reduced-motion. */
-.click-burst {
-  position: absolute;
-  width: 240px;
-  height: 240px;
-  margin: -120px 0 0 -120px; /* center on the click point */
-  border-radius: 9999px;
-  background: radial-gradient(
-    circle,
-    color-mix(in oklch, var(--burst-color) 55%, transparent) 0%,
-    color-mix(in oklch, var(--burst-color) 22%, transparent) 38%,
-    transparent 70%
-  );
-  filter: blur(10px);
-  will-change: transform, opacity;
-  animation: click-burst 1.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-@keyframes click-burst {
-  from {
-    transform: scale(0.25);
-    opacity: 0.42;
-  }
-  to {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-
 /* ---- Cycle nudge: a soft "sonar ping" ring that pulses on the current step of
    the Vibe Coding cycle, inviting the learner to click through. The active node
    also keeps a static ring, so the affordance survives reduced motion. */
@@ -608,25 +569,25 @@
   /* Always print light, even if the viewer is in dark mode. */
   :root,
   .dark {
-    --background: #f7f5f2;
-    --foreground: #14131a;
-    --card: #fffdfa;
-    --card-foreground: #14131a;
-    --secondary: #edeae5;
-    --secondary-foreground: #14131a;
-    --muted: #edeae5;
-    --muted-foreground: #5a5862;
-    --accent: #e9e5fb;
-    --accent-foreground: #2f2a52;
-    --border: #e3dfd8;
-    --ring: #6d5ae6;
-    --link: #5b45cc;
-    --coral: #ff6b5e;
-    --primary: #6d5ae6;
+    --background: #f6f3ee;
+    --foreground: #17161a;
+    --card: #fdfbf7;
+    --card-foreground: #17161a;
+    --secondary: #ece8e0;
+    --secondary-foreground: #17161a;
+    --muted: #ece8e0;
+    --muted-foreground: #5f5a52;
+    --accent: #efe6d6;
+    --accent-foreground: #4a3a1c;
+    --border: #dcd6cb;
+    --ring: #8a6a2f;
+    --link: #7a5c26;
+    --coral: #b8743a;
+    --primary: #8a6a2f;
     --primary-foreground: #ffffff;
   }
   html {
-    background: #f7f5f2;
+    background: #f6f3ee;
   }
   *,
   *::before,
@@ -662,6 +623,15 @@
   .work-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 0.6rem !important;
+    /* On screen the grid is a hairline grid (1px gap over the border color).
+       In print the gap widens, so drop that ground and border each card. */
+    background: transparent !important;
+    border: 0 !important;
+    overflow: visible !important;
+  }
+  .work-card {
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
   }
   /* Keep About bio paragraphs whole: the 2nd paragraph is too tall for the
      remaining page-2 space, so it moves entirely to page 3 instead of splitting. */
@@ -678,7 +648,7 @@
   }
 }
 
-/* ---- Lab range sliders: larger, brand-violet grab targets ---- */
+/* ---- Lab range sliders: larger, brand-accent grab targets ---- */
 .lab-slider {
   -webkit-appearance: none;
   appearance: none;

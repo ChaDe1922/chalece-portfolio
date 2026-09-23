@@ -20,12 +20,12 @@ export function SectionHeading({
   return (
     <div className={cn("section-heading max-w-2xl", className)}>
       {eyebrow ? (
-        <p className="mb-3 inline-flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-link">
-          <span aria-hidden="true" className="h-px w-6 bg-link" />
+        <p className="eyebrow mb-4 inline-flex items-center gap-3">
+          <span aria-hidden="true" className="h-px w-6 bg-border" />
           {eyebrow}
         </p>
       ) : null}
-      <h2 id={id} className="text-3xl font-bold sm:text-4xl">
+      <h2 id={id} className="display-2">
         {title}
       </h2>
       {description ? (

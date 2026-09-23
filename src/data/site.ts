@@ -27,7 +27,7 @@ export const site = {
   seo: {
     title: "Chalece DeLaCoudray | Learning Experience Designer & Technologist",
     description:
-      "Learning experience designer and technologist in Atlanta. 10 published Coursera courses, 48,000+ learners. M.S. Music Technology, Georgia Tech. Open to remote roles.",
+      "Learning experience designer and technologist in Atlanta. Ten published Coursera courses, 48,000+ learners. M.S. Music Technology, Georgia Tech. Available for senior learning-design roles and consulting engagements.",
     keywords: [
       "Chalece DeLaCoudray",
       "learning experience designer",
@@ -46,6 +46,6 @@ export type NavItem = { label: string; href: string };
 export const navItems: NavItem[] = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
-  { label: "Resume", href: "#resume" },
+  { label: "Résumé", href: "#resume" },
   { label: "Contact", href: "#contact" },
 ];

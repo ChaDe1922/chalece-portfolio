@@ -2,11 +2,11 @@ import type { ReactNode } from "react";
 
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
-import { ClickRipple } from "@/components/click-ripple";
-import { CursorTrail } from "@/components/cursor-glow";
 
-/** Marketing chrome (nav, footer, global pointer effects) for the main site.
- *  Routes outside this group (e.g. /lab) render bare on the root layout. */
+/** Marketing chrome (nav, footer) for the main site. Routes outside this
+ *  group (e.g. /lab) render bare on the root layout. The pointer effects
+ *  (cursor trail, click ripple) were retired from the marketing page; the
+ *  components stay in the repo because the lab decks still use them. */
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <>
@@ -17,12 +17,11 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
         Skip to content
       </a>
       <Nav />
-      <main id="main" className="flex-1">
+      {/* tabIndex lets the skip link actually move focus, not just scroll. */}
+      <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
         {children}
       </main>
       <Footer />
-      <CursorTrail />
-      <ClickRipple />
     </>
   );
 }
