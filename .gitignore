@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Private business collateral — not for the public repo
+/public/p/
+
+# Local screenshot/dev scratch scripts
+_shot*.mjs
+_verify_shot.mjs
+/public/headshot-old.jpg
