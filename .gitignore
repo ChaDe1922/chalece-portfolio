@@ -46,4 +46,3 @@ next-env.d.ts
 # Local screenshot/dev scratch scripts
 _shot*.mjs
 _verify_shot.mjs
-/public/headshot-old.jpg

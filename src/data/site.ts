@@ -12,8 +12,8 @@ export const site = {
   location: "Atlanta, Remote",
   email: "cdelacoudray@gmail.com",
   resumePath: "/Chalece-DeLaCoudray-Resume.pdf",
-  headshotPath: "/headshot.jpg",
-  // Flip to true once a real headshot is placed at public/headshot.jpg.
+  headshotPath: "/headshot.png",
+  // Flip to true once a real headshot is placed at public/headshot.png.
   // Until then the About section shows a polished monogram placeholder.
   hasHeadshot: true,
   initials: "CD",

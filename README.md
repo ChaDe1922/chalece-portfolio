@@ -52,7 +52,7 @@ The downloadable resume is brand-matched to the site. Source: [`resume/resume.ht
 
 ## Assets / config notes
 
-- **Headshot** — `public/headshot.jpg` is in place with `hasHeadshot: true` in `src/data/site.ts`.
+- **Headshot** — `public/headshot.png` is in place with `hasHeadshot: true` in `src/data/site.ts`.
 - **Deployed URL** — `site.url` in `src/data/site.ts` is the production Vercel URL (drives `metadataBase`, canonical, sitemap, robots, JSON-LD).
 
 ## Deploy (Vercel)
