@@ -32,7 +32,7 @@ export function NightHero() {
   const showId = hover ?? single;
   let label: string;
   if (showId) label = `${hover && hover !== single ? "preview" : "solo"}: ${CHANNELS[showId].name.toLowerCase()}`;
-  else if (full) label = "now playing: full mix · music technology · software · learning design";
+  else if (full) label = "full mix: music technology · software · learning design";
   else if (ids.length === 2) label = `blend: ${ids.map((id) => CHANNELS[id].short.toLowerCase()).join(" × ")}`;
   else label = "no signal · pick a verb";
 
