@@ -131,7 +131,7 @@ const pct = (n: number) => `${(n * 100).toFixed(2)}%`;
 const pad = (n: number) => String(n).padStart(2, "0");
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Track label with its export button, then the clips.
+// Track header (name, Solo/Mute, export), then the clips.
 const LANE_GRID = "grid grid-cols-[124px_1fr] gap-4 sm:grid-cols-[160px_1fr]";
 
 function DownloadIcon() {
@@ -141,6 +141,43 @@ function DownloadIcon() {
       <polyline points="7 10 12 15 17 10" />
       <line x1="12" x2="12" y1="15" y2="3" />
     </svg>
+  );
+}
+
+/** DAW track header buttons. They drive the same mix as the console above. */
+function TrackButtons({ id }: { id: PillarId }) {
+  const { on, single, soloOrFull, toggle } = useMix();
+  const ch = CHANNELS[id];
+  const soloed = single === id;
+  const muted = !on[id];
+  const base = "h-11 min-w-11 cursor-pointer rounded-lg border px-1.5 font-mono text-[12px] font-medium transition-colors duration-200";
+  return (
+    <span role="group" aria-label={`${ch.name} track`} className="flex gap-1.5">
+      <button
+        type="button"
+        aria-pressed={soloed}
+        aria-label={`Solo ${ch.name} track`}
+        onClick={() => soloOrFull(id)}
+        className={base}
+        style={{ borderColor: ch.color, background: soloed ? ch.color : "transparent", color: soloed ? "#0f1115" : ch.color }}
+      >
+        Solo
+      </button>
+      <button
+        type="button"
+        aria-pressed={muted}
+        aria-label={`Mute ${ch.name} track`}
+        onClick={() => toggle(id)}
+        className={base}
+        style={{
+          borderColor: muted ? "#ecebe6" : "#3a3f4b",
+          background: muted ? "#ecebe6" : "transparent",
+          color: muted ? "#0f1115" : "#9a9ca3",
+        }}
+      >
+        Mute
+      </button>
+    </span>
   );
 }
 
@@ -186,6 +223,7 @@ function Lane({ id, selectedId, onSelect, register }: LaneProps) {
           </p>
           <h3 className="mt-1 font-display text-[17px] font-bold text-night-fg">{meta.name}</h3>
         </div>
+        {meta.pillar && <TrackButtons id={meta.pillar} />}
         {meta.pillar && <ExportLink id={meta.pillar} hot={single === meta.pillar} />}
       </div>
       <ul
@@ -277,11 +315,6 @@ function nearestStart(at: number, current: number): number {
   return best;
 }
 
-/** Nearest clip in another lane, by where the bars start. */
-function nearestIn(lane: LaneId, at: number): Placed {
-  return LANES[lane].placed.reduce((best, clip) => (Math.abs(clip.at - at) < Math.abs(best.at - at) ? clip : best));
-}
-
 /** Resume: a DAW multitrack. Each clip opens its details below; every craft lane exports its own PDF. */
 export function SessionResume() {
   const today = useSyncExternalStore<number | null>(noopSubscribe, todayPosition, () => null);
@@ -333,21 +366,15 @@ export function SessionResume() {
 
   /**
    * Arrow keys work from anywhere in the timeline: a clip, the playhead, the transport,
-   * or a click on empty space (the wrapper takes focus). Left/right move through time,
-   * up/down change tracks.
+   * or a click on empty space (the wrapper takes focus). Left/right move through time.
    */
   function onTimelineKey(event: KeyboardEvent<HTMLDivElement>) {
     if (event.altKey || event.ctrlKey || event.metaKey) return;
-    const lane = LANE_ORDER.indexOf(current.lane);
     let target: number | null = null;
     if (event.key === "ArrowRight") target = Math.min(COUNT - 1, index + 1);
     else if (event.key === "ArrowLeft") target = Math.max(0, index - 1);
     else if (event.key === "Home") target = 0;
     else if (event.key === "End") target = COUNT - 1;
-    else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-      const other = LANE_ORDER[lane + (event.key === "ArrowDown" ? 1 : -1)];
-      target = other ? SEQUENCE.indexOf(nearestIn(other, current.at)) : index;
-    }
     if (target === null) return;
     event.preventDefault();
     stop();
@@ -549,14 +576,11 @@ export function SessionResume() {
                 Clip {index + 1} of {COUNT}
               </span>
             </p>
-            <p aria-hidden="true" className="hidden font-mono text-xs text-night-muted md:block">
-              drag the playhead · ← → move through time · ↑ ↓ change tracks
-            </p>
             <p aria-hidden="true" className="font-mono text-xs text-night-muted md:hidden">
               drag the playhead or scroll the timeline →
             </p>
             <p id="resume-timeline-keys" className="sr-only">
-              Left and right arrows move through time. Up and down arrows change tracks.
+              Left and right arrows move through time.
             </p>
             <p aria-live={playing ? "off" : "polite"} className="sr-only">
               {announce}

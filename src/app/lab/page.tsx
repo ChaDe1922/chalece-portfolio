@@ -57,9 +57,9 @@ export default function LabIndexPage() {
           >
             <h2
               id="hire-heading"
-              className="max-w-[560px] font-display text-[clamp(1.5rem,3vw,2rem)] font-bold leading-[1.15] tracking-[-0.035em] text-night-fg"
+              className="max-w-[560px] text-balance font-display text-[clamp(1.5rem,3vw,2rem)] font-bold leading-[1.15] tracking-[-0.035em] text-night-fg"
             >
-              Want someone who can build lessons like these? Email me about a role.
+              If these lessons spark an idea, let&apos;s talk.
             </h2>
             <a
               href={roleMailto()}
