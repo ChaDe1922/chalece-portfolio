@@ -187,7 +187,7 @@ export const DEFAULT_PITCH =
   "Want to learn more about my experience? Set the mix to what matters to you, and download my resume.";
 
 export const TABS: { id: string; label: string }[] = [
-  { id: "what", label: "what-i-do" },
+  { id: "what", label: "what i do" },
   { id: "work", label: "work" },
   { id: "about", label: "about" },
   { id: "resume", label: "resume" },
