@@ -13,37 +13,20 @@
       name="description"
       content="A short, scenario-based security-awareness module. Learn the red flags of an urgent-payment scam, then read a message and decide how to respond."
     />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f5f2" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17161d" />
+    <meta name="theme-color" content="#0f1115" />
 
-    <!-- No-flash theme: honor the portfolio's saved choice (shared localStorage
-         key "theme"), else follow the OS. Runs before the stylesheet. -->
-    <script>
-      (function () {
-        try {
-          var t = localStorage.getItem("theme");
-          var dark =
-            t === "dark" ||
-            (t !== "light" &&
-              window.matchMedia &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches);
-          if (dark) document.documentElement.classList.add("dark");
-        } catch (e) {}
-      })();
-    </script>
-
-    <!-- Fonts: Space Grotesk headings, Inter body, with a system fallback. -->
+    <!-- Fonts: Syne headings, IBM Plex Sans body, matching the portfolio. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
 
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236d5ae6'/%3E%3Cpath d='M16 7l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9v-6l8-3z' fill='none' stroke='%23fff' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f5c542'/%3E%3Cpath d='M16 7l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9v-6l8-3z' fill='none' stroke='%230f1115' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"
     />
   </head>
   <body>
@@ -62,10 +45,9 @@
         <button type="button" class="step" data-step="6" aria-label="Go to: Report it"></button>
         <button type="button" class="step" data-step="7" aria-label="Go to: Results"></button>
       </nav>
-      <button type="button" class="navtheme" id="navtheme" aria-label="Toggle dark mode">
-        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
-      </button>
+      <a class="navtheme" href="/lab" aria-label="All lessons">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
+      </a>
     </div>
 
     <main class="stage" id="stage">
@@ -686,7 +668,7 @@
         <div class="deskscene deskscene--report">
           <img class="deskscene__photo" src="assets/blankLaptop.png" alt="" />
           <div class="deskscene__stage is-reading">
-            <div class="compose" id="report-compose" aria-live="polite">
+            <div class="compose" id="report-compose">
               <p class="compose__step" id="report-step"></p>
               <dl class="compose__template" id="report-template">
                 <div class="compose__row" data-slot="to">
@@ -704,7 +686,7 @@
               </dl>
               <p class="compose__prompt" id="report-prompt"></p>
               <div class="compose__options" id="report-options"></div>
-              <p class="compose__note" id="report-note" role="status" aria-live="polite"></p>
+              <p class="compose__note" id="report-note"></p>
               <div class="compose__actions">
                 <button type="button" class="btn btn--primary" id="report-next" hidden>Next</button>
               </div>

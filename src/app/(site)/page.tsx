@@ -1,19 +1,20 @@
-import { Hero } from "@/components/hero";
-import { ProofStats } from "@/components/proof-stats";
-import { WorkGrid } from "@/components/work-grid";
-import { AboutSection } from "@/components/about-section";
-import { ResumeSection } from "@/components/resume-section";
-import { ContactSection } from "@/components/contact-section";
+import { NightHero } from "@/components/night/night-hero";
+import { MixConsole } from "@/components/night/mix-console";
+import { Tracklist } from "@/components/night/tracklist";
+import { LinerNotes } from "@/components/night/liner-notes";
+import { SessionResume } from "@/components/night/session-resume";
+import { NightContact } from "@/components/night/night-contact";
+import { resumePreview } from "@/data/resume-preview";
 
 export default function Home() {
   return (
     <>
-      <Hero />
-      <ProofStats />
-      <WorkGrid />
-      <AboutSection />
-      <ResumeSection />
-      <ContactSection />
+      <NightHero />
+      <MixConsole />
+      <Tracklist />
+      <LinerNotes />
+      <SessionResume />
+      <NightContact preview={resumePreview()} />
     </>
   );
 }

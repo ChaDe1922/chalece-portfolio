@@ -5,7 +5,7 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TOTAL = 5;
-const DOLL_COLORS = ["#d8412f", "#e8924a", "#6d5ae6", "#3aa6a0", "#16a766"];
+const DOLL_COLORS = ["#d8412f", "#e8924a", "#f5c542", "#3aa6a0", "#16a766"];
 
 function Doll({ size, color, glow }: { size: number; color: string; glow?: "base" | "recursive" }) {
   return (

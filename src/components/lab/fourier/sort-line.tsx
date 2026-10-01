@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { createPortal } from "react-dom";
+import { LabPortal } from "@/components/lab/lab-portal";
 import { Play, Square, ChevronLeft, ChevronRight, RotateCcw, GripHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RichText } from "@/components/lab/rich-text";
@@ -184,15 +184,14 @@ export function SortLine({ label, prompt, items, correctOrder, successText, obje
       {/* Full-size drag ghost following the pointer, portaled to <body> so `fixed` is
           viewport-relative (a transformed ancestor would otherwise offset it). */}
       {dragId && dragPos && byId.get(dragId) && typeof document !== "undefined"
-        ? createPortal(
+        ? <LabPortal>
             <div
               className="pointer-events-none fixed z-[100] rounded-xl border-2 border-primary bg-card px-3 py-2 text-center text-sm font-medium text-foreground shadow-xl"
               style={{ left: dragPos.x - dragPos.offX, top: dragPos.y - dragPos.offY, width: dragPos.w }}
             >
               <RichText text={byId.get(dragId)!.label} />
-            </div>,
-            document.body,
-          )
+            </div>
+          </LabPortal>
         : null}
     </CheckCard>
   );

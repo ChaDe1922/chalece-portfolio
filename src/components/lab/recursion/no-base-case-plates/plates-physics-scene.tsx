@@ -11,7 +11,7 @@ const PLATE_R = 0.62;
 const PLATE_H = 0.26;
 // Module-level singletons (Compiler-safe, never re-created).
 const PLATE_GEO = new THREE.CylinderGeometry(PLATE_R, PLATE_R, PLATE_H, 32);
-const PLATE_MAT = new THREE.MeshStandardMaterial({ color: "#6d5ae6", roughness: 0.5, metalness: 0.05 });
+const PLATE_MAT = new THREE.MeshStandardMaterial({ color: "#5ad1c8", roughness: 0.5, metalness: 0.05 });
 
 // Stable pseudo-random in [-0.5,0.5] from an index (no Math.random, so the
 // build is repeatable across renders for the same plate).

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { createPortal } from "react-dom";
+import { LabPortal } from "@/components/lab/lab-portal";
 import { Play, CircleCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RichText } from "@/components/lab/rich-text";
@@ -266,15 +266,14 @@ export function MatchLanes() {
         </p>
 
         {drag && typeof document !== "undefined"
-          ? createPortal(
+          ? <LabPortal>
               <div
                 className="pointer-events-none fixed z-[100] inline-flex items-center gap-1.5 rounded-full border-2 border-primary bg-card px-3 py-1.5 text-sm font-semibold text-link shadow-xl"
                 style={{ left: drag.x - drag.offX, top: drag.y - drag.offY }}
               >
                 <CircleCheck aria-hidden="true" className="size-4" /> Present
-              </div>,
-              document.body,
-            )
+              </div>
+            </LabPortal>
           : null}
       </div>
 

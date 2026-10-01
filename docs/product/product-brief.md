@@ -6,6 +6,9 @@
 **Owner:** Chalece DeLaCoudray
 **Style rule (non-negotiable):** No em dashes anywhere in copy. Use commas, periods, colons, or "to" for ranges.
 
+## v2 update (2026-09-30): three crafts, Night Session design
+The site now presents three equal crafts: music technology (create), software development (build) and learning design (teach). The homepage uses the Night Session design, a mixing-console metaphor where soloing a craft retunes the whole page. Each craft also has its own page at `/music-tech`, `/software` and `/curriculum`, and its own resume PDF. The current site map is in [docs/ux/site-map.md](../ux/site-map.md) and the build ticket is [030](../tickets/030-night-session-homepage.md). Sections below describe v1 and are kept for history; the stats in them are out of date (current: 10 courses, 48,000+ learners).
+
 ---
 
 ## 0. TL;DR for the build team
@@ -56,7 +59,7 @@ This is a **secondary priority** to applications and outreach. The goal is a tas
 ### Out of scope (v1, note as Phase 2)
 - Per-project case-study detail pages (use rich cards in v1).
 - Services / Key Point Systems marketing pages.
-- Ventures hub (BLACQList, E22).
+- Ventures hub (E22).
 - Blog / CMS, auth, databases, e-commerce.
 - Custom domain (ship on a free Vercel subdomain first).
 
@@ -205,7 +208,7 @@ Pull verbatim-where-possible from Chalece's career files (do not invent):
 ## 15. Phase 2 (after MVP ships, not now)
 - Per-project case-study pages (`/work/[slug]`).
 - Services section for Key Point Systems offers (WCAG audits, staff training, etc.).
-- Ventures hub (BLACQList, E22).
+- Ventures hub (E22).
 - Blog or notes (MDX).
 - Custom domain + richer analytics.
 - Optional CMS for self-serve updates.

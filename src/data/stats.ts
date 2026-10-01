@@ -1,5 +1,5 @@
 /**
- * Proof stats for the #proof section. Numeric stats animate with a count-up
+ * The shape of a proof stat. Numeric stats animate with a count-up
  * (reduced-motion safe); non-numeric stats (value === null) render statically.
  */
 
@@ -12,10 +12,3 @@ export type Stat = {
   suffix?: string;
   label: string;
 };
-
-export const stats: Stat[] = [
-  { value: 48000, suffix: "+", label: "Learners reached" },
-  { value: 10, label: "Published Coursera courses" },
-  { value: 10, suffix: "+", label: "Years in learning and technology" },
-  { value: null, display: "M.S.", label: "Music Technology, Georgia Tech" },
-];

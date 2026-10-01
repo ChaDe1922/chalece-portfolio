@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { site } from "@/data/site";
+import { pillars } from "@/data/pillars";
 import { ThemeProvider } from "@/components/theme-provider";
 import { MotionProvider } from "@/components/motion-provider";
 import { Analytics } from "@vercel/analytics/next";
@@ -26,6 +27,11 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+/** Site keywords plus every pillar's set, deduplicated, so search coverage stays balanced. */
+const allKeywords = [
+  ...new Set([...site.seo.keywords, ...pillars.flatMap((p) => p.seo.keywords)]),
+];
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -33,7 +39,7 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description: site.seo.description,
-  keywords: [...site.seo.keywords],
+  keywords: allKeywords,
   authors: [{ name: site.name, url: site.url }],
   creator: site.name,
   alternates: { canonical: "/" },
@@ -57,11 +63,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f5f2" },
-    { media: "(prefers-color-scheme: dark)", color: "#17161d" },
-  ],
-  colorScheme: "light dark",
+  // Every route wears the Night Session theme.
+  themeColor: "#0f1115",
+  colorScheme: "dark",
 };
 
 // JSON-LD Person schema for richer search results.
@@ -69,7 +73,7 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: site.name,
-  jobTitle: "Learning Experience Designer & Technologist",
+  jobTitle: site.role,
   url: site.url,
   email: site.email,
   address: {
@@ -78,11 +82,12 @@ const personJsonLd = {
     addressRegion: "GA",
     addressCountry: "US",
   },
-  alumniOf: {
-    "@type": "CollegeOrUniversity",
-    name: "Georgia Institute of Technology",
-  },
-  sameAs: [site.links.linkedin, site.links.coursera],
+  // B.A. Music Technology, Bethune-Cookman, 2008 to 2012; M.S. Music Technology, Georgia Tech.
+  alumniOf: [
+    { "@type": "CollegeOrUniversity", name: "Bethune-Cookman University" },
+    { "@type": "CollegeOrUniversity", name: "Georgia Institute of Technology" },
+  ],
+  sameAs: [site.links.linkedin, site.links.github, site.links.coursera],
 };
 
 export default function RootLayout({

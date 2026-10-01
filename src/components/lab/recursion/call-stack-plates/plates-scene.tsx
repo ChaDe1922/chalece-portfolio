@@ -13,7 +13,7 @@ const BOTTOM_Y = -MID;
 
 // Module-level singletons (Compiler-safe, never re-created).
 const PLATE_GEO = new THREE.CylinderGeometry(0.4, 0.44, 0.18, 44);
-const FRAME_MAT = new THREE.MeshStandardMaterial({ color: "#6d5ae6", roughness: 0.5, metalness: 0.05 });
+const FRAME_MAT = new THREE.MeshStandardMaterial({ color: "#5ad1c8", roughness: 0.5, metalness: 0.05 });
 const BASE_MAT = new THREE.MeshStandardMaterial({ color: "#16a766", roughness: 0.5, metalness: 0.05 });
 
 type RefArr = React.RefObject<THREE.Mesh | null>[];

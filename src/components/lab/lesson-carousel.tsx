@@ -5,16 +5,13 @@ import Link from "next/link";
 import { m, useReducedMotion } from "motion/react";
 import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LessonAnimation, type LessonId } from "./lesson-animation";
+import { PillarChip } from "@/components/pillar-chip";
+import { LessonAnimation } from "./lesson-animation";
+import { labAccentVars } from "./lab-accent";
 
-export type Lab = {
-  id: LessonId;
-  href: string;
-  eyebrow: string;
-  title: string;
-  blurb: string;
-  external?: boolean;
-};
+import type { Lab } from "@/data/labs";
+
+export type { Lab };
 
 const SWIPE_THRESHOLD = 60;
 const SWIPE_IGNORE = "a, button, input, select, textarea, [role='button'], [data-no-swipe]";
@@ -43,7 +40,7 @@ function ringOffset(i: number, index: number, count: number) {
   return off;
 }
 
-const CARD_SHELL = "flex min-h-[460px] flex-col rounded-2xl border border-border bg-card p-6 shadow-sm";
+const CARD_SHELL = "flex min-h-[500px] flex-col rounded-2xl border border-night-line bg-night-surface p-6";
 
 function Cta({ lab, interactive }: { lab: Lab; interactive: boolean }) {
   const className =
@@ -75,8 +72,13 @@ function CardBody({ lab, front }: { lab: Lab; front: boolean }) {
       <div className="rounded-xl border border-border bg-background">
         <LessonAnimation id={lab.id} active={front} />
       </div>
-      <p className="mt-5 text-xs font-semibold uppercase tracking-wide text-link">{lab.eyebrow}</p>
-      <h2 className="mt-2 font-heading text-2xl font-semibold text-foreground">{lab.title}</h2>
+      <div className="mt-5 flex flex-wrap gap-1.5">
+        {[lab.pillar, ...(lab.alsoIn ?? [])].map((id) => (
+          <PillarChip key={id} id={id} />
+        ))}
+      </div>
+      <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.06em] text-link">{lab.eyebrow}</p>
+      <h2 className="mt-2 font-display text-2xl font-bold tracking-[-0.01em] text-foreground">{lab.title}</h2>
       <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{lab.blurb}</p>
       <Cta lab={lab} interactive={front} />
     </>
@@ -89,8 +91,14 @@ function CardBody({ lab, front }: { lab: Lab; front: boolean }) {
  *  reduced-motion, with a Pause/Play control), plus keyboard + swipe + dots. Fourier
  *  is pinned first; the rest are shuffled on the client after mount. Reduced motion
  *  drops the 3D for a single flat card. */
+const noopSubscribe = () => () => {};
+
 export function LessonCarousel({ labs }: { labs: Lab[] }) {
-  const reduced = useReducedMotion();
+  // The server can't know the motion preference, so hold the reduced layout until
+  // after hydration. Otherwise reduced-motion visitors hit a hydration mismatch.
+  const hydrated = React.useSyncExternalStore(noopSubscribe, () => true, () => false);
+  const prefersReduced = useReducedMotion();
+  const reduced = hydrated && prefersReduced;
 
   const fourierFirst = React.useMemo(() => {
     const f = labs.filter((l) => l.id === "spectrum");
@@ -202,14 +210,14 @@ export function LessonCarousel({ labs }: { labs: Lab[] }) {
       {reduced ? (
         // Flat, calm fallback: a single upright card, no perspective or rotation.
         <div className="mx-auto max-w-md lg:max-w-lg">
-          <div className={cardShell} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${count}: ${active.title}`}>
+          <div className={cardShell} style={labAccentVars(active.pillar)} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${count}: ${active.title}`}>
             <CardBody lab={active} front />
           </div>
         </div>
       ) : (
         // 3D coverflow ring.
         <div className="relative overflow-hidden px-1 py-4" style={{ perspective: 1200 }} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
-          <div className="relative mx-auto h-[460px] max-w-3xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl" style={{ transformStyle: "preserve-3d" }}>
+          <div className="relative mx-auto h-[500px] max-w-3xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl" style={{ transformStyle: "preserve-3d" }}>
             {items.map((lab, i) => {
               const off = ringOffset(i, index, count);
               const a = Math.abs(off);
@@ -224,7 +232,7 @@ export function LessonCarousel({ labs }: { labs: Lab[] }) {
                     !front && "cursor-pointer",
                     a >= 1 && "max-sm:hidden", // mobile: front card only
                   )}
-                  style={{ zIndex: 30 - a * 10 }}
+                  style={{ ...labAccentVars(lab.pillar), zIndex: 30 - a * 10 }}
                   initial={{ opacity: 0, scale: 0.7, z: -260, x: "0%", rotateY: 0 }}
                   animate={{ x: p.x, rotateY: p.rotateY, z: p.z, scale: p.scale, opacity: p.opacity }}
                   transition={

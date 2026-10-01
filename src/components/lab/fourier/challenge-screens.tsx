@@ -303,7 +303,7 @@ export function FormulaTranslator() {
   const parts: MathPart[] = data.labels.map((l) => ({
     id: l.part,
     label: SYMBOL[l.part] ?? l.label,
-    color: "#6d5ae6",
+    color: "var(--primary)",
     desc: l.label,
     example: data.kn,
   }));

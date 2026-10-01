@@ -11,10 +11,10 @@ import { cn } from "@/lib/utils";
 
 export type GraphView = "wave" | "bars" | "both";
 
-/** Harmonic color: violet (fundamental) to coral (top), on brand. */
+/** Harmonic color: teal (fundamental) to coral (top), the Night palette. */
 export function harmonicColor(i: number, count: number): string {
-  const a = [0x6d, 0x5a, 0xe6];
-  const b = [0xff, 0x6b, 0x5e];
+  const a = [0x5a, 0xd1, 0xc8];
+  const b = [0xff, 0x7a, 0x59];
   const t = count > 1 ? i / (count - 1) : 0;
   const r = Math.round(a[0] + (b[0] - a[0]) * t);
   const g = Math.round(a[1] + (b[1] - a[1]) * t);

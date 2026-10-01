@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { createPortal } from "react-dom";
+import { LabPortal } from "@/components/lab/lab-portal";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RichText } from "@/components/lab/rich-text";
@@ -177,15 +177,14 @@ export function SortColumns({ label, prompt, columns, cards, successText, object
           it. Portaled to <body> so `fixed` is viewport-relative (an animated ancestor
           with a transform would otherwise offset it). */}
       {drag && current && typeof document !== "undefined"
-        ? createPortal(
+        ? <LabPortal>
             <div
               className="pointer-events-none fixed z-[100] rounded-xl border-2 border-primary bg-card px-4 py-3 text-sm font-medium text-foreground shadow-xl"
               style={{ left: drag.x - drag.offX, top: drag.y - drag.offY, width: drag.w }}
             >
               <RichText text={current.label} />
-            </div>,
-            document.body,
-          )
+            </div>
+          </LabPortal>
         : null}
     </CheckCard>
   );

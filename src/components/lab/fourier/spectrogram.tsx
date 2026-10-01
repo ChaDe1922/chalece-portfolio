@@ -15,7 +15,7 @@ const data = fourierLab.slides.spectrogram;
 function heat(m: number): string {
   const t = Math.max(0, Math.min(1, m));
   const stops: Array<[number, number, number, number]> = [
-    [0, 24, 18, 46],
+    [0, 20, 23, 29],
     [0.3, 46, 70, 190],
     [0.55, 40, 180, 150],
     [0.75, 150, 215, 70],

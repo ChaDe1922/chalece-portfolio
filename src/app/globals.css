@@ -9,9 +9,36 @@
   --color-foreground: var(--foreground);
   --color-link: var(--link);
   --color-coral: var(--coral);
+  --color-pillar-curriculum: var(--pillar-curriculum);
+  --color-pillar-curriculum-foreground: var(--pillar-curriculum-foreground);
+  --color-pillar-curriculum-ink: var(--pillar-curriculum-ink);
+  --color-pillar-curriculum-subtle: var(--pillar-curriculum-subtle);
+  --color-pillar-music: var(--pillar-music);
+  --color-pillar-music-foreground: var(--pillar-music-foreground);
+  --color-pillar-music-ink: var(--pillar-music-ink);
+  --color-pillar-music-subtle: var(--pillar-music-subtle);
+  --color-pillar-software: var(--pillar-software);
+  --color-pillar-software-foreground: var(--pillar-software-foreground);
+  --color-pillar-software-ink: var(--pillar-software-ink);
+  --color-pillar-software-subtle: var(--pillar-software-subtle);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-space-grotesk);
+  /* ---- Night Session palette (main site). Static values, see .theme-night. ---- */
+  --color-night: #0f1115;
+  --color-night-surface: #14171d;
+  --color-night-raised: #1d212a;
+  --color-night-strip: #171a21;
+  --color-night-open: #1a1e26;
+  --color-night-footer: #0c0e12;
+  --color-night-vinyl: #0a0b0e;
+  --color-night-line: #262a33;
+  --color-night-line-strong: #3a3f4b;
+  --color-night-fg: #ecebe6;
+  --color-night-body: #b3b5bb;
+  --color-night-muted: #9a9ca3;
+  --color-signal: var(--signal, #ff7a59);
+  --font-display: var(--font-syne);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -74,6 +101,22 @@
   --ring: #6d5ae6;
   --link: #5b45cc; /* accessible violet for text/links, 6.09:1 */
   --coral: #ff6b5e; /* decorative only, never body text on paper */
+  /* ---- Pillar accents: one sanctioned accent per pillar (see brand studio
+     07-design-system.md). Solid = stripe/icon/active fill; foreground = text
+     on solid; ink = pillar text; subtle = quiet chip fill. Never for CTAs,
+     links, focus, or status. The music-tech pillar uses the music tokens. ---- */
+  --pillar-curriculum: #9a620a; /* oklch(0.545 0.115 70) 4.68:1 on bg */
+  --pillar-curriculum-foreground: #ffffff; /* 5.09:1 on solid */
+  --pillar-curriculum-ink: #7c500f; /* oklch(0.470 0.095 70) 6.41:1 on bg */
+  --pillar-curriculum-subtle: #fbeedf; /* oklch(0.955 0.025 70) ink on it 6.11:1 */
+  --pillar-music: #83325b; /* oklch(0.445 0.120 352) 7.50:1 on bg */
+  --pillar-music-foreground: #ffffff; /* 8.16:1 on solid */
+  --pillar-music-ink: #6e2d4d; /* oklch(0.400 0.100 352) 8.99:1 on bg */
+  --pillar-music-subtle: #fbe9f0; /* oklch(0.950 0.022 352) ink on it 8.40:1 */
+  --pillar-software: #037a84; /* oklch(0.530 0.090 205) 4.68:1 on bg */
+  --pillar-software-foreground: #ffffff; /* 5.10:1 on solid */
+  --pillar-software-ink: #02646d; /* oklch(0.460 0.078 205) 6.33:1 on bg */
+  --pillar-software-subtle: #e0f5f7; /* oklch(0.955 0.022 205) ink on it 6.10:1 */
   /* Color-coded formula symbols, legible on the light card surface. */
   --formula-signal: #334155;
   --formula-amp: #6d4fd0;
@@ -121,6 +164,19 @@
   --ring: #9b8cf0;
   --link: #9b8cf0; /* lighter violet, 6.33:1 on near-black */
   --coral: #ff8478;
+  /* Pillar accents, dark: lit solids with tinted near-black text. */
+  --pillar-curriculum: #e5a452; /* oklch(0.765 0.125 70) 8.35:1 on bg */
+  --pillar-curriculum-foreground: #201507; /* oklch(0.205 0.030 70) 8.33:1 on solid */
+  --pillar-curriculum-ink: #f3c085; /* oklch(0.840 0.095 70) 10.86:1 on bg */
+  --pillar-curriculum-subtle: #382814; /* oklch(0.290 0.040 70) ink on it 8.56:1 */
+  --pillar-music: #de81ab; /* oklch(0.715 0.125 352) 6.70:1 on bg */
+  --pillar-music-foreground: #221119; /* oklch(0.205 0.030 352) 6.74:1 on solid */
+  --pillar-music-ink: #f5abcb; /* oklch(0.820 0.095 352) 9.90:1 on bg */
+  --pillar-music-subtle: #3b202c; /* oklch(0.285 0.045 352) ink on it 8.10:1 */
+  --pillar-software: #5cd7e4; /* oklch(0.815 0.110 205) 10.52:1 on bg */
+  --pillar-software-foreground: #041b1e; /* oklch(0.205 0.030 205) 10.41:1 on solid */
+  --pillar-software-ink: #8be2eb; /* oklch(0.860 0.085 205) 12.13:1 on bg */
+  --pillar-software-subtle: #143034; /* oklch(0.290 0.035 205) ink on it 9.44:1 */
   /* Color-coded formula symbols, brightened for the dark card surface. */
   --formula-signal: #cbd5e1;
   --formula-amp: #a99cf5;
@@ -143,6 +199,164 @@
   --sidebar-border: #322f3c;
   --sidebar-ring: #9b8cf0;
 }
+
+/* Night Session: the site's one visual world (studio console at night).
+   Applied by the MixProvider wrapper in (site)/layout.tsx and lab/layout.tsx;
+   lessons then swap --primary, --link and --coral to their craft (lab-accent).
+   Remaps the shadcn and
+   pillar tokens so shared components (pillar pages, work cards) follow along.
+   Verified on #0f1115: fg 15.83:1, body 9.22:1, muted 6.89:1, coral 7.36:1,
+   teal 10.25:1, yellow 11.65:1; #0f1115 text on each accent matches those
+   ratios. Muted stays 5.88:1+ on #1d212a. */
+.theme-night {
+  --signal: #ff7a59;
+  --background: #0f1115;
+  --foreground: #ecebe6;
+  --card: #14171d;
+  --card-foreground: #ecebe6;
+  --popover: #14171d;
+  --popover-foreground: #ecebe6;
+  --primary: #ff7a59;
+  --primary-foreground: #0f1115;
+  --secondary: #1d212a;
+  --secondary-foreground: #ecebe6;
+  --muted: #1d212a;
+  --muted-foreground: #9a9ca3;
+  --accent: #1d212a;
+  --accent-foreground: #ecebe6;
+  --border: #262a33;
+  --input: #3a3f4b;
+  --ring: #ecebe6;
+  --link: #ff7a59;
+  --coral: #ff7a59;
+  --pillar-music: #ff7a59;
+  --pillar-music-foreground: #0f1115;
+  --pillar-music-ink: #ff7a59;
+  --pillar-music-subtle: rgba(255, 122, 89, 0.14);
+  --pillar-software: #5ad1c8;
+  --pillar-software-foreground: #0f1115;
+  --pillar-software-ink: #5ad1c8;
+  --pillar-software-subtle: rgba(90, 209, 200, 0.14);
+  --pillar-curriculum: #f5c542;
+  --pillar-curriculum-foreground: #0f1115;
+  --pillar-curriculum-ink: #f5c542;
+  --pillar-curriculum-subtle: rgba(245, 197, 66, 0.14);
+  /* Wrong answers: a cooler crimson, so it never reads as the music coral.
+     5.9:1 on #0f1115. */
+  --destructive: #ff5f79;
+  /* Formula symbols: a categorical code built from the Night palette, plus
+     one rose and one blue so all five parts stay distinct. Each is 7:1+ on
+     the #14171d card. */
+  --formula-signal: #ecebe6;
+  --formula-neutral: #9a9ca3;
+  --formula-amp: #f5c542;
+  --formula-sin: #e8a6c8;
+  --formula-freq: #ff7a59;
+  --formula-time: #5ad1c8;
+  --formula-phase: #8fb3ff;
+  /* Lesson success and caution states are written as emerald and amber
+     utilities. Night swaps both ramps: success leans lime so it stays clear
+     of the software teal, and caution uses the Night yellow. */
+  --color-emerald-50: oklch(0.97 0.035 135);
+  --color-emerald-100: oklch(0.94 0.06 135);
+  --color-emerald-200: oklch(0.9 0.1 135);
+  --color-emerald-300: oklch(0.86 0.14 135);
+  --color-emerald-400: oklch(0.82 0.16 135);
+  --color-emerald-500: oklch(0.76 0.17 135);
+  --color-emerald-600: oklch(0.67 0.15 135);
+  --color-emerald-700: oklch(0.56 0.13 135);
+  --color-emerald-800: oklch(0.45 0.1 135);
+  --color-emerald-900: oklch(0.36 0.08 135);
+  --color-emerald-950: oklch(0.26 0.055 135);
+  --color-amber-50: oklch(0.97 0.035 88);
+  --color-amber-100: oklch(0.95 0.06 88);
+  --color-amber-200: oklch(0.92 0.1 88);
+  --color-amber-300: oklch(0.89 0.13 88);
+  --color-amber-400: oklch(0.86 0.15 88);
+  --color-amber-500: oklch(0.8 0.15 85);
+  --color-amber-600: oklch(0.7 0.14 80);
+  --color-amber-700: oklch(0.58 0.12 75);
+  --color-amber-800: oklch(0.47 0.1 72);
+  --color-amber-900: oklch(0.38 0.08 70);
+  --color-amber-950: oklch(0.27 0.055 70);
+  /* Type: Syne for display, IBM Plex for body and labels. */
+  --font-inter: var(--font-plex-sans);
+  --font-space-grotesk: var(--font-syne);
+  --font-geist-mono: var(--font-plex-mono);
+  color-scheme: dark;
+  background: #0f1115;
+  color: #ecebe6;
+  font-family: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+}
+html:has(.theme-night),
+html:has(.theme-night) body {
+  background: #0f1115;
+  color-scheme: dark;
+}
+.theme-night :where(button, a, [tabindex="0"]):focus-visible {
+  outline: 2px solid #ecebe6;
+  outline-offset: 3px;
+}
+
+/* Horizontal send fader in the contact mixer. --cc is the channel colour, --p the level. */
+.send-fader {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.send-fader:focus-visible {
+  outline: 2px solid #ecebe6;
+  outline-offset: 2px;
+}
+.send-fader::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--cc) 0 var(--p), #262a33 var(--p) 100%);
+}
+.send-fader::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--cc) 0 var(--p), #262a33 var(--p) 100%);
+}
+.send-fader::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 30px;
+  height: 18px;
+  margin-top: -6px;
+  border-radius: 3px;
+  border: 1px solid #0a0b0e;
+  background: linear-gradient(180deg, #e6e5e0, #9ea0a6);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.send-fader::-moz-range-thumb {
+  width: 30px;
+  height: 18px;
+  border-radius: 3px;
+  border: 1px solid #0a0b0e;
+  background: linear-gradient(180deg, #e6e5e0, #9ea0a6);
+}
+
+/* Live level meter on the current nav tab. Off under reduced motion. */
+.eq-live span {
+  animation: eqbar 800ms ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+.eq-live span:nth-child(2) { animation-delay: -250ms; }
+.eq-live span:nth-child(3) { animation-delay: -500ms; }
+.eq-live span:nth-child(4) { animation-delay: -120ms; }
+@keyframes eqbar {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eq-live span { animation: none; }
+}
+
 
 @layer base {
   * {
@@ -624,6 +838,18 @@
     --coral: #ff6b5e;
     --primary: #6d5ae6;
     --primary-foreground: #ffffff;
+    --pillar-curriculum: #9a620a;
+    --pillar-curriculum-foreground: #ffffff;
+    --pillar-curriculum-ink: #7c500f;
+    --pillar-curriculum-subtle: #fbeedf;
+    --pillar-music: #83325b;
+    --pillar-music-foreground: #ffffff;
+    --pillar-music-ink: #6e2d4d;
+    --pillar-music-subtle: #fbe9f0;
+    --pillar-software: #037a84;
+    --pillar-software-foreground: #ffffff;
+    --pillar-software-ink: #02646d;
+    --pillar-software-subtle: #e0f5f7;
   }
   html {
     background: #f7f5f2;

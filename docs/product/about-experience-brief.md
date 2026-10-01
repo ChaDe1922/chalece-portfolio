@@ -61,7 +61,7 @@ Final copy is paste-ready and em-dash-free. Content lives in `src/data/story.ts`
 **Slide 4, Range: one person, many threads**
 - Purpose: show breadth without a wall of text.
 - Visual: a hub with selectable facets: Music Tech, Computer Science, Data, AI, Building.
-- Interaction: tapping a facet reconfigures the slide to show that thread with one tight line and a proof point (Music: Georgia Tech M.S., Tree Sound; CS: Codio, 7 courses; Data: E22 / Atlanta Truth dashboards; AI: agent systems, daily practice; Building: BLACQList, shipped software). Only one facet shown at a time, calm and uncluttered.
+- Interaction: tapping a facet reconfigures the slide to show that thread with one tight line and a proof point (Music: Georgia Tech M.S., Tree Sound; CS: Codio, 10 courses; Data: E22 / Atlanta Truth dashboards; AI: agent systems, daily practice; Building: Athlete OS, shipped software). Only one facet shown at a time, calm and uncluttered.
 - Copy: "I am not one lane. Pick a thread."
 
 **Slide 5, Published and shipped**
@@ -72,9 +72,9 @@ Final copy is paste-ready and em-dash-free. Content lives in `src/data/story.ts`
 
 **Slide 6, What I am building now**
 - Purpose: show she is a builder, not only a designer (a differentiator for modern learning roles).
-- Visual: a compact "now" panel: The BLACQList (digital products + AI agents) and the agent systems that run her own work.
+- Visual: a compact "now" panel: the Athlete OS / E22 platform and the agent systems that run her own work.
 - Interaction: tap to expand each into one sentence; a subtle live touch (e.g., a tiny animated node graph for "agent systems").
-- Copy: "I design learning, and I build the software around it. Right now: The BLACQList and a fleet of AI agent systems."
+- Copy: "I design learning, and I build the software around it. Right now: Athlete OS and the systems that run my own work."
 
 **Slide 7, What I believe**
 - Purpose: values, her non-negotiables, briefly and warmly.
@@ -122,7 +122,7 @@ In `docs/tickets/`, numbered format (Goal, Content, Acceptance criteria, States)
 - **033-slide-make-it-click** Slide 3 (jargon to plain toggle, the meta lesson).
 - **034-slide-range-facets** Slide 4 (facet switcher).
 - **035-slide-published-cards** Slide 5 (three flip cards with links).
-- **036-slide-building-now** Slide 6 (BLACQList + agent systems).
+- **036-slide-building-now** Slide 6 (Athlete OS + agent systems).
 - **037-slide-beliefs** Slide 7 (three belief chips with stories).
 - **038-slide-close-cta** Slide 8 (contact, resume, links, cross-link to /lab/recursion).
 - **039-a11y-reduced-motion-seo** Audit + OG + analytics.

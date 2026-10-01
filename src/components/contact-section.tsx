@@ -20,6 +20,15 @@ function LinkedinIcon({ className }: IconProps) {
   );
 }
 
+/** GitHub mark, inline for the same reason. */
+function GithubIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3" />
+    </svg>
+  );
+}
+
 type Channel = {
   label: string;
   value: string;
@@ -38,6 +47,13 @@ const channels: Channel[] = [
     external: true,
   },
   {
+    label: "GitHub",
+    value: "ChaDe1922",
+    href: site.links.github,
+    icon: GithubIcon,
+    external: true,
+  },
+  {
     label: "Coursera",
     value: "10 published courses",
     href: site.links.coursera,
@@ -46,7 +62,7 @@ const channels: Channel[] = [
   },
 ];
 
-/** Contact channels. Email + LinkedIn + Coursera, no form in v1. */
+/** Contact channels. Email, LinkedIn, GitHub and Coursera, no form in v1. */
 export function ContactSection() {
   return (
     <section
@@ -60,11 +76,11 @@ export function ContactSection() {
             id="contact-heading"
             eyebrow="Contact"
             title="Let's talk."
-            description="Open to remote roles in learning experience design, instructional design, and curriculum."
+            description={site.openTo}
           />
         </Reveal>
 
-        <Reveal className="mt-10 grid gap-4 sm:grid-cols-3 print:mt-5 print:grid-cols-3">
+        <Reveal className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 print:mt-5 print:grid-cols-4">
           {channels.map(({ label, value, href, icon: Icon, external }) => (
             <a
               key={label}

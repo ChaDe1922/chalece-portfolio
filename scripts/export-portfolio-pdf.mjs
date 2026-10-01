@@ -10,7 +10,7 @@ const OUT = "exports/Chalece-DeLaCoudray-Portfolio.pdf";
 const browser = await chromium.launch();
 try {
   // reducedMotion from first paint: the stat count-up never runs, so the PDF
-  // captures the final numbers (30,630+ / 7 / 10+), not a mid-animation frame.
+  // captures the final numbers, not a mid-animation frame.
   const context = await browser.newContext({ reducedMotion: "reduce" });
   const page = await context.newPage();
   await page.emulateMedia({ media: "print" });

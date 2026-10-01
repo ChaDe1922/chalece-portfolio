@@ -28,7 +28,7 @@ const slides: Slide[] = [
     title: s.intro.title,
     titleNode: (
       <>
-        What is inside a <ClickWord label="sound">sound</ClickWord>?
+        What is inside a <span className="whitespace-nowrap"><ClickWord label="sound">sound</ClickWord>?</span>
       </>
     ),
     render: () => <Intro />,

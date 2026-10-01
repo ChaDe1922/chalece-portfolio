@@ -11,12 +11,12 @@ import { fourierLab } from "@/data/fourier-lab";
 
 const data = fourierLab.slides.voice;
 
-/** Heat color for a spectrogram cell: dark -> violet -> coral by intensity. */
+/** Heat color for a spectrogram cell: clear -> teal -> coral by intensity, the Night palette. */
 function heat(v: number): string {
   const t = v / 255;
   if (t < 0.04) return "rgba(0,0,0,0)";
-  const a = [0x6d, 0x5a, 0xe6];
-  const b = [0xff, 0x6b, 0x5e];
+  const a = [0x5a, 0xd1, 0xc8];
+  const b = [0xff, 0x7a, 0x59];
   const k = Math.min(1, t * 1.2);
   const r = Math.round(a[0] + (b[0] - a[0]) * k);
   const g = Math.round(a[1] + (b[1] - a[1]) * k);

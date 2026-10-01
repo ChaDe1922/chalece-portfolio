@@ -48,7 +48,7 @@ const slides: Slide[] = [
     title: s.snapshot.title,
     titleNode: (
       <>
-        A commit is a <ClickWord label="photo">photo</ClickWord>, not a diff
+        A commit is a <span className="whitespace-nowrap"><ClickWord label="photo">photo</ClickWord>,</span> not a diff
       </>
     ),
     render: () => <Snapshot />,
@@ -99,7 +99,7 @@ const slides: Slide[] = [
     title: s.merge.title,
     titleNode: (
       <>
-        <ClickWord label="Merge">Merge</ClickWord>: join the tracks
+        <span className="whitespace-nowrap"><ClickWord label="Merge">Merge</ClickWord>:</span> join the tracks
       </>
     ),
     render: () => <Merge />,
@@ -109,7 +109,7 @@ const slides: Slide[] = [
     title: s.rebase.title,
     titleNode: (
       <>
-        <ClickWord label="Rebase">Rebase</ClickWord>: replay onto the other track
+        <span className="whitespace-nowrap"><ClickWord label="Rebase">Rebase</ClickWord>:</span> replay onto the other track
       </>
     ),
     render: () => <Rebase />,
