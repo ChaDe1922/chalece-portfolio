@@ -167,11 +167,10 @@ type LaneProps = {
   id: LaneId;
   selectedId: string;
   onSelect: (clip: Placed) => void;
-  onKey: (event: KeyboardEvent<HTMLButtonElement>, clip: Placed) => void;
   register: (id: string, el: HTMLButtonElement | null) => void;
 };
 
-function Lane({ id, selectedId, onSelect, onKey, register }: LaneProps) {
+function Lane({ id, selectedId, onSelect, register }: LaneProps) {
   const { on, single } = useMix();
   const meta = LANE_META[id];
   const { placed, rows } = LANES[id];
@@ -208,7 +207,6 @@ function Lane({ id, selectedId, onSelect, onKey, register }: LaneProps) {
                 aria-controls={INSPECTOR_ID}
                 aria-describedby="resume-timeline-keys"
                 onClick={() => onSelect(clip)}
-                onKeyDown={(event) => onKey(event, clip)}
                 className="group relative block size-full cursor-pointer overflow-hidden rounded-md text-left text-night-fg"
               >
                 <span className={cn("flex h-5 whitespace-nowrap", clip.alignEnd && "justify-end")}>
@@ -333,23 +331,31 @@ export function SessionResume() {
     setPlaying(false);
   }
 
-  function onKey(event: KeyboardEvent<HTMLButtonElement>, clip: Placed) {
-    const at = SEQUENCE.indexOf(clip);
-    const lane = LANE_ORDER.indexOf(clip.lane);
+  /**
+   * Arrow keys work from anywhere in the timeline: a clip, the playhead, the transport,
+   * or a click on empty space (the wrapper takes focus). Left/right move through time,
+   * up/down change tracks.
+   */
+  function onTimelineKey(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    const lane = LANE_ORDER.indexOf(current.lane);
     let target: number | null = null;
-    if (event.key === "ArrowRight") target = at + 1;
-    else if (event.key === "ArrowLeft") target = at - 1;
+    if (event.key === "ArrowRight") target = Math.min(COUNT - 1, index + 1);
+    else if (event.key === "ArrowLeft") target = Math.max(0, index - 1);
     else if (event.key === "Home") target = 0;
     else if (event.key === "End") target = COUNT - 1;
     else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       const other = LANE_ORDER[lane + (event.key === "ArrowDown" ? 1 : -1)];
-      if (other) target = SEQUENCE.indexOf(nearestIn(other, clip.at));
-      else target = at;
+      target = other ? SEQUENCE.indexOf(nearestIn(other, current.at)) : index;
     }
     if (target === null) return;
     event.preventDefault();
     stop();
-    go(target, { focus: true });
+    // The playhead and transport keep focus; anywhere else, focus follows the selected clip.
+    const from = event.target instanceof HTMLElement ? event.target : null;
+    const onTransport = Boolean(from?.closest("[data-transport]"));
+    const keep = from === handle.current || onTransport;
+    go(target, { focus: !keep, speak: onTransport });
   }
 
   function fractionAt(clientX: number): number {
@@ -392,18 +398,6 @@ export function SessionResume() {
     onLostPointerCapture: endScrub,
   };
 
-  function onPlayheadKey(event: KeyboardEvent<HTMLSpanElement>) {
-    let target: number | null = null;
-    if (event.key === "ArrowRight" || event.key === "ArrowUp") target = Math.min(COUNT - 1, index + 1);
-    else if (event.key === "ArrowLeft" || event.key === "ArrowDown") target = Math.max(0, index - 1);
-    else if (event.key === "Home") target = 0;
-    else if (event.key === "End") target = COUNT - 1;
-    if (target === null) return;
-    event.preventDefault();
-    stop();
-    go(target);
-  }
-
   // Play walks the session one clip at a time and stops on the last one.
   useEffect(() => {
     if (!playing) return;
@@ -429,9 +423,9 @@ export function SessionResume() {
       className="scroll-mt-20 lg:scroll-mt-28 border-y border-night-line bg-night-surface"
     >
       <div className={cn(SHELL, "py-16 md:py-24")}>
-        <p className={EYEBROW}>{"// resume · the session"}</p>
+        <p className={EYEBROW}>{"// resume · 2008 to now"}</p>
         <h2 id="resume-heading" className={H2}>
-          The short version.
+          The whole session.
         </h2>
         <p className="mt-3.5 max-w-[640px] text-base leading-relaxed text-night-muted">
           Download a resume for any track, or shape your own mix in the{" "}
@@ -441,130 +435,133 @@ export function SessionResume() {
           . Select any clip to read what I did there.
         </p>
 
-        <div
-          ref={scroller}
-          role="region"
-          aria-label="Resume timeline"
-          className="mt-9 overflow-x-auto rounded-3xl border border-night-line bg-night"
-        >
-          <div className="min-w-[960px] px-5 py-6 sm:px-8 sm:py-7">
-            <div aria-hidden="true" className={LANE_GRID}>
-              <span className="sticky left-0 z-30 -mr-4 bg-night" />
-              {/* The ruler: press anywhere on it to move the playhead there. */}
-              <div
-                onPointerDown={(event) => startScrub(event, false)}
-                {...scrubHandlers}
-                className="relative h-7 cursor-pointer touch-none select-none border-b border-night-line-strong font-mono text-[11px] text-night-muted"
-              >
-                {TICKS.map((year) => (
-                  <span key={year} className="absolute -translate-x-1/2 first:translate-x-0" style={{ left: pct((year - TIMELINE.from) / SPAN) }}>
-                    {year}
-                  </span>
-                ))}
+        {/* Takes focus on a click anywhere in the timeline, so the arrow keys work from there. */}
+        <div tabIndex={-1} onKeyDown={onTimelineKey} className="outline-none">
+          <div
+            ref={scroller}
+            role="region"
+            aria-label="Resume timeline"
+            className="mt-9 overflow-x-auto rounded-3xl border border-night-line bg-night"
+          >
+            <div className="min-w-[960px] px-5 py-6 sm:px-8 sm:py-7">
+              <div aria-hidden="true" className={LANE_GRID}>
+                <span className="sticky left-0 z-30 -mr-4 bg-night" />
+                {/* The ruler: press anywhere on it to move the playhead there. */}
+                <div
+                  onPointerDown={(event) => startScrub(event, false)}
+                  {...scrubHandlers}
+                  className="relative h-7 cursor-pointer touch-none select-none border-b border-night-line-strong font-mono text-[11px] text-night-muted"
+                >
+                  {TICKS.map((year) => (
+                    <span key={year} className="absolute -translate-x-1/2 first:translate-x-0" style={{ left: pct((year - TIMELINE.from) / SPAN) }}>
+                      {year}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="relative">
-              <div className={cn(LANE_GRID, "pointer-events-none absolute inset-0 z-10")}>
-                <span />
-                <span ref={track} className="relative">
-                  {today !== null && (
-                    <span aria-hidden="true" className="absolute inset-y-0 w-0.5 bg-night-fg opacity-50" style={{ left: pct(today) }} />
-                  )}
-                  {/* Playhead: follows the selected clip, and drags to scrub through the session. */}
-                  <span
-                    data-playhead
-                    className={cn(
-                      "absolute -top-3.5 bottom-0 w-0.5",
-                      scrub === null &&
-                        "transition-[left] duration-300 ease-[cubic-bezier(.16,1,.3,1)] motion-reduce:transition-none"
+              <div className="relative">
+                <div className={cn(LANE_GRID, "pointer-events-none absolute inset-0 z-10")}>
+                  <span />
+                  <span ref={track} className="relative">
+                    {today !== null && (
+                      <span aria-hidden="true" className="absolute inset-y-0 w-0.5 bg-night-fg opacity-50" style={{ left: pct(today) }} />
                     )}
-                    style={{ left: pct(scrub ?? current.at), background: meta.color }}
-                  >
+                    {/* Playhead: follows the selected clip, and drags to scrub through the session. */}
                     <span
-                      ref={handle}
-                      role="slider"
-                      tabIndex={0}
-                      aria-label="Playhead"
-                      aria-valuemin={1}
-                      aria-valuemax={COUNT}
-                      aria-valuenow={index + 1}
-                      aria-valuetext={`${current.title}, ${current.label}`}
-                      aria-controls={INSPECTOR_ID}
-                      onPointerDown={(event) => startScrub(event, true)}
-                      {...scrubHandlers}
-                      onKeyDown={onPlayheadKey}
+                      data-playhead
                       className={cn(
-                        "group/playhead pointer-events-auto absolute -left-[21px] -top-4 flex size-11 touch-none select-none justify-center rounded-lg",
-                        scrub === null ? "cursor-grab" : "cursor-grabbing"
+                        "absolute -top-3.5 bottom-0 w-0.5",
+                        scrub === null &&
+                          "transition-[left] duration-300 ease-[cubic-bezier(.16,1,.3,1)] motion-reduce:transition-none"
                       )}
+                      style={{ left: pct(scrub ?? current.at), background: meta.color }}
                     >
                       <span
-                        aria-hidden="true"
+                        ref={handle}
+                        role="slider"
+                        tabIndex={0}
+                        aria-label="Playhead"
+                        aria-valuemin={1}
+                        aria-valuemax={COUNT}
+                        aria-valuenow={index + 1}
+                        aria-valuetext={`${current.title}, ${current.label}`}
+                        aria-controls={INSPECTOR_ID}
+                        onPointerDown={(event) => startScrub(event, true)}
+                        {...scrubHandlers}
+                        aria-describedby="resume-timeline-keys"
                         className={cn(
-                          "mt-4 size-3 rotate-45 rounded-[2px] transition-transform duration-200 motion-reduce:transition-none",
-                          scrub === null ? "group-hover/playhead:scale-125" : "scale-125"
+                          "group/playhead pointer-events-auto absolute -left-[21px] -top-4 flex size-11 touch-none select-none justify-center rounded-lg",
+                          scrub === null ? "cursor-grab" : "cursor-grabbing"
                         )}
-                        style={{ background: meta.color }}
-                      />
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            "mt-4 size-3 rotate-45 rounded-[2px] transition-transform duration-200 motion-reduce:transition-none",
+                            scrub === null ? "group-hover/playhead:scale-125" : "scale-125"
+                          )}
+                          style={{ background: meta.color }}
+                        />
+                      </span>
                     </span>
                   </span>
-                </span>
+                </div>
+                <ul className="mt-3.5 flex flex-col gap-3">
+                  {LANE_ORDER.map((id) => (
+                    <Lane
+                      key={id}
+                      id={id}
+                      selectedId={current.id}
+                      onSelect={(clip) => {
+                        stop();
+                        // Safari doesn't focus buttons on click, so focus explicitly for the arrow keys.
+                        go(SEQUENCE.indexOf(clip), { focus: true });
+                      }}
+                      register={register}
+                    />
+                  ))}
+                </ul>
               </div>
-              <ul className="mt-3.5 flex flex-col gap-3">
-                {LANE_ORDER.map((id) => (
-                  <Lane
-                    key={id}
-                    id={id}
-                    selectedId={current.id}
-                    onSelect={(clip) => {
-                      stop();
-                      go(SEQUENCE.indexOf(clip));
-                    }}
-                    onKey={onKey}
-                    register={register}
-                  />
-                ))}
-              </ul>
             </div>
           </div>
-        </div>
 
-        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <div role="group" aria-label="Timeline transport" className="inline-flex gap-1 rounded-[14px] border border-night-line bg-night p-1">
-            <TransportButton label="Previous clip" onClick={() => { stop(); go(index - 1, { speak: true }); }}>
-              <svg {...ICON}><path d="M6 5h2v14H6zM20 5v14L9.5 12z" /></svg>
-            </TransportButton>
-            <TransportButton label={playing ? "Pause" : "Play the session"} onClick={togglePlay}>
-              {playing ? (
-                <svg {...ICON}><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
-              ) : (
-                <svg {...ICON}><path d="M8 5v14l11-7z" /></svg>
-              )}
-            </TransportButton>
-            <TransportButton label="Next clip" onClick={() => { stop(); go(index + 1, { speak: true }); }}>
-              <svg {...ICON}><path d="M16 5h2v14h-2zM4 5v14l10.5-7z" /></svg>
-            </TransportButton>
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <div data-transport role="group" aria-label="Timeline transport" className="inline-flex gap-1 rounded-[14px] border border-night-line bg-night p-1">
+              <TransportButton label="Previous clip" onClick={() => { stop(); go(index - 1, { speak: true }); }}>
+                <svg {...ICON}><path d="M6 5h2v14H6zM20 5v14L9.5 12z" /></svg>
+              </TransportButton>
+              <TransportButton label={playing ? "Pause" : "Play the session"} onClick={togglePlay}>
+                {playing ? (
+                  <svg {...ICON}><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
+                ) : (
+                  <svg {...ICON}><path d="M8 5v14l11-7z" /></svg>
+                )}
+              </TransportButton>
+              <TransportButton label="Next clip" onClick={() => { stop(); go(index + 1, { speak: true }); }}>
+                <svg {...ICON}><path d="M16 5h2v14h-2zM4 5v14l10.5-7z" /></svg>
+              </TransportButton>
+            </div>
+            <p className="font-mono text-[13px] text-night-muted">
+              <span aria-hidden="true">
+                {pad(index + 1)} / {pad(COUNT)}
+              </span>
+              <span className="sr-only">
+                Clip {index + 1} of {COUNT}
+              </span>
+            </p>
+            <p aria-hidden="true" className="hidden font-mono text-xs text-night-muted md:block">
+              drag the playhead · ← → move through time · ↑ ↓ change tracks
+            </p>
+            <p aria-hidden="true" className="font-mono text-xs text-night-muted md:hidden">
+              drag the playhead or scroll the timeline →
+            </p>
+            <p id="resume-timeline-keys" className="sr-only">
+              Left and right arrows move through time. Up and down arrows change tracks.
+            </p>
+            <p aria-live={playing ? "off" : "polite"} className="sr-only">
+              {announce}
+            </p>
           </div>
-          <p className="font-mono text-[13px] text-night-muted">
-            <span aria-hidden="true">
-              {pad(index + 1)} / {pad(COUNT)}
-            </span>
-            <span className="sr-only">
-              Clip {index + 1} of {COUNT}
-            </span>
-          </p>
-          <p aria-hidden="true" className="hidden font-mono text-xs text-night-muted md:block">
-            drag the playhead · ← → move through time · ↑ ↓ change tracks
-          </p>
-          <p aria-hidden="true" className="font-mono text-xs text-night-muted md:hidden">
-            drag the playhead or scroll the timeline →
-          </p>
-          <p id="resume-timeline-keys" className="sr-only">
-            Left and right arrows move through time. Up and down arrows change tracks.
-          </p>
-          <p aria-live={playing ? "off" : "polite"} className="sr-only">
-            {announce}
-          </p>
         </div>
 
         <ResumeInspector id={INSPECTOR_ID} clip={current} lane={meta} />

@@ -10,7 +10,7 @@ export const about = {
     "In music technology, I led audio quality and hardware compatibility for Amazon Amp across 1,200+ test scenarios and set up its audio hardware testing lab. Every year since 2023 I have led music tech coding workshops for high school learners at Georgia Tech.",
     "In software, I built the data systems in Athlete OS for E22, the athletic development company I co-founded. I programmed the embedded hardware for Planet Bug, published at ACM CHI 2020, and I built the interactive lessons you can try in my lab.",
     "In learning design, I wrote 10 published Coursera courses at Codio on DevOps, containers, CI/CD and operating systems, reaching 48,000+ learners. I also design for live rooms, from summer coding cohorts to Your Voice Is Power.",
-    "I care about clarity, accessibility, and craft. If you have something complex that people need to hear, use, or understand, I can help them get there.",
+    "I care about clarity, accessibility, and craft. If you have something complex that people need to use or understand, I can help them get there.",
   ],
   skills: [
     "Audio engineering and recording",

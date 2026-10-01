@@ -176,8 +176,8 @@ export function MixConsole() {
   let stats: { value: string; label: string }[] = [];
   if (ids.length === 0) {
     label = "NO SIGNAL";
-    title = "Nothing is playing.";
-    desc = "Tap Solo on any channel to hear one craft, or press Full mix.";
+    title = "All channels are off.";
+    desc = "Tap Solo on any channel to see one craft, or press Full mix.";
   } else if (single) {
     const ch = CHANNELS[single];
     label = `SOLO · CH ${ch.num}`;
@@ -198,10 +198,10 @@ export function MixConsole() {
       <div className={cn(SHELL, "py-16 md:py-24")}>
         <p className={EYEBROW}>{"// three crafts, one thread"}</p>
         <h2 id="what-heading" className={H2}>
-          Solo a craft, or play the full mix.
+          Solo a craft, or bring up the full mix.
         </h2>
         <p className="mt-3.5 max-w-[640px] text-base leading-relaxed text-night-muted">
-          Each channel is one of my crafts. Turn on two to hear how they work together. Pull a fader all the way down to switch it off.
+          Each channel is one of my crafts. Turn on two to see how they work together. Pull a fader all the way down to switch it off.
         </p>
 
         <div className="mt-10 grid gap-7 rounded-3xl border border-night-line bg-night-surface p-3 sm:p-7 lg:grid-cols-[492px_1fr]">
@@ -274,7 +274,7 @@ export function MixConsole() {
                 href="#work"
                 className="mt-auto inline-flex min-h-11 items-center pt-3 font-mono text-sm text-signal"
               >
-                hear these in the tracklist ↓
+                see these in the tracklist ↓
               </a>
             )}
           </div>

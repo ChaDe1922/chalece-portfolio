@@ -172,7 +172,7 @@ export const ROLE_COPY: Record<PillarId, RoleCopy> = {
     subject: "Music technology role",
     preset: { "music-tech": 100, software: 55, curriculum: 40 },
     pitch:
-      "Georgia Tech M.S., studio-trained, and audio quality across 1,200+ test scenarios for Amazon Music. Tell me what you want people to hear.",
+      "Georgia Tech M.S., studio-trained, and audio quality across 1,200+ test scenarios for Amazon Music.",
   },
   software: {
     label: "Software development",
