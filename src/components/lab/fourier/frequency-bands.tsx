@@ -14,12 +14,12 @@ const NOTE_ID = "bands-sweep";
 const MIN = data.min;
 const MAX = data.max;
 
-// Band fill colors (low = violet, high = coral), kept on brand.
+// Band fill colors: low reads cool teal, high reads hot coral, the Night palette.
 const BAND_COLOR: Record<string, string> = {
-  sub: "rgba(91, 69, 204, 0.18)",
-  bass: "rgba(109, 90, 230, 0.18)",
-  mid: "rgba(167, 139, 250, 0.20)",
-  treble: "rgba(255, 107, 94, 0.20)",
+  sub: "rgba(90, 209, 200, 0.24)",
+  bass: "rgba(90, 209, 200, 0.14)",
+  mid: "rgba(236, 235, 230, 0.07)",
+  treble: "rgba(255, 122, 89, 0.20)",
 };
 
 const logPct = (f: number) => {

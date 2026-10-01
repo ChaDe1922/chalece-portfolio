@@ -7,9 +7,9 @@ import * as THREE from "three";
 // only ever loads client-side (the scene is imported via next/dynamic ssr:false).
 const RING_GEO = new THREE.TorusGeometry(1.8, 0.04, 8, 64);
 // Flat emissive look with no lighting (cheaper than PBR). toneMapped:false lets
-// the violet feed the bloom bright-pass at full strength.
+// the teal feed the bloom bright-pass at full strength.
 const RING_MAT = new THREE.MeshBasicMaterial({
-  color: "#6d5ae6", // brand --primary violet
+  color: "#5ad1c8", // Night software teal, the recursion lesson accent
   toneMapped: false,
 });
 
@@ -27,8 +27,8 @@ function makeGlowTexture(): THREE.CanvasTexture | null {
   const ctx = canvas.getContext("2d");
   if (!ctx) return null;
   const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-  g.addColorStop(0, "rgba(160,143,255,0.9)");
-  g.addColorStop(1, "rgba(160,143,255,0)");
+  g.addColorStop(0, "rgba(122,226,218,0.9)");
+  g.addColorStop(1, "rgba(122,226,218,0)");
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, size, size);
   return new THREE.CanvasTexture(canvas);

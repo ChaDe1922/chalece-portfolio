@@ -4,7 +4,7 @@ import * as React from "react";
 import * as THREE from "three";
 
 export const TOTAL = 5;
-export const DOLL_COLORS = ["#d8412f", "#e8924a", "#6d5ae6", "#3aa6a0", "#16a766"];
+export const DOLL_COLORS = ["#d8412f", "#e8924a", "#f5c542", "#3aa6a0", "#16a766"];
 
 // Matryoshka silhouette as a lathe profile (radius x, height y), unit height.
 const v = (x: number, y: number) => new THREE.Vector2(x, y);

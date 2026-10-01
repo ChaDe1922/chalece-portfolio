@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { createPortal } from "react-dom";
+import { LabPortal } from "@/components/lab/lab-portal";
 import { cn } from "@/lib/utils";
 
 /** A LaTeX-styled, color-coded formula. Plain tokens render as math typography;
@@ -33,14 +33,23 @@ export function MathFormula({ tokens, parts, className }: { tokens: readonly Mat
   // Viewport coordinates for the clicked token, so the popover can be portaled to
   // <body> and positioned `fixed` (on top of every card, past any transformed ancestor).
   const [open, setOpen] = React.useState<{ id: string; x: number; y: number } | null>(null);
+  // The symbol that opened the popover, so Escape can hand focus back to it.
+  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+  const labelId = React.useId();
   const part = open ? parts.find((p) => p.id === open.id) ?? null : null;
 
   const colorOf = (tok: MathToken) => tok.color ?? (tok.part ? parts.find((p) => p.id === tok.part)?.color : undefined);
 
   const onToken = (e: React.MouseEvent<HTMLButtonElement>, partId: string) => {
     const r = e.currentTarget.getBoundingClientRect();
+    triggerRef.current = e.currentTarget;
     setOpen((cur) => (cur?.id === partId ? null : { id: partId, x: r.left + r.width / 2, y: r.bottom + 8 }));
   };
+
+  // Move focus into the popover so screen readers announce it.
+  React.useEffect(() => {
+    if (open) popRef.current?.focus({ preventScroll: true });
+  }, [open]);
 
   React.useEffect(() => {
     if (!open) return;
@@ -50,7 +59,9 @@ export function MathFormula({ tokens, parts, className }: { tokens: readonly Mat
       setOpen(null);
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(null);
+      if (e.key !== "Escape") return;
+      setOpen(null);
+      triggerRef.current?.focus();
     };
     const onScroll = () => setOpen(null);
     document.addEventListener("mousedown", onDown);
@@ -100,14 +111,16 @@ export function MathFormula({ tokens, parts, className }: { tokens: readonly Mat
       </div>
 
       {open && part && typeof document !== "undefined"
-        ? createPortal(
+        ? <LabPortal>
             <div
               ref={popRef}
               role="dialog"
-              className="fixed z-[100] -translate-x-1/2 rounded-xl border bg-card p-3 shadow-xl"
+              aria-labelledby={labelId}
+              tabIndex={-1}
+              className="fixed z-[100] -translate-x-1/2 rounded-xl outline-none border bg-card p-3 shadow-xl"
               style={{ left, top: open.y, width: popW, borderColor: part.color }}
             >
-              <p className="text-sm font-semibold" style={{ color: part.color }}>
+              <p id={labelId} className="text-sm font-semibold" style={{ color: part.color }}>
                 {part.label}
               </p>
               <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{part.desc}</p>
@@ -117,9 +130,8 @@ export function MathFormula({ tokens, parts, className }: { tokens: readonly Mat
                 </span>
                 {part.example}
               </p>
-            </div>,
-            document.body,
-          )
+            </div>
+          </LabPortal>
         : null}
     </div>
   );

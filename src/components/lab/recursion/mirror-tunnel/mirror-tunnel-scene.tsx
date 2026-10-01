@@ -14,15 +14,15 @@ export function MirrorTunnelScene({ depth }: { depth: number }) {
   return (
     <div
       aria-hidden="true"
-      className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-[#05040d]"
+      className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-[#08090c]"
     >
       <Canvas
         frameloop="demand"
         dpr={[1, 1.5]}
         gl={{ powerPreference: "low-power", antialias: false }}
       >
-        <color attach="background" args={["#05040d"]} />
-        <fogExp2 attach="fog" args={["#05040d", 0.09]} />
+        <color attach="background" args={["#08090c"]} />
+        <fogExp2 attach="fog" args={["#08090c", 0.09]} />
         <MirrorTunnelCamera depth={depth} />
         <MirrorTunnelRings />
         <EffectComposer>

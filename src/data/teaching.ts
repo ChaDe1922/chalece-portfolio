@@ -6,7 +6,7 @@ export const teaching = {
   eyebrow: "How I design learning",
   heading: "A few beliefs about teaching",
   lede:
-    "These principles shape every lesson above, whether the learner is twelve or a staff engineer.",
+    "These principles shape every lesson above, whether the learner is new to code or already works in tech.",
   principles: [
     {
       title: "Experience before vocabulary",

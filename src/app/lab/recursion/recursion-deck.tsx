@@ -76,7 +76,7 @@ const slides: Slide[] = [
     title: s.callStack.title,
     titleNode: (
       <>
-        Wait, what is a <ClickWord label="call stack">call stack</ClickWord>?
+        Wait, what is a <span className="whitespace-nowrap"><ClickWord label="call stack">call stack</ClickWord>?</span>
       </>
     ),
     render: () => <CallStack />,
@@ -86,7 +86,7 @@ const slides: Slide[] = [
     title: s.noBaseCase.title,
     titleNode: (
       <>
-        What if there is no <ClickWord label="base case">base case</ClickWord>?
+        What if there is no <span className="whitespace-nowrap"><ClickWord label="base case">base case</ClickWord>?</span>
       </>
     ),
     render: () => <NoBaseCase />,
@@ -116,7 +116,7 @@ const slides: Slide[] = [
     title: s.outro.title,
     titleNode: (
       <>
-        That is <ClickWord label="recursion">recursion</ClickWord>.
+        That is <span className="whitespace-nowrap"><ClickWord label="recursion">recursion</ClickWord>.</span>
       </>
     ),
     render: () => <Outro />,

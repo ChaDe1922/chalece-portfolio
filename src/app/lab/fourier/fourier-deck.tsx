@@ -26,7 +26,7 @@ const slides: Slide[] = [
     title: s.introTwo.title,
     titleNode: (
       <>
-        How does a computer find the <ClickWord label="recipe">recipe</ClickWord>?
+        How does a computer find the <span className="whitespace-nowrap"><ClickWord label="recipe">recipe</ClickWord>?</span>
       </>
     ),
     render: () => <IntroTwo />,

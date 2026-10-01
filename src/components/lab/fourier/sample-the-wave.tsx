@@ -64,6 +64,7 @@ export function SampleTheWave() {
       ctx.clearRect(0, 0, w, h);
 
       const primary = readVar(canvas, "--primary", "#6d5ae6");
+      const coral = readVar(canvas, "--coral", "#e0564a");
       const grid = readVar(canvas, "--border", "#e3dfd8");
       const ink = readVar(canvas, "--foreground", "#1c1b22");
       const padL = 30;
@@ -121,8 +122,8 @@ export function SampleTheWave() {
         const y = cy - s.value * ampY;
         const isTarget = targetRow != null && s.n === targetRow;
         ctx.beginPath();
-        ctx.fillStyle = isTarget ? "#e0564a" : primary;
-        ctx.shadowColor = isTarget ? "#e0564a" : primary;
+        ctx.fillStyle = isTarget ? coral : primary;
+        ctx.shadowColor = isTarget ? coral : primary;
         ctx.shadowBlur = 10;
         ctx.arc(x, y, isTarget ? 6 : 4.5, 0, Math.PI * 2);
         ctx.fill();

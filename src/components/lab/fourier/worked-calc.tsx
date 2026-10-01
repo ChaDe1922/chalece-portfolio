@@ -41,7 +41,7 @@ function SourceGraph({ values, targetN, found, onPick }: { values: readonly numb
       {pts.map((p) => (
         <g key={p.i}>
           {focused === p.i ? <circle cx={p.x} cy={p.y} r={11} fill="none" stroke="var(--ring)" strokeWidth={2} /> : null}
-          <circle cx={p.x} cy={p.y} r={p.i === targetN && found ? 6 : 4.5} fill={p.i === targetN && found ? "#059669" : "var(--primary)"} />
+          <circle cx={p.x} cy={p.y} r={p.i === targetN && found ? 6 : 4.5} fill={p.i === targetN && found ? "#34d399" : "var(--primary)"} />
           <circle
             cx={p.x}
             cy={p.y}

@@ -26,6 +26,7 @@ Lean ticket set for the v1 build. Source spec: [`../product/product-brief.md`](.
 | 024 | [Call stack (countdown)](024-slide-call-stack.md) | lesson slide 4 | done |
 | 027 | [A11y & reduced motion](027-a11y-and-reduced-motion.md) | audit | |
 | 028 | [OG, SEO & analytics](028-og-seo-analytics.md) | ship | |
+| 030 | [Night Session homepage](030-night-session-homepage.md) | homepage + chrome | built, pending review |
 
 Lesson slides shipped (8, sourced from the curriculum lesson, not separate tickets): mirror room, dolls + definition, what it is and where (why + applications), how to write one (recipe + countdown + predict), call stack (LIFO), no base case = RecursionError, fractal tree, assessment. Every assessed concept is taught first.
 

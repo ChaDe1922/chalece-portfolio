@@ -82,7 +82,7 @@ export function TestWaveMaker() {
 
   const paint = React.useCallback(() => {
     const primary = mysteryRef.current ? readVar(mysteryRef.current, "--primary", "#6d5ae6") : "#6d5ae6";
-    const coral = "#e0564a";
+    const coral = mysteryRef.current ? readVar(mysteryRef.current, "--coral", "#e0564a") : "#e0564a";
     // Top: the mystery sound, drawn faintly at its hidden frequency.
     drawWave(mysteryRef.current, cyclesFor(data.hiddenFreq), primary, { faint: true });
     // Bottom: target behind (only during the challenge), then the live test wave.

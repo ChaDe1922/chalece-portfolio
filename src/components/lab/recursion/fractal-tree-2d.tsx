@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { useReducedMotion } from "motion/react";
-import { useTheme } from "next-themes";
 
 /** Branch color: warm brown trunk (t=0) to fresh green tips (t=1). */
 export function branchColor(t: number) {
@@ -23,18 +22,17 @@ type Props = {
 
 /** The original 2D canvas fractal tree, drawn by recursion with a level-by-level
  *  grow. Used as the reduced-motion / no-WebGL fallback for the 3D tree. The
- *  canvas is device-pixel-ratio scaled and theme-aware. */
+ *  canvas is device-pixel-ratio scaled and always drawn on the Night background. */
 export function FractalTree2D({ depth, angle, ratio, lean, leaves, onCount }: Props) {
   const reduced = useReducedMotion();
-  const { resolvedTheme } = useTheme();
 
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const rafRef = React.useRef<number | null>(null);
   const growRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
   const rd = React.useRef(0); // currently rendered max depth
 
-  const p = React.useRef({ angle, ratio, leaves, lean, depth, reduced, theme: resolvedTheme });
-  p.current = { angle, ratio, leaves, lean, depth, reduced, theme: resolvedTheme };
+  const p = React.useRef({ angle, ratio, leaves, lean, depth, reduced });
+  p.current = { angle, ratio, leaves, lean, depth, reduced };
 
   const drawAt = React.useCallback(
     (maxDepth: number) => {
@@ -52,10 +50,9 @@ export function FractalTree2D({ depth, angle, ratio, lean, leaves, onCount }: Pr
       canvas.style.height = `${cssH}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const isLight = p.current.theme === "light";
       const bg = ctx.createLinearGradient(0, 0, 0, cssH);
-      bg.addColorStop(0, isLight ? "#faf9f6" : "#0d1016");
-      bg.addColorStop(1, isLight ? "#eee9f2" : "#161b22");
+      bg.addColorStop(0, "#0f1115");
+      bg.addColorStop(1, "#14171d");
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, cssW, cssH);
 
@@ -139,10 +136,10 @@ export function FractalTree2D({ depth, angle, ratio, lean, leaves, onCount }: Pr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [depth]);
 
-  // Live edits to the other params, theme, and resize repaint at current depth.
+  // Live edits to the other params and resize repaint at current depth.
   React.useEffect(() => {
     schedule(rd.current);
-  }, [angle, ratio, lean, leaves, resolvedTheme, schedule]);
+  }, [angle, ratio, lean, leaves, schedule]);
 
   React.useEffect(() => {
     const ro = new ResizeObserver(() => schedule(rd.current));

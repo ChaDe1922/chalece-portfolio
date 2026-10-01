@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { createPortal } from "react-dom";
+import { LabPortal } from "@/components/lab/lab-portal";
 import { Play, Square, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RichText } from "@/components/lab/rich-text";
@@ -32,9 +32,9 @@ type Props = {
 };
 
 const BAND_BG: Record<string, string> = {
-  bass: "rgba(109, 90, 230, 0.16)",
-  mid: "rgba(167, 139, 250, 0.18)",
-  treble: "rgba(255, 107, 94, 0.18)",
+  bass: "rgba(90, 209, 200, 0.16)",
+  mid: "rgba(236, 235, 230, 0.07)",
+  treble: "rgba(255, 122, 89, 0.18)",
 };
 
 export function BandDrag({ label, prompt, min, max, bands, markers, sounds, successText, objective, onSolved }: Props) {
@@ -268,12 +268,11 @@ export function BandDrag({ label, prompt, min, max, bands, markers, sounds, succ
       </p>
 
       {drag && current && typeof document !== "undefined"
-        ? createPortal(
+        ? <LabPortal>
             <div className="pointer-events-none fixed z-[100] rounded-xl border-2 border-primary bg-card px-4 py-2.5 text-sm font-medium text-foreground shadow-xl" style={{ left: drag.x - drag.offX, top: drag.y - drag.offY, width: drag.w }}>
               {current.label}
-            </div>,
-            document.body,
-          )
+            </div>
+          </LabPortal>
         : null}
     </CheckCard>
   );

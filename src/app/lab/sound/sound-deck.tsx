@@ -33,7 +33,7 @@ const slides: Slide[] = [
     title: s.whatIsSound.title,
     titleNode: (
       <>
-        What is a <ClickWord label="sound">sound</ClickWord>?
+        What is a <span className="whitespace-nowrap"><ClickWord label="sound">sound</ClickWord>?</span>
       </>
     ),
     render: () => (
@@ -125,7 +125,7 @@ const slides: Slide[] = [
     title: s.synth.title,
     titleNode: (
       <>
-        Build your <ClickWord label="synth">synth</ClickWord>, play a tune
+        Build your <span className="whitespace-nowrap"><ClickWord label="synth">synth</ClickWord>,</span> play a tune
       </>
     ),
     render: () => <SynthKeyboard />,

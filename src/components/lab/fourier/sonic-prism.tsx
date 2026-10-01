@@ -352,7 +352,7 @@ export function SonicPrism() {
     // Dark panel behind the spectrogram so the heat colors pop and valleys read
     // dark, like the Chrome Music Lab reference.
     const specX = slabRight + 2;
-    const panel = "#0d0b16";
+    const panel = "#0b0d11";
     ctx.fillStyle = panel;
     ctx.beginPath();
     if (typeof ctx.roundRect === "function") ctx.roundRect(specX, 2, w - specX - 2, h - 4, 8);

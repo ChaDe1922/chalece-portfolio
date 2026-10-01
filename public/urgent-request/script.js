@@ -1160,43 +1160,6 @@
     });
   }
 
-  // Light/dark toggle. Shares the portfolio's localStorage key ("theme") so the
-  // choice carries across, and follows the OS while no explicit choice is set.
-  function initTheme() {
-    var btn = $("#navtheme");
-    var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
-    function stored() {
-      try {
-        return localStorage.getItem("theme");
-      } catch (e) {
-        return null;
-      }
-    }
-    function apply(dark) {
-      var root = document.documentElement;
-      root.classList.add("no-transition");
-      root.classList.toggle("dark", dark);
-      void root.offsetWidth; // flush, then re-enable transitions
-      root.classList.remove("no-transition");
-    }
-    if (btn) {
-      btn.addEventListener("click", function () {
-        var dark = !document.documentElement.classList.contains("dark");
-        apply(dark);
-        try {
-          localStorage.setItem("theme", dark ? "dark" : "light");
-        } catch (e) {}
-      });
-    }
-    if (mq) {
-      var onChange = function () {
-        if (!stored()) apply(mq.matches);
-      };
-      if (mq.addEventListener) mq.addEventListener("change", onChange);
-      else if (mq.addListener) mq.addListener(onChange);
-    }
-  }
-
   document.addEventListener("click", onAction);
   var choicesGroup = $(".choices");
   if (choicesGroup) choicesGroup.addEventListener("click", onChoiceClick);
@@ -1223,7 +1186,6 @@
   initReportComposer();
   initPing();
   initAudio();
-  initTheme();
 
   // Initial state: animate the title screen in; all others hidden, stepper at step 1.
   swapTo("title");

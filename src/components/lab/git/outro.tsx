@@ -7,6 +7,7 @@ import { RichText } from "@/components/lab/rich-text";
 import { CursorTrail } from "@/components/cursor-glow";
 import { ClickRipple } from "@/components/click-ripple";
 import { site } from "@/data/site";
+import { pillarById } from "@/data/pillars";
 
 const data = gitLab.slides.outro;
 
@@ -89,7 +90,7 @@ export function Outro() {
           <ArrowLeft aria-hidden="true" className="size-4" /> {data.backToPortfolio}
         </Link>
         <a
-          href={site.resumePath}
+          href={pillarById["software"].resumePath}
           download
           className="inline-flex h-11 items-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >

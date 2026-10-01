@@ -87,7 +87,7 @@ export function CosineSineVector() {
 
     const primary = readVar(canvas, "--primary", "#6d5ae6");
     const grid = readVar(canvas, "--border", "#e3dfd8");
-    const coral = "#e0564a";
+    const coral = readVar(canvas, "--coral", "#e0564a");
     const cx = w / 2;
     const cy = h / 2;
     const R = Math.min(w, h) / 2 - 16;

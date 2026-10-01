@@ -40,7 +40,7 @@ function drawDots(canvas: HTMLCanvasElement | null, values: readonly number[], a
   ctx.clearRect(0, 0, w, h);
 
   const grid = readVar(canvas, "--border", "#e3dfd8");
-  const coral = "#e0564a";
+  const coral = readVar(canvas, "--coral", "#e0564a");
   const cy = h / 2;
   const ampY = (h / 2) * 0.72;
   const padX = 16;
