@@ -3,10 +3,11 @@ import { cn } from "@/lib/utils";
 import { roleMailto, site } from "@/data/site";
 import { labs } from "@/data/labs";
 import { TeachingBeliefs } from "@/components/teaching-beliefs";
-import { LessonCarousel } from "@/components/lab/lesson-carousel";
+import { LabCourse } from "@/components/lab/course/lab-course";
+import { courseOrder } from "@/components/lab/course/course";
 import { NightNav } from "@/components/night/night-nav";
 import { NightFooter } from "@/components/night/night-footer";
-import { EYEBROW, H2, SHELL } from "@/components/night/shell";
+import { SHELL } from "@/components/night/shell";
 
 export const metadata: Metadata = {
   title: { absolute: "Interactive Lessons | Chalece DeLaCoudray" },
@@ -22,6 +23,25 @@ export const metadata: Metadata = {
   },
 };
 
+// Plain props only, so the client course never bundles the lesson decks.
+const lessons = courseOrder(
+  labs.map((lab) => ({
+    id: lab.id,
+    href: lab.href,
+    external: !!lab.external,
+    eyebrow: lab.eyebrow,
+    title: lab.title,
+    blurb: lab.blurb,
+    craft: lab.pillar,
+    short: lab.short,
+    minutes: lab.minutes,
+    slides: lab.slides,
+    checkpoint: lab.checkpoint,
+    objectives: [...lab.objectives],
+    icon: lab.icon,
+  }))
+);
+
 export default function LabIndexPage() {
   return (
     <>
@@ -33,37 +53,23 @@ export default function LabIndexPage() {
       </a>
       <NightNav />
       <main id="main" className="flex-1">
-        <div className={cn(SHELL, "py-16 md:py-24")}>
-          <p className={EYEBROW}>{"// lab · interactive lessons"}</p>
-          <h1 className={H2}>Learn by doing.</h1>
-          <p className="mt-3.5 max-w-[640px] text-lg leading-relaxed text-night-body">
-            Short, hands-on lessons that run right in your browser. No setup, no account. Pick one and
-            start clicking.
-          </p>
-
-          {/* The lessons, as a spotlight carousel. */}
-          <LessonCarousel labs={labs} />
-
-          {/* Andragogy beliefs, below the lessons, as interactive dropdowns. */}
-          <div className="mt-16 border-t border-night-line pt-10">
-            <div className="max-w-3xl">
-              <TeachingBeliefs />
-            </div>
-          </div>
+        <LabCourse lessons={lessons} defaultSelected="git" />
+        <div className={cn(SHELL, "pb-16 md:pb-24")}>
+          <TeachingBeliefs />
 
           <section
             aria-labelledby="hire-heading"
-            className="mt-16 flex flex-col items-start gap-6 rounded-3xl border border-night-line bg-night-surface p-6 sm:p-10 md:flex-row md:items-center md:justify-between"
+            className="mt-14 flex flex-col items-start gap-5 rounded-[20px] border border-night-line bg-night-surface p-6 md:flex-row md:items-center md:justify-between md:gap-8 md:rounded-3xl md:p-10 lg:mt-[72px]"
           >
             <h2
               id="hire-heading"
-              className="max-w-[560px] text-balance font-display text-[clamp(1.5rem,3vw,2rem)] font-bold leading-[1.15] tracking-[-0.035em] text-night-fg"
+              className="max-w-[560px] text-balance font-display text-[26px] font-bold leading-[1.15] tracking-[-0.035em] text-night-fg md:text-[32px]"
             >
               If these lessons spark an idea, let&apos;s talk.
             </h2>
             <a
               href={roleMailto()}
-              className="inline-flex h-[52px] shrink-0 items-center gap-2.5 rounded-[10px] bg-signal px-6 text-base font-semibold text-night"
+              className="inline-flex h-[52px] w-full shrink-0 items-center justify-center gap-2.5 rounded-[10px] bg-night-fg px-6 text-base font-semibold text-night md:w-auto"
             >
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect width="20" height="16" x="2" y="4" rx="2" />
