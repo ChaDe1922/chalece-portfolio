@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#6d5ae6"/>
-  <text x="50%" y="52%" dominant-baseline="central" text-anchor="middle"
-    font-family="'Space Grotesk', 'Helvetica Neue', Arial, sans-serif"
-    font-size="300" font-weight="700" fill="#ffffff">C</text>
+  <title>Chalece DeLaCoudray</title>
+  <rect width="512" height="512" rx="112" fill="#0f1115"/>
+  <path fill="#ff7a59" d="M64 416V248a24 24 0 0 1 24-24h48a24 24 0 0 1 24 24v168z"/>
+  <path fill="#5ad1c8" d="M208 416V120a24 24 0 0 1 24-24h48a24 24 0 0 1 24 24v296z"/>
+  <path fill="#f5c542" d="M352 416V200a24 24 0 0 1 24-24h48a24 24 0 0 1 24 24v216z"/>
 </svg>
