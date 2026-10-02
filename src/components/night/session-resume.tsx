@@ -315,7 +315,10 @@ function nearestStart(at: number, current: number): number {
   return best;
 }
 
-/** Resume: a DAW multitrack. Each clip opens its details below; every craft lane exports its own PDF. */
+/**
+ * Resume: a DAW multitrack. The selected clip's details dock to the bottom of the
+ * screen while the timeline is in view; every craft lane exports its own PDF.
+ */
 export function SessionResume() {
   const today = useSyncExternalStore<number | null>(noopSubscribe, todayPosition, () => null);
   const [index, setIndex] = useState(0);
@@ -323,10 +326,14 @@ export function SessionResume() {
   const [announce, setAnnounce] = useState("");
   /** Where the playhead sits while it is being dragged, 0..1. Null when it rests on a clip. */
   const [scrub, setScrub] = useState<number | null>(null);
+  const [open, setOpen] = useState(true);
   const scroller = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLSpanElement>(null);
   const handle = useRef<HTMLSpanElement>(null);
   const grab = useRef<number | null>(null);
+  const dock = useRef<HTMLElement>(null);
+  /** Set when a change should bring the selected clip into view above the dock. */
+  const follow = useRef(false);
   const buttons = useRef(new Map<string, HTMLButtonElement>());
   const current = SEQUENCE[index];
   const meta = LANE_META[current.lane];
@@ -351,12 +358,42 @@ export function SessionResume() {
     if (delta) box.scrollBy({ left: delta, behavior: reducedMotion() ? "auto" : "smooth" });
   }
 
+  /**
+   * Scroll the page so the selected clip sits between the nav and the dock. Skipped
+   * when the timeline is off screen, so autoplay never pulls the reader back.
+   */
+  function revealVertical() {
+    const box = scroller.current;
+    const el = buttons.current.get(current.id);
+    if (!box || !el || !dock.current) return;
+    const view = box.getBoundingClientRect();
+    if (view.bottom <= 0 || view.top >= window.innerHeight) return;
+    const nav = document.querySelector('nav[aria-label="Primary"]')?.closest("header");
+    const top = (nav?.getBoundingClientRect().bottom ?? 0) + 12;
+    const bottom = window.innerHeight - dock.current.offsetHeight - 12;
+    const clip = el.getBoundingClientRect();
+    let delta = 0;
+    if (clip.bottom > bottom) delta = clip.bottom - bottom;
+    else if (clip.top < top) delta = clip.top - top;
+    if (delta) window.scrollBy({ top: delta, behavior: reducedMotion() ? "auto" : "smooth" });
+  }
+
+  // Runs after the dock renders the new clip, so its height is current.
+  useEffect(() => {
+    if (!follow.current) return;
+    follow.current = false;
+    revealVertical();
+    // revealVertical only reads refs and the DOM.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index, open]);
+
   /** Select by sequence position. `focus` moves keyboard focus along with it. */
   function go(next: number, how: { focus?: boolean; speak?: boolean } = {}) {
     const clip = SEQUENCE[(next + COUNT) % COUNT];
     setIndex(SEQUENCE.indexOf(clip));
     if (how.focus) buttons.current.get(clip.id)?.focus({ preventScroll: true });
     if (how.speak) setAnnounce(`${clip.title}, ${clip.label}`);
+    follow.current = true;
     reveal(clip.id);
   }
 
@@ -416,6 +453,7 @@ export function SessionResume() {
     setScrub(null);
     setAnnounce(`${current.title}, ${current.label}`);
     reveal(current.id);
+    revealVertical();
   }
 
   const scrubHandlers = {
@@ -552,8 +590,36 @@ export function SessionResume() {
             </div>
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-            <div data-transport role="group" aria-label="Timeline transport" className="inline-flex gap-1 rounded-[14px] border border-night-line bg-night p-1">
+          <p aria-hidden="true" className="mt-3 font-mono text-xs text-night-muted md:hidden">
+            drag the playhead or scroll the timeline →
+          </p>
+          <p id="resume-timeline-keys" className="sr-only">
+            Left and right arrows move through time.
+          </p>
+          <p aria-live={playing ? "off" : "polite"} className="sr-only">
+            {announce}
+          </p>
+
+          <ResumeInspector
+            ref={dock}
+            id={INSPECTOR_ID}
+            clip={current}
+            lane={meta}
+            open={open}
+            onToggle={() => {
+              follow.current = !open;
+              setOpen(!open);
+            }}
+          >
+            <p className="font-mono text-[13px] whitespace-nowrap text-night-muted">
+              <span aria-hidden="true">
+                {pad(index + 1)} / {pad(COUNT)}
+              </span>
+              <span className="sr-only">
+                Clip {index + 1} of {COUNT}
+              </span>
+            </p>
+            <div data-transport role="group" aria-label="Timeline transport" className="inline-flex gap-0.5 rounded-xl border border-night-line bg-night p-0.5">
               <TransportButton label="Previous clip" onClick={() => { stop(); go(index - 1, { speak: true }); }}>
                 <svg {...ICON}><path d="M6 5h2v14H6zM20 5v14L9.5 12z" /></svg>
               </TransportButton>
@@ -568,27 +634,8 @@ export function SessionResume() {
                 <svg {...ICON}><path d="M16 5h2v14h-2zM4 5v14l10.5-7z" /></svg>
               </TransportButton>
             </div>
-            <p className="font-mono text-[13px] text-night-muted">
-              <span aria-hidden="true">
-                {pad(index + 1)} / {pad(COUNT)}
-              </span>
-              <span className="sr-only">
-                Clip {index + 1} of {COUNT}
-              </span>
-            </p>
-            <p aria-hidden="true" className="font-mono text-xs text-night-muted md:hidden">
-              drag the playhead or scroll the timeline →
-            </p>
-            <p id="resume-timeline-keys" className="sr-only">
-              Left and right arrows move through time.
-            </p>
-            <p aria-live={playing ? "off" : "polite"} className="sr-only">
-              {announce}
-            </p>
-          </div>
+          </ResumeInspector>
         </div>
-
-        <ResumeInspector id={INSPECTOR_ID} clip={current} lane={meta} />
       </div>
     </section>
   );
