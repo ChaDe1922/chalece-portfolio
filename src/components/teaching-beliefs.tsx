@@ -1,21 +1,12 @@
 "use client";
 
-import * as React from "react";
-import { AnimatePresence, m, useReducedMotion } from "motion/react";
-import { Brain, Compass, Hand, Plus, Sparkles, Target, Trophy, type LucideIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { teaching } from "@/data/teaching";
+import { ChevronIcon } from "@/components/lab/course/icons";
 
-// One icon per belief, in order. Sparkles is the fallback if the list grows.
-const ICONS: LucideIcon[] = [Hand, Brain, Target, Trophy, Compass];
-
-/** The andragogy section as a set of fun, animated dropdowns. Each belief is a
- *  button that springs open to reveal its explanation; multiple can be open. The
- *  page that renders this stays a Server Component, so the interactivity lives
- *  here. Accessible (aria-expanded/controls) and reduced-motion safe. */
+/** The andragogy beliefs as numbered rows beside a heading column. The first is open. */
 export function TeachingBeliefs() {
-  const reduced = useReducedMotion();
-  const [open, setOpen] = React.useState<Set<number>>(new Set());
+  const [open, setOpen] = useState<ReadonlySet<number>>(() => new Set([0]));
 
   const toggle = (i: number) =>
     setOpen((prev) => {
@@ -26,95 +17,49 @@ export function TeachingBeliefs() {
     });
 
   return (
-    <section aria-labelledby="teaching-heading">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-link">{teaching.eyebrow}</p>
-      <h2
-        id="teaching-heading"
-        className="mt-3 font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
-      >
-        {teaching.heading}
-      </h2>
-      <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">{teaching.lede}</p>
+    <section
+      aria-labelledby="teaching-heading"
+      className="mt-14 border-t border-night-line pt-9 lg:mt-[72px] lg:grid lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-14 lg:pt-12"
+    >
+      <div>
+        <p className="font-mono text-[13px] text-night-muted">{teaching.eyebrow}</p>
+        <h2
+          id="teaching-heading"
+          className="mt-3 font-display text-[30px] leading-[1.08] font-bold tracking-[-0.03em] text-night-fg text-balance lg:text-[38px]"
+        >
+          {teaching.heading}
+        </h2>
+        <p className="mt-3.5 text-[15px] leading-[1.6] text-night-body lg:text-base">{teaching.lede}</p>
+      </div>
 
-      <ul className="lesson-stagger mt-8 space-y-3">
+      <ul className="mt-5 border-b border-night-line lg:mt-0">
         {teaching.principles.map((p, i) => {
-          const Icon = ICONS[i] ?? Sparkles;
           const isOpen = open.has(i);
           const panelId = `belief-panel-${i}`;
-          const buttonId = `belief-button-${i}`;
           return (
-            <li key={p.title}>
-              <div
-                className={cn(
-                  "overflow-hidden rounded-2xl border transition-colors",
-                  isOpen
-                    ? "border-link/40 bg-[color-mix(in_oklch,var(--link)_7%,var(--card))]"
-                    : "border-border bg-card hover:border-link/30 hover:bg-muted/40",
-                )}
+            <li key={p.title} className="border-t border-night-line">
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => toggle(i)}
+                className="flex min-h-[60px] w-full cursor-pointer items-center gap-3 py-3 text-left text-night-fg lg:min-h-16 lg:gap-4"
               >
-                <button
-                  type="button"
-                  id={buttonId}
-                  onClick={() => toggle(i)}
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  className="flex w-full items-center gap-4 px-4 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset sm:px-5"
-                >
-                  {/* Icon chip: fills and pops on open. */}
-                  <m.span
-                    aria-hidden="true"
-                    animate={
-                      reduced
-                        ? {}
-                        : { scale: isOpen ? [1, 1.18, 1] : 1 }
-                    }
-                    transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-                    className={cn(
-                      "grid size-10 shrink-0 place-items-center rounded-xl transition-colors",
-                      isOpen ? "bg-primary text-primary-foreground" : "bg-primary/10 text-link",
-                    )}
-                  >
-                    <Icon className="size-5" />
-                  </m.span>
-
-                  <span className="flex-1 font-heading text-base font-semibold text-foreground">
-                    {p.title}
-                  </span>
-
-                  {/* Plus that rotates 45 degrees into an x when open. */}
-                  <m.span
-                    aria-hidden="true"
-                    animate={reduced ? {} : { rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className={cn(
-                      "grid size-7 shrink-0 place-items-center rounded-full border",
-                      isOpen ? "border-link/40 text-link" : "border-border text-muted-foreground",
-                    )}
-                  >
-                    <Plus className="size-4" />
-                  </m.span>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {isOpen ? (
-                    <m.div
-                      key="panel"
-                      id={panelId}
-                      role="region"
-                      aria-labelledby={buttonId}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: reduced ? 0 : 0.32, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <p className="px-4 pb-4 pl-[4.5rem] text-sm leading-relaxed text-muted-foreground sm:px-5 sm:pb-5 sm:pl-[4.75rem]">
-                        {p.body}
-                      </p>
-                    </m.div>
-                  ) : null}
-                </AnimatePresence>
-              </div>
+                <span className="w-6 shrink-0 font-mono text-xs text-night-muted">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="flex-1 text-base leading-[1.35] font-semibold lg:text-lg">{p.title}</span>
+                <span className="text-night-muted">
+                  <ChevronIcon up={isOpen} />
+                </span>
+              </button>
+              <p
+                id={panelId}
+                hidden={!isOpen}
+                className="mb-5 ml-9 max-w-[560px] text-[15px] leading-[1.6] text-night-body text-pretty lg:ml-10 lg:text-base"
+              >
+                {p.body}
+              </p>
             </li>
           );
         })}
