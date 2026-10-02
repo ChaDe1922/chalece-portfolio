@@ -42,42 +42,45 @@ export function NightContact({ preview }: { preview: ResumePreview }) {
         <p id="mix-label" className="mt-8 font-mono text-[13px] text-night-muted">
           WHAT MATTERS MOST TO YOU?
         </p>
-        <div
-          role="group"
-          aria-labelledby="mix-label"
-          className="mt-3 inline-flex flex-col gap-1.5 rounded-[14px] border border-night-line bg-night-surface p-1.5 sm:flex-row"
-        >
-          {ROLE_ORDER.map((id) => {
-            const selected = preset === id;
-            return (
-              <button
-                key={id}
-                type="button"
-                aria-pressed={selected}
-                onClick={() => applyPreset(ROLE_COPY[id].preset)}
-                className="min-h-12 cursor-pointer rounded-[10px] px-5 text-left text-[15px] font-semibold transition-colors duration-200 sm:text-center"
-                style={{ background: selected ? CHANNELS[id].color : "transparent", color: selected ? "#0f1115" : "#b3b5bb" }}
-              >
-                {ROLE_COPY[id].label}
-              </button>
-            );
-          })}
-        </div>
-
-        <p aria-live="polite" className="mt-6 max-w-[640px] text-lg leading-relaxed text-night-fg md:text-xl">
-          {role?.pitch ?? DEFAULT_PITCH}
-        </p>
-
-        <div className="mt-8 grid items-start gap-8 lg:grid-cols-[1fr_340px] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-10">
+        {/* The master strip starts level with the presets on desktop. */}
+        <div className="mt-3 grid items-start gap-8 lg:grid-cols-[1fr_340px] lg:grid-rows-[auto_auto_1fr] lg:gap-x-12">
           <div className="lg:col-start-1 lg:row-start-1">
-            <Sends />
-          </div>
+            <div
+              role="group"
+              aria-labelledby="mix-label"
+              className="inline-flex flex-col gap-1.5 rounded-[14px] border border-night-line bg-night-surface p-1.5 sm:flex-row"
+            >
+              {ROLE_ORDER.map((id) => {
+                const selected = preset === id;
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => applyPreset(ROLE_COPY[id].preset)}
+                    className="min-h-12 cursor-pointer rounded-[10px] px-5 text-left text-[15px] font-semibold transition-colors duration-200 sm:text-center"
+                    style={{ background: selected ? CHANNELS[id].color : "transparent", color: selected ? "#0f1115" : "#b3b5bb" }}
+                  >
+                    {ROLE_COPY[id].label}
+                  </button>
+                );
+              })}
+            </div>
 
-          <div className="w-full max-w-[400px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-w-none">
-            <MasterStrip preview={preview} />
+            <p aria-live="polite" className="mt-6 max-w-[640px] text-lg leading-relaxed text-night-fg md:text-xl">
+              {role?.pitch ?? DEFAULT_PITCH}
+            </p>
           </div>
 
           <div className="lg:col-start-1 lg:row-start-2">
+            <Sends />
+          </div>
+
+          <div className="w-full max-w-[400px] lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:max-w-none">
+            <MasterStrip preview={preview} />
+          </div>
+
+          <div className="lg:col-start-1 lg:row-start-3">
             <div className="flex flex-wrap gap-3">
               <a
                 href={mailto}
